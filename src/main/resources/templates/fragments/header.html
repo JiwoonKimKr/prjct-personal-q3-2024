@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+	<header th:fragment="headerFragment">
+		<div class="d-flex h-100 justify-content-between align-items-center">
+			<div class="title-header">
+				<span>
+					프로젝트빌드 테스트
+				</span>
+			</div>
+			<div>
+				<div th:if="${session.userId != null}" class="group-logIn d-flex align-items-center">
+					<div id="welcome-text-after-login" class="mr-3">
+						<span th:text="${session.userName} + '님 안녕하세요'">이 Header Layout 수정해야함!</span>
+					</div>
+					<div class="title-logIn">
+						<a href="/user/sign-out">로그아웃</a>
+					</div>
+				</div>
+				<div th:unless="${session.userId != null}">
+					<div class="title-logIn">
+						<a href="/user/sign-in-view">로그인</a>
+					</div>				
+				</div>
+			</div>
+		</div>	
+	</header>
+</html>
