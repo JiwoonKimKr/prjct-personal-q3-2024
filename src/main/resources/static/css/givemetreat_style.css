@@ -3,188 +3,254 @@
 	min-height: 1024px;
 }
 
-header {
-	height: 160px;
-	background-color: #FFBD3D;
+footer a, span {
+font-family: 'Alice';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+color: #7C7C7C;
+}
+footer a:hover {
+	text-decoration: none;
 }
 
-.contents {
-	min-height: 719px;
+.group-main-frames{
+	height: 767px;
 }
 
-footer {
-	margin-top: 20px;
-	height: 145px;
-	background-color: #FFBD3D;
-	font-size: 24px;
+.frame-sign-in-home{
+	width: 606px;
+	height: 767px;
 }
 
-.title-header {
-	margin-left: 48px;
-	font-size: 64px;
+/* 여기부터  */
+.main-title {
+	width: 379px;
+	height: 90px;
+	
+	position: relative;
+	left: 20px;
+	top: 20px;
+	
+	background: #FF6868;
+	border-radius: 40px;
+	
+	display: flex;	
 }
 
-.title-logIn {
-	margin-right: 100px;
-	color: #0E7CCC;
-	font-size: 32px;
+.svg-angry-puppy {
+	/* angry puppy  */
+	position: relative;
+	right: 75px;
+	top: -8px;
 }
 
-.group-article {
-	margin-top: 79px;
-}
-
-.title-article {
-	font-size: 48px;
-}
-
-.input-signIn {
-	margin-top: 10px;
-	width: 436px;
-	height: 61px;
-}
-
-.group-input {
-	margin-top: 50px;
-	margin-bottom: 20px;
-}
-
-.btn-signIn {
-	margin-bottom: 10px;
+.text-main-title {
+	/* 간식줘집사 */
+	font-weight: 800;
 	font-size: 40px;
-	height: 62px;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
+	color: #FFFFFF;
+	text-align: right;
+	padding-right: 25px;
 }
 
-.btn-signUp {
-	font-size: 40px;
-	height: 62px;
-	background-color: #007bff;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
+.group-sign-in{
+	/* Rect-bg-yellow */
+	width: 532px;
+	height: 330px;
+	
+	background: #FFE397;
+	box-shadow: 10px 10px 0px #00D9FF;
+	border-radius: 88px 38px 120px 29px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-.btn-signUp-2 {
-	margin-top: 36px;
-	width: 292px;
-	height: 62px;
-	font-size: 40px;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 5px;
-}
-
-#welcome-text-after-login {
-	font-size: 32px;
-}
-
-.group-signUp {
-	width: 930px;
-	height: 300px;
-}
-
-.title-group-signUp {
-	padding-bottom: 33px;
-}
-
-#btn-verify-id-duplicated {
-	font-size: medium;
-}
-
-.group-postList-view {
-	width: 1006px;
-}
-
-.table-postList {
-	font-size: medium;
-}
-
-.anchor-postList {
-	color: #000;
-	font-size: 24px;
-}
-
-.btn-writePost {
-	margin-top: 75px;
-	width: 191px;
-	height: 76px;
-	background: #FFBD3D;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	text-align: center;
-	font-size: 48px;
-}
-
-.group-input-post-create {
-	min-width: 765px;
-}
-
-/* .btn-file-upload{
-	width: 200px;
+.input-sign-in{
+	/* Rect-bg */
+	width: 460px;
 	height: 55px;
-	font-size: 36px;
-	Rectangle 4
+	
+	background: #FFFFFF;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 47px;
+	border-color: transparent;
+	
+	display: flex;
+}
 
-	background: #BABABA;
-	border-radius: 10px;
-	border: 1px none #000000;	
-} */
-.path-file-upload {
+.text-input{
+/* ID */
+	width: 180px;
+	height: 55px;
+
+	background: #FBAA63;
+	border-radius: 29px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.font-id-input{
+	width: 180px;
+	height: 55px;
+		
+	font-weight: 700;
+	font-size: 40px;
+	text-align: center;	
+	
+	color: #FFF;
+}
+
+#loginId-sign-in{
+	background: transparent;
+	border-radius: 47px;
+	border-color: transparent;
+	font-size: 28px;
+}
+
+.font-password-input{
+	width: 180px;
+	height: 55px;
+		
+	font-weight: 700;
 	font-size: 32px;
+	text-align: center;	
+	
+	color: #FFF;
 }
 
-.btn-post-list {
-	width: 191px;
-	height: 76px;
-	margin-right: 100px;
-	background: #8E8D89;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	text-align: center;
-	font-size: 36px;
+#password-sign-in{
+	background: transparent;
+	border-radius: 47px;
+	border-color: transparent;
+	font-size: 24px;
 }
 
-.btn-post-delete-all {
-	width: 191px;
-	height: 76px;
-	margin-right: 25px;
-	background: #EBEBEB;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+.btn-login{
+	/* Rect-bg */
+	width: 268px;
+	height: 60px;
+	
+	background: #FE70AE;
+	box-shadow: 4px 4px 0px #00D9FF;
+	border-radius: 47px;
+	border-color: inherit;
+	
+	/* 로그인 텍스트 */
+
+	font-weight: 700;
+	font-size: 32px;
 	text-align: center;
-	font-size: 36px;
+		
+	color: #FFFFFF;
+}
+.group-sign-up{
+	margin-top: 60px;
 }
 
-.btn-post-save {
-	width: 191px;
-	height: 76px;
-	background: rgba(255, 189, 61, 1);
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	text-align: center;
-	font-size: 36px;
+.btn-sign-up{
+	width: 375px;
+	height: 90px;
+	
+	background: #FF8661;
+	box-shadow: 8px 8px 0px #00D9FF;
+	border-radius: 47px;
+	border-color: inherit;
+
+	font-weight: 400;
+	font-size: 48px;
+	
+	color: #FFFFFF;
 }
 
-.btn-post-delete {
-	width: 195px;
-	height: 76px;
-	margin-right: 100px;
-	background: #EBEBEB;
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	text-align: center;
-	font-size: 36px;
+.btn-find-id-pasword{
+	width: 375px;
+	height: 58px;
+	
+	background: #8F8F8F;
+	box-shadow: 4px 4px 0px #FF8661;
+	border-radius: 47px;
+	border-color: inherit;
+	
+	/* 아이디/비밀번호 찾기 */
+	
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 29px;
+	
+	color: #FFFFFF;
 }
 
-.btn-post-update {
-	width: 191px;
-	height: 76px;
-	background: rgba(255, 189, 61, 1);
-	border: 1px solid #000000;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	text-align: center;
-	font-size: 36px;
+/* sign-up 페이지 */
+
+.group-inputs-sign-up{
+	margin-top: 100px;
+	
+	width: 1021px;
+	height: 663px;
+	
+	background: #FFE397;
+	border-radius: 250px 75px;
+	border: inherit;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.column-input-sign-up{
+	display: flex;
+	align-items: center;
+}
+
+.input-sign-up{
+	box-sizing: border-box;
+	
+	width: 794px;
+	height: 57px;
+	
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 50px;
+	
+	padding-left: 40px;
+	font-size: 24px;
+}
+
+.group-warning-text{
+	width: 100%;
+	min-height: 100px;
+	
+	margin-top: 10px;
+}
+
+#text-warning-sign-up{
+	position: relative;
+	left: 175px;
+		
+	font-size: 28px;
+	font-weight: bolder;
+	color: #FF0000;
+}
+
+#btn-sign-up{
+	margin-top: 50px;
+	
+	width: 750px;
+	height: 90px;
+	
+	background: #FF8661;
+	box-shadow: 8px 8px 0px #00D9FF;
+	border-radius: 47px;
+	border-color: inherit;
+
+	font-weight: 400;
+	font-size: 48px;
+	
+	color: #FFFFFF;
 }

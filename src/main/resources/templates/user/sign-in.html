@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/Layout4Encounter}">
+	<head>
+		<title>간식줘집사</title>
+	</head>
+	<section layout:fragment="contents" class="contents h-100 w-100">
+		<div class="d-flex justify-content-center h-100 w-100">
+			<article class="group-main-frames h-100 w-100 d-flex justify-content-between align-items-center">
+				<div class="main-images">
+					<img alt="main image showing puppy eating treat" src="/img/main_1.png" width="834" height="581">
+				</div>
+				<div
+					class="frame-sign-in-home d-flex flex-column justify-content-center align-items-center">
+<!-- 홈페이지 메인 타이틀 심볼__Start-->					
+					<div class="main-title">
+						<div class="svg-angry-puppy col-1">
+							<svg width="204" height="124" viewBox="0 0 204 124" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
+									<path d="M45.8911 53.1721C45.8911 11.0479 87.8162 1.48308 109.063 1C130.31 1 171.666 9.88855 171.666 53.1721C171.666 96.4556 130.31 100.513 109.063 100.513C87.8162 100.03 45.8911 95.2962 45.8911 53.1721Z" fill="white" />
+									<path d="M128.748 47.1321C131.683 41.8847 138.503 37.1648 145.105 36.4388C150.693 35.8242 159.921 38.3595 158.072 47.7269C156.223 57.0944 146.875 61.3569 134.198 58.9741C127.193 57.6573 124.573 54.595 128.748 47.1321Z" fill="white" />
+									<path d="M101.98 56.5616C101.98 52.0206 96.0312 44.9517 86.6831 41.6346C77.3349 38.3175 64.5874 38.9088 64.5874 44.9517C64.5874 52.1773 68.4869 56.7011 79.8844 59.8787C85.8332 61.5373 101.98 65.1295 101.98 56.5616Z" fill="white" />
+									<path d="M116.465 62.3666C126.663 62.3666 128.646 68.448 128.363 72.3179C126.663 76.4643 122.584 78.9521 116.465 78.9521C110.347 78.9521 105.7 76.1879 105.417 72.3179C105.134 68.448 106.267 62.3666 116.465 62.3666Z" fill="white" />
+									<path d="M45.8911 53.1721C45.8911 11.0479 87.8162 1.48308 109.063 1C130.31 1 171.666 9.88855 171.666 53.1721C171.666 96.4556 130.31 100.513 109.063 100.513C87.8162 100.03 45.8911 95.2962 45.8911 53.1721Z" stroke="black" stroke-width="2" />
+									<path d="M128.748 47.1321C131.683 41.8847 138.503 37.1648 145.105 36.4388C150.693 35.8242 159.921 38.3595 158.072 47.7269C156.223 57.0944 146.875 61.3569 134.198 58.9741C127.193 57.6573 124.573 54.595 128.748 47.1321Z" stroke="black" stroke-width="2" />
+									<path d="M101.98 56.5616C101.98 52.0206 96.0312 44.9517 86.6831 41.6346C77.3349 38.3175 64.5874 38.9088 64.5874 44.9517C64.5874 52.1773 68.4869 56.7011 79.8844 59.8787C85.8332 61.5373 101.98 65.1295 101.98 56.5616Z" stroke="black" stroke-width="2" />
+									<path d="M116.465 62.3666C126.663 62.3666 128.646 68.448 128.363 72.3179C126.663 76.4643 122.584 78.9521 116.465 78.9521C110.347 78.9521 105.7 76.1879 105.417 72.3179C105.134 68.448 106.267 62.3666 116.465 62.3666Z" stroke="black" stroke-width="2" />
+									<path d="M188.93 88.8542C206.319 79.2144 178.931 33.567 166.306 14.1538C147.924 -4.02659 149.174 13.1499 157.535 29.0493C175.371 62.9687 165.016 73.7606 164.248 84.2699C165.571 89.509 171.54 98.494 188.93 88.8542Z" fill="white" stroke="black" stroke-width="2" />
+									<path d="M24.4399 113.892C1.324 102.911 25.6991 49.0323 40.7761 23.4656C65.488 -4.33617 69.6221 25.243 61.0289 46.3734C54.1543 63.2777 55.7797 94.0831 57.4517 107.373C56.0794 114.122 47.5557 124.874 24.4399 113.892Z" fill="white" stroke="black" stroke-width="2" />
+									<path d="M102.251 30.7821C98.0529 24.0626 92.2613 27.9783 89.8902 30.7761M88.3834 10.9514C91.7827 20.9027 85.2673 24.4963 81.5847 25.0491M96.0748 9.95166C96.4519 20.4348 103.843 21.5812 107.492 20.8439" stroke="black" stroke-width="2" />
+								</svg>
+						</div>
+						<div class="text-main-title col-11 w-100 my-auto ">간식줘집사</div>
+					</div>
+<!-- 홈페이지 메인 타이틀 심볼__End-->					
+					<div class="group-sign-in">
+						<!-- ID -->
+						<div class="group-id-input input-sign-in">
+							<div class="text-input">
+								<label for="loginId-sign-in" class="font-id-input">
+									ID
+								</label>
+							</div>
+							<input id="loginId-sign-in" type="text" class="form-control h-100">
+						</div>
+						<!-- 비밀번호 -->
+						<div class="group-password-input input-sign-in mt-3">
+							<div class="text-input">
+								<label for="password-sign-in" class="font-password-input mb-0 mt-1 p-0">
+									비밀번호
+								</label>
+							</div>
+							<input id="password-sign-in" type="password" class="form-control h-100">
+						</div>
+						<button type="button" class="btn-login mt-5">로그인</button>
+					</div>
+					<div class="group-sign-up">
+						<div>
+							<button type="button" class="btn-sign-up">회원가입</button>
+						</div>
+						<div>
+							<button type="button" class="btn-find-id-pasword mt-4">아이디/비밀번호
+								찾기
+							</button>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<th:block layout:fragment="script">
+		<script>
+			
+		</script>
+	</th:block>
+
+</html>
