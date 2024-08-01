@@ -41,7 +41,7 @@
 							</svg>
 						</div>
 						<!-- Input -->
-						<input id="loginId-signUp" type="text" class="input-sign-up" placeholder="이메일">
+						<input id="loginId-sign-up" type="text" class="input-sign-up" placeholder="이메일">
 					</div>
 				<!-- 비밀번호 Input -->
 					<div class="column-input-sign-up d-flex">
@@ -65,7 +65,7 @@
 							</svg>
 						</div>
 						<!-- Input -->
-						<input id="secondary-password-sign-up" type="password" class="input-sign-up" placeholder="비밀번호 확인">
+						<input id="password-confirm-sign-up" type="password" class="input-sign-up" placeholder="비밀번호 확인">
 					</div>
 				<!-- 닉네임 Input -->
 					<div class="column-input-sign-up d-flex">
@@ -80,7 +80,7 @@
 					</div>
 				</div>
 				<div class="group-warning-text">
-					<span id="text-warning-sign-up" th:text="'thymeleaf도 이제 써야되는뎁'"> 닉네임이 중복되었습니다😇😇 </span>
+					<span id="text-warning-sign-up" th:text="''"> 닉네임이 중복되었습니다😇😇 </span>
 				</div>
 			</div>
 			<!-- 가입하기 버튼 -->
@@ -91,8 +91,70 @@
 	</section>
 
 	<th:block layout:fragment="script">
-    	<script>
-    	
+    	<script th:inline="javascript">
+    	$(document).ready(function(){
+    		/* 
+    			회원가입 항목들; id 리스트
+	    			loginId-sign-up
+	    			password-sign-up
+	    			secondary-password-sign-up
+	    			nickname-sign-up
+    		*/
+    		
+    		$("#btn-sign-up").on('click', function(){
+    			let loginId = $("#loginId-sign-up").val().trim();
+    			let password = $("#password-sign-up").val();
+    			let passwordConfirm = $("#password-confirm-sign-up").val();
+    			let nickname = $("#nickname-sign-up").val().trim();
+    			
+    			if(!loginId){
+    				alert("이메일을 입력하세요");
+    				return;
+    			}
+    			if(!password || !passwordConfirm){
+    				alert("이메일을 입력하세요");
+    				return;
+    			}
+    			if(password != passwordConfirm){
+    				alert("비밀번호가 일치하지 않습니다.");
+    				return;
+    			}
+    			if(!nickname){
+    				alert("닉네임을 입력하세요");
+    				return;
+    			}
+    			
+    			let url = "/user/sign-up";
+    			console.log(url);
+    			let params = {
+			   					"loginId" : loginId
+			   					, "password" : password
+			   					, "passwordConfirm" : passwordConfirm
+			   					, "nickname" : nickname
+    						};
+    			console.log(params);
+    			
+    			$.post(url, params)
+    			.done(function(data){
+    				if(data.code == 200){
+    					alert("가입을 환영합니다. 로그인 해주시길 바랍니다.");
+    					location.href = "/";
+    				} else {
+    					console.log(data.error_message);
+    					
+    					$("#text-warning-sign-up").removeClass("d-none");
+    					$("#text-warning-sign-up").text(data.error_message);
+    					
+    					$("#loginId-sign-up").val('');
+    					$("#password-sign-up").val('');
+    					$("#password-confirm-sign-up").val('');
+    					$("#nickname-sign-up").val('');
+    				}
+    			})
+    			
+    		})// btn-sign-up.on click
+    		
+    	}) // document.ready
     	</script>
 	</th:block>
 	

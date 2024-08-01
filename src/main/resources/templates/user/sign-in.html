@@ -5,7 +5,7 @@
 	<head>
 		<title>간식줘집사</title>
 	</head>
-	<section layout:fragment="contents" class="contents h-100 w-100">
+	<section layout:fragment="contents" class="contents h-100 w-100 mt-5">
 		<div class="d-flex justify-content-center h-100 w-100">
 			<article class="group-main-frames h-100 w-100 d-flex justify-content-between align-items-center">
 				<div class="main-images">
@@ -57,7 +57,9 @@
 					</div>
 					<div class="group-sign-up">
 						<div>
-							<button type="button" class="btn-sign-up">회원가입</button>
+							<button type="button" class="btn-sign-up">
+								회원가입
+							</button>
 						</div>
 						<div>
 							<button type="button" class="btn-find-id-pasword mt-4">아이디/비밀번호
@@ -71,8 +73,54 @@
 	</section>
 
 	<th:block layout:fragment="script">
-		<script>
-			
+		<script th:inline="javascript">
+			$(document).ready(function(){
+				
+				/* 로그인 버튼 클릭 */
+				$(".btn-login").on('click', function(){
+					/* 
+						loginId-sign-in
+						password-sign-in
+					*/
+					
+					let loginId = $("#loginId-sign-in").val().trim();
+					let password = $("#password-sign-in").val();
+					
+					if(!loginId){
+						alert("이메일을 입력하세요.");
+						return;
+					}
+					if(!password){
+						alert("비밀번호를 입력하세요.");
+						return;
+					}
+					
+					let url = "/user/sign-in"
+					let params = {
+									"loginId": loginId
+									, "password": password
+								};
+					
+					console.log(`${url}, ${params}`);
+					
+					$.post(url, params)
+					.done(function(data){
+						if(data.code == 200){
+							location.href= "/product/product-list-view";
+						} else {
+							alert(data.error_message);
+						}
+						
+					})// ajax
+					
+				})// btn-login on click
+				
+				/* 회원가입 버튼 클릭 */
+				$(".btn-sign-up").on('click', function(){
+					location.href = "/user/sign-up-view"
+				}); //btn-sign-up.on click
+				
+			}); // document.ready
 		</script>
 	</th:block>
 
