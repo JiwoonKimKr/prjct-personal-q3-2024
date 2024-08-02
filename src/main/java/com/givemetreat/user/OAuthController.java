@@ -1,5 +1,7 @@
 package com.givemetreat.user;
 
+import java.util.*;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.givemetreat.api.dto.ResponseTokenKakaoApi;
+import com.givemetreat.api.dto.UserInfoKakaoApi;
 import com.givemetreat.api.utils.PrivateKeysKakaoApi;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +32,29 @@ public class OAuthController {
 		}
 		
 		//2)Token as Response
-		ResponseTokenKakaoApi response = postRequestWithCodeForToken(code);
-		if(response == null) {
+		ResponseTokenKakaoApi TokenResponse = postRequestWithCodeForToken(code);
+		if(TokenResponse == null) {
 			return "redirect: localhost/";
 		}
 		
 		//3)AccessToken
-		String accessToken = response.getAccess_token();
+		String accessToken = TokenResponse.getAccess_token();
+		
+		UserInfoKakaoApi userInfo = accessUserInfoWithAccessToken(accessToken);
+		
+		log.info("[OAuth: Kakao Api: 3rd] Response As User Info:{}", userInfo);
+		
+		Integer id = Integer.parseInt(userInfo.getId());
+		String email = (String) userInfo.getKakao_account().get("email");
+		@SuppressWarnings("unchecked")
+		Map<String, Object> profile = (Map<String, Object>) userInfo.getKakao_account().get("profile");
+		String nickname  = (String) profile.get("nickname");
+		
+		if(id == null || email == null || nickname == null) {
+			return "redirect: localhost/";
+		}
+		
+		
 		
 		return "redirect: /product/productList";
 	}
@@ -54,7 +73,7 @@ public class OAuthController {
 		
 		//Post Request Trial
 		WebClient webClient = WebClient.builder()
-										.baseUrl("https://kauth.kakao.com/oauth/token")
+										.baseUrl( PrivateKeysKakaoApi.URL_TOKEN_KAKAO_OAUTH)
 										.defaultHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
 										.build();
 		ResponseTokenKakaoApi response = webClient.post()
@@ -70,4 +89,17 @@ public class OAuthController {
 		
 		return response;
 	}
+	
+	private UserInfoKakaoApi accessUserInfoWithAccessToken(String accessToken) {
+		WebClient webClient = WebClient.builder().build();
+		UserInfoKakaoApi userInfo = webClient.get()
+				.uri(PrivateKeysKakaoApi.URL_ACCESS_KAKAO_OAUTH)
+				.header("Authorization", "Bearer " + accessToken)
+				.header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
+				.retrieve()
+				.bodyToMono(UserInfoKakaoApi.class)
+				.block();
+		return userInfo;
+	}
+	
 }
