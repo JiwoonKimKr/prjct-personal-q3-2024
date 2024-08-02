@@ -11,6 +11,7 @@ import com.givemetreat.common.EncryptUtils;
 import com.givemetreat.user.bo.UserBO;
 import com.givemetreat.user.domain.UserEntity;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/user")
@@ -23,7 +24,8 @@ public class UserRestController {
 	@PostMapping("/sign-in")
 	public Map<String, Object> signIn(
 			@RequestParam String loginId
-			, @RequestParam String password){
+			, @RequestParam String password
+			, HttpSession session){
 		
 		Map<String, Object> result = new HashMap<>();
 		
@@ -44,6 +46,10 @@ public class UserRestController {
 			result.put("error_message", "비밀번호를 확인해 주세요.");
 			return result;
 		}
+		session.setAttribute("userId", user.getId());
+		session.setAttribute("loginId", user.getLoginId());
+		session.setAttribute("userName", user.getNickname());
+		
 		result.put("code", 200);
 		result.put("result", "success");
 		
@@ -56,7 +62,8 @@ public class UserRestController {
 			@RequestParam String loginId
 			, @RequestParam String password
 			, @RequestParam String passwordConfirm
-			, @RequestParam String nickname){
+			, @RequestParam String nickname
+			, HttpSession session){
 		
 		Map<String, Object> result = new HashMap<>();
 
@@ -82,6 +89,10 @@ public class UserRestController {
 		UserEntity user = userBO.addUser(loginId, hashedPassword, salt, nickname);
 		
 		if(user != null) {
+			session.setAttribute("userId", user.getId());
+			session.setAttribute("loginId", user.getLoginId());
+			session.setAttribute("nickname", user.getNickname());
+			
 			result.put("code", 200);
 			result.put("result", "success");
 		} else {
