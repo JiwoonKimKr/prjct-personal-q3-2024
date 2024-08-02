@@ -72,6 +72,7 @@ public class OAuthController {
 			formData.add("password", idUserInfo);
 			WebClient webClient = WebClient.builder().build();
 			String response = webClient.post()
+							.uri("/user/sign-in")
 							.bodyValue(formData)
 							.retrieve()
 							.bodyToMono(String.class)
