@@ -3,7 +3,7 @@
 	min-height: 1024px;
 }
 
-footer a, span {
+footer a,span {
 font-family: 'Alice';
 font-style: normal;
 font-weight: 400;
@@ -294,6 +294,7 @@ footer a:hover {
 
 	background: #51C3ED;
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+	border-color:inherit;
 	border-radius: 20px;
 	/* 검색 */
 	
@@ -362,26 +363,282 @@ footer a:hover {
 /* Rect_Background_LogIn */
 	position:absolute;
 	right: 0;
-	top: -2px;
+	top: -5px;
 
 	width: 343px;
-	height: 932px;
+	height: 935px;
 
 	background: #FBAA63;
+	background: rgba(251, 170, 99, 0.75);
+	mix-blend-mode: multiply;
 	border-radius: 0px 0px 0px 260px;
+	overflow:hidden;
+	
 	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.group-btn-add-profile-image{
+	position: relative;
+	top: 125px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#btn-add-profile-image{
+	position:absolute;
+	z-index: 5;
+	width: 135px;
+	height: 155px;
+	
+	/* 👇 프로필 이미지를 추가하세요 */
+	background-color: transparent;
+	border-color: transparent;
+	
+	/* 👇 프로필 이미지를 추가하세요 */
+	font-size: 16px;
+	font-weight: 799;
+	line-height: 23px;
+	color: #000000;
+	
+}
+
+#bg-add-profile-image{
+	position:absolute;
+	z-index: 4;
+}
+
+#group-input-self-description{
+	position: absolute;
+	top: 235px;
+	
+	width: 310px;
+	height: 66px;
+	background: #FFFFFF;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+}
+
+#input-self-description{
+	width: 200px;
+	margin-left: 25px;
+	
+	border-color: transparent;
+	background-color: transparent;
+	font-size: 25px;
+	
+}
+
+/* 자기소개 버튼 */
+#btn-self-description{
+	background-color: transparent;
+	border-color: transparent;
+}
+
+/* 반려견 추가 버튼 */
+#btn-pet-list-view{
+	/* Rectangle 4 */
+	position: absolute;
+	width: 230px;
+	height: 75px;
+	top: 320px;
+	
+	background: #FFFFFF;
+	box-shadow: 5px 5px 0px #00D9FF;
+	border-color: inherit;
+	border-radius: 50px;
+	filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
+	
+	display:flex;
+	align-items: center;
+}
+
+/* Aside 장바구니 버튼 */
+#btn-shopping-cart-view{
+	position: absolute;
+	width: 230px;
+	height: 60px;
+	top: 475px;
+	
+	background: #FFFFFF;
+	box-shadow: 5px 5px 0px #00D9FF;
+	border-color: inherit;
+	border-radius: 50px;
+	filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
+	
+	display:flex;
+	justify-content: center;
+	align-items: center;	
+}
+#btn-shopping-cart-view > span{
+	/* 장바구니 */
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	
+	color: #000000;
+}
+
+/* Aside 배송조회 버튼 */
+#btn-delivery-view {
+	position: absolute;
+	width: 230px;
+	height: 60px;
+	top: 550px;
+	
+	background: #FFFFFF;
+	box-shadow: 5px 5px 0px #00D9FF;
+	border-color: inherit;
+	border-radius: 50px;
+	filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
+	
+	display:flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+#btn-delivery-view > span{
+	/* 장바구니 */
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	
+	color: #000000;
+}
+
+/* Aside 주문내역조회 버튼 */
+#btn-invoice-list-view {
+	position: absolute;
+	width: 230px;
+	height: 60px;
+	top: 625px;
+	
+	background: #FFFFFF;
+	box-shadow: 5px 5px 0px #00D9FF;
+	border-color: inherit;
+	border-radius: 50px;
+	filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
+	
+	display:flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+#btn-invoice-list-view > span{
+	/* 장바구니 */
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	
+	color: #000000;
+}
+
+/* Aside 개인정보 수정 버튼 */
+/* Aside 주문내역조회 버튼 */
+#btn-user-info-view {
+	position: absolute;
+	width: 230px;
+	height: 60px;
+	top: 735px;
+	
+	background: #FFFFFF;
+	box-shadow: 5px 5px 0px #00D9FF;
+	border-color: inherit;
+	border-radius: 50px;
+	filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
+	
+	display:flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+#btn-user-info-view > span{
+	/* 장바구니 */
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	
+	color: #000000;
+}
+
+/* 로그아웃 버튼 */
+#btn-log-out{
+	/* bg_logout */
+	
+	position: absolute;
+	width: 100px;
+	height: 35px;
+	
+	Top: 875px;
+	right: 20px;
+	
+	
+	background: #FF2D30;
+	border-radius: 20px;
+	filter: drop-shadow(6px 4px 0px rgba(0, 0, 0, 0.25));
+}
+#btn-log-out > span{
+	font-weight: 800;
+	font-size: 16px;
+	
+	color: #FFFFFF;
 }
 
 
 /* pet-list-view */
 .group-article-pet-list{
-/* Rect_Background */
+	/* Rect_Background */
 	width: 1118px;
 	height: 929px;
-	left: 0px;
-	top: 0px;
+	padding-top: 75px;
 	
 	background: #FFE397;
 	border-radius: 100px 430px 0px 0px;
+}
+
+.title-article-list{
+	width: 600px;
+	height: 75px;
+	margin-left: 135px;
+
+	background: #FFFFFF;
+	border-radius: 30px;
+	border-color: transparent;
 	
+	display: flex;
+	align-items:center;
+}
+.title-article-list > span{
+	margin: auto;
+	font-weight: 600;
+	font-size: 36px;
+	
+	color: #000000;	
+}
+
+.pet-image-card-list{
+	margin-left: 30px;
+	column-gap: 30px;	
+	
+	display: flex;
+	
+}
+
+/* 카드 박스 */
+.pet-image-card{
+	/* Btn-Plus-Pet */
+	/* Square_Thumbnail_Article */
+	width: 329.25px;
+	height: 331.41px;
+
+	
+	background: #FFFFFF;
+	border-radius: 35px;
+	box-shadow: inset 5px 4px 4px rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

@@ -30,9 +30,9 @@
 			<div id="groups-nav-header" class="">
 				<div id="group-input-keyword-search-header">
 					<input id="search-keyword" type="text" placeholder="🔎검색하기" class="form-control m-0 p-0">
-					<div class="btn-search-keyword">
+					<button type="button" class="btn-search-keyword">
 						검색
-					</div>
+					</button>
 				</div>
 				<div class="group-right-side-header d-flex">
 					<div th:if="${session.userId != null}" class="group-logIn d-flex align-items-center">
@@ -56,6 +56,100 @@
 		</div>	
 		<aside class="groups-aside-dropdown">
 			<div id="nav-user">
+				<div class="group-btn-add-profile-image">
+					<button id="btn-add-profile-image" type="button">👇 <br>프로필 이미지를<br>추가하세요</button>
+					<div id="bg-add-profile-image" class="svg-bg-btn-add-image">
+						<svg width="208" height="206" viewBox="0 0 208 206" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M207.849 103C207.849 159.885 161.321 206 103.925 206C46.5286 206 0 159.885 0 103C0 46.1147 46.5286 0 103.925 0C161.321 0 207.849 46.1147 207.849 103Z" fill="#D9D9D9"/>
+							<path d="M195 103C195 152.706 154.258 193 104 193C53.7421 193 13 152.706 13 103C13 53.2944 53.7421 13 104 13C154.258 13 195 53.2944 195 103Z" fill="white"/>
+						</svg>
+					</div>
+				</div>
+<!-- 자기소개 버튼 -->				
+				<div id="group-input-self-description">
+					<input id="input-self-description" type="text" placeholder="✋자기소개 하기">
+					<button id="btn-self-description" type="button">
+						<div class="icon-plus">
+							<svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g filter="url(#filter0_d_229_16)">
+									<path d="M15.4667 3.73334C15.4667 1.67147 17.1381 0 19.2 0C21.2619 0 22.9333 1.67147 22.9333 3.73334V34.6667C22.9333 36.7286 21.2619 38.4001 19.2 38.4001C17.1381 38.4001 15.4667 36.7286 15.4667 34.6667V3.73334Z" fill="#ED5178"/>
+									<path d="M34.6667 15.4667C36.7285 15.4667 38.4 17.1382 38.4 19.2C38.4 21.2619 36.7285 22.9334 34.6667 22.9334L3.73333 22.9334C1.67147 22.9334 -9.01269e-08 21.2619 0 19.2C9.01269e-08 17.1382 1.67147 15.4667 3.73333 15.4667L19.2 15.4667H34.6667Z" fill="#ED5178"/>
+								</g>
+								<defs>
+									<filter id="filter0_d_229_16" x="0" y="0" width="41.3999" height="41.4001" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+										<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+										<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+										<feOffset dx="3" dy="3"/>
+										<feComposite in2="hardAlpha" operator="out"/>
+										<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.85098 0 0 0 0 1 0 0 0 1 0"/>
+										<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_229_16"/>
+										<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_229_16" result="shape"/>
+									</filter>
+								</defs>
+							</svg>
+						</div>
+					</button>
+				</div>
+<!-- 반려견 추가 버튼 ; 설명 hover 넣어야-->				
+				<button id="btn-pet-list-view" >
+					<svg width="61" height="61" viewBox="0 0 61 61" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="30.5" cy="30.5" r="30.5" fill="#ED5178"/>
+						<path d="M14.1469 15.1013C10.7841 16.4865 10.3638 30.3384 21.2927 30.3384C23.1141 30.3384 26.3367 28.7685 24.6553 22.489C22.5536 14.6395 17.5096 13.7161 14.1469 15.1013Z" fill="white"/>
+						<path d="M32.5649 10.2617C28.9082 10.2177 22.5857 22.2799 32.5397 26.3946C34.1987 27.0804 37.8069 26.9087 38.9682 20.7357C40.4197 13.0195 36.2216 10.3057 32.5649 10.2617Z" fill="white"/>
+						<path d="M5.68995 32.6983C3.95582 34.986 9.68145 43.2493 17.2731 38.4397C18.5384 37.6381 20.0949 35.3043 16.199 32.3821C11.329 28.7293 7.42408 30.4106 5.68995 32.6983Z" fill="white"/>
+						<path d="M48.3571 19.005C46.944 16.6177 38.9011 17.9361 40.9047 26.2267C41.2386 27.6085 42.7322 29.8676 46.0351 27.8499C50.1638 25.3278 49.7701 21.3922 48.3571 19.005Z" fill="white"/>
+						<path d="M36.7697 47.7498C28.6722 48.9478 20.2058 47.1681 19.1383 41.6296C17.3918 35.2276 27.3801 31.2084 32.1416 30.7844C36.9031 30.3604 46.601 30.1525 47.4939 35.0508C48.3867 39.9491 44.8672 46.5518 36.7697 47.7498Z" fill="white"/>
+					</svg>
+					<span class="h1 ml-3">🐶</span>
+					<div class="icon-plus ml-4">
+						<svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g filter="url(#filter0_d_229_16)">
+								<path d="M15.4667 3.73334C15.4667 1.67147 17.1381 0 19.2 0C21.2619 0 22.9333 1.67147 22.9333 3.73334V34.6667C22.9333 36.7286 21.2619 38.4001 19.2 38.4001C17.1381 38.4001 15.4667 36.7286 15.4667 34.6667V3.73334Z" fill="#ED5178"/>
+								<path d="M34.6667 15.4667C36.7285 15.4667 38.4 17.1382 38.4 19.2C38.4 21.2619 36.7285 22.9334 34.6667 22.9334L3.73333 22.9334C1.67147 22.9334 -9.01269e-08 21.2619 0 19.2C9.01269e-08 17.1382 1.67147 15.4667 3.73333 15.4667L19.2 15.4667H34.6667Z" fill="#ED5178"/>
+							</g>
+							<defs>
+								<filter id="filter0_d_229_16" x="0" y="0" width="41.3999" height="41.4001" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+									<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+									<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+									<feOffset dx="3" dy="3"/>
+									<feComposite in2="hardAlpha" operator="out"/>
+									<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0.85098 0 0 0 0 1 0 0 0 1 0"/>
+									<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_229_16"/>
+									<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_229_16" result="shape"/>
+								</filter>
+							</defs>
+						</svg>
+					</div>
+				</button>
+<!-- 장바구니 버튼 -->
+				<button id="btn-shopping-cart-view">
+					<svg width="51" height="38" viewBox="0 0 51 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M47.6246 16.6827C49.2719 17.4537 51.5782 20.0863 47.6246 24.4481M47.6246 16.6827L39.1488 24.4481M47.6246 16.6827L42.2145 16.6827M47.6246 24.4481H39.1488M47.6246 24.4481L42.1584 30.4787M25.9844 36.5093L32.5666 30.4787M25.9844 36.5093H36.6922L42.1584 30.4787M25.9844 36.5093V30.4787M25.9844 36.5093L19.1828 30.4787M25.9844 36.5093H14.9198L9.27136 30.4787M32.5666 30.4787L39.1488 24.4481M32.5666 30.4787H25.9844M32.5666 30.4787H42.1584M39.1488 24.4481H30.7142M25.9844 24.4481V16.6827M25.9844 24.4481H30.7142M25.9844 24.4481V30.4787M25.9844 24.4481H21.097M25.9844 16.6827H36.8045M25.9844 16.6827H14.8037M30.7142 24.4481L25.9844 30.4787M30.7142 24.4481L36.8045 16.6827M25.9844 30.4787H19.1828M25.9844 30.4787L21.097 24.4481M36.8045 16.6827L42.2145 16.6827M3.62296 16.6827C1.9207 17.4537 -0.462461 20.0863 3.62296 24.4481M3.62296 16.6827L12.3812 24.4481M3.62296 16.6827H14.8037M3.62296 24.4481H12.3812M3.62296 24.4481L9.27136 30.4787M19.1828 30.4787L12.3812 24.4481M19.1828 30.4787H9.27136M12.3812 24.4481H21.097M21.097 24.4481L14.8037 16.6827M9.21333 16.6827C9.21333 4.60466 25.4556 4.78675 25.4556 4.78675C25.4556 4.78675 42.2145 4.60467 42.2145 16.6827M6.50831 16.6827C6.50831 5.77792 16.0139 1.92116 25.4556 1.93066C34.9228 1.9402 44.3907 4.72274 44.3907 16.8008" stroke="#FF6868" stroke-width="2"/>
+					</svg>
+					<span class="ml-1 mb-0">장바구니</span>
+				</button>
+<!-- 배송조회 버튼 -->
+				<button id="btn-delivery-view">
+					<svg width="49" height="36" viewBox="0 0 49 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path fill-rule="evenodd" clip-rule="evenodd" d="M15.6035 0H17.1035H46.9619H48.4619V1.5V27.6522V29.1522H46.9619H42.2942C42.2644 30.2377 42.0265 31.4578 41.4074 32.5757C40.3367 34.5087 38.2744 35.8669 35.0187 35.8669C31.763 35.8669 29.7008 34.5087 28.6301 32.5757C28.0109 31.4578 27.7731 30.2377 27.7432 29.1522H21.8747C21.8448 30.2377 21.607 31.4578 20.9878 32.5757C19.9171 34.5087 17.8549 35.8669 14.5992 35.8669C11.3434 35.8669 9.28121 34.5087 8.21053 32.5757C7.59136 31.4578 7.35352 30.2377 7.32365 29.1522H1.5H0V27.6522C0 20.9316 0.917021 15.8877 2.09728 12.2867C3.25968 8.74023 4.72046 6.4674 5.92034 5.44392L6.34095 5.08514H6.89379H15.6035V1.5V0ZM29.3814 26.1522C29.3623 26.1518 29.3433 26.1518 29.3243 26.1522H20.2936C20.2746 26.1518 20.2556 26.1518 20.2365 26.1522H18.6035V6.58514V3H45.4619V26.1522H40.7132C40.6942 26.1518 40.6752 26.1518 40.6561 26.1522H29.3814ZM30.7446 29.1522C30.7732 29.8152 30.922 30.5219 31.2545 31.1221C31.7334 31.9869 32.7171 32.8669 35.0187 32.8669C37.3204 32.8669 38.304 31.9869 38.783 31.1221C39.1155 30.5219 39.2642 29.8152 39.2929 29.1522H30.7446ZM18.3634 31.1221C18.6959 30.5219 18.8447 29.8152 18.8733 29.1522H17.1035H10.325C10.3536 29.8152 10.5024 30.5219 10.8349 31.1221C11.3138 31.9869 12.2975 32.8669 14.5992 32.8669C16.9008 32.8669 17.8845 31.9869 18.3634 31.1221ZM15.6035 26.1522H8.9618C8.94271 26.1518 8.92366 26.1518 8.90468 26.1522H3.01622C3.14064 20.4612 3.96539 16.2192 4.94806 13.2211C5.85045 10.4679 6.85735 8.84645 7.51479 8.08514H15.6035V26.1522Z" fill="#51C3ED"/>
+					</svg>
+					<span class="ml-1 mb-0">배송조회</span>
+				</button>
+<!-- 주문내역조회 -->
+				<button id="btn-invoice-list-view">
+					<svg width="38" height="32" viewBox="0 0 38 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M2 12.5L12.5 2H36M2 12.5H25.5M2 12.5V30.5H25.5M25.5 12.5L36 2M25.5 12.5V30.5M36 2V20L25.5 30.5" stroke="#FF8661" stroke-width="3"/>
+					</svg>
+					<span class="mb-0">주문내역조회</span>
+				</button>
+<!-- 개인정보 수정 -->
+				<button id="btn-user-info-view">
+					<span class="mb-0">개인정보 수정</span>
+				</button>														
+<!-- 개인정보 수정 -->
+				<button id="btn-log-out">
+					<span class="mb-0">LOGOUT</span>
+				</button>														
 			</div>
 		</aside>
 		
