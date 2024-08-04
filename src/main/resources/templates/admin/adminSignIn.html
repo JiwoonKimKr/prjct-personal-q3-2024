@@ -97,6 +97,8 @@
 					$.post(url, params)
 					.done(function(data){
 						if(data.code == 200){
+							$("#loginId-sign-in").val('');
+							$("#password-sign-in").val('');
 							location.href= "/admin/admin-main-view";
 						} else {
 							alert(data.error_message);

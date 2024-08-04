@@ -3,13 +3,10 @@ package com.givemetreat.admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class AdminController {
-
-	@GetMapping("/admin")
-	public String adminView() {
-		return "redirect:http://localhost/admin/sign-in-view";
-	}
 	
 	@GetMapping("/admin/sign-in-view")
 	public String AdminSignInView() {
@@ -19,5 +16,11 @@ public class AdminController {
 	@GetMapping("/admin/admin-main-view")
 	public String mainView() {
 		return "admin/adminMain"; 
+	}
+	
+	@GetMapping("/admin/sign-out")
+	public String signOut(HttpSession session) {
+		session.removeAttribute("authorizationCurrent");
+		return "redirect:/admin/sign-in-view";
 	}
 }

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 	<header>
 		<div th:fragment="headerFragment">
+			<div class="d-flex justify-content-between">
 	<!-- 메인 로고; 간식줘집사 관리자 페이지: 시작 -->	
 			<a class="main-title-admin" href="/admin/admin-main-view">
 				<div class="svg-angry-puppy col-1">
@@ -22,7 +23,12 @@
 				</div>
 				<div class="text-main-title col-11 w-100 my-auto ">간식줘집사 ADMIN</div>
 			</a>
-	<!-- 메인 로고; 간식줘집사 관리자 페이지: 끝 -->	
+	<!-- 메인 로고; 간식줘집사 관리자 페이지: 끝 -->
+			
+			<a class="btn btn-danger mt-5" href="/admin/sign-out">
+				로그아웃
+			</a>
+			</div>	
 			<div class="nav-menu-admin-main mt-5">
 	 			<ul class="nav">
 				  	<li class="nav-item d-flex flex-wrap">
@@ -53,6 +59,8 @@
 				  	</li>
 				</ul>
 			</div>
+			
+
 		</div>
 	</header>
 		

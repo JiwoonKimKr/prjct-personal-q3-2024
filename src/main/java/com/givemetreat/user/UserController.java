@@ -2,6 +2,9 @@ package com.givemetreat.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -27,5 +30,14 @@ public class UserController {
 				+ "response_type=code"
 				+ "&client_id=aade720b5d42c7f112e4f9be91c63a27"
 				+ "&redirect_uri=http://localhost/OAuth/kakao-sign-up";
+	}
+	
+	@RequestMapping("/user/sign-out")
+	public String signOut(HttpSession session) {
+		session.removeAttribute("loginId");
+		session.removeAttribute("userId");
+		session.removeAttribute("userName");
+		
+		return "redirect:/user/sign-in-view";
 	}
 }
