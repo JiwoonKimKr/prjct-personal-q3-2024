@@ -97,25 +97,36 @@
 					</svg>
 				</button>
 			</div>
+<!-- 카드 리스트 끝 -->			
 		</article>
 	</section>
 
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(){
+    			let tooltipClosed = false;
  
     			$(".pet-image-card").on('mouseenter', function(){
+    				if(tooltipClosed){
+    					return;
+    				}
+    				
     				let tooltip = $("#tooltip-btn-click-add-pet");
     				tooltip.css("visibility", "visible");
     				
     				let offset = $(this).offset();
     				tooltip.offset({top: offset.top , left: offset.left + 165});
-    			})
+    			}) // petImageCard onMouseEnter
     			
     			$(".btn-close-message").on('click', function(){
     				$("#tooltip-btn-click-add-pet").css("visibility", "hidden");
+    				tooltipClosed = true;
     				
     			}) // btn-close-message on click
+    			
+    			$(".pet-image-card").on('click', function(){
+    				location.href = "/pet/register-pet-view";
+    			})
 
     		})//document ready
     	</script>

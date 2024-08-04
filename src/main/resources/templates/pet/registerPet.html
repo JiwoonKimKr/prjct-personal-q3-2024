@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/defaultLayout}">
+	<head>
+		<title>반려견 리스트</title>
+	</head>
+	<section layout:fragment="contents" class="contents">
+		<article class="group-register-pet">
+			<div class="title-article-list">
+				<span>반려견 추가 페이지</span>
+			</div>
+			<div class="groups-form-register-Pet mx-auto">
+				<div class="groups-form-upper">
+					<div class="group-btn-pet-image-upload">
+						<button class="btn-pet-image-upload">
+							<div class="icon-dog-footprint">
+								<svg width="74" height="67" viewBox="0 0 74 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M16.3832 10.2394C11.1535 12.3936 10.4998 33.9362 27.4964 33.9362C30.3291 33.9362 35.3408 31.4947 32.726 21.7287C29.4574 9.52129 21.613 8.08512 16.3832 10.2394Z" fill="white"/>
+									<path d="M45.0271 2.7132C39.3402 2.64475 29.5075 21.4039 44.9879 27.8031C47.5679 28.8696 53.1795 28.6025 54.9854 19.0023C57.2429 7.00208 50.714 2.78165 45.0271 2.7132Z" fill="white"/>
+									<path d="M3.23124 37.6067C0.534325 41.1646 9.4388 54.0156 21.2453 46.5357C23.213 45.289 25.6337 41.6596 19.5748 37.115C12.0011 31.4342 5.92815 34.0489 3.23124 37.6067Z" fill="white"/>
+									<path d="M69.587 16.3104C67.3894 12.5977 54.8812 14.648 57.9971 27.5416C58.5164 29.6905 60.8392 33.2039 65.9759 30.0659C72.3967 26.1436 71.7846 20.023 69.587 16.3104Z" fill="white"/>
+									<path d="M51.5669 61.0148C38.9737 62.8779 25.8067 60.1102 24.1466 51.4967C21.4305 41.5403 36.9643 35.2896 44.3693 34.6302C51.7743 33.9709 66.8565 33.6476 68.2451 41.2654C69.6337 48.8832 64.1601 59.1517 51.5669 61.0148Z" fill="white"/>
+								</svg>
+							</div>
+							<div class="mt-3">
+								<span class="text-image-upload">
+									IMAGE<br>
+									UPLOAD
+								</span>
+							</div>
+						</button>
+					</div>
+					<div class="group-btns-submit mr-5 mt-5">
+						<button class="btn-cancel-register">
+							취소하기
+						</button>
+						<button class="btn-submit ml-2">
+							제출하기
+						</button>
+					</div>
+				</div>
+<!-- 이름 입력 -->
+				<div class="group-input-skyblue">
+					<div class="icon-dog-footprint">
+						<svg width="74" height="67" viewBox="0 0 74 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M16.3832 10.2394C11.1535 12.3936 10.4998 33.9362 27.4964 33.9362C30.3291 33.9362 35.3408 31.4947 32.726 21.7287C29.4574 9.52129 21.613 8.08512 16.3832 10.2394Z" fill="white"/>
+							<path d="M45.0271 2.7132C39.3402 2.64475 29.5075 21.4039 44.9879 27.8031C47.5679 28.8696 53.1795 28.6025 54.9854 19.0023C57.2429 7.00208 50.714 2.78165 45.0271 2.7132Z" fill="white"/>
+							<path d="M3.23124 37.6067C0.534325 41.1646 9.4388 54.0156 21.2453 46.5357C23.213 45.289 25.6337 41.6596 19.5748 37.115C12.0011 31.4342 5.92815 34.0489 3.23124 37.6067Z" fill="white"/>
+							<path d="M69.587 16.3104C67.3894 12.5977 54.8812 14.648 57.9971 27.5416C58.5164 29.6905 60.8392 33.2039 65.9759 30.0659C72.3967 26.1436 71.7846 20.023 69.587 16.3104Z" fill="white"/>
+							<path d="M51.5669 61.0148C38.9737 62.8779 25.8067 60.1102 24.1466 51.4967C21.4305 41.5403 36.9643 35.2896 44.3693 34.6302C51.7743 33.9709 66.8565 33.6476 68.2451 41.2654C69.6337 48.8832 64.1601 59.1517 51.5669 61.0148Z" fill="white"/>
+						</svg>
+					</div>
+					<div class="text-label-input-row">
+						<span>이름</span>
+					</div>		
+					<input id="namePet" type="text" class="input-rounded-white">
+				</div>
+<!-- 연령 입력 -->				
+				<div class="group-input-orange">
+					<div class="icon-dog-footprint">
+						<svg width="74" height="67" viewBox="0 0 74 67" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M16.3832 10.2394C11.1535 12.3936 10.4998 33.9362 27.4964 33.9362C30.3291 33.9362 35.3408 31.4947 32.726 21.7287C29.4574 9.52129 21.613 8.08512 16.3832 10.2394Z" fill="white"/>
+							<path d="M45.0271 2.7132C39.3402 2.64475 29.5075 21.4039 44.9879 27.8031C47.5679 28.8696 53.1795 28.6025 54.9854 19.0023C57.2429 7.00208 50.714 2.78165 45.0271 2.7132Z" fill="white"/>
+							<path d="M3.23124 37.6067C0.534325 41.1646 9.4388 54.0156 21.2453 46.5357C23.213 45.289 25.6337 41.6596 19.5748 37.115C12.0011 31.4342 5.92815 34.0489 3.23124 37.6067Z" fill="white"/>
+							<path d="M69.587 16.3104C67.3894 12.5977 54.8812 14.648 57.9971 27.5416C58.5164 29.6905 60.8392 33.2039 65.9759 30.0659C72.3967 26.1436 71.7846 20.023 69.587 16.3104Z" fill="white"/>
+							<path d="M51.5669 61.0148C38.9737 62.8779 25.8067 60.1102 24.1466 51.4967C21.4305 41.5403 36.9643 35.2896 44.3693 34.6302C51.7743 33.9709 66.8565 33.6476 68.2451 41.2654C69.6337 48.8832 64.1601 59.1517 51.5669 61.0148Z" fill="white"/>
+						</svg>
+					</div>
+					<div class="text-label-input-row">
+						<span>
+							연령
+						</span>
+					</div>		
+					<div class="input-group input-rounded-white">
+						<select class="custom-select input-select-inside w-100 h-100" id="agePet" aria-label="Example select with button addon">
+						    <option selected>--------</option>
+						    <option value="1">생후 6개월 미만</option>
+						    <option value="2">성견</option>
+						    <option value="3">고령견</option>
+						</select>
+					</div>					
+				</div>
+			</div>
+		
+		</article>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script>
+    		$(document).ready(function(){
+ 
+
+
+    		})//document ready
+    	</script>
+	</th:block>
+	
+</html>

@@ -695,3 +695,158 @@ footer a:hover {
 	align-items: center;
 }
 
+/* 반려견 상세 입력 페이지 */
+/* register-pet-view */
+.group-register-pet{
+	/* Rect_Background */
+	width: 1440px;
+	height: 940px;
+	padding-top: 75px;
+	
+	background: #FFE397;
+	border-radius: 100px 430px 0px 0px;
+}
+
+.groups-form-register-Pet{
+	margin-top: 30px;
+
+	width: 1030px;
+	height: 700px;
+}
+
+.groups-form-upper{
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+}
+
+.group-btn-pet-image-upload{
+	/* Square_img 4 uploading_Writing Articles */
+
+	width: 433.72px;
+	height: 433.72px;
+	
+	background: #FFFFFF;
+	border-radius: 35px;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-pet-image-upload{
+	/* bg_img Upload */
+
+	width: 290.86px;
+	height: 262.17px;
+	
+	background: #51C3ED;
+	box-shadow: 8px 8px 0px #777777;
+	border-radius: 55px;
+	border-color: transparent;
+	
+	display:flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.text-image-upload{
+	/* IMAGE UPLOAD */
+	font-weight: 800;
+	font-size: 32px;
+	line-height: 95%;
+	color: #FFFFFF;
+}
+
+.btn-cancel-register{
+	/* bg-btn Cancel Article */
+	width: 170.89px;
+	height: 90.15px;
+	
+	background: #FF5050;
+	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.25);
+	border-radius: 22px;
+	border-color: transparent;
+
+	/* 취소하기 */
+	font-weight: 800;
+	font-size: 32px;
+	color: #FFFFFF;
+}
+
+.btn-submit{
+	/* bg btn-submit */
+	width: 170.89px;
+	height: 90.15px;
+	
+	background: #51C3ED;
+	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.25);
+	border-radius: 22px;
+	border-color: transparent;
+
+	/* 제출하기 */
+	font-weight: 800;
+	font-size: 32px;
+	color: #FFFFFF;
+}
+
+.group-input-skyblue{
+/* bg_title_Writing Article */
+	width: 1031px;
+	height: 93.4px;
+	margin-bottom: 25px;
+	padding-left: 35px;
+	
+	background: #51C3ED;
+	border-radius: 15px;
+	
+	display:flex;
+	align-items: center;	
+}
+.text-label-input-row{
+/* font_제목_title_Writing Article */
+	width: 305.98px;
+	height: 40.72px;
+	
+	display:flex;
+	justify-content: center;
+}
+.text-label-input-row > span{
+	font-weight: 600;
+	font-size: 32px;
+	color: #FFFFFF;	
+}
+
+.input-rounded-white{
+/* input title_Writing Article */
+
+	width: 580.45px;
+	height: 71.7px;
+	
+	border-radius: 15px;
+	border-color:transparent;	
+
+}
+
+.group-input-orange{
+/* bg_title_Writing Article */
+	width: 1031px;
+	height: 93.4px;
+	margin-bottom: 25px;
+	padding-left: 35px;
+	
+	background: #FF8661;
+	border-radius: 15px;
+	
+	display:flex;
+	align-items: center;	
+}
+
+.input-select-inside{
+	border-color: transparent;
+	border-radius: 15px;
+	border-color:transparent;	
+	
+	font-size: 28px;
+}
