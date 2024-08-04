@@ -4,8 +4,8 @@
 		<div class="d-flex h-100 justify-content-between align-items-center">
 			<div class="title-header">
 				<span>
-<!-- 홈페이지 메인 타이틀 심볼__Start-->					
-					<div id="main-title-header" class="main-title">
+<!-- 홈페이지 메인 타이틀 아이콘_Start-->					
+					<a id="main-title-header" class="main-title" href="/product/product-list-view">
 						<div class="svg-angry-puppy col-1">
 							<svg width="204" height="124" viewBox="0 0 204 124" fill="none"
 								xmlns="http://www.w3.org/2000/svg">
@@ -23,8 +23,8 @@
 								</svg>
 						</div>
 						<div class="text-main-title col-11 w-100 my-auto ">간식줘집사</div>
-					</div>
-<!-- 홈페이지 메인 타이틀 심볼__End-->					
+					</a>
+<!-- 홈페이지 메인 타이틀 아이콘_End-->					
 				</span>
 			</div>
 			<div id="groups-nav-header" class="">
@@ -158,7 +158,16 @@
 				$("#toggle-aside-dropdown").on('click', function(){
 					let asideDisplay = $(".groups-aside-dropdown").css("display");
 					$(".groups-aside-dropdown").css("display", asideDisplay == "none" ? "flex" : "none");
-				})
+				});// toggle-aside-dropdown
+				
+				/*  */
+				
+				/* btn-pet-list-view 클릭 */
+				$("#btn-pet-list-view").on('click', function(){
+					
+					location.href= "/pet/pet-list-view";
+					
+				});// btn-pet-list-view on click
 				
 			})//document ready
 		</script>

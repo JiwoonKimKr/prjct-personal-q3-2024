@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.givemetreat.pet.mapper.PetMapper">
+ 	<select id="selectPetByUserIdAndName" resultType="com.givemetreat.pet.domain.Pet">
+ 		SELECT
+ 			`id`
+			, `userId`
+			, `name`
+			, `age`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`pet`
+		WHERE
+			`userId` = #{userId}
+		AND
+			`name` = #{name}	
+ 		
+ 	</select>
+ 
+ 	<insert id="insertPet" parameterType="map">
+		INSERT INTO `pet`
+		(
+			`userId`
+			, `name`
+			, `age`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES
+		(
+			#{userId}
+			, #{name}
+			, #{age}
+			, #{imagePathProfile}
+			, #{imagePathThumbnail}
+			, NOW()
+			, NOW()
+		)
+ 	</insert>
+ </mapper>

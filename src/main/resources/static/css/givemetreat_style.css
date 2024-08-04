@@ -35,12 +35,14 @@ footer a:hover {
 	background: #FF6868;
 	border-radius: 40px;
 	
-	display: flex;	
+	display: flex;
+	
 }
 #main-title-header{
 	position: relative;
 	left: 65px;
-	top: 25px;	
+	top: 25px;
+	text-decoration: none;	
 }
 
 .svg-angry-puppy {
@@ -412,7 +414,7 @@ footer a:hover {
 
 #group-input-self-description{
 	position: absolute;
-	top: 235px;
+	top: 240px;
 	
 	width: 310px;
 	height: 66px;
@@ -542,7 +544,7 @@ footer a:hover {
 	position: absolute;
 	width: 230px;
 	height: 60px;
-	top: 735px;
+	bottom: 125px;
 	
 	background: #FFFFFF;
 	box-shadow: 5px 5px 0px #00D9FF;
@@ -572,7 +574,7 @@ footer a:hover {
 	width: 100px;
 	height: 35px;
 	
-	Top: 875px;
+	bottom: 20px;
 	right: 20px;
 	
 	
@@ -627,18 +629,69 @@ footer a:hover {
 	
 }
 
+/* 카드 박스 hover tooltip */
+
+#tooltip-btn-click-add-pet{
+	visibility: hidden;
+	position: absolute;
+	z-index: 1;
+}
+
+.groups-message{
+	position: relative;
+}
+
+.icon-footprint-rotated{
+	position: absolute;
+	left: 75px;
+	top: 15px;
+	z-index: 2;
+}
+
+.text-desc-message{
+	position: absolute;
+	top: 85px;
+	left: 120px;
+	width: 300x;
+	height: 70px;
+	z-index: 2;
+}
+
+.text-desc-message>span{
+	font-weight: 800;
+	font-size: 24px;
+	line-height: 35px;
+	
+	color: #FFFFFF;	
+}
+.btn-close-message{
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	z-index: 2;
+	
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.bg-message-blue{
+	position: inherit;
+	z-index: 1;
+}
+
 /* 카드 박스 */
 .pet-image-card{
 	/* Btn-Plus-Pet */
-	/* Square_Thumbnail_Article */
+	position: relative;
 	width: 329.25px;
 	height: 331.41px;
 
-	
 	background: #FFFFFF;
 	border-radius: 35px;
+	border-color:transparent;
 	box-shadow: inset 5px 4px 4px rgba(0, 0, 0, 0.25);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+

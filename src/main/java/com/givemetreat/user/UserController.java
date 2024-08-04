@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 	
 	@GetMapping("/")
-	public String signInView() {
+	public String initialIndexView() {
 		return "user/signIn";
+	}
+	
+	@GetMapping("/user/sign-in-view")
+	public String signInView() {
+		return "redirect:/";
 	}
 
 	@GetMapping("/user/sign-up-view")

@@ -89,10 +89,6 @@ public class UserRestController {
 		UserEntity user = userBO.addUser(loginId, hashedPassword, salt, nickname);
 		
 		if(user != null) {
-			session.setAttribute("userId", user.getId());
-			session.setAttribute("loginId", user.getLoginId());
-			session.setAttribute("nickname", user.getNickname());
-			
 			result.put("code", 200);
 			result.put("result", "success");
 		} else {

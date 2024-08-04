@@ -18,7 +18,7 @@ public class FileManagerService {
 
 	public static final String FILE_UPLOAD_PATH = "C:\\Users\\syjnk\\7_PersonalProject\\prct_personal\\workspace_prjctQ3\\images/";
 	
-	public String uploadFile(MultipartFile file, String loginId) {
+	public static String uploadFile(MultipartFile file, String loginId) {
 		String directoryName = loginId + "_" + System.currentTimeMillis();
 		String filePath = FILE_UPLOAD_PATH + directoryName + "/";
 		
@@ -35,6 +35,8 @@ public class FileManagerService {
 
 			//TODO 
 			//URLDecoder.decode(nameEncoded, "UTF-8")이란 반대 방식도 추후 추가해야!
+			
+			//TODO 화질과 해상도 낮춘 imageThumbnail도 별도로 생성해서 path 반환해야함! 
 			
 			Path path = Paths.get(filePath + nameEncoded);
 			Files.write(path, bytes);
