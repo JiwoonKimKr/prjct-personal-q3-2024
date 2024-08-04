@@ -751,6 +751,10 @@ footer a:hover {
 	align-items: center;
 }
 
+.input-file-upload-image{
+	display: none;
+}
+
 .text-image-upload{
 	/* IMAGE UPLOAD */
 	font-weight: 800;
@@ -825,8 +829,9 @@ footer a:hover {
 	height: 71.7px;
 	
 	border-radius: 15px;
-	border-color:transparent;	
-
+	border-color:transparent;
+	
+	font-size: 28px;
 }
 
 .group-input-orange{

@@ -21,11 +21,11 @@ import lombok.RequiredArgsConstructor;
 public class PetRestController {
 	private final PetBO petBO;
 
-	@PostMapping("/add-pet-info")
+	@PostMapping("/register-pet")
 	public Map<String, Object> addPetInfo(
 			@RequestPart("name") String name
 			, @RequestParam int age //TODO enum 타입으로 변형하는 것을 고려해야
-			, @RequestPart(name = "file", required = false) MultipartFile file
+			, @RequestPart(name = "imageProfile", required = false) MultipartFile file
 			, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
 		

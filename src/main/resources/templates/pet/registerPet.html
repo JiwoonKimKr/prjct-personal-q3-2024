@@ -6,8 +6,8 @@
 		<title>반려견 리스트</title>
 	</head>
 	<section layout:fragment="contents" class="contents">
-		<article class="group-register-pet">
-			<div class="title-article-list">
+		<article class="group-register-pet d-flex flex-column align-items-center">
+			<div class="title-article-list mx-auto">
 				<span>반려견 추가 페이지</span>
 			</div>
 			<div class="groups-form-register-Pet mx-auto">
@@ -30,6 +30,7 @@
 								</span>
 							</div>
 						</button>
+						<input id="imagePet" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
 					</div>
 					<div class="group-btns-submit mr-5 mt-5">
 						<button class="btn-cancel-register">
@@ -87,10 +88,77 @@
 	</section>
 
 	<th:block layout:fragment="script">
-    	<script>
+    	<script th:inline="javascript">
     		$(document).ready(function(){
- 
-
+    			
+    			$(".btn-pet-image-upload").on('click', function(){
+    				$("#imagePet").click();
+    			})// btn-pet-image-upload on click
+    			
+    			$("#imagePet").on('change', function(e){
+    				let file = e.target.files[0];
+    				if(file == null){
+    					$(this).val("");
+    					return;
+    				}
+    				
+    				let fileName = e.target.files[0].name;
+    				console.log(fileName);
+    			})// imagePet on Click
+    			
+    			$(".btn-submit").on('click', function(){
+    				let name = $("#namePet").val().trim();
+    				let age = $("#agePet").val();
+    				let pathFile = $("#imagePet").val();
+    				
+    				console.log(`${name}, ${age}, ${pathFile}`);
+    				
+    				if(!name){
+    					alert("반려견 이름을 기재해 주세요.");
+    					return;
+    				}
+    				if(!age){
+    					alert("반려견 연령을 선택해 주세요.");
+    					return;
+    				}
+    				
+    				let extension = pathFile.split(".").pop().toLowerCase();
+    				if(pathFile != "" && $.inArray(extension, ["jpg", "gif", "png"]) == -1){
+    					alert("이미지 파일만 업로드 가능합니다.");
+    					$("#pathFile").val("");
+    					return;
+    				}
+    				
+    				let formData = new FormData();
+    				
+    				formData.append("name", name);
+    				formData.append("age", age);
+    				formData.append("imageProfile", $("#imagePet")[0].files[0]);
+    				
+    				$.ajax({
+    					type: "POST"
+    					, url: "/pet/register-pet"
+    					, data: formData
+    					, enctype: 'multipart/form-data'
+    					, processData: false
+    					, contentType: false
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("🐶🥰반려견 추가 등록 성공하였습니다.");
+    							location.href= "/pet/pet-list-view";
+    						} else {
+    							alert(data.error_message);
+    						}
+    						
+    					}
+    					, error: function(error){
+    						alert("반려견 등록에 실패하였습니다. 관리자에게 문의하세요.")
+    					}
+    					
+    				})//ajax POST 
+    				
+    			})// btn-submit on click
 
     		})//document ready
     	</script>
