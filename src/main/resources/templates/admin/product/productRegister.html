@@ -44,7 +44,13 @@
 							<span class="h3 text-white col-4">
 								카테고리
 							</span>
-							<input id="categoryProduct" type="text" class="form-control col-8">
+							<div class="input-group p-0 col-8">
+								<select id="categoryProduct" class="custom-select input-select-inside w-100 h-100" aria-label="Example select with button addon">
+								    <option selected>--------</option>
+								    <option value="사료">사료</option>
+								    <option value="간식">간식</option>
+								</select>
+							</div>
 						</div>
 						<!-- price -->
 						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
@@ -58,23 +64,25 @@
 							<span class="h3 text-white col-4">
 								섭취 적정 연령
 							</span>
-							<input id="agePetProperProduct" type="text" class="form-control col-8">
-						</div>
-						<!-- imgProfile -->
-						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
-							<span class="h3 text-white col-4">
-								제품명
-							</span>
-							<input id="imgProfileProduct" type="text" class="form-control col-8">
+							<div class="input-group p-0 col-8">
+								<select class="custom-select input-select-inside w-100 h-100" id="agePetProperProduct" aria-label="Example select with button addon">
+								    <option selected>--------</option>
+								    <option value="1">생후 6개월 미만</option>
+								    <option value="2">성견</option>
+								    <option value="3">고령견</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-				<button class="btn btn-danger btn-cancel-register">
-					취소하기
-				</button>
-				<button class="btn btn-primary btn-submit">
-					제출하기
-				</button>					
+				<div class="d-flex justify-content-end">
+					<button class="btn btn-danger btn-cancel-register mr-5">
+						취소하기
+					</button>
+					<button class="btn btn-primary btn-submit mr-5">
+						제출하기
+					</button>
+				</div>			
 			</article>
 	</section>
 
@@ -96,6 +104,58 @@
     				console.log(fileName);
     			})// imagePet on Click
     			
+    			$(".btn-submit").on('click', function(){
+					let name = $("#nameProduct").val().trim();
+					let category = $("#categoryProduct").val();
+					let price = $("#priceProduct").val().trim();
+					let agePetProper = $("#agePetProperProduct").val();
+					let pathFile = $("#imageProduct").val();
+    				
+					if(!name){
+						alert("제품명을 기재해 주세요.");
+    					return;
+					}
+					if(!category){
+						alert("제품 카데고리를 선택해 주세요.");
+						return;
+					}
+					if(!price){
+						alert("제품 카데고리를 선택해 주세요.");
+						return;
+					}
+					if(!agePetProper){
+						alert("제품 카데고리를 선택해 주세요.");
+						return;
+					}
+
+					let extension = pathFile.split(".").pop().toLowerCase();
+					if(pathFile != "" && $.inArray(extension, ["jpg", "gif", "png"]) == -1){
+    					alert("이미지 파일만 업로드 가능합니다.");
+    					$("#pathFile").val("");
+    					return;
+    				}
+
+					$.ajax({
+						type: "POST"
+    					, url: "/admin/product/register-product"
+    					, data: formData
+    					, enctype: 'multipart/form-data'
+    					, processData: false
+    					, contentType: false
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("🐶🥰반려견 추가 등록 성공하였습니다.");
+    							location.href= "/admin/product/product-list-view";
+    						} else {
+    							alert(data.error_message);
+    						}
+    					}
+    					, error: function(error){
+    						alert("상품 등록에 실패하였습니다. 관리자에게 문의하세요.")
+    					}
+					})
+    			})
     			
     		})//document ready
     	
