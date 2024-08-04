@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry
 		.addInterceptor(permissionInterceptor)
 		.addPathPatterns("/**")
-		.excludePathPatterns("/error", "/css/**", "/img/**", "/user/sign-out");
+		.excludePathPatterns("/error", "/css/**", "/img/**", "/user/sign-out", "/admin", "/admin/sign-in-view", "/admin/sign-in");
 	}
 	
 	@Override

@@ -37,6 +37,14 @@ public class PermissionInterceptor implements HandlerInterceptor {
 			return false;
 		}
 		
+		//관리자 페이지 권한 설정
+		//session: "authorizationCurrent" = "admin"
+		String authorizationCurrent = (String) session.getAttribute("authorizationCurrent");
+		if(uri.startsWith("/admin") && authorizationCurrent.equals("admin") == false) {
+			response.sendRedirect("/admin/sign-in-view");
+			return false;
+		}
+		
 		return true;
 	}
 	
