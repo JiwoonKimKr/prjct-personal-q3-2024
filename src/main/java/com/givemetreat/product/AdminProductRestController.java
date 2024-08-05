@@ -50,7 +50,7 @@ public class AdminProductRestController {
 	
 	
 	//해당 검색 페이지에서 바로 뿌려주는 형식
-	@PostMapping("/product-detail-view")
+	@PostMapping("/product-list-view")
 	public Map<String, Object> productDetailView(
 				@RequestParam(required = false) Integer id 
 				, @RequestParam(required = false) String name 
