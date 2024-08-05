@@ -47,8 +47,8 @@
 							<div class="input-group p-0 col-8">
 								<select id="categoryProduct" class="custom-select input-select-inside w-100 h-100" aria-label="Example select with button addon">
 								    <option selected>--------</option>
-								    <option value="사료">사료</option>
-								    <option value="간식">간식</option>
+								    <option value="kibble">사료</option>
+								    <option value="treat">간식</option>
 								</select>
 							</div>
 						</div>
@@ -154,8 +154,8 @@
     					, error: function(error){
     						alert("상품 등록에 실패하였습니다. 관리자에게 문의하세요.")
     					}
-					})
-    			})
+					})//ajax
+    			}) // btn-submit on click
     			
     		})//document ready
     	
