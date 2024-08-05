@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.givemetreat.product.bo.ProductBO;
+import com.givemetreat.product.bo.ProductAdminBO;
 import com.givemetreat.product.domain.Product;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RestController
 public class AdminProductRestController {
-	private final ProductBO productBO;
+	private final ProductAdminBO productAdminBO;
 	
 	//localhost/admin/product/register-product
 	@PostMapping("/register-product")
@@ -35,7 +35,7 @@ public class AdminProductRestController {
 			){
 		Map<String, Object> result = new HashMap<>();
 		
-		int count = productBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct);
+		int count = productAdminBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct);
 		
 		if(count < 0) {
 			result.put("code", 500);
@@ -71,7 +71,7 @@ public class AdminProductRestController {
 			agePetProper = null;
 		}
 		
-		List<Product> listProducts = productBO.getProduct(id, name, category, price, agePetProper);
+		List<Product> listProducts = productAdminBO.getProduct(id, name, category, price, agePetProper);
 		
 		result.put("code", 200);
 		result.put("result", "success");

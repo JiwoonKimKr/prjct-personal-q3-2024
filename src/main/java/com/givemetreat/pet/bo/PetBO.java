@@ -1,5 +1,7 @@
 package com.givemetreat.pet.bo;
 
+import java.util.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,10 +17,15 @@ public class PetBO {
 	private final PetMapper petMapper;
 	
 	public int addPet(int userId, String loginId, String name, String age, MultipartFile file) {
-		String imagePathProfile = FileManagerService.uploadFile(file, loginId);
+		List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
 		
 		//TODO imageThumbnail도 생성해서 DB에 넣을 때 Thumbnail 경로도 추가해야 한다!
-		return petMapper.insertPet(userId, name, age, imagePathProfile, null);
+		return petMapper.insertPet(
+								userId
+								, name
+								, age
+								, imagePathProfile.get(0)
+								, imagePathProfile.get(1));
 	}
 
 	public Pet getPetByUserIdAndName(int userId, String name) {

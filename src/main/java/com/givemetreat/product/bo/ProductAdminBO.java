@@ -13,7 +13,7 @@ import com.givemetreat.product.mapper.ProductMapper;
 
 @RequiredArgsConstructor
 @Service
-public class ProductBO {
+public class ProductAdminBO {
 	private final ProductMapper productMapper;
 
 	public List<Product> getProduct(Integer id
@@ -29,16 +29,18 @@ public class ProductBO {
 							, int price
 							, String agePetProper,
 							MultipartFile imageProduct) {
-		String pathImageProfile = FileManagerService.uploadFile(imageProduct, "productProfile");
-		
-//		String pathImageThumbnailFile = FileManagerService.uploadFile(imageProduct, "productProfile");
+
+		List<String> ListpathsImageProfile = FileManagerService
+												.uploadImageWithThumbnail(
+														imageProduct
+														, "productProfile");
 		
 		return productMapper.insertProduct(name
 										, category
 										, price
 										, agePetProper
-										, pathImageProfile
-										, pathImageProfile);
+										, ListpathsImageProfile.get(0)
+										, ListpathsImageProfile.get(1));
 	}
 
 }

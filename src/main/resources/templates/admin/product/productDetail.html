@@ -12,17 +12,17 @@
 				<th:block th:object="${productCurrent}">
 					<img th:attr="src=${productCurrent.imgProfile}" width="300">
 					<hr>
-					<p th:text="${productCurrent.id}"></p>
+					<p th:text="|제품 고유번호: ${productCurrent.id}|"></p>
 					<hr>
-					<p th:text="${productCurrent.name}"></p>
+					<p th:text="|제품명: ${productCurrent.name}|"></p>
 					<hr>
-					<p th:text="${productCurrent.category}"></p>
+					<p th:text="|제품 카테고리: ${productCurrent.category}|"></p>
 					<hr>
-					<p th:text="${productCurrent.price}"></p>
+					<p th:text="|제품 가격: ${productCurrent.price}|"></p>
 					<hr>
-					<p th:text="${productCurrent.createdAt}"></p>
+					<p th:text="|제품 정보 등록 시간: ${productCurrent.createdAt}|"></p>
 					<hr>
-					<p th:text="${productCurrent.updatedAt}"></p>
+					<p th:text="|제품 정보 수정 시간: ${productCurrent.updatedAt}|"></p>
 					<hr>
 				</th:block>
 			</article>

@@ -35,6 +35,8 @@ dependencies {
 	
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 	
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
+	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
