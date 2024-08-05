@@ -122,14 +122,6 @@
     			$(".pet-image-card").on('click', function(){
     				location.href = "/pet/register-pet-view";
     			})
-    			
-    			/* modal-pet-detail */
-    			$('.pet-image-card-registered').on('show.bs.modal', function(e){
-    				let button = $(e.relatedTarget);
-    				let pet = button.data('pet-current');
-    				console.log(pet);
-    				
-    			})// modal pet on show
 
     		})//document ready
     	</script>

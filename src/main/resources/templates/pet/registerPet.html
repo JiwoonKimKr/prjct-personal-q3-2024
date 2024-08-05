@@ -30,6 +30,7 @@
 								</span>
 							</div>
 						</button>
+						<img id="imagePreview" class="d-none rounded" width="400" height="400">
 						<input id="imagePet" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
 					</div>
 					<div class="group-btns-submit mr-5 mt-5">
@@ -97,15 +98,38 @@
     			
     			$("#imagePet").on('change', function(e){
     				let file = e.target.files[0];
-    				if(file == null){
-    					$(this).val("");
-    					return;
-    				}
+					if(file == null){
+						$(".btn-pet-image-upload").removeClass('d-none');
+						$("#imagePreview").attr('src', '');
+						$(this).val("");
+						return;
+					}
     				
-    				let fileName = e.target.files[0].name;
-    				console.log(fileName);
-    			})// imagePet on Click
-    			
+					let reader = new FileReader();
+					reader.onload = function(event){
+						$("#imagePreview").removeClass('d-none');
+						$("#imagePreview").attr('src', event.target.result);
+					};
+					reader.readAsDataURL(file);
+    				
+					$(".btn-pet-image-upload").addClass('d-none');
+					
+    			})// imagePet on change
+
+    			/*    			
+ 				function readURL(input) {
+					if (input.files && input.files[0]) {
+						var reader = new FileReader();
+						reader.onload = function(e) {
+						document.getElementById('preview').src = e.target.result;
+						};
+						reader.readAsDataURL(input.files[0]);
+					} else {
+						document.getElementById('preview').src = "";
+					}
+				} 
+				*/
+
     			$(".btn-submit").on('click', function(){
     				let name = $("#namePet").val().trim();
     				let age = $("#agePet").val();
@@ -160,6 +184,11 @@
     				
     			})// btn-submit on click
 
+    			$(".btn-cancel-register").on('click',function(){
+    				
+    				location.reload();
+    			})// btn-cancel-register on click
+    			
     		})//document ready
     	</script>
 	</th:block>
