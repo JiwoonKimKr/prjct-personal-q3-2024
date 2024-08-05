@@ -11,6 +11,8 @@
 			, `agePetProper`
 			, `imgProfile`
 			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
 		FROM
 			`product`
 		<where>
@@ -31,4 +33,31 @@
 			</if>
 		</where>	
  	</select>
+ 	
+ 	<insert id="insertProduct" >
+ 		INSERT INTO
+ 			`product`
+		(
+			`name`
+			, `category`
+			, `price`
+			, `agePetProper`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`		
+		)
+		VALUES
+		(
+			#{name}
+			, #{category}
+			, #{price}
+			, #{agePetProper}
+			, #{imgProfile}
+			, #{imgThumbnail}
+			, NOW()
+			, NOW()
+		)
+ 		
+ 	</insert>
  </mapper>

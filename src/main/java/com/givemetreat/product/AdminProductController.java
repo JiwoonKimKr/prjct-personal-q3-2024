@@ -4,15 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.givemetreat.product.bo.ProductBO;
-
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RequestMapping("/admin/product")
 @Controller
 public class AdminProductController {
-	private final ProductBO productBO;
 	
 	@GetMapping("/product-register-view")
 	public String productRegisterView() {

@@ -140,6 +140,9 @@
     			})// #dropDown-for-choosing-field on change
     			
      			$(".btn-search").on('click', function(){
+     				/* 기존 검색값 초기화 */
+     				$("#tableBody").empty();
+     				
     				let id = $("#idProduct").val().trim();
     				let name = $("#nameProduct").val().trim();
 					let category = $("#categoryProduct").val();
@@ -172,7 +175,7 @@
 									, "name": name
 									, "category": category
 									, "price": price
-									, "agepetProper":agePetProper
+									, "agePetProper":agePetProper
 								}
 					let url = "/admin/product/product-detail-view"
 					

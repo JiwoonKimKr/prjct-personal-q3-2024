@@ -3,7 +3,11 @@ package com.givemetreat.product.bo;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.RequiredArgsConstructor;
+
+import com.givemetreat.common.FileManagerService;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.mapper.ProductMapper;
 
@@ -18,6 +22,23 @@ public class ProductBO {
 								, Integer price
 								, String agePetProper) {
 		return productMapper.selectProduct(id, name, category, price, agePetProper);
+	}
+
+	public int registerProduct(String name
+							, String category
+							, int price
+							, String agePetProper,
+							MultipartFile imageProduct) {
+		String pathImageProfile = FileManagerService.uploadFile(imageProduct, "productProfile");
+		
+//		String pathImageThumbnailFile = FileManagerService.uploadFile(imageProduct, "productProfile");
+		
+		return productMapper.insertProduct(name
+										, category
+										, price
+										, agePetProper
+										, pathImageProfile
+										, pathImageProfile);
 	}
 
 }

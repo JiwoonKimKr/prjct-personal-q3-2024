@@ -134,6 +134,14 @@
     					$("#pathFile").val("");
     					return;
     				}
+					
+					let formData = new FormData();
+					
+					formData.append("name", name);
+					formData.append("category", category);
+					formData.append("price", price);
+					formData.append("agePetProper", agePetProper);
+					formData.append("imageProduct", $("#imageProduct")[0].files[0]);
 
 					$.ajax({
 						type: "POST"
@@ -145,8 +153,8 @@
     					
     					, success: function(data){
     						if(data.code == 200){
-    							alert("🐶🥰반려견 추가 등록 성공하였습니다.");
-    							location.href= "/admin/product/product-list-view";
+    							alert("🌞🌞해당 제품 추가 등록 성공하였습니다.");
+    							location.reload();
     						} else {
     							alert(data.error_message);
     						}
