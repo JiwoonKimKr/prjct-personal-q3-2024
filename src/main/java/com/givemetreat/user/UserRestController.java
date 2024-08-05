@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.givemetreat.common.EncryptUtils;
+import com.givemetreat.common.validation.WordingValidation;
 import com.givemetreat.user.bo.UserBO;
 import com.givemetreat.user.domain.UserEntity;
 
@@ -28,7 +29,7 @@ public class UserRestController {
 			, HttpSession session){
 		
 		Map<String, Object> result = new HashMap<>();
-		
+
 		UserEntity user = userBO.getUserByLoginId(loginId);
 		
 		if(user == null) {
@@ -66,6 +67,28 @@ public class UserRestController {
 			, HttpSession session){
 		
 		Map<String, Object> result = new HashMap<>();
+		
+		//서버쪽에서도 거치는 Validation 과정
+		//아이디
+		if(WordingValidation.isEmail(loginId) == false) {
+			result.put("code", 500);
+			result.put("error_message", "올바른 이메일 주소를 입력하여 주십시오.");
+			return result;
+		}
+		//비밀번호
+		if(WordingValidation.hasAlphaLowerUpperNumericSpecialLengthBetween8And16(password) == false
+			|| WordingValidation.hasAlphaLowerUpperNumericSpecialLengthBetween8And16(passwordConfirm) == false
+			) {
+			result.put("code", 500);
+			result.put("error_message", "비밀번호는 8~16자의 영어 대소문자, 숫자, 특수문자로 구성되어야 합니다.");
+			return result;			
+		}
+		if(password.equals(passwordConfirm) == false) {
+			result.put("code", 500);
+			result.put("error_message", "비밀번호가 일치하지 않습니다.");
+			return result;
+		}
+		
 
 		UserEntity userHasExist = userBO.getUserByLoginId(loginId);
 		//로그인 아이디(이메일) 중복 체크
