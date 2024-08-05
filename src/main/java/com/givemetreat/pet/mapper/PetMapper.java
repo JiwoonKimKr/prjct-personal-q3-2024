@@ -14,7 +14,7 @@ public interface PetMapper {
 	int insertPet(
 			@Param("userId") int userId
 			, @Param("name") String name
-			, @Param("age") int age
+			, @Param("age") String age
 			, @Param("imagePathProfile") String imagePathProfile
 			, @Param("imagePathThumbnail") String imagePathThumbnail);
 

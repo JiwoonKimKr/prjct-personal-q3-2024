@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class PetBO {
 	private final PetMapper petMapper;
 	
-	public int addPet(int userId, String loginId, String name, int age, MultipartFile file) {
+	public int addPet(int userId, String loginId, String name, String age, MultipartFile file) {
 		String imagePathProfile = FileManagerService.uploadFile(file, loginId);
 		
 		//TODO imageThumbnail도 생성해서 DB에 넣을 때 Thumbnail 경로도 추가해야 한다!

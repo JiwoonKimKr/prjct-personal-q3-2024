@@ -1,10 +1,10 @@
 package com.givemetreat.pet;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +24,7 @@ public class PetRestController {
 	@PostMapping("/register-pet")
 	public Map<String, Object> addPetInfo(
 			@RequestPart("name") String name
-			, @RequestParam int age //TODO enum 타입으로 변형하는 것을 고려해야
+			, @RequestPart String age //TODO enum 타입으로 변형하는 것을 고려해야
 			, @RequestPart(name = "imageProfile", required = false) MultipartFile file
 			, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
