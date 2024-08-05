@@ -20,7 +20,22 @@
 			`name` = #{name}	
  		
  	</select>
- 
+ 	<select id="selectPetsByUserId" resultType="com.givemetreat.pet.domain.Pet">
+ 		SELECT
+ 			`id`
+			, `userId`
+			, `name`
+			, `age`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`pet`
+		WHERE
+			`userId` = #{userId} 		
+ 	</select>
+ 	
  	<insert id="insertPet" parameterType="map">
 		INSERT INTO `pet`
 		(
@@ -43,4 +58,5 @@
 			, NOW()
 		)
  	</insert>
+ 	
  </mapper>

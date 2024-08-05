@@ -32,5 +32,9 @@ public class PetBO {
 		return petMapper.selectPetByUserIdAndName(userId, name);
 	}
 
+	public List<Pet> getPetsByUserId(int userId) {
+		return petMapper.selectPetsByUserId(userId);
+	}
+
 	
 }

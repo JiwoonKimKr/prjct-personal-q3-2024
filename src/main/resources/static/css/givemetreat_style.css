@@ -695,6 +695,21 @@ footer a:hover {
 	align-items: center;
 }
 
+.pet-image-card-registered{
+	/* Btn-Plus-Pet */
+	position: relative;
+	width: 329.25px;
+	height: 331.41px;
+
+	background: #FFFFFF;
+	border-radius: 35px;
+	border-color:transparent;
+	box-shadow: inset 5px 4px 4px rgba(0, 0, 0, 0.25);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 /* 반려견 상세 입력 페이지 */
 /* register-pet-view */
 .group-register-pet{
