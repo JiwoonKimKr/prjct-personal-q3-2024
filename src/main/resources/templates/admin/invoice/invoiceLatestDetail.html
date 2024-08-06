@@ -9,10 +9,6 @@
     </head>
 	<section layout:fragment="contents" class="contents mt-5">
 			<article class="group-article ">
-				<div>
-					[[${listProducts}]]
-					[[${invoice}]]
-				</div>				
 				<!-- 상품 조회 상세 내역 출력_시작 -->
 				<div class="mt-5">
 					<table class="table-striped table-hover text-center w-100">
@@ -28,41 +24,79 @@
 							</tr>
 						<thead>
 						<tbody id="tableBody">
-							<th:block>
+							<tr>
+								<th>
+									<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
+										주문고유번호
+									</button>
+								</th>
+								<th>
+									<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
+										결제자 로그인아이디
+									</button>
+								</th>
+								<td th:text="${invoice.updatedAt}"></td>
+								<td th:text="${invoice.hasCanceled}"></td>
+								<td th:text="${invoice.statusDelivery}"></td>
+								<td th:text="${invoice.statusDelivery == '배송준비 완료' ? 'O' : 'X'}"></td>
+								<td th:text="${invoice.statusDelivery == '터미널 이동' ? 'O' : 'X'}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- 해당 주문 상세 내역; listProducts -->
+				<div class="mt-5 mx-4">
+					<table class="table-striped table-hover text-center w-100">
+						<thead>
+							<tr>
+								<th>제품 고유번호</th>
+								<th>제품명</th>
+								<th>주문 수량</th>
+								<th>카테고리</th>
+								<th>가격</th>
+								<th>섭취적정연령</th>
+								<th>이미지</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="itemOrdered : ${listProducts}">
+<!-- 
+	private int countOrdered;
+	private int productId;
+	private String productName;
+	private String category;
+	private int price;
+	private String agePetProper;
+	private String imgProfile;
+	private String imgThumbnail;
+ -->							
 								<tr>
-									<th>
-										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
-											주문고유번호
-										</button>
-									</th>
-									<th>
-										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
-											결제자 로그인아이디
-										</button>
-									</th>
-									<td th:text="${invoice.updatedAt}"></td>
-									<td th:text="${invoice.hasCanceled}"></td>
-									<td th:text="${invoice.statusDelivery}"></td>
-									<td th:text="${invoice.statusDelivery == '배송준비 완료' ? 'O' : 'X'}"></td>
-									<td th:text="${invoice.statusDelivery == '터미널 이동' ? 'O' : 'X'}"></td>
+									<th th:text="${itemOrdered.productId}"></th>
+									<th th:text="${itemOrdered.productName}"></th>
+									<th th:text="${itemOrdered.countOrdered}"></th>
+									<th th:text="${itemOrdered.category}"></th>
+									<th th:text="${itemOrdered.price}"></th>
+									<th th:text="${itemOrdered.agePetProper}"></th>
+									<th><img th:src="${itemOrdered.imgThumbnail}" width="50"></th>
 								</tr>
 							</th:block>
 						</tbody>
 					</table>
 				</div>
-				<!-- 해당 주문 상세 내역; listProducts -->
-				
 			</article>
 	</section>
 
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			
+    			
+    			
      			$(".btn-invoice-detail").on('click', function(){
      				let invoiceId = $(this).data('id');
      				let userId = $(this).data('userId');
      				
-     				location.href= "/admin/invoice/invoice-latest-detail?invoiceId=" + invoiceId
+     				location.href= "/admin/invoice/invoice-latest-detail-view?invoiceId=" + invoiceId
      								+ "&userId=" + userId;
      			})
     		})//document ready
