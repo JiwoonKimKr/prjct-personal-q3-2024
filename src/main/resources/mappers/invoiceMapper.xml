@@ -70,6 +70,6 @@
 		</where>
 		ORDER BY `ID`		
 		DESC
-		LIMIT 1000
+		LIMIT 30
  	</select>
  </mapper>

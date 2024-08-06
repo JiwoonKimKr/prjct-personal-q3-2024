@@ -51,7 +51,7 @@ public class AdminInvoiceController {
 	}
 	
 	//전체 주문내역 조회 페이지; JPA가 아닌 MyBatis 방식 차용
-	@GetMapping("/invoice-entire-list-view")
+	@GetMapping("/invoices-entire-view")
 	public String invoiceEntireListView(@RequestParam(required = false) Integer invoiceId //아예 입력이 안 되는 null도 고려해서, Integer
 										, @RequestParam(required = false) Integer userId //아예 입력이 안 되는 null도 고려해서 Integer
 										, @RequestParam(required = false) Integer payment //아예 입력이 안 되는 null도 고려해서 Integer
@@ -87,6 +87,6 @@ public class AdminInvoiceController {
 																			, updatedAt);
 		
 		model.addAttribute("listInvoices", listInvoicesEntire);
-		return "admin/invoice/invoiceEntireList";
+		return "admin/invoice/invoiceEntire";
 	}
 }
