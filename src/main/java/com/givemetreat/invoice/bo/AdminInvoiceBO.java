@@ -76,9 +76,10 @@ public class AdminInvoiceBO {
 			
 			Product product = adminProductBO.getProduct(productId, null, null, null, null).get(0);
 			
-			//이미 존재하는 동일한 제품인 경우 갯수만 하나 더 증가시키도록 코딩해야;
+			//이미 존재하는 동일한 제품인 경우 갯수만 하나만 더 추가시킴
 			if(mapItemsOrdered.containsKey(product)) {
 				mapItemsOrdered.put(product, mapItemsOrdered.get(product) + 1);
+				continue; // 여기서 반복문 안 넘기면 1로 초기화 된다 ㅠㅠ
 			}
 			
 			mapItemsOrdered.put(product, 1);

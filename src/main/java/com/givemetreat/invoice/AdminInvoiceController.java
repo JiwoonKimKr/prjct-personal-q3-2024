@@ -41,18 +41,18 @@ public class AdminInvoiceController {
 										, Model model){
 		log.info("[AdminInvoiceController: invoicelatestDetailView() Requested] invoiceId:{}, userId:{}", invoiceId, userId);
 		
-		List<AdminProductInvoiceVO> listProductVOs = adminInvoiceBO.getProductInvoicesByInvoiceIdAndUserId(invoiceId, userId);
 		AdminInvoiceVO invoice = adminInvoiceBO.getInvoiceByInvoiceIdAndUserId(invoiceId, userId);
+		List<AdminProductInvoiceVO> listProductVOs = adminInvoiceBO.getProductInvoicesByInvoiceIdAndUserId(invoiceId, userId);
 		
-		model.addAttribute("listProducts", listProductVOs);
 		model.addAttribute("invoice", invoice);
+		model.addAttribute("listProducts", listProductVOs);
 		
 		return "admin/invoice/invoiceLatestDetail";
 	}
 	
 	//전체 주문내역 조회 페이지; JPA가 아닌 MyBatis 방식 차용
 	@GetMapping("/invoices-entire-view")
-	public String invoiceEntireListView(@RequestParam(required = false) Integer invoiceId //아예 입력이 안 되는 null도 고려해서, Integer
+	public String invoiceEntireView(@RequestParam(required = false) Integer invoiceId //아예 입력이 안 되는 null도 고려해서, Integer
 										, @RequestParam(required = false) Integer userId //아예 입력이 안 되는 null도 고려해서 Integer
 										, @RequestParam(required = false) Integer payment //아예 입력이 안 되는 null도 고려해서 Integer
 										, @RequestParam(required = false) String paymentType
@@ -89,4 +89,21 @@ public class AdminInvoiceController {
 		model.addAttribute("listInvoices", listInvoicesEntire);
 		return "admin/invoice/invoiceEntire";
 	}
+	
+	// 주문 전체 조회: 상세 내역 페이지
+	@GetMapping("/invoice-entire-detail-view")
+	public String invoiceEntireDetailView(@RequestParam int invoiceId
+										, @RequestParam int userId
+										, Model model){
+		log.info("[AdminInvoiceController: invoiceEntireDetailView() Requested] invoiceId:{}, userId:{}", invoiceId, userId);
+		
+		AdminInvoiceVO invoice = adminInvoiceBO.getInvoiceByInvoiceIdAndUserId(invoiceId, userId);
+		List<AdminProductInvoiceVO> listProductVOs = adminInvoiceBO.getProductInvoicesByInvoiceIdAndUserId(invoiceId, userId);
+		
+		model.addAttribute("invoice", invoice);
+		model.addAttribute("listProducts", listProductVOs);
+		
+		return "admin/invoice/invoiceEntireDetail";
+	}
+	
 }
