@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminDefaultLayout}">
+    <head>
+    	<title>
+    		최근 결제완료 주문 조회
+    	</title>
+    </head>
+	<section layout:fragment="contents" class="contents mt-5">
+			<article class="group-article ">
+				<div>
+					[[${ListInvoicesLatest}]]
+				</div>
+<!-- 
+	id
+	userId
+	payment
+	paymentType
+	company
+	monthlyInstallment
+	hasCanceled
+	buyerName
+	buyerPhoneNumber
+	statusDelivery
+	receiverName
+	receiverPhoneNumber
+	address
+	createdAt
+	updatedAt
+ -->				
+				<!-- 상품 조회 상세 내역 출력_시작 -->
+				<div class="mt-5">
+					<table class="table-striped table-hover text-center w-100">
+						<thead>
+							<tr>
+								<th>주문<br>고유번호</th>
+								<th>유저<br>로그인아이디</th>
+								<th>결제 완료<br>시간</th>
+								<th>주문<br>취소 여부</th>
+								<th>배송 현황</th>
+								<th>배송<br>준비 상태</th>
+								<th>택배 상차<br>완료 여부</th>
+							</tr>
+						<thead>
+						<tbody id="tableBody">
+							<th:block th:each="invoice: ${ListInvoicesLatest}">
+								<tr>
+									<th>
+										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
+											주문고유번호
+										</button>
+									</th>
+									<th>
+										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
+											결제자 로그인아이디
+										</button>
+									</th>
+									<td th:text="${invoice.updatedAt}"></td>
+									<td th:text="${invoice.hasCanceled}"></td>
+									<td th:text="${invoice.statusDelivery}"></td>
+									<td th:text="${invoice.statusDelivery == '배송준비 완료' ? 'O' : 'X'}"></td>
+									<td th:text="${invoice.statusDelivery == '터미널 이동' ? 'O' : 'X'}"></td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+				
+			</article>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script th:inline="javascript">
+    		$(document).ready(function(){
+     			$(".btn-invoice-detail").on('click', function(){
+     				let invoiceId = $(this).data('id');
+     				let userId = $(this).data('userId');
+     				
+     				$.ajax({
+     					
+     					
+     				})//ajax
+     			})
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>

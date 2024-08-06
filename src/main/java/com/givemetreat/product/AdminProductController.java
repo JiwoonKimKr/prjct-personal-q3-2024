@@ -37,4 +37,5 @@ public class AdminProductController {
 		model.addAttribute("productCurrent", productCurrent);
 		return "admin/product/productDetail";
 	}
+	
 }

@@ -30,13 +30,14 @@ public class UserBO {
 		return userRepository.findUserByLoginId(loginId);
 	}
 
+	@Transactional
 	public UserEntity getUserByLoginIdAndPassword(String loginId, String hashedPassword) {
 		return userRepository.findUserByLoginIdAndPassword(loginId, hashedPassword);
 	}
 
-	public UserEntity addUserByEmail(String email, String accesstoken) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public UserEntity getUserById(int userId) {
+		return userRepository.findById(userId).orElse(null);
 	}
 
 }
