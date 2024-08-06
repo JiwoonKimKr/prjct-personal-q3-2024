@@ -1,12 +1,15 @@
 package com.givemetreat.invoice.bo;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.givemetreat.invoice.domain.AdminInvoiceVO;
+import com.givemetreat.invoice.domain.Invoice;
 import com.givemetreat.invoice.domain.InvoiceEntity;
+import com.givemetreat.invoice.mapper.InvoiceMapper;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.Product;
@@ -23,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AdminInvoiceBO {
 	private final InvoiceRepository invoiceRepository;
+	private final InvoiceMapper invoiceMapper;
 	
 	private final UserBO userBO;
 	private final AdminProductInvoiceBO adminProductInvoiceBO;
@@ -89,6 +93,54 @@ public class AdminInvoiceBO {
 			Product itemCur = iter.next();
 			
 			listVOs.add(new AdminProductInvoiceVO(itemCur, mapItemsOrdered.get(itemCur)));
+		}
+		
+		return listVOs;
+	}
+
+	//★★★★★ 필드 하나만 선택해서 조회하도록 코딩해야;
+	public List<AdminInvoiceVO> getInvoices(Integer invoiceId
+										, Integer userId
+										, Integer payment
+										, String paymentType
+										, String company
+										, String monthlyInstallment
+										, Integer hasCanceled
+										, String buyerName
+										, String buyerPhoneNumber
+										, String statusDelivery
+										, String receiverName
+										, String receiverPhoneNumber
+										, String address
+										, LocalDateTime createdAt
+										, LocalDateTime updatedAt) {
+		List<Invoice> listInvoices = invoiceMapper.selectInvoices( invoiceId
+											, userId
+											, payment
+											, paymentType
+											, company
+											, monthlyInstallment
+											, hasCanceled
+											, buyerName
+											, buyerPhoneNumber
+											, statusDelivery
+											, receiverName
+											, receiverPhoneNumber
+											, address
+											, createdAt
+											, updatedAt);
+		
+		List<AdminInvoiceVO> listVOs = new ArrayList<>();
+		for(Invoice invoice: listInvoices) {
+			AdminInvoiceVO vo = new AdminInvoiceVO(invoice);
+			
+			Integer userIdCur = userId;
+			//사용자 loginId 찾아서 넣기
+			if(userIdCur == null) {
+				userIdCur = invoice.getUserId();
+			}
+			vo.setLoginId(userBO.getUserById(userIdCur).getLoginId());
+			listVOs.add(vo);
 		}
 		
 		return listVOs;

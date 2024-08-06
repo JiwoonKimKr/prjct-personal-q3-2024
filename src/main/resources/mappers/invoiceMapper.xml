@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.givemetreat.invoice.mapper.InvoiceMapper">
+ 	<select id="selectInvoices" parameterType="map" resultType="com.givemetreat.invoice.domain.Invoice">
+ 		SELECT
+			 `id`
+			, `userId`
+			, `payment`
+			, `paymentType`
+			, `company`
+			, `monthlyInstallment`
+			, `hasCanceled`
+			, `buyerName`
+			, `buyerPhoneNumber`
+			, `statusDelivery`
+			, `receiverName`
+			, `receiverPhoneNumber`
+			, `address`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`invoice`
+		<where>
+			<if test="id != null">
+				`id` = #{id}
+			</if>		
+			<if test="userId != null">
+				`userId` = #{userId}
+			</if>		
+			<if test="payment != null">
+				`payment` = #{payment}
+			</if>		
+			<if test="paymentType != null">
+				`payment` like LOWER(concat('%',#{paymentType},'%'))
+			</if>		
+			<if test="company != null">
+				`company` like LOWER(concat('%',#{company},'%'))
+			</if>		
+			<if test="monthlyInstallment != null">
+				`monthlyInstallment` like LOWER(concat('%',#{monthlyInstallment},'%'))
+			</if>		
+			<if test="hasCanceled != null">
+				`hasCanceled` = #{hasCanceled}
+			</if>		
+			<if test="buyerName != null">
+				`buyerName` like LOWER(concat('%',#{buyerName},'%'))
+			</if>		
+			<if test="buyerPhoneNumber != null">
+				`buyerPhoneNumber` like concat('%',#{buyerPhoneNumber},'%')
+			</if>		
+			<if test="statusDelivery != null">
+				`statusDelivery` = #{statusDelivery}
+			</if>		
+			<if test="receiverName != null">
+				`receiverName` like LOWER(concat('%',#{receiverName},'%'))
+			</if>		
+			<if test="receiverPhoneNumber != null">
+				`receiverPhoneNumber` like concat('%',#{receiverPhoneNumber},'%')
+			</if>		
+			<if test="address != null">
+				`address` like LOWER(concat('%',#{address},'%'))
+			</if>
+			<if test="createdAt != null">
+				`createdAt` = #{createdAt}
+			</if>		
+			<if test="updatedAt != null">
+				`updatedAt` = #{updatedAt}
+			</if>		
+		</where>
+		ORDER BY `ID`		
+		DESC
+		LIMIT 1000
+ 	</select>
+ </mapper>
