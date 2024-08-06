@@ -10,25 +10,9 @@
 	<section layout:fragment="contents" class="contents mt-5">
 			<article class="group-article ">
 				<div>
-					[[${ListInvoicesLatest}]]
-				</div>
-<!-- 
-	id
-	userId
-	payment
-	paymentType
-	company
-	monthlyInstallment
-	hasCanceled
-	buyerName
-	buyerPhoneNumber
-	statusDelivery
-	receiverName
-	receiverPhoneNumber
-	address
-	createdAt
-	updatedAt
- -->				
+					[[${listProducts}]]
+					[[${invoice}]]
+				</div>				
 				<!-- 상품 조회 상세 내역 출력_시작 -->
 				<div class="mt-5">
 					<table class="table-striped table-hover text-center w-100">
@@ -44,7 +28,7 @@
 							</tr>
 						<thead>
 						<tbody id="tableBody">
-							<th:block th:each="invoice: ${ListInvoicesLatest}">
+							<th:block>
 								<tr>
 									<th>
 										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
@@ -66,6 +50,7 @@
 						</tbody>
 					</table>
 				</div>
+				<!-- 해당 주문 상세 내역; listProducts -->
 				
 			</article>
 	</section>
@@ -77,7 +62,7 @@
      				let invoiceId = $(this).data('id');
      				let userId = $(this).data('userId');
      				
-     				location.href= "/admin/invoice/invoice-latest-detail-view?invoiceId=" + invoiceId
+     				location.href= "/admin/invoice/invoice-latest-detail?invoiceId=" + invoiceId
      								+ "&userId=" + userId;
      			})
     		})//document ready

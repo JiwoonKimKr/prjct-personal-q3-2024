@@ -8,6 +8,8 @@ import com.givemetreat.invoice.domain.InvoiceEntity;
 
 public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Integer> {
 
-	List<InvoiceEntity> findUserByHasCanceledAndStatusDeliveryOrderByIdDesc(int i, String string);
+	List<InvoiceEntity> findInvoiceByHasCanceledAndStatusDeliveryOrderByIdDesc(int i, String string);
+
+	InvoiceEntity findInvoiceByIdAndUserId(int invoiceId, int userId);
 
 }

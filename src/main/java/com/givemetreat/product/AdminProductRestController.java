@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.givemetreat.product.bo.ProductAdminBO;
+import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.Product;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RestController
 public class AdminProductRestController {
-	private final ProductAdminBO productAdminBO;
+	private final AdminProductBO adminProductBO;
 	
 	//localhost/admin/product/register-product
 	@PostMapping("/register-product")
@@ -36,7 +36,7 @@ public class AdminProductRestController {
 			){
 		Map<String, Object> result = new HashMap<>();
 		
-		int count = productAdminBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct);
+		int count = adminProductBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct);
 		
 		if(count < 0) {
 			result.put("code", 500);
@@ -77,7 +77,7 @@ public class AdminProductRestController {
 			agePetProper = null;
 		}
 		
-		List<Product> listProducts = productAdminBO.getProduct(id, name, category, price, agePetProper);
+		List<Product> listProducts = adminProductBO.getProduct(id, name, category, price, agePetProper);
 		log.info("[ADMIN-Product: productDetail] Ready to show products list for Searching product detail:{},{},{},{},{}]"
 					, id, name, category, price, agePetProper);
 		
@@ -93,7 +93,7 @@ public class AdminProductRestController {
 				@RequestParam(required = false)int id){
 		Map<String, Object> result = new HashMap<>();
 		 
-		int count = productAdminBO.deleteProduct(id);
+		int count = adminProductBO.deleteProduct(id);
 		
 		if(count < 0) {
 			log.info("[ADMIN-Product: deleteProduct()] failed to delete current product; id:{}", id);

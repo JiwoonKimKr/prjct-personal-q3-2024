@@ -13,7 +13,7 @@ import com.givemetreat.product.mapper.ProductMapper;
 
 @RequiredArgsConstructor
 @Service
-public class ProductAdminBO {
+public class AdminProductBO {
 	private final ProductMapper productMapper;
 
 	public List<Product> getProduct(Integer id

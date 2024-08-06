@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.givemetreat.product.bo.ProductAdminBO;
+import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.Product;
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/admin/product")
 @Controller
 public class AdminProductController {
-	private final ProductAdminBO productAdminBO;
+	private final AdminProductBO adminProductBO;
 	
 	@GetMapping("/product-register-view")
 	public String productRegisterView() {
@@ -32,7 +32,7 @@ public class AdminProductController {
 	@GetMapping("/{idProduct}")
 	public String productDetailView(@PathVariable int idProduct
 									, Model model) {
-		Product productCurrent = productAdminBO.getProduct(idProduct, null, null, null, null).get(0);
+		Product productCurrent = adminProductBO.getProduct(idProduct, null, null, null, null).get(0);
 		
 		model.addAttribute("productCurrent", productCurrent);
 		return "admin/product/productDetail";
