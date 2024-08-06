@@ -43,4 +43,8 @@ public class ProductAdminBO {
 										, ListpathsImageProfile.get(1));
 	}
 
+	public int deleteProduct(int id) {
+		return productMapper.deleteProduct(id);
+	}
+
 }

@@ -60,4 +60,11 @@
 		)
  		
  	</insert>
+ 	
+ 	<delete id="deleteProduct">
+ 		DELETE FROM `product`
+ 		WHERE
+ 			`id` = #{id}
+ 	</delete>
+ 	
  </mapper>

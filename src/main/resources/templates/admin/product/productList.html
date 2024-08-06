@@ -189,7 +189,7 @@
     							for(let i = 0; i< data.listProducts.length; i++){
     								let strUrlCurrent = '<a href="/admin/product/' + data.listProducts[i].id + '">';
     								let tableTd = '<tr>';
-    								tableTd += '<td>' + i + 1 + '</td>';
+    								tableTd += '<td>' + (i + 1) + '</td>';
     								tableTd += '<td>' + strUrlCurrent + data.listProducts[i].id + '</a></td>';
     								tableTd += '<td>' + strUrlCurrent + data.listProducts[i].name + '</td>';
     								tableTd += '<td>' + data.listProducts[i].price + '</td>';

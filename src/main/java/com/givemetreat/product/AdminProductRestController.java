@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,11 +41,15 @@ public class AdminProductRestController {
 		if(count < 0) {
 			result.put("code", 500);
 			result.put("error_message", "해당 상품 등록이 실패하였습니다.");
+			log.info("[ADMIN-Product: register-product] fail to register current product:{},{},{},{},{}"
+					, name, category, price, agePetProper, imageProduct);
 			return result;
 		}
 		
 		result.put("code", 200);
 		result.put("result", "success");
+		log.info("[ADMIN-Product: register-product] success registering current product:{},{},{},{},{}"
+					, name, category, price, agePetProper, imageProduct);
 		return result;
 	}
 	
@@ -59,7 +64,8 @@ public class AdminProductRestController {
 				, @RequestParam(required = false) String agePetProper
 				){
 		Map<String, Object> result = new HashMap<>();
-		log.info("[ADMIN-Product: RequestParam for Searching product detail:{},{},{},{},{}]", id, name, category, price, agePetProper);
+		log.info("[ADMIN-Product: productDetail] RequestParam for Searching product detail:{},{},{},{},{}"
+					, id, name, category, price, agePetProper);
 		
 		if(name != null && name.isBlank()) {
 			name = null;
@@ -72,11 +78,29 @@ public class AdminProductRestController {
 		}
 		
 		List<Product> listProducts = productAdminBO.getProduct(id, name, category, price, agePetProper);
+		log.info("[ADMIN-Product: productDetail] Ready to show products list for Searching product detail:{},{},{},{},{}]"
+					, id, name, category, price, agePetProper);
 		
 		result.put("code", 200);
 		result.put("result", "success");
 		result.put("listProducts", listProducts);
 		
+		return result;
+	}
+	
+	@DeleteMapping("/delete-product")
+	public Map<String, Object> deleteProduct(
+				@RequestParam(required = false)int id){
+		Map<String, Object> result = new HashMap<>();
+		 
+		int count = productAdminBO.deleteProduct(id);
+		
+		if(count < 0) {
+			log.info("[ADMIN-Product: deleteProduct()] failed to delete current product; id:{}", id);
+		}
+		
+		result.put("code", 200);
+		result.put("result", "success");
 		return result;
 	}
 }

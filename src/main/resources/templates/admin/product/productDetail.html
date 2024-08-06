@@ -24,6 +24,9 @@
 					<hr>
 					<p th:text="|제품 정보 수정 시간: ${productCurrent.updatedAt}|"></p>
 					<hr>
+					<a id="btn-delete-product" class="btn btn-danger m-3 p-3" th:data-product-id=${productCurrent.id}>
+						제품 삭제
+					</a>
 				</th:block>
 			</article>
 	</section>
@@ -31,6 +34,33 @@
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(){
+    			
+    			$("#btn-delete-product").on('click', function(e){
+    				//주의 문구 띄우는 것도 좋을 듯
+    				
+    				let productId = $(this).data('product-id');
+    				console.log(productId);
+    				
+    				$.ajax({
+    					type: "DELETE"
+    					, url: "/admin/product/delete-product"
+    					, data: {"id": productId}
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("해당 상품을 삭제하였습니다.");
+    							location.href= "/admin/product/product-list-view";
+    						} else {
+    							alert(data.error_message);
+    						}
+    						
+    					}
+    					, error: function(error){
+    						alert("해당 상품을 삭제하지 못하였습니다.");
+    					}
+    					
+    				})//ajax POST 
+    			})// btn-delete-product on click
     			
     		})//document ready
     	

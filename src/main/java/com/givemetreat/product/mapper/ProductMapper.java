@@ -24,5 +24,7 @@ public interface ProductMapper {
 			, @Param("agePetProper") String agePetProper
 			, @Param("imgProfile") String pathImageProfile
 			, @Param("imgThumbnail") String pathImageThumbnail);
+
+	public int deleteProduct(int id);
 	
 }
