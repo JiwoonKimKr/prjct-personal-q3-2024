@@ -25,4 +25,8 @@ public interface PetMapper {
 	Pet selectPetByIdAndUserId(
 			@Param("id") int id
 			, @Param("userId") int userId);
+
+	int deletePetByIdAndUserId(
+			@Param("id") int id
+			, @Param("userId") int userId);
 }

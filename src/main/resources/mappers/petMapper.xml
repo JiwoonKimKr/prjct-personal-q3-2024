@@ -76,4 +76,11 @@
 		)
  	</insert>
  	
+ 	<delete id="deletePetByIdAndUserId" parameterType="map">
+ 		DELETE FROM `pet`
+ 		WHERE
+ 			`id` = #{id}
+		AND
+			`userId` = #{userId}
+ 	</delete>
  </mapper>

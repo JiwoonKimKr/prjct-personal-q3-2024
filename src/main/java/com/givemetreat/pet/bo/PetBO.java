@@ -41,5 +41,10 @@ public class PetBO {
 		return petMapper.selectPetByIdAndUserId(petId, userId);
 	}
 
+	public int deletePetByUserIdAndPetId(int userId, int petId) {
+		//Mapper로 보낼때는 petId를 Id라고 지칭하여 순서를 바꾸었다!
+		return petMapper.deletePetByIdAndUserId(petId, userId);
+	}
+
 	
 }

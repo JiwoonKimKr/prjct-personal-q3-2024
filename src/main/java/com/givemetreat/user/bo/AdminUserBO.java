@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.givemetreat.pet.bo.PetBO;
+import com.givemetreat.pet.domain.AdminPetVO;
 import com.givemetreat.pet.domain.Pet;
 import com.givemetreat.user.domain.AdminUserVO;
 import com.givemetreat.user.domain.UserEntity;
@@ -127,9 +128,18 @@ public class AdminUserBO {
 	}
 
 	@Transactional
-	public Pet getPetByUserIdAndPetId(int userId, int petId) {
+	public AdminPetVO getPetByUserIdAndPetId(int userId, int petId) {
 
-		return petBO.getPetByUserIdAndPetId(userId, petId);
+		Pet petCurrent = petBO.getPetByUserIdAndPetId(userId, petId);
+		
+		UserEntity user = userRepository.findById(userId).orElse(null);
+		
+		return new AdminPetVO(petCurrent, user.getLoginId(), user.getNickname());
+	}
+
+	@Transactional
+	public int deletePetByUserIdAndPetId(int userId, int petId) {
+		return petBO.deletePetByUserIdAndPetId(userId, petId);
 	}
 
 }
