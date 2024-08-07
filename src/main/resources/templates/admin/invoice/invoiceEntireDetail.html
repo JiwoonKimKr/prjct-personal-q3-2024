@@ -79,8 +79,14 @@
 	private String imgThumbnail;
  -->							
 								<tr>
-									<th th:text="${itemOrdered.productId}"></th>
-									<th th:text="${itemOrdered.productName}"></th>
+									<th>
+										<button class="btn-product-detail btn btn-info" th:data-product-id="${itemOrdered.productId}" th:text="${itemOrdered.productId}">
+										</button>
+									</th>
+									<th>
+										<button class="btn-product-detail btn btn-info" th:data-product-id="${itemOrdered.productId}" th:text="${itemOrdered.productName}">
+										</button>
+									</th>
 									<th th:text="${itemOrdered.countOrdered}"></th>
 									<th th:text="${itemOrdered.category}"></th>
 									<th th:text="${itemOrdered.price}"></th>
@@ -99,17 +105,23 @@
     		$(document).ready(function(){
      			$(".btn-invoice-detail").on('click', function(){
      				let invoiceId = $(this).data('id');
-     				let userId = $(this).data('userId');
+     				let userId = $(this).data('user-id');
      				
      				location.href= "/admin/invoice/invoice-entire-detail-view?invoiceId=" + invoiceId
      								+ "&userId=" + userId;
      			})//btn-invoice-detail on click
      			
      			$(".btn-user-detail").on('click', function(){
-     				let userId = $(this).data('userId');
+     				let userId = $(this).data('user-idd');
      				
      				location.href= "/admin/invoice/invoices-entire-view?userId=" + userId;
      			})//btn-user-detail on click
+     			
+     			$(".btn-product-detail").on('click', function(){
+     				let productId = $(this).data('product-id')
+     				
+     				location.href= "/admin/product/" + productId; //이번에는 와일드카드 문법으로 작성 
+     			})// btn-product-detail on click
      			
     		})//document ready
     	
