@@ -159,27 +159,34 @@
 			</div>
 		</aside>
 		
-		<script type="text/javascript">
+		<script type="text/javascript" th:inline="javascript">
 			$(document).ready(function(){
+				
 				$("#toggle-aside-dropdown").on('click', function(){
 					let asideDisplay = $(".groups-aside-dropdown").css("display");
 					$(".groups-aside-dropdown").css("display", asideDisplay == "none" ? "flex" : "none");
 				});// toggle-aside-dropdown
 				
 				$(".btn-dropdown-aside").on('click', function(){
-					let userId = $(this).data('user-id');
+					let userId = /*[[${session.userId}]]*/ null;
 					console.log(userId);
 					
 					if(!userId){
-						
 						location.href= "/user/sign-in-view";
-						return;
+						return;	
 					}
 					
 				}); //btn-dropdown-aside on click
 				
 				/* btn-pet-list-view 클릭 */
 				$("#btn-pet-list-view").on('click', function(){
+					let userId = /*[[${session.userId}]]*/ null;
+					console.log(userId);
+					
+					if(!userId){
+						location.href= "/user/sign-in-view";
+						return;
+					}
 					
 					location.href= "/pet/pet-list-view";
 					
