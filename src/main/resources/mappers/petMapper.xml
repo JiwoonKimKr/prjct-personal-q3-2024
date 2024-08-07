@@ -35,7 +35,24 @@
 		WHERE
 			`userId` = #{userId} 		
  	</select>
- 	
+ 	<select id="selectPetByIdAndUserId" resultType="com.givemetreat.pet.domain.Pet">
+ 		SELECT
+ 			`id`
+			, `userId`
+			, `name`
+			, `age`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`pet`
+		WHERE
+			`id` = #{id}
+		AND
+			`userId` = #{userId} 		
+ 	</select>
+ 	 	
  	<insert id="insertPet" parameterType="map">
 		INSERT INTO `pet`
 		(

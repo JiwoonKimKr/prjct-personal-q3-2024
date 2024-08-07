@@ -22,7 +22,7 @@ public interface PetMapper {
 			, @Param("imagePathProfile") String imagePathProfile
 			, @Param("imagePathThumbnail") String imagePathThumbnail);
 
-	
-
-
+	Pet selectPetByIdAndUserId(
+			@Param("id") int id
+			, @Param("userId") int userId);
 }

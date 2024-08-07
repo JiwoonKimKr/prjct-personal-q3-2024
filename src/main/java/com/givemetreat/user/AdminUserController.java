@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.givemetreat.pet.domain.Pet;
 import com.givemetreat.user.bo.AdminUserBO;
 import com.givemetreat.user.domain.AdminUserVO;
 
@@ -33,5 +34,16 @@ public class AdminUserController {
 		
 		model.addAttribute("listUsers", listUsers);
 		return "/admin/user/userDetail";
+	}
+	
+	@GetMapping("/user-pet-detail-view")
+	public String userPetDetailView(@RequestParam int userId
+									, @RequestParam int petId
+									, Model model) {
+		
+		Pet pet = adminUserBO.getPetByUserIdAndPetId(userId, petId);
+		
+		model.addAttribute("pet", pet);
+		return "/admin/user/userPetDetail";
 	}
 }

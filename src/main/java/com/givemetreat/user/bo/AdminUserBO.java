@@ -126,4 +126,10 @@ public class AdminUserBO {
 		return listVOs;
 	}
 
+	@Transactional
+	public Pet getPetByUserIdAndPetId(int userId, int petId) {
+
+		return petBO.getPetByUserIdAndPetId(userId, petId);
+	}
+
 }

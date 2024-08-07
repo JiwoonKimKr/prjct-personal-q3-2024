@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminDefaultLayout}">
+    <head>
+    	<title>
+    		반려견 상세 정보
+    	</title>
+    </head>
+	<section layout:fragment="contents" class="contents mt-5">
+			<article class="group-article ">
+				<th:block th:object="${pet}">
+					<img th:src="${pet.imgProfile}" width="300">
+					<hr>
+					<p th:text="|보호자 고휴번호: ${pet.userId}|"></p>
+					<hr>
+					<p th:text="|반려견 고유번호: ${pet.id}|"></p>
+					<hr>
+					<p th:text="|반려견 이름: ${pet.name}|"></p>
+					<hr>
+					<p th:text="|반려견 나이: ${pet.age}|"></p>
+					<hr>
+					<p th:text="|등록 시간: ${pet.createdAt}|"></p>
+					<hr>
+					<p th:text="|수정 시간: ${pet.updatedAt}|"></p>
+					<hr>
+					<a id="btn-delete-product" class="btn btn-danger m-3 p-3" th:data-pet-id=${pet.id} th:data-user-id=${pet.userId}>
+						반려견 등록 삭제
+					</a>
+				</th:block>
+			</article>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script>
+    		$(document).ready(function(){
+    			
+    			$("#btn-delete-product").on('click', function(e){
+    				//주의 문구 띄우는 것도 좋을 듯
+    				
+    				let productId = $(this).data('product-id');
+    				console.log(productId);
+    				
+    				$.ajax({
+    					type: "DELETE"
+    					, url: "/admin/user/delete-pet-current
+    					, data: {"id": productId}
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("해당 상품을 삭제하였습니다.");
+    							location.href= "/admin/product/product-list-view";
+    						} else {
+    							alert(data.error_message);
+    						}
+    						
+    					}
+    					, error: function(error){
+    						alert("해당 상품을 삭제하지 못하였습니다.");
+    					}
+    					
+    				})//ajax POST 
+    			})// btn-delete-product on click
+    			
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>
