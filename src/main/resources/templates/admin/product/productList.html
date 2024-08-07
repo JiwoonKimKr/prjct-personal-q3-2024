@@ -97,13 +97,22 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th>id</th>
-								<th>name</th>
-								<th>category</th>
-								<th>price</th>
-								<th>agePetProper</th>
-								<th>createdAt</th>
-								<th>updatedAt</th>
+								<!-- id -->
+								<th>제품 고유번호</th>
+								<!-- name -->
+								<th>제품명</th>
+								<!-- buffer -->
+								<th>제품 수량</th>
+								<!-- category -->
+								<th>카테고리</th>
+								<!-- price -->
+								<th>제품 가격</th>
+								<!-- agePetProper -->
+								<th>섭취 적정 연령</th>
+								<!-- createdAt -->
+								<th>입력 시간</th>
+								<!-- updatedAt -->
+								<th>수정 시간</th>
 							</tr>
 						<thead>
 						<tbody id="tableBody">
@@ -157,19 +166,6 @@
 					}
     				
 					console.log(`${id}, ${name}, ${category}, ${price}, ${agePetProper}`);
-					
-					// 값 하나만 선택해서 넘겨야 
-					// 하지만 아무 값도 안 넘어가면 아예 서버에 요청 안 하도록
-					if(!id
-						&& !name
-						&& !category
-						&& !price
-						&& !agePetProper){
-						alert("검색항목 값을 입력하여 주세요");
-						location.reload();
-						return;
-					}
-					
 					let params = {
 									"id": id
 									, "name": name
@@ -192,6 +188,7 @@
     								tableTd += '<td>' + (i + 1) + '</td>';
     								tableTd += '<td>' + strUrlCurrent + data.listProducts[i].id + '</a></td>';
     								tableTd += '<td>' + strUrlCurrent + data.listProducts[i].name + '</td>';
+    								tableTd += '<td>' + data.listProducts[i].buffer + '</td>';
     								tableTd += '<td>' + data.listProducts[i].price + '</td>';
     								tableTd += '<td>' + data.listProducts[i].category + '</td>';
     								tableTd += '<td>' + data.listProducts[i].agePetProper + '</td>';

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.product.bo.AdminProductBO;
-import com.givemetreat.product.domain.Product;
+import com.givemetreat.product.domain.AdminProductVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class AdminProductRestController {
 	
 	//해당 검색 페이지에서 바로 뿌려주는 형식
 	@PostMapping("/product-list-view")
-	public Map<String, Object> productDetailView(
+	public Map<String, Object> productListView(
 				@RequestParam(required = false) Integer id 
 				, @RequestParam(required = false) String name 
 				, @RequestParam(required = false) String category
@@ -77,7 +77,7 @@ public class AdminProductRestController {
 			agePetProper = null;
 		}
 		
-		List<Product> listProducts = adminProductBO.getProduct(id, name, category, price, agePetProper);
+		List<AdminProductVO> listProducts = adminProductBO.getProduct(id, name, category, price, agePetProper);
 		log.info("[ADMIN-Product: productDetail] Ready to show products list for Searching product detail:{},{},{},{},{}]"
 					, id, name, category, price, agePetProper);
 		

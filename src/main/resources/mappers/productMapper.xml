@@ -31,7 +31,9 @@
 			<if test="agePetProper != null">
 				`agePetProper` = #{agePetProper}
 			</if>
-		</where>	
+		</where>
+		ORDER BY `id` DESC
+		LIMIT 50;
  	</select>
  	
  	<insert id="insertProduct" >

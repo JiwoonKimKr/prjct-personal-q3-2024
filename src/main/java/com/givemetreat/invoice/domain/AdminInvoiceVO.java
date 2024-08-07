@@ -7,9 +7,7 @@ import com.givemetreat.common.utils.StringTranslator;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@ToString
 @NoArgsConstructor
 @Data
 public class AdminInvoiceVO {
