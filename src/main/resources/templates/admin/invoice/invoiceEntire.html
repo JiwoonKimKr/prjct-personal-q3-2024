@@ -276,7 +276,7 @@ listInvoices
     			
      			$(".btn-invoice-detail").on('click', function(){
      				let invoiceId = $(this).data('id');
-     				let userId = $(this).data('userId');
+     				let userId = $(this).data('user-id');
      				
      				location.href= "/admin/invoice/invoice-entire-detail-view?invoiceId=" + invoiceId + "&userId=" + userId;
      			}) // btn invoice detail on click    			

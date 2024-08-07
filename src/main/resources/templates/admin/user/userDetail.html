@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminDefaultLayout}">
+    <head>
+    	<title>
+    		사용자 상세 정보 조회 페이지
+    	</title>
+    </head>
+	<section layout:fragment="contents" class="contents mt-5">
+			<article class="group-article ">
+	 			<!-- Dropdown: Choosing Field for Searching __Start__ -->
+	 			<div class="bg-info rounded d-flex justify-content-between py-3 px-3">
+					<span class="h3 text-white col-3">
+						검색 항목
+					</span>
+					<div class="input-group p-0 col-5">
+						<select id="dropDown-for-choosing-field" class="custom-select h-100" aria-label="Example select with button addon">
+						    <option selected>--------</option>
+						    <option value="field-userid">사용자 PK</option>
+						    <option value="field-loginId">로그인ID</option>
+						    <option value="field-nickname">닉네임</option>
+						    <option value="field-selfDesc">자기 소개</option>
+						    <option value="field-createdAt">가입 시간</option>
+						    <option value="field-updatedAt">수정 시간</option>
+						</select>
+					</div>
+					<div class="d-flex justify-content-end col-4">
+						<button class="btn-search btn-danger btn-cancel-register w-100 mr-2">
+							SEARCH
+						</button>
+					</div>	
+				</div>
+				<!-- 숨겨진 검색 항목별 카테고리들 -->
+				<div class="groups-category-for-search" >
+					<!-- Dropdown: userid -->
+					<div id="field-userid" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+						<span class="h3 text-white col-4">
+							사용자 PK
+						</span>
+						<input id="userid" type="text" class="input-to-choose form-control col-8">
+					</div>
+					<!-- Dropdown: loginId -->
+					<div id="field-loginId" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+						<span class="h3 text-white col-4">
+							로그인ID
+						</span>
+						<input id="loginId" type="text" class="input-to-choose form-control col-8">
+					</div>
+					<!-- Dropdown: nickname -->
+					<div id="field-nickname" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+						<span class="h3 text-white col-4">
+							닉네임
+						</span>
+						<input id="nickname" type="text" class="input-to-choose form-control col-8">
+					</div>
+					<!-- Dropdown: selfDesc -->
+					<div id="field-selfDesc" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+						<span class="h3 text-white col-4">
+							자기조개
+						</span>
+						<input id="selfDesc" type="text" class="input-to-choose form-control col-8">
+					</div>
+					<!-- Dropdown: createdAt ★★★★★ 달력 라이브러리 써서 시간 범위 선택하도록 보완해야 -->
+					<div id="field-createdAt" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+						<span class="h3 text-white col-4">
+							가입 시간
+						</span>
+						<input id="createdAt" type="text" class="input-to-choose form-control col-8">
+					</div>	
+					<!-- Dropdown: updatedAt ★★★★★ 달력 라이브러리 써서 시간 범위 선택하도록 보완해야 -->
+					<div id="field-updatedAt" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+						<span class="h3 text-white col-4">
+							수정 시간
+						</span>
+						<input id="updatedAt" type="text" class="input-to-choose form-control col-8">
+					</div>	
+				</div>
+				<!-- __end__ Dropdown: Choosing Field for Searching -->
+				
+				<!-- 상품 조회 상세 내역 출력_시작 -->
+				<div class="mt-5">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>사용자 PK</th>
+								<th>로그인ID</th>
+								<th>닉네임</th>
+								<th>프로필이미지</th>
+								<th>자기 소개</th>
+								<th>가입 시간</th>
+								<th>수정 시간</th>
+								<th>등록된 반려견</th>
+							</tr>
+						<thead>
+						<tbody id="tableBody">
+							<th:block th:each="user : ${listUsers}">
+	<!-- 
+		검색 항목들
+			Integer userId
+			String loginId
+			String nickname
+			String selfDesc
+			LocalDateTime createdAt
+			LocalDateTime updatedAt
+
+		`user`
+			userId
+			loginId
+			nickname
+			selfDesc
+			imgProfile
+			(위 프로필 이미지로 대체; imgThumbnail)
+			selfDesc
+			createdAt
+			updatedAt
+			List<Pet> listPets
+	 -->							
+								<tr>
+									<th th:text="${user.userId}"></th>
+									<th th:text="${user.loginId}"></th>
+									<td th:text="${user.nickname}"></td>
+									<td>
+										<img th:if="${user.imgThumbnail}" th:src="${user.imgThumbnail}" width="50" height="50">
+									</td>
+									<td th:text="${user.selfDesc}"></td>
+									<td th:text="${user.createdAt}"></td>
+									<td th:text="${user.updatedAt}"></td>
+									<td class="d-flex justify-content-around">
+										<th:block th:each=" pet: ${user.listPets}">
+											<div class="d-flex flex-column justify-content-center align-items-center">
+												<button class="btn-pet-detail btn btn-warning" th:data-user-id="${user.userId}" th:data-pet-id="${pet.id}" th:text="${pet.name}">
+												</button>
+												<img th:src="${pet.imgThumbnail}" width="50" height="50">
+											</div>
+										</th:block>
+									</td>
+								</tr>
+							</th:block>							
+						</tbody>
+					</table>
+				</div>
+				
+			</article>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script th:inline="javascript">
+    		$(document).ready(function(){
+
+    			// RequestParam 어떤 필드 선택되었는지 동적으로 구성하도록 바꿔야!
+    			$("#dropDown-for-choosing-field").on('change', function(){
+    				/* 검색항목 초기화*/
+	    				/* 기존 입력값 초기화 */
+    				$(".input-to-choose").val('');  				
+    				
+						/* 보여지던 필드 태그 초기화 */
+    				$(".bg-secondary").removeClass("d-flex");
+    				$(".bg-secondary").addClass("d-none");
+    				$("#tableBody").empty();
+    				
+    				let fieldChose = $("#dropDown-for-choosing-field").val();
+    				console.log(fieldChose);
+
+    				let dropdownChose = $('#' + fieldChose);
+    				dropdownChose.removeClass("d-none");
+    				dropdownChose.addClass("d-flex");
+    			})// dropDown-for-choosing-field on change
+    			
+				$(".input-to-choose").on('change keyup', function(e){
+
+					let valueCurrent = $(this).val().trim();
+					let fieldCurrent = $(this).attr('id');
+					console.log(valueCurrent, fieldCurrent);
+
+					$(".btn-search").data('value-current', valueCurrent);
+					$(".btn-search").data('field-current', fieldCurrent);
+
+				})// input-to-choose on change
+
+     			$(".btn-search").on('click', function(){
+     				/* 기존 검색값 초기화 */
+     				$("#tableBody").empty();
+     				
+    				let value = $(this).data('value-current');
+    				let field = $(this).data('field-current');
+    				
+					if(value == '--------'){
+						value = '';
+					}
+					if(field == '--------'){
+						field = '';
+					}
+    				
+					// 값 하나만 선택해서 넘겨야 
+					// 하지만 아무 값도 안 넘어가면 아예 서버에 요청 안 하도록
+					if(!value || !field){
+						alert("검색항목 값을 입력하여 주세요");
+						location.reload();
+						return;
+					}
+					
+					location.href= "/admin/user/user-detail-view?" + field + "=" + value;
+    			}) // btn-search on click
+    			
+     			$(".btn-pet-detail").on('click', function(){
+					let userId = $(this).data('user-id');
+     				let petId = $(this).data('pet-id');
+					console.log(`userId : ${userId}, petId : ${petId}`);
+     				
+     				location.href= "/admin/user/user-pet-detail-view?userId=" + userId + "&petId=" + petId;
+     			}) // btn invoice detail on click    			
+    			
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>

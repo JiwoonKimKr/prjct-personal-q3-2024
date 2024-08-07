@@ -25,6 +25,7 @@ public class AdminUserVO {
 		createdAt
 		updatedAt
 	*/
+	
 	private int userId;
 	private String loginId;
 	private String nickname;
