@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.givemetreat.pet.bo.PetBO;
 import com.givemetreat.pet.domain.Pet;
@@ -30,6 +31,7 @@ public class AdminUserBO {
 	 * @param updatedAt
 	 * @return List <{@link AdminUserVO}>
 	 */
+	@Transactional
 	public List<AdminUserVO> getListUserVOs(Integer userId
 											, String loginId
 											, String nickname
@@ -54,11 +56,13 @@ public class AdminUserBO {
 
 		// loginId
 		if(loginId != null) {
-			//loginId도 값이 하나밖에 못 넘어온다
-			UserEntity user = userRepository.findUserByLoginId(loginId);
-			List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-			AdminUserVO vo = new AdminUserVO(user, listPets);
-			listVOs.add(vo);
+			//loginId라는 키워드로 넘어와서 여러 값의 user가 리스트로 넘어올 수 있다!
+			List<UserEntity> listUsers = userRepository.findByLoginIdStartingWithOrderByIdDesc(loginId);
+			for(UserEntity user: listUsers) {
+				List<Pet> listPets = petBO.getPetsByUserId(user.getId());
+				AdminUserVO vo = new AdminUserVO(user, listPets);
+				listVOs.add(vo);
+			}
 			return listVOs;
 		}
 		

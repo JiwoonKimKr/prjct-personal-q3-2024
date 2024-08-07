@@ -38,7 +38,7 @@
 						<span class="h3 text-white col-4">
 							사용자 PK
 						</span>
-						<input id="userid" type="text" class="input-to-choose form-control col-8">
+						<input id="userId" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: loginId -->
 					<div id="field-loginId" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
@@ -191,6 +191,7 @@
 					if(field == '--------'){
 						field = '';
 					}
+					console.log(`${value}, ${field}`);
     				
 					// 값 하나만 선택해서 넘겨야 
 					// 하지만 아무 값도 안 넘어가면 아예 서버에 요청 안 하도록

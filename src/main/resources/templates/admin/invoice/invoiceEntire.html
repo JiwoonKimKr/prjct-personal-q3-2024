@@ -21,7 +21,7 @@ listInvoices
 					<div class="input-group p-0 col-5">
 						<select id="dropDown-for-choosing-field" class="custom-select h-100" aria-label="Example select with button addon">
 						    <option selected>--------</option>
-						    <option value="field-userId">결제자 ID</option>
+						    <option value="field-userId">결제자 PK</option>
 						    <option value="field-payment">결제금액</option>
 						    <option value="field-paymentType">결제타입</option>
 						    <option value="field-company">결제 회사</option>
@@ -48,7 +48,7 @@ listInvoices
 					<!-- Dropdown: userId -->
 					<div id="field-userId" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
-							결제자Id
+							결제자PK
 						</span>
 						<input id="userId" type="text" class="input-to-choose form-control col-8">
 					</div>
@@ -188,12 +188,12 @@ listInvoices
 							<th:block th:each="invoice: ${listInvoices}">
 								<tr>
 									<th>
-										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
+										<button class="btn-invoice-detail btn btn-warning" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
 											주문고유번호
 										</button>
 									</th>
 									<th>
-										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
+										<button class="btn-invoice-detail btn btn-success" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
 											결제자 로그인아이디
 										</button>
 									</th>

@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
 	UserEntity findUserByLoginIdAndPassword(String loginId, String hashedPassword);
 
+	List<UserEntity> findByLoginIdStartingWithOrderByIdDesc(String loginId);
+	
 	List<UserEntity> findByNicknameStartingWithOrderByIdDesc(String nickname);
 
 	List<UserEntity> findBySelfDescContainingOrderByIdDesc(String nickname);

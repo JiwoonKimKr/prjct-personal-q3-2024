@@ -11,20 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AdminUserVO {
-	/*	
-	 	`user` 테이블 desc;
-	 		해당 사용자 Pet리스트는 View Template Table의 Column 하나에 버튼 형식으로 몰아서 표현하는 방식으로;
-	 	
-		userId
-		loginId
-		password
-		nickname
-		imgProfile
-		imgThumbnail
-		selfDesc
-		createdAt
-		updatedAt
-	*/
 	
 	private int userId;
 	private String loginId;

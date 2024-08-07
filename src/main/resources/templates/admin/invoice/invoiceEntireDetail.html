@@ -30,12 +30,12 @@
 						<tbody id="tableBody">
 							<tr>
 								<th>
-									<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
+									<button class="btn-invoice-detail btn btn-warning" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.id}">
 										주문고유번호
 									</button>
 								</th>
 								<th>
-									<button class="btn-user-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
+									<button class="btn-user-detail btn btn-success" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
 										결제자 로그인아이디
 									</button>
 								</th>
@@ -80,11 +80,11 @@
  -->							
 								<tr>
 									<th>
-										<button class="btn-product-detail btn btn-info" th:data-product-id="${itemOrdered.productId}" th:text="${itemOrdered.productId}">
+										<button class="btn-product-detail btn btn-primary" th:data-product-id="${itemOrdered.productId}" th:text="${itemOrdered.productId}">
 										</button>
 									</th>
 									<th>
-										<button class="btn-product-detail btn btn-info" th:data-product-id="${itemOrdered.productId}" th:text="${itemOrdered.productName}">
+										<button class="btn-product-detail btn btn-primary" th:data-product-id="${itemOrdered.productId}" th:text="${itemOrdered.productName}">
 										</button>
 									</th>
 									<th th:text="${itemOrdered.countOrdered}"></th>
@@ -114,7 +114,8 @@
      			$(".btn-user-detail").on('click', function(){
      				let userId = $(this).data('user-id');
      				
-     				location.href= "/admin/invoice/invoices-entire-view?userId=" + userId;
+     				//사용자 정보조회 페이지로 이동
+     				location.href= "/admin/user/user-detail-view?userId=" + userId;
      			})//btn-user-detail on click
      			
      			$(".btn-product-detail").on('click', function(){

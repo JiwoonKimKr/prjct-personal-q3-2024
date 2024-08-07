@@ -15,7 +15,8 @@
 						<thead>
 							<tr>
 								<th>주문<br>고유번호</th>
-								<th>유저<br>로그인아이디</th>
+								<th>결제자<br>로그인아이디</th>
+								<th>결제자<br>PK</th>
 								<th>결제 완료<br>시간</th>
 								<th>주문<br>취소 여부</th>
 								<th>배송 현황</th>
@@ -32,8 +33,13 @@
 										</button>
 									</th>
 									<th>
-										<button class="btn-invoice-detail btn btn-danger" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
+										<button class="btn-user-detail btn btn-success" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
 											결제자 로그인아이디
+										</button>
+									</th>
+									<th>
+										<button class="btn-user-detail btn btn-success" th:data-id="${invoice.id}" th:data-user-id="${invoice.userId}" th:text="${invoice.loginId}">
+											결제자 PK
 										</button>
 									</th>
 									<td th:text="${invoice.updatedAt}"></td>
@@ -60,6 +66,13 @@
      				location.href= "/admin/invoice/invoice-latest-detail-view?invoiceId=" + invoiceId
      								+ "&userId=" + userId;
      			})
+     			
+     			$(".btn-user-detail").on('click', function(){
+     				let userId = $(this).data('user-id');
+     				
+     				//사용자 정보조회 페이지로 이동
+     				location.href= "/admin/user/user-detail-view?userId=" + userId;
+     			})//btn-user-detail on click     			
     		})//document ready
     	
     	</script>
