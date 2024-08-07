@@ -43,7 +43,8 @@ footer a:hover {
 	position: relative;
 	left: 65px;
 	top: 25px;
-	text-decoration: none;	
+	text-decoration: none;
+	z-index: 1;	
 }
 
 .svg-angry-puppy {
@@ -268,6 +269,7 @@ footer a:hover {
 	position: relative;
 	width: 934px;
 	height: 85px;
+	z-index: 1;
 	
 	background: #FBAA63;
 	border-radius: 50px 0px 0px 50px;
@@ -377,7 +379,7 @@ footer a:hover {
 .groups-aside-dropdown{
 	position:relative;
 	display: none;
-	z-index:3
+	z-index:3;
 }
 
 #nav-user{
@@ -888,4 +890,199 @@ footer a:hover {
 	border-color:transparent;	
 	
 	font-size: 28px;
+}
+
+/* /product/product-list-view 메인 뷰 관련 */
+
+.background-cards-list{
+/* Rect_Background */
+
+	width: 1187px;
+	height: 932px;
+	
+	background: #FFE397;
+	border-radius: 0px 215px 0px 0px;
+}
+.groups-nav-aside{
+	position: relative;
+	width: 253px;
+	height: 945px;
+	top: -10px;
+	overflow: hidden;
+	
+	background: #D9D9D9;
+	border-radius: 115px 0px 0px 0px;
+}
+
+.group-dropdown-select{
+	width: 379px;
+	height: 45px;
+
+	background: rgba(239, 239, 239, 0.5);
+	border: 1px solid #000000;
+	border-radius: 40px;
+	
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.label-for-select{
+	width: 160px;
+	height: 100%;
+	
+	background: #FFFFFF;
+	border-radius: 40px;
+	
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 24px;
+	
+	color: #000000;
+	
+	display:flex;
+	justify-content: center;
+	align-items: center;	
+}
+
+.btn-select-dropdown-specific{
+	width: 220px;
+	height: 45px;
+	
+	font-size: 25px;
+}
+
+.groups-cards-collapsed{
+	margin-top: 30px;
+	
+	display: flex;
+	padding: 0px, 40px;
+	justify-content: center;
+}
+
+.group-scroll-bar{
+	position: relative;
+	margin-right: 30px;
+	width: 42px;
+	height: 800px;
+	
+	background: #FFFFFF;
+	border-radius: 32px;
+	
+	display: flex;
+	justify-content: center;
+}
+
+.scroll-bar{
+	margin-top: 15px;
+	position: absolute;
+	width: 32px;
+	height: 300px;
+	
+	background: #51C3ED;
+	border-radius: 32px;
+	
+}
+
+.groups-product-list{
+	margin-right: 30px;
+	width: 1042px;
+	height: 750px;
+
+	/* Auto layout */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	padding: 0px;
+	gap: 41px;
+}
+
+.unit-card-product{
+	width: 320px;
+	height: 320px;
+	
+	background: #FFFFFF;
+	border-radius: 35px;
+}
+
+/* nav aside 메뉴 */
+
+.groups-nav-aside{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.btn-skyblue-menu-aside{
+	position: relative;
+	/* btn-menu-Category */
+	width: 192.77px;
+	height: 61.11px;
+	
+	/* title_btn-menu-Category */
+	font-weight: 400;
+	font-size: 24px;
+	color: #FFFFFF;
+	background: #51C3ED;
+	border-radius: 22px;
+	border-color: transparent;
+	
+	filter: drop-shadow(8px 8px 4px rgba(0, 0, 0, 0.25));
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon-footprint{
+	position: absolute;
+	left:-15px;
+	top:-10px;
+}
+
+.btn-purple-menu-aside{
+	position: relative;
+	/* btn-menu-Category */
+	width: 192.77px;
+	height: 61.11px;
+	
+	/* title_btn-menu-Category */
+	font-weight: 400;
+	font-size: 24px;
+	color: #FFFFFF;
+	background: #7351ED;
+	border-radius: 22px;
+	border-color: transparent;
+	
+	filter: drop-shadow(8px 8px 4px rgba(0, 0, 0, 0.25));
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-magenta-menu-aside{
+	position: relative;
+	/* btn-menu-Category */
+	width: 192.77px;
+	height: 61.11px;
+	
+	/* title_btn-menu-Category */
+	font-weight: 400;
+	font-size: 24px;
+	color: #FFFFFF;
+	background: #ED5178;
+	border-radius: 22px;
+	border-color: transparent;
+	
+	filter: drop-shadow(8px 8px 4px rgba(0, 0, 0, 0.25));
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.margin-top-100px{
+	margin-top: 300px;
 }
