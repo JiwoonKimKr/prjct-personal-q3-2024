@@ -22,18 +22,21 @@
 									<path d="M102.251 30.7821C98.0529 24.0626 92.2613 27.9783 89.8902 30.7761M88.3834 10.9514C91.7827 20.9027 85.2673 24.4963 81.5847 25.0491M96.0748 9.95166C96.4519 20.4348 103.843 21.5812 107.492 20.8439" stroke="black" stroke-width="2" />
 								</svg>
 						</div>
-						<div class="text-main-title col-11 w-100 my-auto ">간식줘집사</div>
+						<div class="text-main-title col-11 w-100 my-auto">간식줘집사</div>
 					</a>
 <!-- 홈페이지 메인 타이틀 아이콘_End-->					
 				</span>
 			</div>
+			
 			<div id="groups-nav-header" class="">
+<!-- 검색 버튼 __start__-->			
 				<div id="group-input-keyword-search-header">
 					<input id="search-keyword" type="text" placeholder="🔎검색하기" class="form-control m-0 p-0">
 					<button type="button" class="btn-search-keyword">
 						검색
 					</button>
 				</div>
+<!-- button search-keyword __end__ -->				
 				<div class="group-right-side-header d-flex">
 					<div th:if="${session.userId != null}" class="group-logIn d-flex align-items-center">
 	 					<div id="welcome-text-after-signIn" class="mr-3">
@@ -41,12 +44,14 @@
 							<span class="hello-text-after-signIn">님 안녕하세요!</span>
 						</div>
 					</div>
-					<div th:unless="${session.userId != null}">
-						<div class="title-logIn">
-							<a href="/">로그인</a>
-						</div>				
+<!-- 로그인 버튼; 비로그인 상태에서 활성화 -->					
+					<div th:unless="${session.userId != null}" class="d-flex align-items-center">
+						<button class="btn-sign-in-header btn-dropdown-aside">
+							로그인
+						</button>
 					</div>
-					<button id="toggle-aside-dropdown" type="button">
+<!-- aside 드롭다운 토글 버튼  -->
+					<button id="toggle-aside-dropdown" type="button" th:data-user-id="${session.userId}">
 						<svg width="55" height="50" viewBox="0 0 55 50" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M5.79004 5H49.733M5.79004 25H49.733M5.79004 45H49.733" stroke="white" stroke-width="10" stroke-linecap="round"/>
 						</svg>
@@ -54,9 +59,10 @@
 				</div>			
 			</div>
 		</div>	
+<!-- Aside Dropdown 메뉴 ;토글 클릭 후 아래쪽으로 활성화됨 -->		
 		<aside class="groups-aside-dropdown">
 			<div id="nav-user">
-				<div class="group-btn-add-profile-image">
+				<div class="group-btn-add-profile-image btn-dropdown-aside">
 					<button id="btn-add-profile-image" type="button">👇 <br>프로필 이미지를<br>추가하세요</button>
 					<div id="bg-add-profile-image" class="svg-bg-btn-add-image">
 						<svg width="208" height="206" viewBox="0 0 208 206" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +72,7 @@
 					</div>
 				</div>
 <!-- 자기소개 버튼 -->				
-				<div id="group-input-self-description">
+				<div id="group-input-self-description" class="btn-dropdown-aside">
 					<input id="input-self-description" type="text" placeholder="✋자기소개 하기">
 					<button id="btn-self-description" type="button">
 						<div class="icon-plus">
@@ -91,7 +97,7 @@
 					</button>
 				</div>
 <!-- 반려견 추가 버튼 ; 설명 hover 넣어야-->				
-				<button id="btn-pet-list-view" >
+				<button id="btn-pet-list-view" class="btn-dropdown-aside">
 					<svg width="61" height="61" viewBox="0 0 61 61" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<circle cx="30.5" cy="30.5" r="30.5" fill="#ED5178"/>
 						<path d="M14.1469 15.1013C10.7841 16.4865 10.3638 30.3384 21.2927 30.3384C23.1141 30.3384 26.3367 28.7685 24.6553 22.489C22.5536 14.6395 17.5096 13.7161 14.1469 15.1013Z" fill="white"/>
@@ -122,32 +128,32 @@
 					</div>
 				</button>
 <!-- 장바구니 버튼 -->
-				<button id="btn-shopping-cart-view">
+				<button id="btn-shopping-cart-view" class="btn-dropdown-aside">
 					<svg width="51" height="38" viewBox="0 0 51 38" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M47.6246 16.6827C49.2719 17.4537 51.5782 20.0863 47.6246 24.4481M47.6246 16.6827L39.1488 24.4481M47.6246 16.6827L42.2145 16.6827M47.6246 24.4481H39.1488M47.6246 24.4481L42.1584 30.4787M25.9844 36.5093L32.5666 30.4787M25.9844 36.5093H36.6922L42.1584 30.4787M25.9844 36.5093V30.4787M25.9844 36.5093L19.1828 30.4787M25.9844 36.5093H14.9198L9.27136 30.4787M32.5666 30.4787L39.1488 24.4481M32.5666 30.4787H25.9844M32.5666 30.4787H42.1584M39.1488 24.4481H30.7142M25.9844 24.4481V16.6827M25.9844 24.4481H30.7142M25.9844 24.4481V30.4787M25.9844 24.4481H21.097M25.9844 16.6827H36.8045M25.9844 16.6827H14.8037M30.7142 24.4481L25.9844 30.4787M30.7142 24.4481L36.8045 16.6827M25.9844 30.4787H19.1828M25.9844 30.4787L21.097 24.4481M36.8045 16.6827L42.2145 16.6827M3.62296 16.6827C1.9207 17.4537 -0.462461 20.0863 3.62296 24.4481M3.62296 16.6827L12.3812 24.4481M3.62296 16.6827H14.8037M3.62296 24.4481H12.3812M3.62296 24.4481L9.27136 30.4787M19.1828 30.4787L12.3812 24.4481M19.1828 30.4787H9.27136M12.3812 24.4481H21.097M21.097 24.4481L14.8037 16.6827M9.21333 16.6827C9.21333 4.60466 25.4556 4.78675 25.4556 4.78675C25.4556 4.78675 42.2145 4.60467 42.2145 16.6827M6.50831 16.6827C6.50831 5.77792 16.0139 1.92116 25.4556 1.93066C34.9228 1.9402 44.3907 4.72274 44.3907 16.8008" stroke="#FF6868" stroke-width="2"/>
 					</svg>
 					<span class="ml-1 mb-0">장바구니</span>
 				</button>
 <!-- 배송조회 버튼 -->
-				<button id="btn-delivery-view">
+				<button id="btn-delivery-view" class="btn-dropdown-aside">
 					<svg width="49" height="36" viewBox="0 0 49 36" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" clip-rule="evenodd" d="M15.6035 0H17.1035H46.9619H48.4619V1.5V27.6522V29.1522H46.9619H42.2942C42.2644 30.2377 42.0265 31.4578 41.4074 32.5757C40.3367 34.5087 38.2744 35.8669 35.0187 35.8669C31.763 35.8669 29.7008 34.5087 28.6301 32.5757C28.0109 31.4578 27.7731 30.2377 27.7432 29.1522H21.8747C21.8448 30.2377 21.607 31.4578 20.9878 32.5757C19.9171 34.5087 17.8549 35.8669 14.5992 35.8669C11.3434 35.8669 9.28121 34.5087 8.21053 32.5757C7.59136 31.4578 7.35352 30.2377 7.32365 29.1522H1.5H0V27.6522C0 20.9316 0.917021 15.8877 2.09728 12.2867C3.25968 8.74023 4.72046 6.4674 5.92034 5.44392L6.34095 5.08514H6.89379H15.6035V1.5V0ZM29.3814 26.1522C29.3623 26.1518 29.3433 26.1518 29.3243 26.1522H20.2936C20.2746 26.1518 20.2556 26.1518 20.2365 26.1522H18.6035V6.58514V3H45.4619V26.1522H40.7132C40.6942 26.1518 40.6752 26.1518 40.6561 26.1522H29.3814ZM30.7446 29.1522C30.7732 29.8152 30.922 30.5219 31.2545 31.1221C31.7334 31.9869 32.7171 32.8669 35.0187 32.8669C37.3204 32.8669 38.304 31.9869 38.783 31.1221C39.1155 30.5219 39.2642 29.8152 39.2929 29.1522H30.7446ZM18.3634 31.1221C18.6959 30.5219 18.8447 29.8152 18.8733 29.1522H17.1035H10.325C10.3536 29.8152 10.5024 30.5219 10.8349 31.1221C11.3138 31.9869 12.2975 32.8669 14.5992 32.8669C16.9008 32.8669 17.8845 31.9869 18.3634 31.1221ZM15.6035 26.1522H8.9618C8.94271 26.1518 8.92366 26.1518 8.90468 26.1522H3.01622C3.14064 20.4612 3.96539 16.2192 4.94806 13.2211C5.85045 10.4679 6.85735 8.84645 7.51479 8.08514H15.6035V26.1522Z" fill="#51C3ED"/>
 					</svg>
 					<span class="ml-1 mb-0">배송조회</span>
 				</button>
 <!-- 주문내역조회 -->
-				<button id="btn-invoice-list-view">
+				<button id="btn-invoice-list-view" class="btn-dropdown-aside">
 					<svg width="38" height="32" viewBox="0 0 38 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M2 12.5L12.5 2H36M2 12.5H25.5M2 12.5V30.5H25.5M25.5 12.5L36 2M25.5 12.5V30.5M36 2V20L25.5 30.5" stroke="#FF8661" stroke-width="3"/>
 					</svg>
 					<span class="mb-0">주문내역조회</span>
 				</button>
 <!-- 개인정보 수정 -->
-				<button id="btn-user-info-view">
+				<button id="btn-user-info-view" class="btn-dropdown-aside">
 					<span class="mb-0">개인정보 수정</span>
 				</button>														
-<!-- 개인정보 수정 -->
-				<button id="btn-log-out">
+<!-- 로그아웃 버튼 -->
+				<button id="btn-log-out" th:if="${session.userId}">
 					<span class="mb-0">LOGOUT</span>
 				</button>														
 			</div>
@@ -160,7 +166,17 @@
 					$(".groups-aside-dropdown").css("display", asideDisplay == "none" ? "flex" : "none");
 				});// toggle-aside-dropdown
 				
-				/*  */
+				$(".btn-dropdown-aside").on('click', function(){
+					let userId = $(this).data('user-id');
+					console.log(userId);
+					
+					if(!userId){
+						
+						location.href= "/user/sign-in-view";
+						return;
+					}
+					
+				}); //btn-dropdown-aside on click
 				
 				/* btn-pet-list-view 클릭 */
 				$("#btn-pet-list-view").on('click', function(){

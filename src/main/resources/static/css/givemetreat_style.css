@@ -34,6 +34,7 @@ footer a:hover {
 	
 	background: #FF6868;
 	border-radius: 40px;
+	border-color:transparent;
 	
 	display: flex;
 	
@@ -136,7 +137,7 @@ footer a:hover {
 	font-size: 24px;
 }
 
-.btn-login{
+.btn-sign-in{
 	/* Rect-bg */
 	width: 268px;
 	height: 60px;
@@ -290,6 +291,21 @@ footer a:hover {
 	align-items: center;
 }
 
+#search-keyword{
+/* placehoder_🔎 Search */
+	position: relative;
+	width: 250px;
+	height: 30px;
+	left: 25px;
+	
+	font-weight: 400;
+	font-size: 24px;
+	color: #000;
+	
+	background-color:inherit;
+	border-color: transparent;
+}
+
 .btn-search-keyword{
 	width: 144px;
 	height: 51px;
@@ -309,23 +325,26 @@ footer a:hover {
 	align-items: center;	
 }
 
-#search-keyword{
-/* placehoder_🔎 Search */
-	position: relative;
-	width: 250px;
-	height: 30px;
-	left: 25px;
-	
-	font-weight: 400;
-	font-size: 24px;
-	color: #000;
-	
-	background-color:inherit;
-	border-color: transparent;
-}
-
 .group-right-side-header{
 	z-index: 3;
+}
+
+.btn-sign-in-header{
+	width: 157px;
+	height: 45px;
+	
+	background: #FE70AE;
+	box-shadow: 2px 2px 2px #00D9FF;
+	border-radius: 47px;
+	border-color: #FE70AE;
+	
+	/* 로그인 텍스트 */
+
+	font-weight: 700;
+	font-size: 25px;
+	text-align: center;
+		
+	color: #FFFFFF;
 }
 
 #welcome-text-after-signIn{

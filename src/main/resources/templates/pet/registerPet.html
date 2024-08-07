@@ -56,7 +56,7 @@
 					<div class="text-label-input-row">
 						<span>이름</span>
 					</div>		
-					<input id="namePet" type="text" class="input-rounded-white">
+					<input id="namePet" type="text" class="input-rounded-white pl-5">
 				</div>
 <!-- 연령 입력 -->				
 				<div class="group-input-orange">
@@ -75,7 +75,7 @@
 						</span>
 					</div>		
 					<div class="input-group input-rounded-white">
-						<select class="custom-select input-select-inside w-100 h-100" id="agePet" aria-label="Example select with button addon">
+						<select class="custom-select input-select-inside pl-5 w-100 h-100" id="agePet" aria-label="Example select with button addon">
 						    <option selected>--------</option>
 						    <option value="under6months">생후 6개월 미만</option>
 						    <option value="adult">성견</option>
@@ -141,10 +141,18 @@
     					alert("반려견 이름을 기재해 주세요.");
     					return;
     				}
-    				if(!age){
+    				
+    				if(name.length > 20){
+    					alert("20자 이내의 길이로 이름을 기재해 주세요.")
+    					return;
+    				}
+    				
+    				if(age == "--------"){
     					alert("반려견 연령을 선택해 주세요.");
     					return;
     				}
+    				
+    				
     				
     				let extension = pathFile.split(".").pop().toLowerCase();
     				if(pathFile != "" && $.inArray(extension, ["jpg", "gif", "png"]) == -1){

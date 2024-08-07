@@ -6,25 +6,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
 
+@RequestMapping("/user")
 @Controller
 public class UserController {
-	
-	@GetMapping("/")
-	public String initialIndexView() {
-		return "user/signIn";
-	}
-	
-	@GetMapping("/user/sign-in-view")
-	public String signInView() {
-		return "redirect:/";
-	}
 
-	@GetMapping("/user/sign-up-view")
+	@GetMapping("/sign-in-view")
+	public String signInView() {
+		return "user/signIn";
+	}	
+	
+	@GetMapping("/sign-up-view")
 	public String signUpView() {
 		return "user/signUp";
 	}
 	
-	@GetMapping("/user/kakao-api")
+	@GetMapping("/kakao-api")
 	public String kakaoApi(){
 		return "redirect:https://kauth.kakao.com/oauth/authorize?" 
 				+ "response_type=code"
@@ -32,7 +28,7 @@ public class UserController {
 				+ "&redirect_uri=http://localhost/OAuth/kakao-sign-up";
 	}
 	
-	@RequestMapping("/user/sign-out")
+	@RequestMapping("/sign-out")
 	public String signOut(HttpSession session) {
 		session.removeAttribute("loginId");
 		session.removeAttribute("userId");
