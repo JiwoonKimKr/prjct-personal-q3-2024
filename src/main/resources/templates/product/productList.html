@@ -32,33 +32,37 @@
 						</div>
 					</div>
 					<div class="groups-product-list">
-					<!-- 하나의 Card Unit이 320px X 320px; -->
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
-					<div class="unit-card-product">
-					</div>
+<!--
+model attributes:
+listProducts
+
+	private Integer id;
+	private String name;
+	private String category;
+	private int price;
+	private String agePetProper;
+	private String imgProfile;
+	private String imgThumbnail;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
+
+ -->					
+						<th:block th:each="unit : ${listProducts}">
+							<!-- 하나의 Card Unit이 320px X 320px; -->
+							<div class="unit-card-product">
+								<a th:href="@{/product/product-detail-view(productId=${unit.id})}">
+									<img class="img-unit-list-view" th:src="${unit.imgProfile}" width="270" height="270">
+								</a>
+								<div class="group-link-from-unit">
+									<a class="name-unit-list-view anchor-unit-list-view" th:data-field="name" th:data-value="${unit.name}" href="#">
+										<span th:text="${unit.name}"></span>
+									</a>
+									<a class="category-unit-list-view anchor-unit-list-view" th:data-field="category" th:data-value="${unit.category}" href="#">
+										<span th:text="${unit.category}"></span>
+									</a>
+								</div>
+							</div>
+						</th:block>
 				</div>
 				</div>
 			</article>

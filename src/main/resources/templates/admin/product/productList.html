@@ -102,7 +102,9 @@
 								<!-- name -->
 								<th>제품명</th>
 								<!-- buffer -->
-								<th>제품 수량</th>
+								<th>제품 총 재고</th>
+								<!-- buffer -->
+								<th>제품 가용 수량</th>
 								<!-- category -->
 								<th>카테고리</th>
 								<!-- price -->
@@ -187,7 +189,8 @@
     								tableTd += '<td>' + (i + 1) + '</td>';
     								tableTd += '<td>' + strUrlCurrent + data.listProducts[i].id + '</a></td>';
     								tableTd += '<td>' + strUrlCurrent + data.listProducts[i].name + '</td>';
-    								tableTd += '<td>' + data.listProducts[i].buffer + '</td>';
+    								tableTd += '<td>' + data.listProducts[i].countTotal + '</td>';
+    								tableTd += '<td>' + data.listProducts[i].countAvailable + '</td>';
     								tableTd += '<td>' + data.listProducts[i].price + '</td>';
     								tableTd += '<td>' + data.listProducts[i].category + '</td>';
     								tableTd += '<td>' + data.listProducts[i].agePetProper + '</td>';
