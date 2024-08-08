@@ -985,9 +985,9 @@ footer a:hover {
 
 .groups-product-list{
 	margin-right: 30px;
-	width: 1042px;
-	height: 750px;
-	overflow: hidden;
+	width: 1075px;
+	height: 800px;
+	overflow: auto;
 
 	/* Auto layout */
 	display: flex;
@@ -996,9 +996,24 @@ footer a:hover {
 	align-items: flex-start;
 	align-content: flex-start;
 	padding: 0px;
-	gap: 41px;
+	gap: 30px;
 }
 
+/* groups-product-list 내 스크롤바 scrollbar 스타일 */
+.groups-product-list::-webkit-scrollbar{
+	width: 25px;
+}
+.groups-product-list::-webkit-scrollbar-thumb{
+	background-color: #51C3ED;
+	border-radius: 15px;
+}
+.groups-product-list::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+}
+
+
+/* 상품 리스트 단위 하나의 유닛 */
 .unit-card-product{
 	width: 320px;
 	height: 320px;
