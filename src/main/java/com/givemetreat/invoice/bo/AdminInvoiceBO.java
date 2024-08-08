@@ -1,12 +1,7 @@
 package com.givemetreat.invoice.bo;
 
+import java.util.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +13,8 @@ import com.givemetreat.invoice.mapper.InvoiceMapper;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.AdminProductVO;
+import com.givemetreat.productBuffer.bo.ProductBufferBO;
+import com.givemetreat.productBuffer.domain.ProductBufferEntity;
 import com.givemetreat.productInvoice.bo.AdminProductInvoiceBO;
 import com.givemetreat.productInvoice.domain.AdminProductInvoiceVO;
 import com.givemetreat.productInvoice.domain.ProductInvoiceEntity;
@@ -36,6 +33,7 @@ public class AdminInvoiceBO {
 	private final UserBO userBO;
 	private final AdminProductInvoiceBO adminProductInvoiceBO;
 	private final AdminProductBO adminProductBO;
+	private final ProductBufferBO ProductBufferBO;
 
 	@Transactional
 	public AdminInvoiceVO getInvoiceByInvoiceIdAndUserId(int id, int userId) {
@@ -73,32 +71,41 @@ public class AdminInvoiceBO {
 	@Transactional
 	public List<AdminProductInvoiceVO> getProductInvoicesByInvoiceIdAndUserId(int invoiceId, int userId) {
 		List<ProductInvoiceEntity> listProductInvoices = adminProductInvoiceBO.getProductInvoicesByInvoiceIdAndUserId(invoiceId, userId);
+
+		//1)product_buffer 갯수 Map구조로 수량 파악
+		Map<AdminProductVO, Integer> mapProductVOs = new HashMap<>();
 		
-		Map<AdminProductVO, Integer> mapItemsOrdered = new HashMap<>();
-		
-		for(ProductInvoiceEntity itemOrdered : listProductInvoices) {
-			int productId = itemOrdered.getProductId();
+		for(ProductInvoiceEntity productInvoice : listProductInvoices) {
+			int productInvoiceId = productInvoice.getId();
+			int productId = productInvoice.getProductId();
+
+			ProductBufferEntity buffer = ProductBufferBO.getBuffer(productId, true, productInvoiceId);
+
+			if(buffer == null) {
+				continue;
+			}
 			
 			AdminProductVO productVO = adminProductBO.getProduct(productId, null, null, null, null).get(0);
 			
-			//이미 존재하는 동일한 제품인 경우 갯수만 하나만 더 추가시킴
-			if(mapItemsOrdered.containsKey(productVO)) {
-				mapItemsOrdered.put(productVO, mapItemsOrdered.get(productVO) + 1);
-				continue; // 여기서 반복문 안 넘기면 1로 초기화 된다 ㅠㅠ
+			if(mapProductVOs.containsKey(productVO)) {
+				mapProductVOs.put(productVO
+								, mapProductVOs.get(productVO) + 1);
+				continue;
 			}
-			
-			mapItemsOrdered.put(productVO, 1);
+			mapProductVOs.put(productVO, 1);
 		}
 		
+		//2) AdminProductInvoiceVO 리스트 반환
 		List<AdminProductInvoiceVO> listVOs = new ArrayList<>();
 		
-		//<Product, Integer>의 Map에서 VO를 가진 List로 변환;
-		Set<AdminProductVO> keys = mapItemsOrdered.keySet();
-		Iterator<AdminProductVO> iter =keys.iterator();
+		Set<AdminProductVO> keys = mapProductVOs.keySet();
+		Iterator<AdminProductVO> iter = keys.iterator();
+		
 		while(iter.hasNext()) {
-			AdminProductVO itemCur = iter.next();
+			AdminProductVO itemOrdered = iter.next();
 			
-			listVOs.add(new AdminProductInvoiceVO(itemCur, mapItemsOrdered.get(itemCur)));
+			listVOs.add(new AdminProductInvoiceVO(itemOrdered
+					, mapProductVOs.get(itemOrdered)));
 		}
 		
 		return listVOs;

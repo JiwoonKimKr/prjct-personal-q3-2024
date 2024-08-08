@@ -180,7 +180,6 @@
     					, url: url
     					, data: params
     					, success:function(data){
-							console.log(data);
     						if(data.code == 200){
     							for(let i = 0; i< data.listProducts.length; i++){
     								let strUrlCurrent = '<a href="/admin/product/' + data.listProducts[i].id + '">';

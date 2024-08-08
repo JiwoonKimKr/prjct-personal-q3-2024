@@ -1,5 +1,7 @@
 package com.givemetreat.productBuffer.domain;
 
+import java.time.LocalDateTime;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -32,11 +34,14 @@ public class ProductBufferEntity {
 	
 	private boolean reserved;
 	
+	@Column(name = "productInvoiceId")
+	private int productInvoiceId;
+	
 	@CreationTimestamp
 	@Column(name = "createdAt")
-	private int createdAt;
+	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp
 	@Column(name = "updatedAt")
-	private int updatedAt;
+	private LocalDateTime updatedAt;
 }

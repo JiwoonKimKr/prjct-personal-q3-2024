@@ -1,18 +1,59 @@
 package com.givemetreat.productBuffer.bo;
 
-import org.springframework.stereotype.Service;
+import java.util.*;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.givemetreat.productBuffer.domain.ProductBufferEntity;
 import com.givemetreat.productBuffer.repository.ProductBufferRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
-public class productBufferBO {
+public class ProductBufferBO {
 	private final ProductBufferRepository productBufferRepository;
 
-	public Integer getCountByProductId(Integer productId) {
+	//해당 상품 총 재고 수량_배송 예약된 수량 포함_08 08 2024
+	public Integer getTotalCountByProductId(Integer productId) {
 		return productBufferRepository.countByProductId(productId);
+	}
+	
+	//해당 상품 가용 가능 수량_배송 예약된 수량 제외_08 08 2024
+	public Integer getCountAvailableByProductIdAndReserved(Integer productId, boolean reserved) {
+		return productBufferRepository.countByProductIdAndReserved(productId, reserved);
+	}	
+
+	@Transactional
+	public List<ProductBufferEntity> addProductBuffersInQuantity(
+												Integer productId
+												, Integer quantity){
+		log.info("[productBufferBO: addProductBuffersInQuantity() Requested] productId:{}, quantity:{}"
+					, productId, quantity);
+		List<ProductBufferEntity> listEntities = new ArrayList<>();
+		
+		//해당 수량만큼 entity를 생성해서 DB에 저장
+		for(int i = 0; i < quantity; i ++) {
+			ProductBufferEntity entity = ProductBufferEntity.builder()
+					.productId(productId)
+					.reserved(false)
+					.build();
+			productBufferRepository.save(entity);
+			
+			listEntities.add(entity);
+		}
+		
+		log.info("[productBufferBO: addProductBuffersInQuantity() completed] productId:{}, quantity:{}"
+				, productId, quantity);
+
+		return listEntities;
+	}
+
+	public ProductBufferEntity getBuffer(int productId, boolean reserved, int productInvoiceId) {
+		return productBufferRepository.findByProductIdAndReservedAndProductInvoiceId(productId, reserved, productInvoiceId);
 	}
 
 }

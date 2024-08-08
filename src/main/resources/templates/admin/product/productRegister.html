@@ -21,6 +21,7 @@
 								</span>
 							</div>
 						</button>
+						<img id="imagePreview" class="d-none rounded" width="400" height="400">
 						<input id="imageProduct" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
 					</div>
 		
@@ -74,6 +75,13 @@
 								</select>
 							</div>
 						</div>
+						<!-- quantity: productBuffer -->
+						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
+							<span class="h3 text-white col-4">
+								제품 수량
+							</span>
+							<input id="quantityProduct" type="text" class="form-control col-8">
+						</div>						
 					</div>
 				</div>
 				<div class="d-flex justify-content-end">
@@ -92,7 +100,7 @@
     		$(document).ready(function(){
     			$(".btn-product-image-upload").on('click', function(){
     				$("#imageProduct").click();
-    			})// btn-pet-image-upload on click
+    			})// btn-product-image-upload on click
     			
     			$("#imageProduct").on('change', function(e){
     				let file = e.target.files[0];
@@ -101,9 +109,15 @@
     					return;
     				}
     				
-    				let fileName = e.target.files[0].name;
-    				console.log(fileName);
-    			})// imagePet on Click
+					let reader = new FileReader();
+					reader.onload = function(event){
+						$("#imagePreview").removeClass('d-none');
+						$("#imagePreview").attr('src', event.target.result);
+					};
+					reader.readAsDataURL(file);
+    				
+					$(".btn-product-image-upload").addClass('d-none');
+    			})// imageProduct on Click
     			
     			$(".btn-submit").on('click', function(){
 					let name = $("#nameProduct").val().trim();
@@ -111,6 +125,7 @@
 					let price = $("#priceProduct").val().trim();
 					let agePetProper = $("#agePetProperProduct").val();
 					let pathFile = $("#imageProduct").val();
+					let quantity = $("#quantityProduct").val().trim();
     				
 					if(!name){
 						alert("제품명을 기재해 주세요.");
@@ -135,6 +150,11 @@
     					$("#pathFile").val("");
     					return;
     				}
+					if(!quantity){
+						alert("제품 수량을 기입해 주세요.");
+						return;
+					}
+					
 					
 					let formData = new FormData();
 					
@@ -143,6 +163,7 @@
 					formData.append("price", price);
 					formData.append("agePetProper", agePetProper);
 					formData.append("imageProduct", $("#imageProduct")[0].files[0]);
+					formData.append("quantity", quantity);
 
 					$.ajax({
 						type: "POST"

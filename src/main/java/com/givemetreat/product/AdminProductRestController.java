@@ -33,12 +33,15 @@ public class AdminProductRestController {
 			, @RequestPart String price
 			, @RequestPart String agePetProper
 			, @RequestPart MultipartFile imageProduct
+			, @RequestPart String quantity
 			){
 		Map<String, Object> result = new HashMap<>();
+
+		//TODO Server쪽에서도 관련 Parameter들 Validatoin 거쳐야!!!
 		
-		int count = adminProductBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct);
+		Integer pkInserted = adminProductBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct, Integer.parseInt(quantity));
 		
-		if(count < 0) {
+		if(pkInserted < 0) {
 			result.put("code", 500);
 			result.put("error_message", "해당 상품 등록이 실패하였습니다.");
 			log.info("[ADMIN-Product: register-product] fail to register current product:{},{},{},{},{}"

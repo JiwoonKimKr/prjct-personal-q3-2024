@@ -12,22 +12,22 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AdminProductInvoiceVO {
 
-	public AdminProductInvoiceVO(AdminProductVO productVO, Integer number) {
-		this.countOrdered = number;
-		this.productId = productVO.getId();
-		this.productName = productVO.getName();
-		this.productBuffer = productVO.getBuffer();
-		this.category = StringTranslator.translateCategory(productVO.getCategory());
-		this.price = productVO.getPrice();
-		this.agePetProper = StringTranslator.translateAgePetProper(productVO.getAgePetProper());
-		this.imgProfile = productVO.getImgProfile();
-		this.imgThumbnail = productVO.getImgThumbnail();
+	public AdminProductInvoiceVO(AdminProductVO product, Integer countOrdered) {
+		this.countOrdered = countOrdered;
+		this.productId = product.getId();
+		this.productName = product.getName();
+		
+		this.category = StringTranslator.translateCategory(product.getCategory());
+		this.price = product.getPrice();
+		this.agePetProper = StringTranslator.translateAgePetProper(product.getAgePetProper());
+		this.imgProfile = product.getImgProfile();
+		this.imgThumbnail = product.getImgThumbnail();
 	}
 	
 	private int countOrdered;
 	private int productId;
 	private String productName;
-	private int productBuffer;
+	
 	private String category;
 	private int price;
 	private String agePetProper;

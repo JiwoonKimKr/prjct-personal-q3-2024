@@ -31,8 +31,11 @@ public class AdminProductVO {
 	updatedAt
  */
 	private int id;
-	
-	private int buffer; //product_buffer DB table에서 별도로 얻어와야ㅠ
+
+	//AdminProductBO에서 productId를 통해 조회한 총 재고와 가용 수량
+	//나중에 AdminProductBO가 두 field를 채워준다;
+	private int countTotal; 
+	private int countAvailable;
 	
 	private String name;
 	private String category;

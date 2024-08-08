@@ -16,7 +16,9 @@
 					<hr>
 					<p th:text="|제품명: ${productCurrent.name}|"></p>
 					<hr>
-					<p th:text="|제품 수량: ${productCurrent.buffer}|"></p>
+					<p th:text="|제품 총 재고: ${productCurrent.countTotal}|"></p>
+					<hr>
+					<p th:text="|제품 가용 재고: ${productCurrent.countAvailable}|"></p>
 					<hr>
 					<p th:text="|제품 카테고리: ${productCurrent.category}|"></p>
 					<hr>

@@ -36,7 +36,8 @@
 		LIMIT 50;
  	</select>
  	
- 	<insert id="insertProduct" >
+ 	<insert id="insertProduct" parameterType="com.givemetreat.product.domain.Product"
+ 	 useGeneratedKeys="true" keyProperty="id">
  		INSERT INTO
  			`product`
 		(
