@@ -12,7 +12,4 @@ public interface ProductBufferRepository extends JpaRepository<ProductBufferEnti
 
 	Integer countByProductIdAndReservedAndProductInvoiceId(int productId, boolean reserved, int productInvoiceId);
 
-	ProductBufferEntity findByProductIdAndReservedAndProductInvoiceId(int productId, boolean reserved,
-			int productInvoiceId);
-
 }

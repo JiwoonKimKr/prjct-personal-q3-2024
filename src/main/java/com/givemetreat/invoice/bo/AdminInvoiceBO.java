@@ -14,7 +14,6 @@ import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.AdminProductVO;
 import com.givemetreat.productBuffer.bo.ProductBufferBO;
-import com.givemetreat.productBuffer.domain.ProductBufferEntity;
 import com.givemetreat.productInvoice.bo.AdminProductInvoiceBO;
 import com.givemetreat.productInvoice.domain.AdminProductInvoiceVO;
 import com.givemetreat.productInvoice.domain.ProductInvoiceEntity;
@@ -79,20 +78,22 @@ public class AdminInvoiceBO {
 			int productInvoiceId = productInvoice.getId();
 			int productId = productInvoice.getProductId();
 
-			ProductBufferEntity buffer = ProductBufferBO.getBuffer(productId, true, productInvoiceId);
+			Integer count = ProductBufferBO.getCount(productId, true, productInvoiceId);
 
-			if(buffer == null) {
+			if(count == null) {
 				continue;
 			}
 			
 			AdminProductVO productVO = adminProductBO.getProduct(productId, null, null, null, null).get(0);
 			
+			//중복된 값이 리스트에 존재한다는 것 자체가 주문이 잘못 전달 된 상황; 에러!
 			if(mapProductVOs.containsKey(productVO)) {
-				mapProductVOs.put(productVO
-								, mapProductVOs.get(productVO) + 1);
+				log.warn("[AdminInvoiceBO getProductInvoicesByInvoiceIdAndUserId()]"
+						+ " item ordered in Current Invoice has shown duplicated in wrong way! invoiceId:{}", invoiceId);
 				continue;
 			}
-			mapProductVOs.put(productVO, 1);
+			
+			mapProductVOs.put(productVO, count);
 		}
 		
 		//2) AdminProductInvoiceVO 리스트 반환

@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.givemetreat.productBuffer.domain.ProductBufferEntity;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -25,10 +23,10 @@ class ProductBufferBOTest {
 //	}
 	@Test
 	void jUnitTest_getBufferTest() {
-		ProductBufferEntity item = ProductBufferBO.getBuffer(5, true, 3);
+		Integer item = ProductBufferBO.getCount(5, true, 3);
 		
 		log.info("[productBufferBOTest jUnitTest_getBufferTest()]");
-		assertEquals(item.getId(), 5);
+		assertEquals(item, 5);
 	}
 
 }

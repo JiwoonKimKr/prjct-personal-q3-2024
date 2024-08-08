@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.FileManagerService;
-import com.givemetreat.common.utils.StringTranslator;
 import com.givemetreat.product.domain.AdminProductVO;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.mapper.ProductMapper;

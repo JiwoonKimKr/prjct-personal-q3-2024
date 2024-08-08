@@ -52,8 +52,8 @@ public class ProductBufferBO {
 		return listEntities;
 	}
 
-	public ProductBufferEntity getBuffer(int productId, boolean reserved, int productInvoiceId) {
-		return productBufferRepository.findByProductIdAndReservedAndProductInvoiceId(productId, reserved, productInvoiceId);
+	public Integer getCount(int productId, boolean reserved, int productInvoiceId) {
+		return productBufferRepository.countByProductIdAndReservedAndProductInvoiceId(productId, reserved, productInvoiceId);
 	}
 
 }
