@@ -9,8 +9,8 @@
 	<section layout:fragment="contents" class="contents w-100">
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article background-cards-list">
-				<div class="groups-dropdown-select-types">
-					<div class="group-dropdown-select mt-5 ml-5">
+				<div class="groups-dropdown-select">
+					<div class="group-dropdown-select">
 						<label for="field-agePetProper" class="label-for-select m-0">
 							연령별 분류
 						</label>
@@ -18,7 +18,7 @@
 						    <option data-field="agePetProper">
 						    	---선택---
 					    	</option>
-						    <option class="undefined" data-field="agePetProper" data-value="undefined">
+						    <option data-field="agePetProper">
 						    	전체
 					    	</option>
 						    <option class="under6months" data-field="agePetProper" data-value="under6months">
@@ -29,6 +29,25 @@
 					    	</option>
 						    <option class="senior" data-field="agePetProper" data-value="senior">
 						    	고령견
+					    	</option>
+				  		</select>
+					</div>
+					<div class="group-dropdown-select">
+						<label for="field-category" class="label-for-select m-0">
+							카테고리
+						</label>
+					  	<select id="field-category" name="category" class="btn-select-dropdown-specific custom-select">
+						    <option data-field="category">
+						    	---선택---
+					    	</option>
+						    <option data-field="category">
+						    	전체
+					    	</option>
+						    <option class="treat" data-field="category" data-value="treat">
+						    	간식
+					    	</option>
+						    <option class="kibble" data-field="category" data-value="kibble">
+						    	사료
 					    	</option>
 				  		</select>
 					</div>
@@ -118,6 +137,7 @@ listProducts
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(e){
+    			/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
     			let link = window.location.href;
 				let url = new URL(link.toString());
 				let urlParams = url.searchParams;
@@ -129,8 +149,8 @@ listProducts
 					console.log(`key: ${key}, value: ${value}`);
 					let selectCur = $('#field-' + key);
 					let optionSelected = $('option.' + value)[0];
-					$(".group-dropdown-select").find(optionSelected).prop('selected', true);
-					console.log($(".group-dropdown-select").find(optionSelected));
+					selectCur.find(optionSelected).prop('selected', true);
+					console.log(selectCur.find(optionSelected));
 				}
     			
     			$(".btn-select-dropdown-specific").on('change', function(e){
@@ -138,12 +158,13 @@ listProducts
     				let url = new URL(link.toString());
     				let urlParams = url.searchParams;
 
-    				let field = $("option:selected").data('field'); 
-    				let value = $("option:selected").data('value'); 
+    				let field = $(this).children("option:selected").data('field'); 
+    				let value = $(this).children("option:selected").data('value');
+    				console.log(`${field}, ${value}`);
     				
 					//전체 버튼을 눌렀을 경우 아예 해당 field를 지우고 현재 창 새로고침 하도록 바꿨다.
-					if(value == "undefined" || value == "---선택---"){
-						urlParams.delete(field)
+					if(!value || value == "전체" || value == "---선택---"){
+						urlParams.delete(field);
 						location.href= url;
 						return;
 					}
