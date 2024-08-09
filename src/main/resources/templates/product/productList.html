@@ -10,24 +10,24 @@
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article background-cards-list">
 				<div class="groups-dropdown-select-types">
-					<div id="field-ageProProper" class="group-dropdown-select mt-5 ml-5">
+					<div class="group-dropdown-select mt-5 ml-5">
 						<label for="field-agePetProper" class="label-for-select m-0">
 							연령별 분류
 						</label>
-					  	<select id="field-agePetProper" class="btn-select-dropdown-specific custom-select">
+					  	<select id="field-agePetProper" name="agePetProper" class="btn-select-dropdown-specific custom-select">
 						    <option data-field="agePetProper">
 						    	---선택---
 					    	</option>
-						    <option data-field="agePetProper" data-value="undefined">
+						    <option class="undefined" data-field="agePetProper" data-value="undefined">
 						    	전체
 					    	</option>
-						    <option data-field="agePetProper" data-value="under6months">
+						    <option class="under6months" data-field="agePetProper" data-value="under6months">
 						    	6개월 미만
 					    	</option>
-						    <option data-field="agePetProper" data-value="adult">
+						    <option class="adult" data-field="agePetProper" data-value="adult">
 						    	성견
 					    	</option>
-						    <option data-field="agePetProper" data-value="senior">
+						    <option class="senior" data-field="agePetProper" data-value="senior">
 						    	고령견
 					    	</option>
 				  		</select>
@@ -118,8 +118,20 @@ listProducts
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(e){
-    			
-    			
+    			let link = window.location.href;
+				let url = new URL(link.toString());
+				let urlParams = url.searchParams;
+				
+				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
+				let keys = urlParams.keys();
+				for(let key of keys){
+					let value = urlParams.get(key);
+					console.log(`key: ${key}, value: ${value}`);
+					let selectCur = $('#field-' + key);
+					let optionSelected = $('option.' + value)[0];
+					$(".group-dropdown-select").find(optionSelected).prop('selected', true);
+					console.log($(".group-dropdown-select").find(optionSelected));
+				}
     			
     			$(".btn-select-dropdown-specific").on('change', function(e){
     				let link = window.location.href;
