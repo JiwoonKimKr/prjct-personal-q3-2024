@@ -1206,9 +1206,6 @@ footer a:hover {
 	margin: 20px 20px 40px 20px;
 	height: 450px;
 	
-	background-color: #ddd;
-	border-radius: 50px 150px 0px 50px;
-	
 	display:flex;
 	justify-content: space-between;
 }
@@ -1216,12 +1213,14 @@ footer a:hover {
 .image-detail-product{
 	width: 450px;
 	height: 450px;
+	overflow:hidden;
 	
 	border-radius: 50px;
 }
 
 .group-right-upper-side-detail-product{
-	width: 600px;
+	margin-left: 45px;
+	width: 555px;
 }
 
 .title-upper-side-detail-product{
@@ -1235,10 +1234,16 @@ footer a:hover {
 }
 .group-btns-cart-detail-product{
 	width: 100%;
+}
+.btns-quantity-detail-product{
+	margin-top: 20px;
+	
+	width: 100%;
 	height: 80px;
+	margin-bottom: 180px;
 	
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 }
 
@@ -1255,6 +1260,8 @@ footer a:hover {
 	border-color: transparent;
 }
 .input-count-order-product{
+	padding: 5px 10px 5px 10px;
+	
 	width: 110px;
 	height: 80px;
 
@@ -1277,13 +1284,58 @@ footer a:hover {
 }
 
 .group-btn-add-to-cart{
+	margin-left: 15px;
+	
 	width: 192.77px;
 	height: 61.11px;
 
 	background: #51C3ED;
-	box-shadow: 4px 4px 0px #ABABAB;
 	border-radius: 22px;
 	border-color: inherit;
 	
+	font-size: 24px;
+	font-weight: bold;
+	color: #FFF;
+	
 	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btns-pay-or-not{
+	display: flex;
+}
+
+.btn-pay-product-current{
+	width: 192.77px;
+	height: 61.11px;
+	
+	background: #51C3ED;
+	box-shadow: 4px 4px 0px #FF6868;
+	border-radius: 22px;
+	border-color: inherit;
+	
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 35px;
+	
+	color: #FFFFFF;
+}
+
+.btn-cancel-product-current{
+	width: 192.77px;
+	height: 61.11px;
+	
+	background: #FF6868;
+	box-shadow: 4px 4px 0px #51C3ED;
+	border-radius: 22px;
+	border-color: inherit;
+	
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 35px;
+	
+	color: #FFFFFF;	
 }

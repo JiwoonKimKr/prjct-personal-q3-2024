@@ -32,46 +32,51 @@ ProductVO(
 							</div>
 							<div class="group-btns-cart-detail-product">
 								<div class="btns-quantity-detail-product">
-									<button class="btn-plus">
-										<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<g filter="url(#filter0_d_64_304)">
-												<path fill-rule="evenodd" clip-rule="evenodd" d="M28 4.5C28 2.29086 26.2091 0.5 24 0.5C21.7909 0.5 20 2.29086 20 4.5V20.5H4C1.79086 20.5 0 22.2909 0 24.5C0 26.7091 1.79086 28.5 4 28.5H20L20 44.5C20 46.7091 21.7909 48.5 24 48.5C26.2091 48.5 28 46.7091 28 44.5L28 28.5H44C46.2091 28.5 48 26.7091 48 24.5C48 22.2909 46.2091 20.5 44 20.5H28V4.5Z" fill="#51C3ED"/>
-											</g>
-											<defs>
-												<filter id="filter0_d_64_304" x="0" y="0.5" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-													<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-													<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-													<feOffset dx="2" dy="2"/>
-													<feComposite in2="hardAlpha" operator="out"/>
-													<feColorMatrix type="matrix" values="0 0 0 0 0.984314 0 0 0 0 0.666667 0 0 0 0 0.388235 0 0 0 1 0"/>
-													<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_304"/>
-													<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_304" result="shape"/>
-												</filter>
-											</defs>
-										</svg>
-									</button>
-									<input id="count-order-product" class="input-count-order-product" type="text">
-									<button class="btn-minus">
-										<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<g filter="url(#filter0_d_64_310)">
-												<path d="M4 4.5H24H44" stroke="#FF6868" stroke-width="8" stroke-linecap="round"/>
-											</g>
-											<defs>
-												<filter id="filter0_d_64_310" x="0" y="0.5" width="50" height="10" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-													<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-													<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-													<feOffset dx="2" dy="2"/>
-													<feComposite in2="hardAlpha" operator="out"/>
-													<feColorMatrix type="matrix" values="0 0 0 0 0.407843 0 0 0 0 1 0 0 0 0 0.635294 0 0 0 1 0"/>
-													<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_310"/>
-													<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_310" result="shape"/>
-												</filter>
-											</defs>
-										</svg>
-
-									</button>
+									<div class="group-btns-quantity-adjust">
+<!-- 장바구니 수량 추가 버튼 -->								
+										<button class="btn-plus">
+											<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g filter="url(#filter0_d_64_304)">
+													<path fill-rule="evenodd" clip-rule="evenodd" d="M28 4.5C28 2.29086 26.2091 0.5 24 0.5C21.7909 0.5 20 2.29086 20 4.5V20.5H4C1.79086 20.5 0 22.2909 0 24.5C0 26.7091 1.79086 28.5 4 28.5H20L20 44.5C20 46.7091 21.7909 48.5 24 48.5C26.2091 48.5 28 46.7091 28 44.5L28 28.5H44C46.2091 28.5 48 26.7091 48 24.5C48 22.2909 46.2091 20.5 44 20.5H28V4.5Z" fill="#51C3ED"/>
+												</g>
+												<defs>
+													<filter id="filter0_d_64_304" x="0" y="0.5" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+														<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+														<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+														<feOffset dx="2" dy="2"/>
+														<feComposite in2="hardAlpha" operator="out"/>
+														<feColorMatrix type="matrix" values="0 0 0 0 0.984314 0 0 0 0 0.666667 0 0 0 0 0.388235 0 0 0 1 0"/>
+														<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_304"/>
+														<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_304" result="shape"/>
+													</filter>
+												</defs>
+											</svg>
+										</button>
+<!-- 수량 기입 버튼 -->
+										<input id="count-order-product" class="input-count-order-product" type="text">
+<!-- 장바구니 수량 감소 버튼 -->									
+										<button class="btn-minus">
+											<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<g filter="url(#filter0_d_64_310)">
+													<path d="M4 4.5H24H44" stroke="#FF6868" stroke-width="8" stroke-linecap="round"/>
+												</g>
+												<defs>
+													<filter id="filter0_d_64_310" x="0" y="0.5" width="50" height="10" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+														<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+														<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+														<feOffset dx="2" dy="2"/>
+														<feComposite in2="hardAlpha" operator="out"/>
+														<feColorMatrix type="matrix" values="0 0 0 0 0.407843 0 0 0 0 1 0 0 0 0 0.635294 0 0 0 1 0"/>
+														<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_310"/>
+														<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_310" result="shape"/>
+													</filter>
+												</defs>
+											</svg>
+										</button>
+									</div>
+<!-- 장바구니 추가 버튼 -->
 									<button id="btn-add-to-cart" class="group-btn-add-to-cart">
-										<div class="icon-cart">
+										<div class="icon-cart mb-2">
 											<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M20.0987 9.53246C20.7788 9.97842 21.7311 11.5011 20.0987 14.0239M20.0987 9.53246L16.5992 14.0239M20.0987 9.53246L17.865 9.53246M20.0987 14.0239H16.5992M20.0987 14.0239L17.8418 17.512M11.1639 21L13.8816 17.512M11.1639 21H15.5849L17.8418 17.512M11.1639 21V17.512M11.1639 21L8.35569 17.512M11.1639 21H6.59557L4.26346 17.512M13.8816 17.512L16.5992 14.0239M13.8816 17.512H11.1639M13.8816 17.512H17.8418M16.5992 14.0239H13.1167M11.1639 14.0239V9.53246M11.1639 14.0239H13.1167M11.1639 14.0239V17.512M11.1639 14.0239H9.14604M11.1639 9.53246H15.6313M11.1639 9.53246H6.54765M13.1167 14.0239L11.1639 17.512M13.1167 14.0239L15.6313 9.53246M11.1639 17.512H8.35569M11.1639 17.512L9.14604 14.0239M15.6313 9.53246L17.865 9.53246M1.93136 9.53246C1.22853 9.97842 0.244577 11.5011 1.93136 14.0239M1.93136 9.53246L5.54745 14.0239M1.93136 9.53246H6.54765M1.93136 14.0239H5.54745M1.93136 14.0239L4.26346 17.512M8.35569 17.512L5.54745 14.0239M8.35569 17.512H4.26346M5.54745 14.0239H9.14604M9.14604 14.0239L6.54765 9.53246M4.2395 9.53246C4.2395 2.54662 10.9456 2.65193 10.9456 2.65193C10.9456 2.65193 17.865 2.54663 17.865 9.53246M3.12266 9.53245C3.12266 3.22522 7.04732 0.994501 10.9456 1C14.8544 1.00551 18.7635 2.61491 18.7635 9.60075" stroke="white" stroke-width="1.5"/>
 											</svg>
@@ -79,7 +84,13 @@ ProductVO(
 										장바구니 추가
 									</button>
 								</div>
-								<div>
+								<div class="btns-pay-or-not d-flex justify-content-start">
+									<button class="btn-pay-product-current">
+										해당 항목 결제
+									</button>
+									<button class="btn-cancel-product-current ml-3">
+										취소하기
+									</button>
 								</div>
 							</div>
 						</div>
@@ -137,46 +148,7 @@ ProductVO(
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(e){
-    			/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
-    			let link = window.location.href;
-				let url = new URL(link.toString());
-				let urlParams = url.searchParams;
-				
-				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
-				let keys = urlParams.keys();
-				for(let key of keys){
-					let value = urlParams.get(key);
-					console.log(`key: ${key}, value: ${value}`);
-					let selectCur = $('#field-' + key);
-					let optionSelected = $('option.' + value)[0];
-					selectCur.find(optionSelected).prop('selected', true);
-					console.log(selectCur.find(optionSelected));
-				}
-    			
-    			$(".btn-select-dropdown-specific").on('change', function(e){
-    				let link = window.location.href;
-    				let url = new URL(link.toString());
-    				let urlParams = url.searchParams;
 
-    				let field = $(this).children("option:selected").data('field'); 
-    				let value = $(this).children("option:selected").data('value');
-    				console.log(`${field}, ${value}`);
-    				
-					//전체 버튼을 눌렀을 경우 아예 해당 field를 지우고 현재 창 새로고침 하도록 바꿨다.
-					if(!value || value == "전체" || value == "---선택---"){
-						urlParams.delete(field);
-						location.href= url;
-						return;
-					}
-	  				//기존 field가 이미 존재할 때는 Set로
-	  				// 존재하지 않으면 append로 값 넣기
-	  				if(urlParams.has(field)){
-	  					urlParams.set(field, value);
-	  				} else {
-	  					urlParams.append(field, value);
-	  				}
-    				location.href= url;
-    			})
     			
     			$("#btn-treat-menu-aside").on('click', function(){
     				location.href= "/product/product-list-view?category=treat"
