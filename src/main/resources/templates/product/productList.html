@@ -19,7 +19,7 @@
 						    	------
 							</button>
 						  	<div class="dropdown-menu">
-							    <a class="param-to-add-dropdown dropdown-item" th:href="${url}">
+							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper">
 							    	전체
 						    	</a>
 							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="under6months">
@@ -132,7 +132,21 @@ listProducts
     				let value = $(this).data('value'); 
     				console.log(`${field}, ${value}`);
     				
-    				urlParams.append(field, value);
+					//전체 버튼을 눌렀을 경우 아예 해당 field를 지우고 현재 창 새로고침 하도록 바꿨다.
+					if(!value){
+						urlParams.delete(field)
+						location.href= url;
+						return;
+					}
+    				
+	  				//기존 field가 이미 존재할 때는 Set로
+	  				// 존재하지 않으면 append로 값 넣기
+	  				if(urlParams.has(field)){
+	  					urlParams.set(field, value);
+	  				} else {
+	  					urlParams.append(field, value);
+	  				}
+    				
     				console.log(urlParams.toString());
     				
     				location.href= url;

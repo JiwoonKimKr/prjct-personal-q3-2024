@@ -17,19 +17,24 @@
 			`product`
 		<where>
 			<if test="id != null">
-				`id` = #{id}
+				AND
+					`id` = #{id}
 			</if>
 			<if test="name != null">
-				`name` like LOWER(concat('%',#{name},'%'))
+				AND			
+					`name` like LOWER(concat('%',#{name},'%'))
 			</if>	
 			<if test="category != null">
-				`category` = #{category}
+				AND			
+					`category` = #{category}
 			</if>	
 			<if test="price != null">
-				`price` = #{price}
+				AND			
+					`price` = #{price}
 			</if>	
 			<if test="agePetProper != null">
-				`agePetProper` = #{agePetProper}
+				AND			
+					`agePetProper` = #{agePetProper}
 			</if>
 		</where>
 		ORDER BY `id` DESC
