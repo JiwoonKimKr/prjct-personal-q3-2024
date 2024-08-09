@@ -949,6 +949,8 @@ footer a:hover {
 	height: 45px;
 	
 	font-size: 25px;
+	background-color:transparent;
+	border: 0px;
 }
 
 .groups-cards-collapsed{

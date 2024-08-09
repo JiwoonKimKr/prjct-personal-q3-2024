@@ -11,28 +11,26 @@
 			<article class="group-article background-cards-list">
 				<div class="groups-dropdown-select-types">
 					<div id="field-ageProProper" class="group-dropdown-select mt-5 ml-5">
-						<div class="label-for-select">
+						<label for="field-agePetProper" class="label-for-select m-0">
 							연령별 분류
-						</div>
-						<div class="dropdown">
-							<button class="btn-select-dropdown-specific btn btn-white dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-						    	------
-							</button>
-						  	<div class="dropdown-menu">
-							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper">
-							    	전체
-						    	</a>
-							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="under6months">
-							    	6개월 미만
-						    	</a> <!--  href="/product/product-list-view?agePetProper=under6months" -->
-							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="adult">
-							    	성견
-						    	</a> <!-- href="/product/product-list-view?agePetProper=adult" -->
-							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="senior">
-							    	고령견
-						    	</a> <!-- href="/product/product-list-view?agePetProper=senior" -->
-					  		</div>
-						</div>
+						</label>
+					  	<select id="field-agePetProper" class="btn-select-dropdown-specific custom-select">
+						    <option data-field="agePetProper">
+						    	---선택---
+					    	</option>
+						    <option data-field="agePetProper" data-value="undefined">
+						    	전체
+					    	</option>
+						    <option data-field="agePetProper" data-value="under6months">
+						    	6개월 미만
+					    	</option>
+						    <option data-field="agePetProper" data-value="adult">
+						    	성견
+					    	</option>
+						    <option data-field="agePetProper" data-value="senior">
+						    	고령견
+					    	</option>
+				  		</select>
 					</div>
 				</div>
 <!-- scroll-bar -->				
@@ -120,25 +118,23 @@ listProducts
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(e){
-    			$(".param-to-add-dropdown").on('click', function(e){
-    				e.preventDefault();
+    			
+    			
+    			
+    			$(".btn-select-dropdown-specific").on('change', function(e){
     				let link = window.location.href;
     				let url = new URL(link.toString());
-    				console.log(url);
     				let urlParams = url.searchParams;
-    				console.log(urlParams.toString());
 
-    				let field = $(this).data('field'); 
-    				let value = $(this).data('value'); 
-    				console.log(`${field}, ${value}`);
+    				let field = $("option:selected").data('field'); 
+    				let value = $("option:selected").data('value'); 
     				
 					//전체 버튼을 눌렀을 경우 아예 해당 field를 지우고 현재 창 새로고침 하도록 바꿨다.
-					if(!value){
+					if(value == "undefined" || value == "---선택---"){
 						urlParams.delete(field)
 						location.href= url;
 						return;
 					}
-    				
 	  				//기존 field가 이미 존재할 때는 Set로
 	  				// 존재하지 않으면 append로 값 넣기
 	  				if(urlParams.has(field)){
@@ -146,11 +142,7 @@ listProducts
 	  				} else {
 	  					urlParams.append(field, value);
 	  				}
-    				
-    				console.log(urlParams.toString());
-    				
     				location.href= url;
-    				
     			})
     			
     			$("#btn-treat-menu-aside").on('click', function(){
