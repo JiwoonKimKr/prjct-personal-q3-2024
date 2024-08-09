@@ -85,9 +85,11 @@ ProductVO(
 									</button>
 								</div>
 								<div class="btns-pay-or-not d-flex justify-content-start">
+<!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
 									<button class="btn-pay-product-current">
 										해당 항목 결제
 									</button>
+<!-- 취소하기 버튼; 상품 리스트 페이지로 넘어가야 -->									
 									<button class="btn-cancel-product-current ml-3">
 										취소하기
 									</button>
@@ -95,8 +97,26 @@ ProductVO(
 							</div>
 						</div>
 					</div>
-<!-- 제품상세 내역 -->	<div class="group-lower-side-detail-product"> 
+					<div class="group-lower-side-detail-product"> 
 					</div>
+				</div>
+<!-- 제품상세 내역 -->	
+				<div class="groups-buttom-cart-total">
+					<div class="group-cost-total-current">
+						<div class="label-cost-total-current">
+							전체
+						</div>
+						<div class="text-cost-total-current">
+							<span id="cost-total-current">25000</span>
+							<span class="ml-2">원</span>
+						</div>
+					</div>
+					<button class="btn-add-to-cart-bottom">
+						장바구니 담기
+					</button>
+					<button class="btn-cancel-cart-total-bottom">
+						장바구니 취소하기
+					</button>
 				</div>
 			</article>
 <!-- 우측 nav 메뉴; groups-nav-aside -->			
