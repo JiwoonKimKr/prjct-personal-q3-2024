@@ -14,6 +14,12 @@ footer a:hover {
 	text-decoration: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .group-main-frames{
 	height: 767px;
 }

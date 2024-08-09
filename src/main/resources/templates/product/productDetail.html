@@ -9,21 +9,7 @@
 	<section layout:fragment="contents" class="contents w-100">
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article background-cards-list">							
-				<div class="groups-detail-product-current">
-					<!-- [[${product}]] -->
-<!-- 
-ProductVO(
-	id=20
-	, name=puppyTreat20
-	, category=treat
-	, categoryTranslatedK=간식
-	, price=10000
-	, agePetProper=adult
-	, agePetProperTranslatedK=성견
-	, imgProfile=/images/productProfile_1723108890947/ì¤í¬ë¦°ì· 2024-08-08 181945.png
-	, imgThumbnail=/images/productProfile_1723108890947/thumbnail_ì¤í¬ë¦°ì· 2024-08-08 181945.png
-	, createdAt=null, updatedAt=null)
- -->					
+				<div class="groups-detail-product-current">					
 <!-- 상단 메뉴들-->		<div class="group-upper-side-detail-product">
 						<img class="image-detail-product" alt="image of product" th:src="${product.imgProfile}" width="450" height="450">
 						<div class="group-right-upper-side-detail-product">
@@ -33,8 +19,8 @@ ProductVO(
 							<div class="group-btns-cart-detail-product">
 								<div class="btns-quantity-detail-product">
 									<div class="group-btns-quantity-adjust">
-<!-- 장바구니 수량 추가 버튼 -->								
-										<button class="btn-plus">
+<!-- 현재 물품 수량 추가 버튼 -->								
+										<button id="btn-plus-quantity-current" class="btn-plus">
 											<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<g filter="url(#filter0_d_64_304)">
 													<path fill-rule="evenodd" clip-rule="evenodd" d="M28 4.5C28 2.29086 26.2091 0.5 24 0.5C21.7909 0.5 20 2.29086 20 4.5V20.5H4C1.79086 20.5 0 22.2909 0 24.5C0 26.7091 1.79086 28.5 4 28.5H20L20 44.5C20 46.7091 21.7909 48.5 24 48.5C26.2091 48.5 28 46.7091 28 44.5L28 28.5H44C46.2091 28.5 48 26.7091 48 24.5C48 22.2909 46.2091 20.5 44 20.5H28V4.5Z" fill="#51C3ED"/>
@@ -53,9 +39,9 @@ ProductVO(
 											</svg>
 										</button>
 <!-- 수량 기입 버튼 -->
-										<input id="count-order-product" class="input-count-order-product" type="text">
-<!-- 장바구니 수량 감소 버튼 -->									
-										<button class="btn-minus">
+										<input id="count-order-product" class="input-count-order-product" type="number" value="0">
+<!-- 현재 물품 수량 감소 버튼 -->									
+										<button id="btn-minus-quantity-current"  class="btn-minus">
 											<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<g filter="url(#filter0_d_64_310)">
 													<path d="M4 4.5H24H44" stroke="#FF6868" stroke-width="8" stroke-linecap="round"/>
@@ -169,7 +155,7 @@ ProductVO(
     	<script>
     		$(document).ready(function(e){
 
-    			
+    			//우측 nav 메뉴 버튼들 관련
     			$("#btn-treat-menu-aside").on('click', function(){
     				location.href= "/product/product-list-view?category=treat"
     			})
@@ -177,6 +163,35 @@ ProductVO(
     				location.href= "/product/product-list-view?category=kibble"
     			})
     			
+				//현재 물품 수량 추가 버튼
+				$("#btn-plus-quantity-current").on('click',function(){
+					let count = $("#count-order-product").val();
+					let number = Number(count);
+					console.log(`count before +1 : ${number}`);
+					number += 1;
+					count = String(number);
+					$("#count-order-product").val(count);
+					console.log(`count 1 plused : ${$("#count-order-product").val()}`);
+				})
+
+				//현재 물품 수량 감소 버튼
+				$("#btn-minus-quantity-current").on('click',function(){
+					let count = $("#count-order-product").val();
+					let number = Number(count);
+					console.log(`count before +1 : ${number}`);
+
+					if(number < 1){
+						return;
+					}
+					number -= 1;
+					count = String(number);
+					$("#count-order-product").val(count);
+					console.log(`count 1 minused : ${$("#count-order-product").val()}`);
+				})
+				
+				$("#btn-add-to-cart").on('click', function(){
+
+				})
     			
     		})//document ready
     	
