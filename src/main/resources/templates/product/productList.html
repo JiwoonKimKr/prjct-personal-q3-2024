@@ -19,13 +19,23 @@
 						    	------
 							</button>
 						  	<div class="dropdown-menu">
-							    <a class="dropdown-item" href="#">6개월 미만</a>
-							    <a class="dropdown-item" href="#">성견</a>
-							    <a class="dropdown-item" href="#">고령견</a>
+							    <a class="param-to-add-dropdown dropdown-item" th:href="${url}">
+							    	전체
+						    	</a>
+							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="under6months">
+							    	6개월 미만
+						    	</a> <!--  href="/product/product-list-view?agePetProper=under6months" -->
+							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="adult">
+							    	성견
+						    	</a> <!-- href="/product/product-list-view?agePetProper=adult" -->
+							    <a class="param-to-add-dropdown dropdown-item" href="#" data-field="agePetProper" data-value="senior">
+							    	고령견
+						    	</a> <!-- href="/product/product-list-view?agePetProper=senior" -->
 					  		</div>
 						</div>
 					</div>
 				</div>
+<!-- scroll-bar -->				
 				<div class="groups-cards-collapsed">
 					<!-- 				
 					<div class="group-scroll-bar">
@@ -38,21 +48,11 @@
 model attributes:
 listProducts
 
-	private Integer id;
-	private String name;
-	private String category;
-	private int price;
-	private String agePetProper;
-	private String imgProfile;
-	private String imgThumbnail;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
-
  -->					
 						<th:block th:each="unit : ${listProducts}">
-							<!-- 하나의 Card Unit이 320px X 320px; -->
+<!-- 하나의 Card Unit이 320px X 320px; -->
 							<div class="unit-card-product">
-								<a th:href="@{/product/product-detail-view(productId=${unit.id})}">
+								<a th:href="@{/product/product-list-view(productId=${unit.id})}">
 									<img class="img-unit-list-view" th:src="${unit.imgProfile}" width="270" height="270">
 								</a>
 								<div class="group-link-from-unit">
@@ -60,7 +60,10 @@ listProducts
 										<span th:text="${unit.name}"></span>
 									</a>
 									<a class="category-unit-list-view anchor-unit-list-view" th:data-field="category" th:data-value="${unit.category}" href="#">
-										<span th:text="${unit.category}"></span>
+										<span th:text="${unit.categoryTranslatedK}"></span>
+									</a>
+									<a class="agePetProper-unit-list-view anchor-unit-list-view" th:data-field="agePetProper" th:data-value="${unit.agePetProper}" href="#">
+										<span th:text="${unit.agePetProperTranslatedK}"></span>
 									</a>
 								</div>
 							</div>
@@ -71,7 +74,7 @@ listProducts
 <!-- 우측 nav 메뉴; groups-nav-aside -->			
 			<aside class="groups-nav-aside">
 <!-- 간식 버튼 -->			
-				<button class="btn-skyblue-menu-aside mt-5">
+				<button id="btn-treat-menu-aside" class="btn-skyblue-menu-aside mt-5">
 					<div class="icon-footprint">
 						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
@@ -84,7 +87,7 @@ listProducts
 					간식
 				</button>
 <!-- 사료 버튼 -->				
-				<button class="btn-purple-menu-aside mt-5">
+				<button id="btn-kibble-menu-aside" class="btn-purple-menu-aside mt-5">
 					<div class="icon-footprint">
 						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
@@ -97,7 +100,7 @@ listProducts
 					사료
 				</button>
 <!-- 커뮤니티 버튼 -->				
-				<button class="btn-magenta-menu-aside margin-top-100px">
+				<button id="btn-community-menu-aside" class="btn-magenta-menu-aside margin-top-100px">
 					<div class="icon-footprint">
 						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
@@ -116,6 +119,35 @@ listProducts
 
 	<th:block layout:fragment="script">
     	<script>
+    		$(document).ready(function(e){
+    			$(".param-to-add-dropdown").on('click', function(e){
+    				e.preventDefault();
+    				let link = window.location.href;
+    				let url = new URL(link.toString());
+    				console.log(url);
+    				let urlParams = url.searchParams;
+    				console.log(urlParams.toString());
+
+    				let field = $(this).data('field'); 
+    				let value = $(this).data('value'); 
+    				console.log(`${field}, ${value}`);
+    				
+    				urlParams.append(field, value);
+    				console.log(urlParams.toString());
+    				
+    				location.href= url;
+    				
+    			})
+    			
+    			$("#btn-treat-menu-aside").on('click', function(){
+    				location.href= "/product/product-list-view?category=treat"
+    			})
+    			$("#btn-kibble-menu-aside").on('click', function(){
+    				location.href= "/product/product-list-view?category=kibble"
+    			})
+    			
+    			
+    		})//document ready
     	
     	</script>
 	</th:block>

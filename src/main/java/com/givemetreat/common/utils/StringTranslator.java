@@ -8,7 +8,7 @@ public class StringTranslator {
 	 * kibble : 사료
 	 * treat : 간식
 	 */
-	public static String translateCategory(String type) {
+	public static String translateCategoryE2K(String type) {
 		if(type.equals("kibble")) return "사료";
 		if(type.equals("treat")) return "간식";
 
@@ -21,7 +21,7 @@ public class StringTranslator {
 	 * adult : 성견
 	 * senior : 고령견
 	 */
-	public static String translateAgePetProper(String type) {
+	public static String translateAgePetProperE2K(String type) {
 		if(type.equals("under6months")) return "6개월 미만";
 		if(type.equals("adult")) return "성견";
 		if(type.equals("senior")) return "고령견";
@@ -37,7 +37,7 @@ public class StringTranslator {
 	 * 
 	 * TODO 다른 할부 개월 목록 더 추가해야
 	 */
-	public static String translatePaymentType(String type) {
+	public static String translatePaymentTypeE2K(String type) {
 		if(type.equals("CreditCard")) return "신용카드";
 		if(type.equals("AccounTranster")) return "계좌이체";
 		return "";
@@ -50,7 +50,7 @@ public class StringTranslator {
 	 * 
 	 * TODO 다른 할부 개월 목록 더 추가해야
 	 */
-	public static String translateMonthlyInstallment(String type) {
+	public static String translateMonthlyInstallmentE2K(String type) {
 		if(type.equals("instance")) return "일시불";
 		if(type.endsWith("M")) return type.replace("M", "개월");
 		return "";
@@ -62,7 +62,7 @@ public class StringTranslator {
 	 * 
 	 * TODO 다른 할부 개월 목록 더 추가해야
 	 */
-	public static String translateHasCanceled(int type) {
+	public static String translateHasCanceledE2K(int type) {
 		if(type == 0) return "결제 완료";
 		if(type == 1) return "결제 취소";
 		return "";
@@ -76,7 +76,7 @@ public class StringTranslator {
 	 * EndPoint: 배송 상차
 	 * DeliveryCurrent: 배송중
 	 */
-	public static String translateStatusDelivery(String status) {
+	public static String translateStatusDeliveryE2K(String status) {
 		if(status.equals("PaymentBilled")) return "결제 완료";
 		if(status.equals("PackingFinished")) return "배송준비 완료";
 		if(status.equals("TerminalHub")) return "터미널 이동";

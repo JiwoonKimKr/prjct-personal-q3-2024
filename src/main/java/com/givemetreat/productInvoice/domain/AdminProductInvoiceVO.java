@@ -17,9 +17,9 @@ public class AdminProductInvoiceVO {
 		this.productId = product.getId();
 		this.productName = product.getName();
 		
-		this.category = StringTranslator.translateCategory(product.getCategory());
+		this.category = StringTranslator.translateCategoryE2K(product.getCategory());
 		this.price = product.getPrice();
-		this.agePetProper = StringTranslator.translateAgePetProper(product.getAgePetProper());
+		this.agePetProper = StringTranslator.translateAgePetProperE2K(product.getAgePetProper());
 		this.imgProfile = product.getImgProfile();
 		this.imgThumbnail = product.getImgThumbnail();
 	}

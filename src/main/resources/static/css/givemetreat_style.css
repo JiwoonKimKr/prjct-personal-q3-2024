@@ -1006,6 +1006,8 @@ footer a:hover {
 .groups-product-list::-webkit-scrollbar-thumb{
 	background-color: #51C3ED;
 	border-radius: 15px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
 }
 .groups-product-list::-webkit-scrollbar-track{
 	background-color: #FFF;
@@ -1120,10 +1122,10 @@ footer a:hover {
 
 .group-link-from-unit{
 	margin-top: 5px;
-	padding: 0px 25px 0px 25px;
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	align-items:center;
 }
 
 .anchor-unit-list-view{
@@ -1136,10 +1138,20 @@ footer a:hover {
 }
 
 .name-unit-list-view{
-	margin-right: 15px;
+	margin-right: 10px;
 	color: #555;
 }
 
 .category-unit-list-view{
+	margin-right: 5px;
 	color: #7351ED;
+	
+	background-color: #DDD;
+}
+
+.agePetProper-unit-list-view{
+	color: #FF6868;
+	font-size: 15px;
+	
+	background-color: #EEE;
 }
