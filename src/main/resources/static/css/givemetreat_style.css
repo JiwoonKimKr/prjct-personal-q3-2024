@@ -1234,6 +1234,10 @@ input::-webkit-inner-spin-button {
 	font-size: 55px;
 }
 
+.title-price-current-detail-product{
+	font-size: 25px;
+}
+
 .group-lower-side-detail-product{
 	width: 100%;
 	height: 1000px;
@@ -1246,7 +1250,7 @@ input::-webkit-inner-spin-button {
 	
 	width: 100%;
 	height: 80px;
-	margin-bottom: 180px;
+	margin-bottom: 150px;
 	
 	display: flex;
 	justify-content: flex-start;

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/defaultLayout}">
+      
+	<head>
+		<title>장바구니</title>
+	</head>
+	<section layout:fragment="contents" class="contents w-100">
+		<div class="d-flex justify-content-between w-100">
+			<article class="group-article background-cards-list">							
+<!--
+ Model Attributes:
+ 
+ listItems
+ -->
+ 				<div>
+ 					[[${listItems}]]
+ 				</div>
+			</article>
+<!-- 우측 nav 메뉴; groups-nav-aside -->			
+			<aside class="groups-nav-aside">
+<!-- 간식 버튼 -->			
+				<button id="btn-treat-menu-aside" class="btn-skyblue-menu-aside mt-5">
+					<div class="icon-footprint">
+						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
+							<path d="M34.2103 1.51109C29.8309 1.45837 22.2589 15.9046 34.1801 20.8325C36.167 21.6538 40.4884 21.4482 41.8791 14.0552C43.6176 4.8139 38.5898 1.5638 34.2103 1.51109Z" fill="white"/>
+							<path d="M2.02395 28.3825C-0.0529071 31.1223 6.80433 41.0187 15.8964 35.2585C17.4117 34.2985 19.2759 31.5035 14.6099 28.0038C8.77754 23.6291 4.10081 25.6426 2.02395 28.3825Z" fill="white"/>
+							<path d="M53.1236 11.9822C51.4312 9.12317 41.7988 10.7021 44.1983 20.6313C44.5982 22.2862 46.387 24.9917 50.3427 22.5753C55.2873 19.5547 54.8159 14.8413 53.1236 11.9822Z" fill="white"/>
+							<path d="M39.2466 46.4086C29.5487 47.8434 19.409 45.712 18.1305 39.0789C16.0389 31.4115 28.0012 26.598 33.7038 26.0902C39.4063 25.5824 51.0209 25.3334 52.0903 31.1998C53.1596 37.0662 48.9444 44.9739 39.2466 46.4086Z" fill="white"/>
+						</svg>
+					</div>
+					간식
+				</button>
+<!-- 사료 버튼 -->				
+				<button id="btn-kibble-menu-aside" class="btn-purple-menu-aside mt-5">
+					<div class="icon-footprint">
+						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
+							<path d="M34.2103 1.51109C29.8309 1.45837 22.2589 15.9046 34.1801 20.8325C36.167 21.6538 40.4884 21.4482 41.8791 14.0552C43.6176 4.8139 38.5898 1.5638 34.2103 1.51109Z" fill="white"/>
+							<path d="M2.02395 28.3825C-0.0529071 31.1223 6.80433 41.0187 15.8964 35.2585C17.4117 34.2985 19.2759 31.5035 14.6099 28.0038C8.77754 23.6291 4.10081 25.6426 2.02395 28.3825Z" fill="white"/>
+							<path d="M53.1236 11.9822C51.4312 9.12317 41.7988 10.7021 44.1983 20.6313C44.5982 22.2862 46.387 24.9917 50.3427 22.5753C55.2873 19.5547 54.8159 14.8413 53.1236 11.9822Z" fill="white"/>
+							<path d="M39.2466 46.4086C29.5487 47.8434 19.409 45.712 18.1305 39.0789C16.0389 31.4115 28.0012 26.598 33.7038 26.0902C39.4063 25.5824 51.0209 25.3334 52.0903 31.1998C53.1596 37.0662 48.9444 44.9739 39.2466 46.4086Z" fill="white"/>
+						</svg>
+					</div>
+					사료
+				</button>
+<!-- 커뮤니티 버튼 -->				
+				<button id="btn-community-menu-aside" class="btn-magenta-menu-aside margin-top-100px">
+					<div class="icon-footprint">
+						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
+							<path d="M34.2103 1.51109C29.8309 1.45837 22.2589 15.9046 34.1801 20.8325C36.167 21.6538 40.4884 21.4482 41.8791 14.0552C43.6176 4.8139 38.5898 1.5638 34.2103 1.51109Z" fill="white"/>
+							<path d="M2.02395 28.3825C-0.0529071 31.1223 6.80433 41.0187 15.8964 35.2585C17.4117 34.2985 19.2759 31.5035 14.6099 28.0038C8.77754 23.6291 4.10081 25.6426 2.02395 28.3825Z" fill="white"/>
+							<path d="M53.1236 11.9822C51.4312 9.12317 41.7988 10.7021 44.1983 20.6313C44.5982 22.2862 46.387 24.9917 50.3427 22.5753C55.2873 19.5547 54.8159 14.8413 53.1236 11.9822Z" fill="white"/>
+							<path d="M39.2466 46.4086C29.5487 47.8434 19.409 45.712 18.1305 39.0789C16.0389 31.4115 28.0012 26.598 33.7038 26.0902C39.4063 25.5824 51.0209 25.3334 52.0903 31.1998C53.1596 37.0662 48.9444 44.9739 39.2466 46.4086Z" fill="white"/>
+						</svg>
+					</div>
+					커뮤니티
+				</button>
+
+			</aside>
+		</div>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script>
+    		$(document).ready(function(e){
+
+    			//우측 nav 메뉴 버튼들 관련
+    			$("#btn-treat-menu-aside").on('click', function(){
+    				location.href= "/product/product-list-view?category=treat"
+    			})
+    			$("#btn-kibble-menu-aside").on('click', function(){
+    				location.href= "/product/product-list-view?category=kibble"
+    			})
+    			
+				//현재 물품 수량 추가 버튼
+				$("#btn-plus-quantity-current").on('click',function(){
+					let count = $("#count-order-product").val();
+					let number = Number(count);
+					console.log(`count before +1 : ${number}`);
+					number += 1;
+					count = String(number);
+					$("#count-order-product").val(count);
+					console.log(`count 1 plused : ${$("#count-order-product").val()}`);
+				}) // btn plus quantity current on click
+
+				//현재 물품 수량 감소 버튼
+				$("#btn-minus-quantity-current").on('click',function(){
+					let count = $("#count-order-product").val();
+					let number = Number(count);
+					console.log(`count before -1 : ${number}`);
+
+					if(number < 1){
+						return;
+					}
+					number -= 1;
+					count = String(number);
+					$("#count-order-product").val(count);
+					console.log(`count 1 minused : ${$("#count-order-product").val()}`);
+				})// btn minus quantity current on click
+				
+				//해당 물품 장바구니 추가 버튼
+				$("#btn-add-to-cart").on('click', function(){
+					let count = $("#count-order-product").val();
+					let number = Number(count);
+					console.log(`count to add cart : ${number}`);
+					
+					if(number < 1){
+						return;
+					}
+					let productId = $(this).data('product-id');
+					let url = "/user/shopping-cart/add-product"
+					let params = {"productId": productId
+								,"quantity": number};
+
+					console.log(`${url}, ${params}`);
+					return;
+
+					$.post(url, params)
+					.done(function(data){
+						if(data.code == 200){
+							//쇼핑카트 뷰로 이동; 로그인 상태에서만 이동 가능;
+							location.href= "/user/shopping-cart-view";
+						} else if(data.code == 403){
+							alert(data.error_message);
+							location.href= "/user/sign-in-view";
+						} else {
+							alert(data.error_message);
+						}
+						
+					})// ajax						
+				})//btn add to cart on click
+    			
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>
