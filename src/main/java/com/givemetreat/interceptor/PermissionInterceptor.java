@@ -28,7 +28,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 				|| uri.startsWith("/shopping-cart")
 				|| uri.startsWith("/invoice"))
 				){
-			response.sendRedirect("/");
+			response.sendRedirect("/user/sign-in-view");
 			return false;
 		}
 		

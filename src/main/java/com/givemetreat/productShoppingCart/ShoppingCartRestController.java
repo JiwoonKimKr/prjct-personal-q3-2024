@@ -26,6 +26,7 @@ public class ShoppingCartRestController {
 	@PostMapping("/add-product")
 	public Map<String, Object> addProduct(@RequestParam int productId
 										, @RequestParam int quantity
+										, @RequestParam(required = false) Integer cartItemId
 										, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
 		
@@ -40,7 +41,8 @@ public class ShoppingCartRestController {
 		
 		ProductShoppingCartEntity itemEnlisted = productShoppingCartBO.addProductsByProductIdAndQuantity(userId
 															, productId
-															, quantity);
+															, quantity
+															, cartItemId);
 		
 		if(itemEnlisted == null) {
 			log.info("[UserShoppingCartRestController addProduct()] current item got failed to get enlisted in cart.");
@@ -53,6 +55,7 @@ public class ShoppingCartRestController {
 		log.info("[UserShoppingCartRestController addProduct()] success to enlist current item in cart.");
 		result.put("code", 200);
 		result.put("success", "해당 상품이 장바구니에 담겼습니다.");
+		result.put("quantity", itemEnlisted.getQuantity());
 		
 		return result;
 	}

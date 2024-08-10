@@ -194,6 +194,13 @@
 				
 				//해당 물품 장바구니 추가 버튼
 				$("#btn-add-to-cart").on('click', function(){
+					let userId = /*[[${session.userId}]] */ null;
+					if(!userId){
+						alert("로그인 후 이용 가능합니다.");
+						location.href="/user/sign-in-view"
+						return;
+					}
+					
 					let count = $("#count-order-product").val().trim();
 					let number = Number(count);
 					console.log(`count to add cart : ${number}`);

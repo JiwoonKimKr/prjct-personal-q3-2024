@@ -21,6 +21,8 @@ public class ProductShoppingCartVO {
 		this.categoryTranslated = product.getCategoryTranslatedK();
 		this.agePetProper = product.getAgePetProper();
 		this.agePetProperTranslated = product.getAgePetProperTranslatedK();
+		this.imgProfile = product.getImgProfile();
+		this.imgThumbnail = product.getImgThumbnail();		
 		
 	}
 	
@@ -33,6 +35,8 @@ public class ProductShoppingCartVO {
 	private String categoryTranslated;
 	private String agePetProper;
 	private String agePetProperTranslated;
+	private String imgProfile;
+	private String imgThumbnail;
 	
 
 }

@@ -9,13 +9,106 @@
 	<section layout:fragment="contents" class="contents w-100">
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article background-cards-list">							
+ 				<div class="">
+ 					<div class="title-cart-view">
+ 						<!-- icon-bucket-red-line -->
+ 						<div class="icon-bucket-red-line pb-2 mr-2">
+							<svg width="59" height="52" viewBox="0 0 59 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M55.4312 22.3311C57.3697 23.446 60.0835 27.2526 55.4312 33.5598M55.4312 22.3311L45.4578 33.5598M55.4312 22.3311L49.0652 22.3312M55.4312 33.5598H45.4578M55.4312 33.5598L48.9992 42.2799M29.9672 51L37.7125 42.2799M29.9672 51H42.5671L48.9992 42.2799M29.9672 51V42.2799M29.9672 51L21.9637 42.2799M29.9672 51H16.9474L10.3009 42.2799M37.7125 42.2799L45.4578 33.5598M37.7125 42.2799H29.9672M37.7125 42.2799H48.9992M45.4578 33.5598H35.5327M29.9672 33.5598V22.3311M29.9672 33.5598H35.5327M29.9672 33.5598V42.2799M29.9672 33.5598H24.2162M29.9672 22.3311H42.6992M29.9672 22.3311H16.8108M35.5327 33.5598L29.9672 42.2799M35.5327 33.5598L42.6992 22.3311M29.9672 42.2799H21.9637M29.9672 42.2799L24.2162 33.5598M42.6992 22.3311L49.0652 22.3312M3.65438 22.3311C1.65132 23.446 -1.15296 27.2526 3.65438 33.5598M3.65438 22.3311L13.9602 33.5598M3.65438 22.3311H16.8108M3.65438 33.5598H13.9602M3.65438 33.5598L10.3009 42.2799M21.9637 42.2799L13.9602 33.5598M21.9637 42.2799H10.3009M13.9602 33.5598H24.2162M24.2162 33.5598L16.8108 22.3311M10.2326 22.3311C10.2326 4.86655 29.345 5.12983 29.345 5.12983C29.345 5.12983 49.0652 4.86656 49.0652 22.3312M7.04958 22.3311C7.04958 6.56305 18.2349 0.986253 29.345 1C40.4851 1.01378 51.626 5.03728 51.626 22.5019" stroke="#FF6868" stroke-width="2"/>
+							</svg>
+ 						</div>
+ 						<span>
+ 							장바구니
+						</span>
+ 					</div>
 <!--
  Model Attributes:
  
  listItems
- -->
- 				<div class="mt-5">
- 					[[${listItems}]]
+ 
+ [ProductShoppingCartVO
+ (cartItemId=1
+ , productId=3
+ , quantity=1
+ , productName=나도줘으르렁
+ , category=kibble
+ , categoryTranslated=사료
+ , agePetProper=under6months
+ , agePetProperTranslated=6개월 미만
+ , imgProfile=/images/productProfile_1722837141707/feed_05082024.jpg
+ , imgThumbnail=/images/productProfile_1722837141707/feed_05082024.jpg)
+ ]
+ -->	 					
+ 					<div class="list-items-in-cart">
+ 					<!-- item 개별 정보들 -->
+	 					<th:block th:each="item : ${listItems}">
+	 						<div class="card-item-detail">
+	 							<div class="image-card-item-detail">
+	 								<img th:src="${item.imgProfile}" width="200" height="200">
+	 							</div>
+	 							<div class="groups-right-side-card-item-detail">
+	 								<div class="title-card-item-detail">
+	 									<span th:text="${item.productName}"></span>
+	 								</div>
+	 								<div class="group-btns-card-item-detail">
+										<div class="group-btns-quantity-adjust">
+	<!-- 현재 물품 수량 추가 버튼 -->								
+											<button class="btn-plus">
+												<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<g filter="url(#filter0_d_64_304)">
+														<path fill-rule="evenodd" clip-rule="evenodd" d="M28 4.5C28 2.29086 26.2091 0.5 24 0.5C21.7909 0.5 20 2.29086 20 4.5V20.5H4C1.79086 20.5 0 22.2909 0 24.5C0 26.7091 1.79086 28.5 4 28.5H20L20 44.5C20 46.7091 21.7909 48.5 24 48.5C26.2091 48.5 28 46.7091 28 44.5L28 28.5H44C46.2091 28.5 48 26.7091 48 24.5C48 22.2909 46.2091 20.5 44 20.5H28V4.5Z" fill="#51C3ED"/>
+													</g>
+													<defs>
+														<filter id="filter0_d_64_304" x="0" y="0.5" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+															<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+															<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+															<feOffset dx="2" dy="2"/>
+															<feComposite in2="hardAlpha" operator="out"/>
+															<feColorMatrix type="matrix" values="0 0 0 0 0.984314 0 0 0 0 0.666667 0 0 0 0 0.388235 0 0 0 1 0"/>
+															<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_304"/>
+															<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_304" result="shape"/>
+														</filter>
+													</defs>
+												</svg>
+											</button>
+	<!-- 수량 기입 버튼 -->
+											<input class="quantity-item-current input-count-order-product-cart-view" type="number" th:value="${item.quantity}" th:data-cart-item-id="${item.cartItemId}" th:data-product-id="${item.productId}">
+	<!-- 현재 물품 수량 감소 버튼 -->									
+											<button class="btn-minus">
+												<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<g filter="url(#filter0_d_64_310)">
+														<path d="M4 4.5H24H44" stroke="#FF6868" stroke-width="8" stroke-linecap="round"/>
+													</g>
+													<defs>
+														<filter id="filter0_d_64_310" x="0" y="0.5" width="50" height="10" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+															<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+															<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+															<feOffset dx="2" dy="2"/>
+															<feComposite in2="hardAlpha" operator="out"/>
+															<feColorMatrix type="matrix" values="0 0 0 0 0.407843 0 0 0 0 1 0 0 0 0 0.635294 0 0 0 1 0"/>
+															<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_310"/>
+															<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_310" result="shape"/>
+														</filter>
+													</defs>
+												</svg>
+											</button>
+										</div>
+										
+										<div class="btns-pay-or-not d-flex justify-content-start ml-5">
+		<!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
+											<button class="btn-pay-product-current">
+												해당 항목 결제
+											</button>
+		<!-- 취소하기 버튼; 상품 리스트 페이지로 넘어가야 -->									
+											<button class="btn-cancel-product-current ml-3">
+												취소하기
+											</button>
+										</div>										
+									</div>
+								</div>	 							
+	 						</div>
+	 					</th:block>
+ 					</div>
  				</div>
 			</article>
 <!-- 우측 nav 메뉴; groups-nav-aside -->			
@@ -77,62 +170,52 @@
     			})
     			
 				//현재 물품 수량 추가 버튼
-				$("#btn-plus-quantity-current").on('click',function(){
-					let count = $("#count-order-product").val();
+				$(".btn-plus").on('click',function(){
+					//형제 태그 중 숫자 인풋 찾기
+					const inputCount = $(this).siblings("input.quantity-item-current")[0];
+					let count = inputCount.value.trim();
 					let number = Number(count);
-					console.log(`count before +1 : ${number}`);
 					number += 1;
 					count = String(number);
-					$("#count-order-product").val(count);
-					console.log(`count 1 plused : ${$("#count-order-product").val()}`);
-				}) // btn plus quantity current on click
-
-				//현재 물품 수량 감소 버튼
-				$("#btn-minus-quantity-current").on('click',function(){
-					let count = $("#count-order-product").val();
-					let number = Number(count);
-					console.log(`count before -1 : ${number}`);
-
-					if(number < 1){
-						return;
-					}
-					number -= 1;
-					count = String(number);
-					$("#count-order-product").val(count);
-					console.log(`count 1 minused : ${$("#count-order-product").val()}`);
-				})// btn minus quantity current on click
-				
-				//해당 물품 장바구니 추가 버튼
-				$("#btn-add-to-cart").on('click', function(){
-					let count = $("#count-order-product").val();
-					let number = Number(count);
-					console.log(`count to add cart : ${number}`);
+					inputCount.setAttribute('value', count)
+					console.log(`count 1 plused : ${inputCount.value}`);
 					
-					if(number < 1){
+					//★★★★★일단 10개 이상 주문 하면 리턴 시킴!
+					if(number >= 10){
 						return;
 					}
-					let productId = $(this).data('product-id');
-					let url = "/user/shopping-cart/add-product"
+					
+					let productId = inputCount.getAttribute('data-product-id');
+					let cartItemId = inputCount.getAttribute('data-cart-item-id');
 					let params = {"productId": productId
-								,"quantity": number};
-
-					console.log(`${url}, ${params}`);
-					return;
-
+								,"quantity": inputCount.value
+								, "cartItemId": cartItemId};
+					
+					console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
+					
+					let url = "/shopping-cart/add-product";
+					
 					$.post(url, params)
 					.done(function(data){
 						if(data.code == 200){
-							//쇼핑카트 뷰로 이동; 로그인 상태에서만 이동 가능;
-							location.href= "/user/shopping-cart-view";
+							let countAdded = data.quantity;
+							inputCount.setAttribute('value', countAdded);
+							console.log("count added:" + countAdded);
 						} else if(data.code == 403){
 							alert(data.error_message);
 							location.href= "/user/sign-in-view";
 						} else {
 							alert(data.error_message);
 						}
-						
-					})// ajax						
-				})//btn add to cart on click
+					})//ajax
+				}) // btn plus quantity current on click
+
+				//현재 물품 수량 감소 버튼
+				$(".btn-minus").on('click',function(){
+
+					
+				})// btn minus quantity current on click
+				
     			
     		})//document ready
     	

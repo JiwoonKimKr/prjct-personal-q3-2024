@@ -12,7 +12,9 @@ import com.givemetreat.productShoppingCart.domain.ProductShoppingCartVO;
 import com.givemetreat.productShoppingCart.repository.ProductShoppingCartRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProductShoppingCartBO {
@@ -46,8 +48,39 @@ public class ProductShoppingCartBO {
 	 * @param quantity
 	 * @return
 	 */
-	public ProductShoppingCartEntity addProductsByProductIdAndQuantity(int userId, int productId, int quantity){
+	@Transactional
+	public ProductShoppingCartEntity addProductsByProductIdAndQuantity(int userId, int productId, int quantity, Integer id){
 		
+		//막 넣으면 안 된다 ㅠㅠ 13:10_10 08 2024
+		//productBuffer와 달리 사용자 장바구니는 Column(Field)에 갯수를 기입한다.
+		//따라서 userId와 productId가 중복되는 경우는 존재할 수 없다!
+		
+		ProductShoppingCartEntity entity = productShoppingCartRepository.findByUserIdAndProductId(userId, productId);
+		
+		if(id != null) {
+			ProductShoppingCartEntity entityForValidation = productShoppingCartRepository.findById(id).orElse(null);
+			if(entity.equals(entityForValidation) == false) {
+				log.warn("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
+						+ " A Record with current userId & productId doesn't match with primary key."
+						+ " userId:{}, productId:{}, quantity:{}, id:{}", userId, productId, quantity, id);
+				return null;
+			}
+		}
+		
+		if(entity != null) {
+			log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
+					+ " A Record for current arguments was already exist."
+					+ " userId:{}, productId:{}, quantity:{}", userId, productId, quantity);
+			entity = entity.toBuilder()
+						.quantity(quantity)
+						.build();
+			productShoppingCartRepository.save(entity);
+			return entity;
+		}
+		
+		log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
+				+ "No record has found, so new one get made."
+				+ " userId:{}, productId:{}, quantity:{}", userId, productId, quantity);		
 		return productShoppingCartRepository.save(ProductShoppingCartEntity.builder()
 																		.userId(userId)
 																		.productId(productId)

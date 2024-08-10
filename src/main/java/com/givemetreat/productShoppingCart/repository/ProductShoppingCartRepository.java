@@ -10,4 +10,6 @@ public interface ProductShoppingCartRepository extends JpaRepository<ProductShop
 
 	List<ProductShoppingCartEntity> findByUserId(int userId);
 
+	ProductShoppingCartEntity findByUserIdAndProductId(int userId, int productId);
+
 }
