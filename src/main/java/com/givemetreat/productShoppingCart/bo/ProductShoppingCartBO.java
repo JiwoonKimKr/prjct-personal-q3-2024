@@ -49,7 +49,7 @@ public class ProductShoppingCartBO {
 	 * @return
 	 */
 	@Transactional
-	public ProductShoppingCartEntity addProductsByProductIdAndQuantity(int userId, int productId, int quantity, Integer id){
+	public ProductShoppingCartEntity updateQuantity(int userId, int productId, int quantity, Integer id){
 		
 		//막 넣으면 안 된다 ㅠㅠ 13:10_10 08 2024
 		//productBuffer와 달리 사용자 장바구니는 Column(Field)에 갯수를 기입한다.
@@ -74,6 +74,12 @@ public class ProductShoppingCartBO {
 			entity = entity.toBuilder()
 						.quantity(quantity)
 						.build();
+			//quantity가 0일 경우 db에서 삭제해야
+			if(quantity == 0) {
+				deleteEntity(entity);
+				return entity;
+			}
+			
 			productShoppingCartRepository.save(entity);
 			return entity;
 		}
@@ -86,6 +92,14 @@ public class ProductShoppingCartBO {
 																		.productId(productId)
 																		.quantity(quantity)
 																		.build());
+	}
+
+	@Transactional
+	private void deleteEntity(ProductShoppingCartEntity entity) {
+		log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
+				+ " current entity get deleted."
+				+ " entity:{}", entity);
+		productShoppingCartRepository.delete(entity);
 	}
 	
 }

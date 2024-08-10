@@ -20,25 +20,7 @@
  						<span>
  							장바구니
 						</span>
- 					</div>
-<!--
- Model Attributes:
- 
- listItems
- 
- [ProductShoppingCartVO
- (cartItemId=1
- , productId=3
- , quantity=1
- , productName=나도줘으르렁
- , category=kibble
- , categoryTranslated=사료
- , agePetProper=under6months
- , agePetProperTranslated=6개월 미만
- , imgProfile=/images/productProfile_1722837141707/feed_05082024.jpg
- , imgThumbnail=/images/productProfile_1722837141707/feed_05082024.jpg)
- ]
- -->	 					
+ 					</div>	 					
  					<div class="list-items-in-cart">
  					<!-- item 개별 정보들 -->
 	 					<th:block th:each="item : ${listItems}">
@@ -49,6 +31,7 @@
 	 							<div class="groups-right-side-card-item-detail">
 	 								<div class="title-card-item-detail">
 	 									<span th:text="${item.productName}"></span>
+	 									<span class="ml-3" th:text="|￦ ${item.price}|"></span>
 	 								</div>
 	 								<div class="group-btns-card-item-detail">
 										<div class="group-btns-quantity-adjust">
@@ -72,7 +55,8 @@
 												</svg>
 											</button>
 	<!-- 수량 기입 버튼 -->
-											<input class="quantity-item-current input-count-order-product-cart-view" type="number" th:value="${item.quantity}" th:data-cart-item-id="${item.cartItemId}" th:data-product-id="${item.productId}">
+											<input class="quantity-item-current input-count-order-product-cart-view" type="number" th:value="${item.quantity}"
+											 th:data-cart-item-id="${item.cartItemId}" th:data-product-id="${item.productId}" th:data-price=${item.price}>
 	<!-- 현재 물품 수량 감소 버튼 -->									
 											<button class="btn-minus">
 												<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,6 +93,24 @@
 	 						</div>
 	 					</th:block>
  					</div>
+ 					<!-- 제품상세 내역 -->	
+					<div class="groups-buttom-cart-total">
+						<div class="group-cost-total-current">
+							<div class="label-cost-total-current">
+								전체
+							</div>
+							<div class="text-cost-total-current">
+								<span id="cost-total-current">0</span>
+								<span class="ml-2">원</span>
+							</div>
+						</div>
+						<button id="btn-pay-cart" class="btn-pay-cart-total-bottom">
+							장바구니 결제하기
+						</button>
+						<button id="btn-cancel-cart-total" class="btn-cancel-cart-total-bottom">
+							장바구니 취소하기
+						</button>
+					</div>
  				</div>
 			</article>
 <!-- 우측 nav 메뉴; groups-nav-aside -->			
@@ -160,6 +162,7 @@
 	<th:block layout:fragment="script">
     	<script>
     		$(document).ready(function(e){
+    			updateCostCurrentCartView();
 
     			//우측 nav 메뉴 버튼들 관련
     			$("#btn-treat-menu-aside").on('click', function(){
@@ -169,21 +172,48 @@
     				location.href= "/product/product-list-view?category=kibble"
     			})
     			
-				//현재 물품 수량 추가 버튼
-				$(".btn-plus").on('click',function(){
+    			function updateCostCurrentCartView (){
+    				let listItems = $(".quantity-item-current");
+    				console.log(listItems);
+    				let sum = 0;
+    				for(let item of listItems){
+	    				let count = item.value;
+	    				let price = item.getAttribute('data-price');
+	    				console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
+	    				count = Number(count);
+	    				price = Number(price);
+    					sum += count * price;
+    					console.log("sum +=" + count*price);
+    				}
+    				$("#cost-total-current").text(sum);
+    				console.log(`"[updateCostCurrentCartView())] current cost total: ${sum}"`)
+    			}    			
+    			
+    			function updateQuantity(e , num){
 					//형제 태그 중 숫자 인풋 찾기
-					const inputCount = $(this).siblings("input.quantity-item-current")[0];
-					let count = inputCount.value.trim();
+					
+					let inputCount;
+					
+					if(e.localName == "input"){
+						//함수 요청한 이벤트 태그가 input인 경우
+						inputCount = e;
+					} else{
+						//함수 요청한 이벤트 태그의 형제가 input인 경우
+						inputCount = e.siblings("input.quantity-item-current")[0];
+					}
+					console.log(inputCount);
+					let count = inputCount.value;
 					let number = Number(count);
-					number += 1;
+					number += num;
+					console.log("number: " + number);
+					
+					//0보다 작으면 0으로 변환
+					if(number < 0){
+						number = 0;
+					}
 					count = String(number);
 					inputCount.setAttribute('value', count)
-					console.log(`count 1 plused : ${inputCount.value}`);
-					
-					//★★★★★일단 10개 이상 주문 하면 리턴 시킴!
-					if(number >= 10){
-						return;
-					}
+					console.log(`count updated : ${inputCount.value}`);
 					
 					let productId = inputCount.getAttribute('data-product-id');
 					let cartItemId = inputCount.getAttribute('data-cart-item-id');
@@ -194,13 +224,20 @@
 					console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
 					
 					let url = "/shopping-cart/add-product";
+					console.log(url.toString());
 					
 					$.post(url, params)
 					.done(function(data){
 						if(data.code == 200){
 							let countAdded = data.quantity;
 							inputCount.setAttribute('value', countAdded);
-							console.log("count added:" + countAdded);
+							console.log("count updated After AJAX :" + countAdded);
+							
+							//수량 0 되었을 때 해당 항목 삭제
+							if(countAdded == 0){
+								alert("해당 항목이 삭제되었습니다.")
+								location.href="/shopping-cart/shopping-cart-view";
+							}
 						} else if(data.code == 403){
 							alert(data.error_message);
 							location.href= "/user/sign-in-view";
@@ -208,13 +245,38 @@
 							alert(data.error_message);
 						}
 					})//ajax
+    			}
+    			
+				//현재 물품 수량 추가 버튼
+				$(".btn-plus").on('click',function(e){
+					updateQuantity($(this), 1);
+					
+					//하단 총합 갱신
+					updateCostCurrentCartView();
 				}) // btn plus quantity current on click
 
 				//현재 물품 수량 감소 버튼
-				$(".btn-minus").on('click',function(){
-
+				$(".btn-minus").on('click',function(e){
+					updateQuantity($(this), -1);
 					
+					//하단 총합 갱신
+					updateCostCurrentCartView();
 				})// btn minus quantity current on click
+				
+				$("input.quantity-item-current").on('keyup', function(){
+					//console.log($(this));
+					let cartItemId = $(this).data('cart-item-id');
+					let count = $(this).val().trim();
+					let number = Number(count);
+					console.log(`"input number: ${cartItemId}, count: ${number}"`);
+					if(number < 0){
+						number = 0;
+					}
+					
+					updateQuantity($(this)[0], number);
+					//하단 총합 갱신
+					updateCostCurrentCartView();
+				})
 				
     			
     		})//document ready

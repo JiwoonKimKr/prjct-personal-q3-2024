@@ -3,6 +3,7 @@ package com.givemetreat.productShoppingCart;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class ShoppingCartRestController {
 	
 	
 	@PostMapping("/add-product")
-	public Map<String, Object> addProduct(@RequestParam int productId
+	public Map<String, Object> AddProduct(@RequestParam int productId
 										, @RequestParam int quantity
 										, @RequestParam(required = false) Integer cartItemId
 										, HttpSession session){
@@ -39,7 +40,7 @@ public class ShoppingCartRestController {
 			return result;			
 		}
 		
-		ProductShoppingCartEntity itemEnlisted = productShoppingCartBO.addProductsByProductIdAndQuantity(userId
+		ProductShoppingCartEntity itemEnlisted = productShoppingCartBO.updateQuantity(userId
 															, productId
 															, quantity
 															, cartItemId);
@@ -55,6 +56,42 @@ public class ShoppingCartRestController {
 		log.info("[UserShoppingCartRestController addProduct()] success to enlist current item in cart.");
 		result.put("code", 200);
 		result.put("success", "해당 상품이 장바구니에 담겼습니다.");
+		result.put("quantity", itemEnlisted.getQuantity());
+		
+		return result;
+	}
+
+	@GetMapping("/substract-product")
+	public Map<String, Object> substractProduct(@RequestParam int productId
+									, @RequestParam int quantity
+									, @RequestParam(required = false) Integer cartItemId
+									, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		if(userId == null) {
+		log.info("[UserShoppingCartRestController addProduct()] userId is null now. Sign-In needed.");
+		result.put("code", 403);
+		result.put("error_message", "로그인 후 이용 가능합니다.");
+		return result;			
+		}
+		
+		ProductShoppingCartEntity itemEnlisted = productShoppingCartBO.updateQuantity(userId
+										, productId
+										, quantity
+										, cartItemId);
+		
+		if(itemEnlisted == null) {
+		log.info("[UserShoppingCartRestController addProduct()] current item got failed to get enlisted in cart.");
+		result.put("code", 500);
+		result.put("error_message", "해당 상품과 수량을 장바구니에서 수정하지 못하였습니다..");
+		return result;
+		}
+		
+		log.info("[UserShoppingCartRestController addProduct()] success to enlist current item in cart.");
+		result.put("code", 200);
+		result.put("success", "해당 상품 및 수량을 장바구니에서 수정하였습니다.");
 		result.put("quantity", itemEnlisted.getQuantity());
 		
 		return result;

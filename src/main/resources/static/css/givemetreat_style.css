@@ -1458,7 +1458,7 @@ input::-webkit-inner-spin-button {
 
 .title-cart-view{
 	/* Rectangle 2 */
-	margin: 50px auto;
+	margin: 35px auto 5px auto;
 	width: 600px;
 	height: 75px;
 	
@@ -1479,9 +1479,9 @@ input::-webkit-inner-spin-button {
 
 /* 장바구니 리스트 관련 */
 .list-items-in-cart{
-	margin: 60px 10px 20px 10px;
+	margin: 10px 10px 20px 10px;
 	width: 1150px;
-	height: 740px;
+	height: 710px;
 	overflow: auto;
 }
 
@@ -1497,7 +1497,7 @@ input::-webkit-inner-spin-button {
 }
 
 .list-items-in-cart::-webkit-scrollbar-track{
-	background-color: #FBAA63;
+	background-color: #FFF;
 	border-radius: 15px;
 	
 }
@@ -1538,7 +1538,7 @@ input::-webkit-inner-spin-button {
 	border-radius: 20px;
 	
 	font-size: 25px;
-	font-weight: bold;
+/* 	font-weight: bold; */
 }
 
 .group-btns-card-item-detail{
@@ -1560,4 +1560,23 @@ input::-webkit-inner-spin-button {
 	background: #FFFFFF;
 	border: 1px solid transparent;
 	border-radius: 30px;
+}
+
+.btn-pay-cart-total-bottom{
+/* bg-btn-payment-ShoppingCart */
+
+	width: 240px;
+	height: 60px;
+
+	background: #51C3ED;
+	box-shadow: 4px 4px 0px #777777;
+	border-radius: 22px;
+	border-color: inherit;
+	
+/* title-btn-payment-per-single-cur */
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	
+	color: #FFFFFF;
 }

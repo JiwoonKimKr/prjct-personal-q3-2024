@@ -42,7 +42,7 @@
 											</svg>
 										</button>
 <!-- 수량 기입 버튼 -->
-										<input id="count-order-product" class="input-count-order-product" type="number" value="0">
+										<input id="count-order-product" class="input-count-order-product" type="number" th:data-price="${product.price}" value="0">
 <!-- 현재 물품 수량 감소 버튼 -->									
 										<button id="btn-minus-quantity-current"  class="btn-minus">
 											<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,8 +63,8 @@
 											</svg>
 										</button>
 									</div>
-<!-- 장바구니 추가 버튼 -->
-									<button id="btn-add-to-cart" class="group-btn-add-to-cart" th:data-product-id="${product.id}">
+<!-- 장바구니 추가 버튼; 첫 번째-->
+									<button class="btn-add-to-cart group-btn-add-to-cart" th:data-product-id="${product.id}">
 										<div class="icon-cart mb-2">
 											<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
 												<path d="M20.0987 9.53246C20.7788 9.97842 21.7311 11.5011 20.0987 14.0239M20.0987 9.53246L16.5992 14.0239M20.0987 9.53246L17.865 9.53246M20.0987 14.0239H16.5992M20.0987 14.0239L17.8418 17.512M11.1639 21L13.8816 17.512M11.1639 21H15.5849L17.8418 17.512M11.1639 21V17.512M11.1639 21L8.35569 17.512M11.1639 21H6.59557L4.26346 17.512M13.8816 17.512L16.5992 14.0239M13.8816 17.512H11.1639M13.8816 17.512H17.8418M16.5992 14.0239H13.1167M11.1639 14.0239V9.53246M11.1639 14.0239H13.1167M11.1639 14.0239V17.512M11.1639 14.0239H9.14604M11.1639 9.53246H15.6313M11.1639 9.53246H6.54765M13.1167 14.0239L11.1639 17.512M13.1167 14.0239L15.6313 9.53246M11.1639 17.512H8.35569M11.1639 17.512L9.14604 14.0239M15.6313 9.53246L17.865 9.53246M1.93136 9.53246C1.22853 9.97842 0.244577 11.5011 1.93136 14.0239M1.93136 9.53246L5.54745 14.0239M1.93136 9.53246H6.54765M1.93136 14.0239H5.54745M1.93136 14.0239L4.26346 17.512M8.35569 17.512L5.54745 14.0239M8.35569 17.512H4.26346M5.54745 14.0239H9.14604M9.14604 14.0239L6.54765 9.53246M4.2395 9.53246C4.2395 2.54662 10.9456 2.65193 10.9456 2.65193C10.9456 2.65193 17.865 2.54663 17.865 9.53246M3.12266 9.53245C3.12266 3.22522 7.04732 0.994501 10.9456 1C14.8544 1.00551 18.7635 2.61491 18.7635 9.60075" stroke="white" stroke-width="1.5"/>
@@ -96,13 +96,15 @@
 							전체
 						</div>
 						<div class="text-cost-total-current">
-							<span id="cost-total-current">25000</span>
+							<span id="cost-total-current" th:data-price="${product.price}">0</span>
 							<span class="ml-2">원</span>
 						</div>
 					</div>
-					<button class="btn-add-to-cart-bottom">
+<!-- 장바구니 추가 버튼 하단; 두 번째 -->					
+					<button class="btn-add-to-cart btn-add-to-cart-bottom"  th:data-product-id="${product.id}">
 						장바구니 담기
 					</button>
+<!-- 장바구니 취소 하기 -->					
 					<button class="btn-cancel-cart-total-bottom">
 						장바구니 취소하기
 					</button>
@@ -155,8 +157,19 @@
 	</section>
 
 	<th:block layout:fragment="script">
-    	<script>
+    	<script th:inline="javascript">
     		$(document).ready(function(e){
+    			
+    			function updateCostCurrent(){
+    				let count = $("#count-order-product").val().trim();
+    				let price = $("#count-order-product").data('price');
+    				console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
+    				count = Number(count);
+    				price = Number(price);
+    				
+    				$("#cost-total-current").text(count * price);
+    				console.log(`"[updateCostCurrent())] count current:${count * price}"`)
+    			}
 
     			//우측 nav 메뉴 버튼들 관련
     			$("#btn-treat-menu-aside").on('click', function(){
@@ -170,18 +183,19 @@
 				$("#btn-plus-quantity-current").on('click',function(){
 					let count = $("#count-order-product").val();
 					let number = Number(count);
-					console.log(`count before +1 : ${number}`);
 					number += 1;
 					count = String(number);
 					$("#count-order-product").val(count);
-					console.log(`count 1 plused : ${$("#count-order-product").val()}`);
+					console.log(`count 1 added : ${$("#count-order-product").val()}`);
+					
+					//하단 가격 표시
+					updateCostCurrent();
 				}) // btn plus quantity current on click
 
 				//현재 물품 수량 감소 버튼
 				$("#btn-minus-quantity-current").on('click',function(){
 					let count = $("#count-order-product").val();
 					let number = Number(count);
-					console.log(`count before -1 : ${number}`);
 
 					if(number < 1){
 						return;
@@ -190,11 +204,18 @@
 					count = String(number);
 					$("#count-order-product").val(count);
 					console.log(`count 1 minused : ${$("#count-order-product").val()}`);
+					
+					//하단 가격 표시
+					updateCostCurrent();
 				})// btn minus quantity current on click
 				
+				$("#count-order-product").on('keyup', function(){
+					updateCostCurrent();
+				});
+				
 				//해당 물품 장바구니 추가 버튼
-				$("#btn-add-to-cart").on('click', function(){
-					let userId = /*[[${session.userId}]] */ null;
+				$(".btn-add-to-cart").on('click', function(){
+					let userId =/*[[${session.userId}]]*/null;
 					if(!userId){
 						alert("로그인 후 이용 가능합니다.");
 						location.href="/user/sign-in-view"

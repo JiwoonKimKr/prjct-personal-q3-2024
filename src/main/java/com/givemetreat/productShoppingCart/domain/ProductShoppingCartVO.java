@@ -17,6 +17,7 @@ public class ProductShoppingCartVO {
 		this.quantity = record.getQuantity();
 		
 		this.productName = product.getName();
+		this.price = product.getPrice();
 		this.category = product.getCategory();
 		this.categoryTranslated = product.getCategoryTranslatedK();
 		this.agePetProper = product.getAgePetProper();
@@ -31,6 +32,7 @@ public class ProductShoppingCartVO {
 	private int quantity;
 	
 	private String productName;
+	private int price;
 	private String category;
 	private String categoryTranslated;
 	private String agePetProper;
