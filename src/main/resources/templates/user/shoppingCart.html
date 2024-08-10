@@ -79,12 +79,12 @@
 										</div>
 										
 										<div class="btns-pay-or-not d-flex justify-content-start ml-5">
-		<!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
+<!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
 											<button class="btn-pay-product-current">
 												해당 항목 결제
 											</button>
-		<!-- 취소하기 버튼; 상품 리스트 페이지로 넘어가야 -->									
-											<button class="btn-cancel-product-current ml-3">
+<!-- 취소하기 버튼; 현재 항목 삭제 -->									
+											<button class="btn-cancel-product-current ml-3" th:data-cart-item-id="${item.cartItemId}" th:data-product-id="${item.productId}" >
 												취소하기
 											</button>
 										</div>										
@@ -107,6 +107,7 @@
 						<button id="btn-pay-cart" class="btn-pay-cart-total-bottom">
 							장바구니 결제하기
 						</button>
+<!-- 장바구니 전체 취소 버튼 -->						
 						<button id="btn-cancel-cart-total" class="btn-cancel-cart-total-bottom">
 							장바구니 취소하기
 						</button>
@@ -174,16 +175,16 @@
     			
     			function updateCostCurrentCartView (){
     				let listItems = $(".quantity-item-current");
-    				console.log(listItems);
+    				//console.log(listItems);
     				let sum = 0;
     				for(let item of listItems){
 	    				let count = item.value;
 	    				let price = item.getAttribute('data-price');
-	    				console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
+	    				//console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
 	    				count = Number(count);
 	    				price = Number(price);
     					sum += count * price;
-    					console.log("sum +=" + count*price);
+    					//console.log("sum +=" + count*price);
     				}
     				$("#cost-total-current").text(sum);
     				console.log(`"[updateCostCurrentCartView())] current cost total: ${sum}"`)
@@ -201,11 +202,18 @@
 						//함수 요청한 이벤트 태그의 형제가 input인 경우
 						inputCount = e.siblings("input.quantity-item-current")[0];
 					}
-					console.log(inputCount);
+					//console.log(inputCount);
 					let count = inputCount.value;
 					let number = Number(count);
-					number += num;
-					console.log("number: " + number);
+					
+					if(e.localName == "input"){
+						console.log("number = num");
+						number = num;
+					} else{
+						console.log("number += num");
+						number += num;
+					}
+					//console.log("number: " + number);
 					
 					//0보다 작으면 0으로 변환
 					if(number < 0){
@@ -213,7 +221,7 @@
 					}
 					count = String(number);
 					inputCount.setAttribute('value', count)
-					console.log(`count updated : ${inputCount.value}`);
+					//console.log(`count updated : ${inputCount.value}`);
 					
 					let productId = inputCount.getAttribute('data-product-id');
 					let cartItemId = inputCount.getAttribute('data-cart-item-id');
@@ -221,17 +229,16 @@
 								,"quantity": inputCount.value
 								, "cartItemId": cartItemId};
 					
-					console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
+					//console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
 					
 					let url = "/shopping-cart/add-product";
-					console.log(url.toString());
 					
 					$.post(url, params)
 					.done(function(data){
 						if(data.code == 200){
 							let countAdded = data.quantity;
 							inputCount.setAttribute('value', countAdded);
-							console.log("count updated After AJAX :" + countAdded);
+							//console.log("count updated After AJAX :" + countAdded);
 							
 							//수량 0 되었을 때 해당 항목 삭제
 							if(countAdded == 0){
@@ -248,7 +255,7 @@
     			}
     			
 				//현재 물품 수량 추가 버튼
-				$(".btn-plus").on('click',function(e){
+				$(".btn-plus").on('click',function(){
 					updateQuantity($(this), 1);
 					
 					//하단 총합 갱신
@@ -256,7 +263,7 @@
 				}) // btn plus quantity current on click
 
 				//현재 물품 수량 감소 버튼
-				$(".btn-minus").on('click',function(e){
+				$(".btn-minus").on('click',function(){
 					updateQuantity($(this), -1);
 					
 					//하단 총합 갱신
@@ -268,15 +275,40 @@
 					let cartItemId = $(this).data('cart-item-id');
 					let count = $(this).val().trim();
 					let number = Number(count);
-					console.log(`"input number: ${cartItemId}, count: ${number}"`);
+					//console.log(`"input number: ${cartItemId}, count: ${number}"`);
 					if(number < 0){
 						number = 0;
 					}
-					
 					updateQuantity($(this)[0], number);
 					//하단 총합 갱신
 					updateCostCurrentCartView();
-				})
+				})//input.quantity-item-current on keyup
+				
+				$(".btn-cancel-product-current").on('click', function(){
+					let productId = $(this).data('product-id');
+					let cartItemId = $(this).data('cart-item-id');
+					let params = {"productId": productId
+								, "cartItemId": cartItemId};
+					
+					console.log(`productId : ${productId}, cartItemId: ${cartItemId}`);
+					let url = "/shopping-cart/delete-product";
+					
+					$.post(url, params)
+					.done(function(data){
+						if(data.code == 200){
+							let count = data.quantity;
+							console.log("count After AJAX Delete:" + count);
+							
+							alert("해당 항목이 삭제되었습니다.")
+							location.href="/shopping-cart/shopping-cart-view";
+						} else if(data.code == 403){
+							alert(data.error_message);
+							location.href= "/user/sign-in-view";
+						} else {
+							alert(data.error_message);
+						}
+					})//ajax
+				})//btn-cancel-product-current on click
 				
     			
     		})//document ready
