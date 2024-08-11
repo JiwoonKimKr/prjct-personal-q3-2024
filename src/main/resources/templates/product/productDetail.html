@@ -79,9 +79,9 @@
 										해당 항목 결제
 									</button>
 <!-- 취소하기 버튼; 상품 리스트 페이지로 넘어가야 -->									
-									<button class="btn-cancel-product-current ml-3">
+									<a class="btn-cancel-product-current ml-3" href="/product/product-list-view">
 										취소하기
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -103,10 +103,6 @@
 <!-- 장바구니 추가 버튼 하단; 두 번째 -->					
 					<button class="btn-add-to-cart btn-add-to-cart-bottom"  th:data-product-id="${product.id}">
 						장바구니 담기
-					</button>
-<!-- 장바구니 취소 하기 -->					
-					<button class="btn-cancel-cart-total-bottom">
-						장바구니 취소하기
 					</button>
 				</div>
 			</article>

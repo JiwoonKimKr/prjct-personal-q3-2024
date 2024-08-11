@@ -1358,9 +1358,18 @@ input::-webkit-inner-spin-button {
 	font-weight: 700;
 	font-size: 24px;
 	line-height: 35px;
+	color: #FFFFFF;
 	
-	color: #FFFFFF;	
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
+
+.btn-cancel-product-current:hover{
+	text-decoration: none;
+}
+
+
 /* 상품 상세 페이지 하단부 관련 */
 .groups-buttom-cart-total{
 	margin-right: 25px;
