@@ -1548,7 +1548,6 @@ input::-webkit-inner-spin-button {
 	border-radius: 20px;
 	
 	font-size: 25px;
-/* 	font-weight: bold; */
 }
 
 .group-btns-card-item-detail{
@@ -1589,4 +1588,147 @@ input::-webkit-inner-spin-button {
 	font-size: 24px;
 	
 	color: #FFFFFF;
+}
+
+/* 결제 페이지 관련 */
+.title-payment-view{
+	/* Rectangle 2 */
+	margin: 35px auto 5px auto;
+	width: 600px;
+	height: 75px;
+	
+	background: #FFFFFF;
+	border-radius: 30px;
+	
+	display: flex;
+	justify-content:center;
+	align-items: center;
+	text-align: center;
+		
+	/* 장바구니 */
+	font-style: normal;
+	font-weight: 600;
+	font-size: 36px;
+	color: #000000;
+}
+
+.list-items-in-invoice{
+	margin: 10px 10px 20px 10px;
+	width: 1150px;
+	height: 710px;
+	overflow: auto;
+}
+
+.list-items-in-invoice::-webkit-scrollbar{
+	width: 25px;
+}
+
+.list-items-in-invoice::-webkit-scrollbar-thumb{
+	background-color: #51C3ED;
+	border-radius: 20px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
+}
+
+.list-items-in-invoice::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+}
+
+.card-item-detail-invoice{
+	margin: 10px 20px 10px 50px;
+	width: 1020px;
+	height: 200px;
+
+	width: 1020px;
+	height: 200px;
+	
+	background: #51C3ED;
+	box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 25px;
+	
+	display: flex;
+	justify-content: space-between;
+}
+
+.image-card-item-detail-invoice{
+	/* Rectangle 10 */
+	
+	width: 180px;
+	height: 180px;
+	
+	background: #D9D9D9;
+	border-radius: 40px;
+}
+
+.title-card-item-detail-invoice{
+	padding-left: 30px;
+	width: 650px;
+	height: 80px;
+	
+	background: #FFFFFF;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 20px;
+	
+	font-size: 25px;
+}
+
+.input-count-order-product-invoice-view{
+	padding: 5px 10px 5px 30px;
+	
+	width: 110px;
+	height: 80px;
+
+	font-size: 30px;
+	background: #FFFFFF;
+	border: 1px solid transparent;
+	border-radius: 30px;
+}
+
+.btn-payment-current-bottom{
+/* bg-btn-payment */
+
+	width: 240px;
+	height: 60px;
+
+	background: #FF0000;
+	box-shadow: 4px 4px 0px #777777;
+	border-radius: 22px;
+	border-color: inherit;
+	
+/* title-btn-payment-per-single-cur */
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	
+	color: #FFFFFF;
+}
+
+.btn-cancel-invoice-total-bottom{
+/* bg-btn-payment-ShoppingCart */
+
+	width: 240px;
+	height: 60px;
+
+	background: #929292;
+	box-shadow: 4px 4px 0px #777777;
+	border-radius: 22px;
+	border-color: inherit;	
+	
+/* title-btn-payment-per-single-cur */
+	font-style: normal;
+	font-weight: 700;
+	font-size: 24px;
+	
+	color: #FFFFFF;	
+}
+
+/* 상품 상세 페이지 하단부 관련 */
+.groups-buttom-invoice-total{
+	margin-right: 25px;
+	display: flex;
+	gap: 20px;
+	justify-content: flex-end;
 }

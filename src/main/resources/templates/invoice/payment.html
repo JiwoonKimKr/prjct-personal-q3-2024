@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/defaultLayout}">
+      
+	<head>
+		<title>결제 페이지</title>
+	</head>
+	<section layout:fragment="contents" class="contents w-100">
+		<div class="d-flex justify-content-between w-100">
+			<article class="group-article background-cards-list">							
+ 				<div class="">
+ 					<div class="title-payment-view">
+ 						<span>
+ 							결제 페이지
+						</span>
+ 					</div>	 					
+ 					<div class="list-items-in-invoice">
+ 					<!-- item 개별 정보들 -->
+	 					<th:block th:each="item : ${listItems}">
+	 						<div class="card-item-detail-invoice">
+	 							<div class="image-card-item-detail-invoice">
+	 								<img th:src="${item.imgProfile}" width="200" height="200">
+	 							</div>
+	 							<div class="groups-right-side-card-item-detail">
+	 								<div class="title-card-item-detail-invoice">
+	 									<span th:text="${item.productName}"></span>
+	 									<span class="mr-3" th:text="|￦ ${item.price}|"></span>
+	 								</div>
+	 								<div class="group-btns-card-item-detail">
+										<div class="group-btns-quantity-adjust">
+<!-- 현재 물품 수량 추가 버튼 -->								
+											<button class="btn-plus">
+												<svg width="50" height="51" viewBox="0 0 50 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<g filter="url(#filter0_d_64_304)">
+														<path fill-rule="evenodd" clip-rule="evenodd" d="M28 4.5C28 2.29086 26.2091 0.5 24 0.5C21.7909 0.5 20 2.29086 20 4.5V20.5H4C1.79086 20.5 0 22.2909 0 24.5C0 26.7091 1.79086 28.5 4 28.5H20L20 44.5C20 46.7091 21.7909 48.5 24 48.5C26.2091 48.5 28 46.7091 28 44.5L28 28.5H44C46.2091 28.5 48 26.7091 48 24.5C48 22.2909 46.2091 20.5 44 20.5H28V4.5Z" fill="#51C3ED"/>
+													</g>
+													<defs>
+														<filter id="filter0_d_64_304" x="0" y="0.5" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+															<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+															<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+															<feOffset dx="2" dy="2"/>
+															<feComposite in2="hardAlpha" operator="out"/>
+															<feColorMatrix type="matrix" values="0 0 0 0 0.984314 0 0 0 0 0.666667 0 0 0 0 0.388235 0 0 0 1 0"/>
+															<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_304"/>
+															<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_304" result="shape"/>
+														</filter>
+													</defs>
+												</svg>
+											</button>
+<!-- 수량 기입 버튼
+th:value="${item.quantity}"
+th:data-invoice-item-id
+th:data-product-id
+th:data-price
+ -->
+											<input class="quantity-item-current input-count-order-product-invoice-view" type="number" th:value="${item.quantity}"
+											 th:data-invoice-item-id="${item.invoiceItemId}" th:data-product-id="${item.productId}" th:data-price=${item.price}>
+<!-- 현재 물품 수량 감소 버튼 -->									
+											<button class="btn-minus">
+												<svg width="50" height="11" viewBox="0 0 50 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<g filter="url(#filter0_d_64_310)">
+														<path d="M4 4.5H24H44" stroke="#FF6868" stroke-width="8" stroke-linecap="round"/>
+													</g>
+													<defs>
+														<filter id="filter0_d_64_310" x="0" y="0.5" width="50" height="10" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+															<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+															<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+															<feOffset dx="2" dy="2"/>
+															<feComposite in2="hardAlpha" operator="out"/>
+															<feColorMatrix type="matrix" values="0 0 0 0 0.407843 0 0 0 0 1 0 0 0 0 0.635294 0 0 0 1 0"/>
+															<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_64_310"/>
+															<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_64_310" result="shape"/>
+														</filter>
+													</defs>
+												</svg>
+											</button>
+										</div>
+										
+										<div class="btns-pay-or-not d-flex justify-content-start ml-5">
+<!-- 취소하기 버튼; 현재 항목 삭제
+th:data-invoice-item-id
+th:data-product-id
+ -->									
+											<button class="btn-cancel-product-current ml-3" th:data-invoice-item-id="${item.invoiceItemId}" th:data-product-id="${item.productId}" >
+												취소하기
+											</button>
+										</div>										
+									</div>
+								</div>	 							
+	 						</div>
+	 					</th:block>
+ 					</div>
+ 					<!-- 제품상세 내역 -->	
+					<div class="groups-buttom-invoice-total">
+						<div class="group-cost-total-current">
+							<div class="label-cost-total-current">
+								전체
+							</div>
+							<div class="text-cost-total-current">
+								<span id="cost-total-current">0</span>
+								<span class="ml-2">원</span>
+							</div>
+						</div>
+<!-- 선택항목 결제하기; 해당 item들이 모두 선택되어 있으면 text를 '전체 항목 결제하기'로 바꿔야 -->						
+						<button id="btn-payment" class="btn-payment-current-bottom">
+							선택항목 결제하기
+						</button>
+<!-- 결제 취소 버튼; 전체 invoice 내 아이템 삭제 -->						
+						<button id="btn-cancel-invocie-total" class="btn-cancel-invoice-total-bottom">
+							결제 취소하기
+						</button>
+					</div>
+ 				</div>
+			</article>
+<!-- 우측 nav 메뉴; groups-nav-aside -->			
+			<aside class="groups-nav-aside">
+<!-- 간식 버튼 -->			
+				<button id="btn-treat-menu-aside" class="btn-skyblue-menu-aside mt-5">
+					<div class="icon-footprint">
+						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
+							<path d="M34.2103 1.51109C29.8309 1.45837 22.2589 15.9046 34.1801 20.8325C36.167 21.6538 40.4884 21.4482 41.8791 14.0552C43.6176 4.8139 38.5898 1.5638 34.2103 1.51109Z" fill="white"/>
+							<path d="M2.02395 28.3825C-0.0529071 31.1223 6.80433 41.0187 15.8964 35.2585C17.4117 34.2985 19.2759 31.5035 14.6099 28.0038C8.77754 23.6291 4.10081 25.6426 2.02395 28.3825Z" fill="white"/>
+							<path d="M53.1236 11.9822C51.4312 9.12317 41.7988 10.7021 44.1983 20.6313C44.5982 22.2862 46.387 24.9917 50.3427 22.5753C55.2873 19.5547 54.8159 14.8413 53.1236 11.9822Z" fill="white"/>
+							<path d="M39.2466 46.4086C29.5487 47.8434 19.409 45.712 18.1305 39.0789C16.0389 31.4115 28.0012 26.598 33.7038 26.0902C39.4063 25.5824 51.0209 25.3334 52.0903 31.1998C53.1596 37.0662 48.9444 44.9739 39.2466 46.4086Z" fill="white"/>
+						</svg>
+					</div>
+					간식
+				</button>
+<!-- 사료 버튼 -->				
+				<button id="btn-kibble-menu-aside" class="btn-purple-menu-aside mt-5">
+					<div class="icon-footprint">
+						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
+							<path d="M34.2103 1.51109C29.8309 1.45837 22.2589 15.9046 34.1801 20.8325C36.167 21.6538 40.4884 21.4482 41.8791 14.0552C43.6176 4.8139 38.5898 1.5638 34.2103 1.51109Z" fill="white"/>
+							<path d="M2.02395 28.3825C-0.0529071 31.1223 6.80433 41.0187 15.8964 35.2585C17.4117 34.2985 19.2759 31.5035 14.6099 28.0038C8.77754 23.6291 4.10081 25.6426 2.02395 28.3825Z" fill="white"/>
+							<path d="M53.1236 11.9822C51.4312 9.12317 41.7988 10.7021 44.1983 20.6313C44.5982 22.2862 46.387 24.9917 50.3427 22.5753C55.2873 19.5547 54.8159 14.8413 53.1236 11.9822Z" fill="white"/>
+							<path d="M39.2466 46.4086C29.5487 47.8434 19.409 45.712 18.1305 39.0789C16.0389 31.4115 28.0012 26.598 33.7038 26.0902C39.4063 25.5824 51.0209 25.3334 52.0903 31.1998C53.1596 37.0662 48.9444 44.9739 39.2466 46.4086Z" fill="white"/>
+						</svg>
+					</div>
+					사료
+				</button>
+<!-- 커뮤니티 버튼 -->				
+				<button id="btn-community-menu-aside" class="btn-magenta-menu-aside margin-top-100px">
+					<div class="icon-footprint">
+						<svg width="56" height="51" viewBox="0 0 56 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12.1519 7.30689C8.12459 8.96585 7.62117 25.5555 20.71 25.5555C22.8915 25.5555 26.751 23.6754 24.7373 16.1547C22.2202 6.7539 16.1793 5.64792 12.1519 7.30689Z" fill="white"/>
+							<path d="M34.2103 1.51109C29.8309 1.45837 22.2589 15.9046 34.1801 20.8325C36.167 21.6538 40.4884 21.4482 41.8791 14.0552C43.6176 4.8139 38.5898 1.5638 34.2103 1.51109Z" fill="white"/>
+							<path d="M2.02395 28.3825C-0.0529071 31.1223 6.80433 41.0187 15.8964 35.2585C17.4117 34.2985 19.2759 31.5035 14.6099 28.0038C8.77754 23.6291 4.10081 25.6426 2.02395 28.3825Z" fill="white"/>
+							<path d="M53.1236 11.9822C51.4312 9.12317 41.7988 10.7021 44.1983 20.6313C44.5982 22.2862 46.387 24.9917 50.3427 22.5753C55.2873 19.5547 54.8159 14.8413 53.1236 11.9822Z" fill="white"/>
+							<path d="M39.2466 46.4086C29.5487 47.8434 19.409 45.712 18.1305 39.0789C16.0389 31.4115 28.0012 26.598 33.7038 26.0902C39.4063 25.5824 51.0209 25.3334 52.0903 31.1998C53.1596 37.0662 48.9444 44.9739 39.2466 46.4086Z" fill="white"/>
+						</svg>
+					</div>
+					커뮤니티
+				</button>
+
+			</aside>
+		</div>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script>
+    		$(document).ready(function(e){
+    			/* ★★★★★ 결제 페이지에 맞게 script 재작성 해야!*/
+    			updateCostCurrentInvoiceView();
+
+    			
+    			//우측 nav 메뉴 버튼들 관련
+    			$("#btn-treat-menu-aside").on('click', function(){
+    				location.href= "/product/product-list-view?category=treat"
+    			})
+    			$("#btn-kibble-menu-aside").on('click', function(){
+    				location.href= "/product/product-list-view?category=kibble"
+    			})
+    			
+    			function updateCostCurrentInvoiceView (){
+    				let listItems = $(".quantity-item-current");
+    				//console.log(listItems);
+    				let sum = 0;
+    				for(let item of listItems){
+	    				let count = item.value;
+	    				let price = item.getAttribute('data-price');
+	    				//console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
+	    				count = Number(count);
+	    				price = Number(price);
+    					sum += count * price;
+    					//console.log("sum +=" + count*price);
+    				}
+    				$("#cost-total-current").text(sum);
+    				console.log(`"[updateCostCurrentInvoiceView())] current cost total: ${sum}"`)
+    			}    			
+    			
+    			function updateQuantity(e , num){
+					//형제 태그 중 숫자 인풋 찾기
+					
+					let inputCount;
+					
+					if(e.localName == "input"){
+						//함수 요청한 이벤트 태그가 input인 경우
+						inputCount = e;
+					} else{
+						//함수 요청한 이벤트 태그의 형제가 input인 경우
+						inputCount = e.siblings("input.quantity-item-current")[0];
+					}
+					//console.log(inputCount);
+					let count = inputCount.value;
+					let number = Number(count);
+					
+					if(e.localName == "input"){
+						console.log("number = num");
+						number = num;
+					} else{
+						console.log("number += num");
+						number += num;
+					}
+					//console.log("number: " + number);
+					
+					//0보다 작으면 0으로 변환
+					if(number < 0){
+						number = 0;
+					}
+					count = String(number);
+					inputCount.setAttribute('value', count)
+					//console.log(`count updated : ${inputCount.value}`);
+					
+					let productId = inputCount.getAttribute('data-product-id');
+					let cartItemId = inputCount.getAttribute('data-cart-item-id');
+					let params = {"productId": productId
+								,"quantity": inputCount.value
+								, "cartItemId": cartItemId};
+					
+					//console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
+					
+					let url = "/shopping-cart/add-product";
+					
+					//★★★★★ 수정전
+					return;
+					
+					$.post(url, params)
+					.done(function(data){
+						if(data.code == 200){
+							let countAdded = data.quantity;
+							inputCount.setAttribute('value', countAdded);
+							//console.log("count updated After AJAX :" + countAdded);
+							
+							//수량 0 되었을 때 해당 항목 삭제
+							if(countAdded == 0){
+								alert("해당 항목이 삭제되었습니다.")
+								location.href="/shopping-cart/shopping-cart-view";
+							}
+						} else if(data.code == 403){
+							alert(data.error_message);
+							location.href= "/user/sign-in-view";
+						} else {
+							alert(data.error_message);
+						}
+					})//ajax
+    			}
+    			
+				//현재 물품 수량 추가 버튼
+				$(".btn-plus").on('click',function(){
+					updateQuantity($(this), 1);
+					
+					//하단 총합 갱신
+					updateCostCurrentInvoiceView();
+				}) // btn plus quantity current on click
+
+				//현재 물품 수량 감소 버튼
+				$(".btn-minus").on('click',function(){
+					updateQuantity($(this), -1);
+					
+					//하단 총합 갱신
+					updateCostCurrentInvoiceView();
+				})// btn minus quantity current on click
+				
+				$("input.quantity-item-current").on('keyup', function(){
+					//console.log($(this));
+					let cartItemId = $(this).data('cart-item-id');
+					let count = $(this).val().trim();
+					let number = Number(count);
+					//console.log(`"input number: ${cartItemId}, count: ${number}"`);
+					if(number < 0){
+						number = 0;
+					}
+					updateQuantity($(this)[0], number);
+					//하단 총합 갱신
+					updateCostCurrentInvoiceView();
+				})//input.quantity-item-current on keyup
+				
+				$(".btn-cancel-product-current").on('click', function(){
+					let productId = $(this).data('product-id');
+					let cartItemId = $(this).data('cart-item-id');
+					let params = {"productId": productId
+								, "cartItemId": cartItemId};
+					
+					console.log(`productId : ${productId}, cartItemId: ${cartItemId}`);
+					let url = "/shopping-cart/delete-product";
+					
+					//★★★★★ 수정전
+					return;
+					
+					$.post(url, params)
+					.done(function(data){
+						if(data.code == 200){
+							let count = data.quantity;
+							console.log("count After AJAX Delete:" + count);
+							
+							alert("해당 항목이 삭제되었습니다.")
+							location.href="/shopping-cart/shopping-cart-view";
+						} else if(data.code == 403){
+							alert(data.error_message);
+							location.href= "/user/sign-in-view";
+						} else {
+							alert(data.error_message);
+						}
+					})//ajax
+				})//btn-cancel-product-current on click
+				
+				$("#btn-cancel-cart-total").on('click', function(){
+					let listItems = $(".quantity-item-current");
+					console.log(listItems);
+					if(listItems.length < 1){
+						alert("장바구니가 비어있는 상태입니다.");
+						return;
+					}
+					if(confirm("장바구니에 담긴 물품을 모두 비우시겠습니까?") == false){
+						return;
+					}
+					
+					//★★★★★ 수정전
+					return;
+					
+					$.ajax({
+    					type: "DELETE"
+    					, url: "/shopping-cart/empty-cart"
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("장바구니가 비워졌습니다.")
+    							location.reload();
+    						}  else if(data.code == 403){
+    							alert(data.error_message);
+    							location.href= "/user/sign-in-view";
+    						}
+    					}
+    					, error: function(error){
+    						alert("장바구니를 비우지 못하였습니다. 관리자에게 문의하시길 바랍니다.");
+    					}
+    					
+    				})//ajax delete 
+					
+				})//btn-cancel-cart-total on click
+				
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>

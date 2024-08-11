@@ -28,6 +28,6 @@ public class ShoppingCartController {
 		List<ProductShoppingCartVO> listItems = productShoppingCartBO.getProductsByUserId(userId);
 		model.addAttribute("listItems", listItems);
 		
-		return "user/shoppingCart";
+		return "shoppingCart/shoppingCart";
 	}
 }
