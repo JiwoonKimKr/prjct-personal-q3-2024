@@ -104,9 +104,9 @@
 								<span class="ml-2">원</span>
 							</div>
 						</div>
-						<button id="btn-pay-cart" class="btn-pay-cart-total-bottom">
+						<a id="btn-pay-cart" class="btn-pay-cart-total-bottom" href="/invoice/payment-view">
 							장바구니 결제하기
-						</button>
+						</a>
 <!-- 장바구니 전체 취소 버튼 -->						
 						<button id="btn-cancel-cart-total" class="btn-cancel-cart-total-bottom">
 							장바구니 취소하기
@@ -231,7 +231,7 @@
 					
 					//console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
 					
-					let url = "/shopping-cart/add-product";
+					let url = "/shopping-cart/update-quantity";
 					
 					$.post(url, params)
 					.done(function(data){
@@ -243,7 +243,7 @@
 							//수량 0 되었을 때 해당 항목 삭제
 							if(countAdded == 0){
 								alert("해당 항목이 삭제되었습니다.")
-								location.href="/shopping-cart/shopping-cart-view";
+								location.reload();
 							}
 						} else if(data.code == 403){
 							alert(data.error_message);

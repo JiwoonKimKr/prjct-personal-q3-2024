@@ -28,7 +28,7 @@ public class ProductController {
 								, @RequestParam(required = false) Integer price
 								, @RequestParam(required = false) String agePetProper			
 								, Model model) {
-		List<ProductVO> listProducts = productBO.getProduct(id, name, category, price, agePetProper);
+		List<ProductVO> listProducts = productBO.getProducts(id, name, category, price, agePetProper);
 
 		model.addAttribute("listProducts", listProducts);
 		
@@ -39,7 +39,7 @@ public class ProductController {
 	public String productDetailView(@PathVariable int productId
 									, Model model){
 		
-		ProductVO product = productBO.getProduct(productId, null, null, null, null).get(0);
+		ProductVO product = productBO.getProducts(productId, null, null, null, null).get(0);
 		
 		model.addAttribute("product", product);
 		

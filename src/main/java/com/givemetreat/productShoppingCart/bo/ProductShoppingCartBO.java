@@ -33,7 +33,7 @@ public class ProductShoppingCartBO {
 		List<ProductShoppingCartVO> listRecords = new ArrayList<>();
 		
 		for(ProductShoppingCartEntity record : listItems) {
-			ProductVO product = productBO.getProduct(
+			ProductVO product = productBO.getProducts(
 								record.getProductId(), null, null, null, null)
 								.get(0);
 			listRecords.add(new ProductShoppingCartVO(record, product));

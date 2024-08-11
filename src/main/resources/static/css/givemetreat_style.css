@@ -1520,11 +1520,12 @@ input::-webkit-inner-spin-button {
 	box-shadow: 5px 4px 4px rgba(0, 0, 0, 0.25);
 	
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 }
 
 .image-card-item-detail{
 	/* Rectangle 10 */
+	margin-left:10px;
 	width: 200px;
 	height: 200px;
 	
@@ -1533,12 +1534,12 @@ input::-webkit-inner-spin-button {
 
 .groups-right-side-card-item-detail{
 	margin: 15px;
-	width: 820px;
+	width: 700px;
 }
 
 .title-card-item-detail{
 	padding-left: 30px;
-	width: 790px;
+	width: 700px;
 	height: 80px;
 	
 	background: #FFFFFF;
@@ -1586,8 +1587,15 @@ input::-webkit-inner-spin-button {
 	font-style: normal;
 	font-weight: 700;
 	font-size: 24px;
-	
 	color: #FFFFFF;
+	
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn-pay-cart-total-bottom:hover{
+	text-decoration: none;
 }
 
 /* 결제 페이지 관련 */
@@ -1636,8 +1644,8 @@ input::-webkit-inner-spin-button {
 }
 
 .card-item-detail-invoice{
-	margin: 10px 20px 10px 50px;
-	width: 1020px;
+	margin: 10px 25px 10px 20px;
+	width: 1050px;
 	height: 200px;
 
 	width: 1020px;
@@ -1653,9 +1661,10 @@ input::-webkit-inner-spin-button {
 
 .image-card-item-detail-invoice{
 	/* Rectangle 10 */
-	
+	margin: auto 5px;
 	width: 180px;
 	height: 180px;
+	overflow: hidden;
 	
 	background: #D9D9D9;
 	border-radius: 40px;
@@ -1687,6 +1696,17 @@ input::-webkit-inner-spin-button {
 	border-radius: 30px;
 }
 
+/* 결제 페이지 항목 toggle 버튼; 활성화/비활성화 */
+.toggle-item-current{
+	margin: auto 15px auto 10px;
+	
+	display:flex;
+	background: transparent;
+	border: 0px;
+}
+
+
+/* 결제페이지 하단부 결제 선택 여부 */
 .btn-payment-current-bottom{
 /* bg-btn-payment */
 
@@ -1732,3 +1752,4 @@ input::-webkit-inner-spin-button {
 	gap: 20px;
 	justify-content: flex-end;
 }
+

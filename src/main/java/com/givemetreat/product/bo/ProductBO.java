@@ -18,7 +18,7 @@ public class ProductBO {
 	private final ProductMapper productMapper;
 
 	@Transactional
-	public List<ProductVO> getProduct(Integer id
+	public List<ProductVO> getProducts(Integer id
 										, String name
 										, String category
 										, Integer price
