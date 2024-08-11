@@ -12,4 +12,6 @@ public interface ProductShoppingCartRepository extends JpaRepository<ProductShop
 
 	ProductShoppingCartEntity findByUserIdAndProductId(int userId, int productId);
 
+	void deleteByUserId(Integer userId);
+
 }

@@ -31,7 +31,7 @@
 	 							<div class="groups-right-side-card-item-detail">
 	 								<div class="title-card-item-detail">
 	 									<span th:text="${item.productName}"></span>
-	 									<span class="ml-3" th:text="|￦ ${item.price}|"></span>
+	 									<span class="mr-3" th:text="|￦ ${item.price}|"></span>
 	 								</div>
 	 								<div class="group-btns-card-item-detail">
 										<div class="group-btns-quantity-adjust">
@@ -310,7 +310,38 @@
 					})//ajax
 				})//btn-cancel-product-current on click
 				
-    			
+				$("#btn-cancel-cart-total").on('click', function(){
+					let listItems = $(".quantity-item-current");
+					console.log(listItems);
+					if(listItems.length < 1){
+						alert("장바구니가 비어있는 상태입니다.");
+						return;
+					}
+					if(confirm("장바구니에 담긴 물품을 모두 비우시겠습니까?") == false){
+						return;
+					}
+					
+					$.ajax({
+    					type: "DELETE"
+    					, url: "/shopping-cart/empty-cart"
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("장바구니가 비워졌습니다.")
+    							location.reload();
+    						}  else if(data.code == 403){
+    							alert(data.error_message);
+    							location.href= "/user/sign-in-view";
+    						}
+    					}
+    					, error: function(error){
+    						alert("장바구니를 비우지 못하였습니다. 관리자에게 문의하시길 바랍니다.");
+    					}
+    					
+    				})//ajax delete 
+					
+				})//btn-cancel-cart-total on click
+				
     		})//document ready
     	
     	</script>

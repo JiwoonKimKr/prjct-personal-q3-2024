@@ -3,6 +3,7 @@ package com.givemetreat.productShoppingCart;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -119,7 +120,7 @@ public class ShoppingCartRestController {
 		if(itemEnlisted == null || itemEnlisted.getQuantity() != 0) {
 		log.info("[UserShoppingCartRestController deleteProduct()] current item got failed to get deleted in cart.");
 		result.put("code", 500);
-		result.put("error_message", "해당 상품과 수량을 장바구니에서 삭제하지 못하였습니다..");
+		result.put("error_message", "해당 상품과 수량을 장바구니에서 삭제하지 못하였습니다.");
 		return result;
 		}
 		
@@ -130,4 +131,32 @@ public class ShoppingCartRestController {
 		
 		return result;		
 	}
+	
+	@DeleteMapping("/empty-cart")
+	public Map<String, Object> emptyCart(HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(userId == null) {
+			log.info("[UserShoppingCartRestController emptyCart()] userId is null now. Sign-In needed.");
+			result.put("code", 403);
+			result.put("error_message", "로그인 후 이용 가능합니다.");
+			return result;			
+		}
+		
+		Boolean hasDeleted = productShoppingCartBO.emptyCart(userId);
+		
+		if(hasDeleted == false) {
+			log.info("[UserShoppingCartRestController emptyCart()] cart is empty.");
+			result.put("code", 500);
+			result.put("error_message", "장바구니가 비어있는 상태입니다.");
+			return result;
+		}
+		
+		log.info("[UserShoppingCartRestController emptyCart()] success to delete current item in cart.");
+		result.put("code", 200);
+		result.put("success", "장바구니를 비웠습니다.");
+		
+		return result;		
+	}	
 }

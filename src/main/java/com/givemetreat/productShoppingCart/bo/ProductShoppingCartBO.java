@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
@@ -57,7 +58,7 @@ public class ProductShoppingCartBO {
 		
 		ProductShoppingCartEntity entity = productShoppingCartRepository.findByUserIdAndProductId(userId, productId);
 		
-		if(id != null) {
+		if(ObjectUtils.isEmpty(id) == false) {
 			ProductShoppingCartEntity entityForValidation = productShoppingCartRepository.findById(id).orElse(null);
 			if(entity.equals(entityForValidation) == false) {
 				log.warn("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
@@ -67,7 +68,7 @@ public class ProductShoppingCartBO {
 			}
 		}
 		
-		if(entity != null) {
+		if(ObjectUtils.isEmpty(entity) == false) {
 			log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
 					+ " A Record for current arguments was already exist."
 					+ " userId:{}, productId:{}, quantity:{}", userId, productId, quantity);
@@ -100,6 +101,25 @@ public class ProductShoppingCartBO {
 				+ " current entity get deleted."
 				+ " entity:{}", entity);
 		productShoppingCartRepository.delete(entity);
+	}
+
+	@Transactional
+	public boolean emptyCart(Integer userId) {
+		List<ProductShoppingCartEntity> listEntities = productShoppingCartRepository.findByUserId(userId);
+		
+		if(ObjectUtils.isEmpty(listEntities) == true) {
+			log.warn("[ProductShoppingCartBO emptyCart()]"
+					+ " current cart of userId got null result."
+					+ " userId:{}", userId);
+			return false;
+		}
+		
+		productShoppingCartRepository.deleteAllInBatch(listEntities);
+		
+		log.info("[ProductShoppingCartBO emptyCart()]"
+				+ " current cart of userId get erased."
+				+ " userId:{}", userId);
+		return true;
 	}
 	
 }
