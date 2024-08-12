@@ -78,7 +78,7 @@ data-checked="true"
 													</defs>
 												</svg>
 											</button>
-										</div>
+										</div> <!--__end__ .group-btns-quantity-adjust -->
 										
 										<div class="btns-pay-or-not d-flex justify-content-start ml-5">
 <!-- 취소하기 버튼; 현재 항목 삭제
@@ -88,19 +88,122 @@ th:data-product-id
 											<button class="btn-cancel-product-current ml-3" th:data-cart-item-id="${item.cartItemId}" th:data-product-id="${item.productId}" >
 												취소하기
 											</button>
-										</div>										
-									</div>
+										</div><!--__end__ .btns-pay-or-not-->										
+									</div><!--__end__ .group-btns-card-item-detail-->
+								</div><!--__end__ .groups-right-side-card-item-detail-->	 							
 <!-- 현재 항목 활성화/비활성화 toggle 버튼 -->									
-								</div>	 							
 								<button class="toggle-item-current" th:data-cart-item-id="${item.cartItemId}" th:data-checked="true">
 									<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 										<rect x="1" y="1" width="38" height="38" rx="14" fill="white" stroke="black" stroke-width="2"/>
 										<path class="icon-checked" d="M10 17.5L19 30.5L30 9" stroke="#FF0000" stroke-width="6"/>
 									</svg>
 								</button>
-	 						</div>
+	 						</div><!--__end__ .card-item-detail-invoice-->
 	 					</th:block>
- 					</div>
+	 					<div class="groups-inputs-payment-delivery-detail">
+	 						<div class="groups-inputs-payment groups-dropdown-select-invoice">
+								<div class="left-side-inputs-payment">
+									<div class="group-dropdown-select-invoice">
+										<label for="field-paymentType" class="label-for-select-invoice m-0">
+											결제 유형
+										</label>
+									  	<select id="field-paymentType" name="paymentType" class="btn-select-dropdown-specific-invoice custom-select">
+										    <option data-field="paymentType">
+										    	---선택---
+									    	</option>
+										    <option class="CreditCard" data-field="paymentType" data-value="CreditCard">
+										    	신용카드
+									    	</option>
+									    	<!-- ★★★★★ 일단 신용카드만 구현_12 08 2024 
+										    <option class="AccountTranster" data-field="paymentType" data-value="AccountTranster">
+										    	계좌이체
+									    	</option>
+									    	 -->
+								  		</select>
+									</div>
+								</div><!--__end__ .left-side-inputs-payment -->
+								<div class="right-side-inputs-payment">
+									<div class="group-dropdown-select-invoice">
+										<label for="field-company" class="label-for-select-invoice m-0">
+											카드사
+										</label>
+									  	<select id="field-company" name="company" class="btn-select-dropdown-specific-invoice custom-select">
+										    <option data-field="company">
+										    	---선택---
+									    	</option>
+										    <option class="SamJungCard" data-field="company" data-value="SamJungCard">
+										    	삼정카드
+									    	</option>
+										    <option class="HyunTaeCard" data-field="company" data-value="HyunTaeCard">
+										    	현태카드
+									    	</option>
+								  		</select>
+									</div><!--__end__ 카드사 dropdown -->
+									<div class="group-dropdown-select-invoice mt-3">
+										<label for="field-monthlyInstallment" class="label-for-select-invoice m-0">
+											할부개월
+										</label>
+									  	<select id="field-monthlyInstallment" name="monthlyInstallment" class="btn-select-dropdown-specific-invoice custom-select">
+										    <option data-field="monthlyInstallment">
+										    	---선택---
+									    	</option>
+										    <option class="instance" data-field="monthlyInstallment" data-value="instance">
+										    	일시불
+									    	</option>
+										    <option class="2M" data-field="monthlyInstallment" data-value="2M">
+										    	2개월
+									    	</option>
+										    <option class="3M" data-field="monthlyInstallment" data-value="3M">
+										    	3개월
+									    	</option>
+								  		</select>
+									</div><!--__end__ 할부개월 dropdown -->
+								</div><!--__end__ .right-side-inputs-payment  -->
+	 						</div><!--__end__ .groups-inputs-->
+<!-- 배송정보 기입 관련 -->	 						
+	 						<div class="groups-inputs-delivery">
+<!-- 결제자 -->	 				<div class="group-buyer">
+									<div class="group-input-delivery-invoice">
+		 								<label for="buyer-name" class="label-grey-input-delivery-invoice">
+		 									결제자
+		 								</label>
+		 								<input id="buyer-name" class="input-delivery-invoice">
+	 								</div> <!-- __end__ 결제자 -->
+		 							<div class="group-input-delivery-invoice">
+		 								<label for="buyer-phone-number" class="label-grey-input-delivery-invoice">
+		 									결제자 연락처
+		 								</label>
+		 								<input id="buyer-phone-number" class="input-delivery-invoice" placeholder="-없이 숫자로 작성해주세요.">
+		 							</div> <!-- __end__ 결제자 연락처-->
+								</div> <!--__end__ group-payer  -->
+								<div class="group-receiver mt-4">
+									<div class="group-input-delivery-invoice">
+		 								<label for="receiver-name" class="label-yellow-input-delivery-invoice">
+		 									수령인
+		 								</label>
+		 								<input id="receiver-name" class="input-delivery-invoice">
+	 								</div> <!-- __end__ 수령인 -->
+									<div class="group-input-delivery-invoice">
+		 								<label for="receiver-phone-number" class="label-yellow-input-delivery-invoice">
+		 									수령인 연락처
+		 								</label>
+		 								<input id="receiver-phone-number" class="input-delivery-invoice">
+	 								</div> <!-- __end__ 수령인 연락처 -->
+									<div class="group-input-delivery-invoice">
+		 								<label for="address" class="label-yellow-input-delivery-invoice">
+		 									배송 주소
+		 								</label>
+		 								<input id="address" class="input-delivery-invoice">
+	 								</div> <!-- __end__ 배송 주소 -->
+								</div>
+								
+
+	 							
+	 							
+	 						</div><!--__end__ .groups-inputs-delivery"  -->
+	 						
+	 					</div><!--__end__ .groups-inputs-payment-delivery-detail-->
+ 					</div><!--__end__ .list-items-in-invoice -->
  					<!-- 제품상세 내역 -->	
 					<div class="groups-buttom-invoice-total">
 						<div class="group-cost-total-current">
@@ -193,7 +296,8 @@ th:data-product-id
     					let checked = item.getAttribute('data-checked') == "true";
     					//console.log(checked);
     					if(checked == false){
-    						console.log(`current inputQuantity has checked FALSE. item: ${item}`, item);
+    						let cartItemId = item.getAttribute('data-cart-item-id');
+    						console.log(`current inputQuantity has checked FALSE. cartItemId: ${cartItemId}`);
     						continue;
     					}
     					
@@ -354,6 +458,24 @@ th:data-product-id
 					inputQuantity.setAttribute("data-checked", checked ? "true": "false");
 					
 					updateCostCurrentInvoiceView ();
+				})
+				
+				$("#btn-payment").on('click', function(){
+					
+					if(confirm("해당 상품과 수량과 가격을 확인하셨습니까?"
+							+ "\n확인 버튼을 누르시면 결제창으로 이동합니다.") == false){
+						console.log("[#btn-payment onclick]client canceled to move to next payment phase.");
+						return;
+					};
+					console.log("[#btn-payment onclick]client agree to move to next payment phase.");
+					
+					// input.quantity-item-current 리스트로 받아오기
+					
+					//반복문으로 리스트각 단위별 정보 산출 
+					//리스트 input의 data로 기입된 data-cart-item-id, data-product-id, data-price, data-checked
+						//data-checked가 false인 것들 제외;
+						//price는 단순 확인용!; 서버 쪽에서 재검증 당연히 해야
+						
 				})
 				
     		})//document ready

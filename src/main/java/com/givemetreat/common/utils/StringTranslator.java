@@ -39,7 +39,7 @@ public class StringTranslator {
 	 */
 	public static String translatePaymentTypeE2K(String type) {
 		if(type.equals("CreditCard")) return "신용카드";
-		if(type.equals("AccounTranster")) return "계좌이체";
+		if(type.equals("AccountTranster")) return "계좌이체";
 		return "";
 	}
 	

@@ -76,7 +76,7 @@
 													</defs>
 												</svg>
 											</button>
-										</div>
+										</div> <!--__end__ .group-btns-quantity-adjust -->
 										
 										<div class="btns-pay-or-not d-flex justify-content-start ml-5">
 <!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
@@ -87,12 +87,12 @@
 											<button class="btn-cancel-product-current ml-3" th:data-cart-item-id="${item.cartItemId}" th:data-product-id="${item.productId}" >
 												취소하기
 											</button>
-										</div>										
+										</div><!--__end__ .btns-pay-or-not  -->									
 									</div>
-								</div>	 							
-	 						</div>
+								</div><!--__end__ .groups-right-side-card-item-detail  --> 							
+	 						</div><!--__end__ .card-item-detail  -->
 	 					</th:block>
- 					</div>
+ 					</div><!--__end__ .list-items-in-cart -->
  					<!-- 제품상세 내역 -->	
 					<div class="groups-buttom-cart-total">
 						<div class="group-cost-total-current">
@@ -103,7 +103,7 @@
 								<span id="cost-total-current">0</span>
 								<span class="ml-2">원</span>
 							</div>
-						</div>
+						</div><!--__end__ .group-cost-total-current -->
 						<a id="btn-pay-cart" class="btn-pay-cart-total-bottom" href="/invoice/payment-view">
 							장바구니 결제하기
 						</a>
@@ -111,7 +111,7 @@
 						<button id="btn-cancel-cart-total" class="btn-cancel-cart-total-bottom">
 							장바구니 취소하기
 						</button>
-					</div>
+					</div><!--__end__ .groups-buttom-cart-total  -->
  				</div>
 			</article>
 <!-- 우측 nav 메뉴; groups-nav-aside -->			
