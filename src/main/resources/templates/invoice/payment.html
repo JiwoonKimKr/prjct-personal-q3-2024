@@ -114,10 +114,10 @@ th:data-product-id
 						</div>
 <!-- 선택항목 결제하기; 해당 item들이 모두 선택되어 있으면 text를 '전체 항목 결제하기'로 바꿔야 -->						
 						<button id="btn-payment" class="btn-payment-current-bottom">
-							선택항목 결제하기
+							전체항목 결제하기
 						</button>
 <!-- 결제 취소 버튼; 전체 invoice 내 아이템 삭제 -->						
-						<button id="btn-cancel-invocie-total" class="btn-cancel-invoice-total-bottom">
+						<button id="btn-cancel-invoice-total" class="btn-cancel-invoice-total-bottom">
 							결제 취소하기
 						</button>
 					</div>
@@ -183,12 +183,20 @@ th:data-product-id
     				location.href= "/product/product-list-view?category=kibble"
     			})
     			
-/* 현재 장바구니 합계 금액 갱신하는 메소드 */    			
+/* 현재 장바구니 합계 금액 갱신하는 메소드: shoppingCart와 달리, 비활성화 된 input은 금액에서 제외 */    			
     			function updateCostCurrentInvoiceView (){
-    				let listItems = $(".quantity-item-current");
+    				let listItems = $("input.quantity-item-current");
     				//console.log(listItems);
     				let sum = 0;
+    				let sumItemChecked = 0;
     				for(let item of listItems){
+    					let checked = item.getAttribute('data-checked') == "true";
+    					//console.log(checked);
+    					if(checked == false){
+    						console.log(`current inputQuantity has checked FALSE. item: ${item}`, item);
+    						continue;
+    					}
+    					
 	    				let count = item.value;
 	    				let price = item.getAttribute('data-price');
 	    				//console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
@@ -196,9 +204,14 @@ th:data-product-id
 	    				price = Number(price);
     					sum += count * price;
     					//console.log("sum +=" + count*price);
+    					
+    					sumItemChecked ++;
     				}
     				$("#cost-total-current").text(sum);
     				console.log(`"[updateCostCurrentInvoiceView())] current cost total: ${sum}"`)
+    				
+    				//#btn-payment: '전체 항목 결제하기' 버튼의 text를 전체 선택 여부에 따라 변경 
+    				$("#btn-payment").text(sumItemChecked == listItems.length ? "전체항목 결제하기" : "선택항목 결제하기");
     			}    			
     			
 /* 형제 태그에서 수량 관련 Input 찾아서, 수량 변화 기입하는 메소드 */    			
@@ -323,7 +336,7 @@ th:data-product-id
 						}
 					})//ajax
 				})//btn-cancel-product-current on click
-/* __end__ShoppingCart와 동일 */				
+/* __end__ShoppingCart와 상당 부분 동일; input.quantity-item-current 관련된 활성화 여부 제외 */				
 				
 				$(".toggle-item-current").on('click', function(){
 					let checked = $(this).data("checked") == "true" ? true : false;
@@ -331,10 +344,16 @@ th:data-product-id
 					
 					//find descendant "path" having class "icon-chcked; 
 					$(this).find("path.icon-checked").toggleClass("d-none", !checked);
+					
+					//체크 여부에 따라 바탕화면 하늘색 또는 회색으로 toggle
 					let color = checked ? "#51C3ED":"#BDBDBD";
 					$(this).parent()[0].style.setProperty("background-color", color);
+					
+					//input.quantity-item-current에 'data-checked'라는 표시로 업데이트;
 					let inputQuantity = $(this).siblings("div.groups-right-side-card-item-detail").find("input.quantity-item-current")[0];
 					inputQuantity.setAttribute("data-checked", checked ? "true": "false");
+					
+					updateCostCurrentInvoiceView ();
 				})
 				
     		})//document ready
