@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.givemetreat.invoice.bo.InvoiceBO;
 import com.givemetreat.productShoppingCart.domain.ProductShoppingCartVO;
@@ -31,14 +32,30 @@ public class InvoiceController {
 	@GetMapping("/payment-view")
 	public String paymentView(HttpSession session
 							, Model model) {
-		////★★★★★ 상품 상세 페이지에서 바로 단일 품목만 띄어야 하는 경우도 고려해야;
-		
 		//장바구니 페이지에서 넘어온 경우
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
 			return "redirect:user/sign-in-view";
 		}
 		List<ProductShoppingCartVO> listItems = invoiceBO.getListProductsFromCartByUserId(userId);
+		
+		model.addAttribute("listItems", listItems);
+		
+		return "invoice/payment";
+	}
+	
+	@GetMapping("/payment-specific-item-view")
+	public String paymentSpecificItemView(@RequestParam int productId
+										, @RequestParam int quantity
+										, HttpSession session
+										, Model model) {
+		//상품 상세 페이지에서 바로 단일 품목만 결제 페이지로 넘어온 경우
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(userId == null) {
+			return "redirect:user/sign-in-view";
+		}
+		List<ProductShoppingCartVO> listItems =
+				invoiceBO.getProductByProductIdAndQuantity(productId, quantity);
 		
 		model.addAttribute("listItems", listItems);
 		

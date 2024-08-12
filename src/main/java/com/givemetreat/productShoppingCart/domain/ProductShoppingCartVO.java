@@ -24,10 +24,28 @@ public class ProductShoppingCartVO {
 		this.agePetProperTranslated = product.getAgePetProperTranslatedK();
 		this.imgProfile = product.getImgProfile();
 		this.imgThumbnail = product.getImgThumbnail();		
-		
 	}
 	
-	private int cartItemId;
+	public ProductShoppingCartVO (Integer cartItemId
+								, ProductVO product
+								, int quantity) {
+		this.cartItemId = cartItemId;
+		
+		this.productId = product.getId();
+		
+		this.quantity = quantity;
+		
+		this.productName = product.getName();
+		this.price = product.getPrice();
+		this.category = product.getCategory();
+		this.categoryTranslated = product.getCategoryTranslatedK();
+		this.agePetProper = product.getAgePetProper();
+		this.agePetProperTranslated = product.getAgePetProperTranslatedK();
+		this.imgProfile = product.getImgProfile();
+		this.imgThumbnail = product.getImgThumbnail();		
+	}	
+	
+	private Integer cartItemId;
 	private int productId;
 	private int quantity;
 	

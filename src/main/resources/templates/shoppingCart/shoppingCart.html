@@ -80,7 +80,7 @@
 										
 										<div class="btns-pay-or-not d-flex justify-content-start ml-5">
 <!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
-											<button class="btn-pay-product-current">
+											<button class="btn-pay-product-current" th:data-product-id="${item.productId}">
 												해당 항목 결제
 											</button>
 <!-- 취소하기 버튼; 현재 항목 삭제 -->									
@@ -286,6 +286,17 @@
 					//하단 총합 갱신
 					updateCostCurrentCartView();
 				})//input.quantity-item-current on keyup
+				
+				$(".btn-pay-product-current").on('click', function(){
+					let productId = $(this).data('product-id');
+					let inputQuantity = $(this).parent(".btns-pay-or-not").siblings(".group-btns-quantity-adjust").children("input.quantity-item-current")[0];
+					let quantity = inputQuantity.getAttribute("value"); 
+					console.log(quantity);
+					url = "/invoice/payment-specific-item-view?productId=" + productId +"&quantity=" + quantity;
+					console.log(url);
+					return;
+					location.href = url;
+				})// 
 				
 /* 해당 물품 취소 버튼: .btn-cancel-product-current*/				
 				$(".btn-cancel-product-current").on('click', function(){

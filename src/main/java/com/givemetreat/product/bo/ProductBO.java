@@ -17,6 +17,15 @@ import lombok.RequiredArgsConstructor;
 public class ProductBO {
 	private final ProductMapper productMapper;
 
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param category
+	 * @param price
+	 * @param agePetProper
+	 * @return List<{@link ProductVO}>
+	 */
 	@Transactional
 	public List<ProductVO> getProducts(Integer id
 										, String name
