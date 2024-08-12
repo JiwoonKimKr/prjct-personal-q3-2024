@@ -215,6 +215,10 @@
 					let productId = $(this).data('product-id');
 					let quantity = $("#count-order-product").val();
 					console.log(quantity);
+					if(quantity < 1){
+						alert("상품 수량을 입력해 주세요");
+						return;
+					}
 					url = "/invoice/payment-specific-item-view?productId=" + productId +"&quantity=" + quantity;
 					console.log(`"[productDetail] product current directly go to payment page. productId = ${productId}, quantity = ${quantity}"`);
 					location.href = url;

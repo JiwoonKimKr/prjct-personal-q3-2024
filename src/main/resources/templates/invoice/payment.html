@@ -360,6 +360,12 @@ th:data-product-id
 					
 					//console.log(`productId : ${productId}, quantity: ${inputCount.value}, cartItemId: ${cartItemId}`);
 					
+					if(cartItemId == -1){
+						console.log("[payment updateQuantity()] current payment page can't be updated to private cart" +
+								", because it's derived clicking button-buying-specfic-product form product-detail page.")
+						return;
+					}
+					
 					let url = "/shopping-cart/update-quantity";
 					
 					$.post(url, params)
@@ -461,26 +467,159 @@ th:data-product-id
 				})
 				
 				$("#btn-payment").on('click', function(){
+					//전체 결제 금액이 0일 때
+					if($("#cost-total-current").text() < 1){
+						alert("상품 수량을 확인해 주십시오.");
+						return;
+					}
 					
 					if(confirm("해당 상품과 수량과 가격을 확인하셨습니까?"
-							+ "\n확인 버튼을 누르시면 결제창으로 이동합니다.") == false){
+							+ "\n확인 버튼을 누르시면 결제창으로 이동합니다."
+							+ "\n결제를 진행하시겠습니까?") == false){
 						console.log("[#btn-payment onclick]client canceled to move to next payment phase.");
 						return;
 					};
 					console.log("[#btn-payment onclick]client agree to move to next payment phase.");
 					
-					// input.quantity-item-current 리스트로 받아오기
+					let listMaps = [];
 					
-					//반복문으로 리스트각 단위별 정보 산출 
-					//리스트 input의 data로 기입된 data-cart-item-id, data-product-id, data-price, data-checked
-						//data-checked가 false인 것들 제외;
-						//price는 단순 확인용!; 서버 쪽에서 재검증 당연히 해야
-						
-				})
+					let listItems = $("input.quantity-item-current");
+    				//console.log(listItems);
+    				let sum = 0;
+
+					//리스트 input.quantity-item-current 반복문
+    				for(let item of listItems){
+    					let checked = item.getAttribute('data-checked') == "true";
+    					console.log(checked);
+    					if(checked == false){
+    						let cartItemId = item.getAttribute('data-cart-item-id');
+    						console.log(`current inputQuantity has checked FALSE. cartItemId: ${cartItemId}`);
+    						continue;
+    					}
+    					
+    					let count = item.value;
+	    				let price = item.getAttribute('data-price');
+	    				count = Number(count);
+	    				price = Number(price);
+    					sum += count * price;
+
+    					let mapItem = {}
+    					mapItem["productId"] = item.getAttribute('data-product-id');
+    					mapItem["cartItemId"] = item.getAttribute('data-cart-item-id');
+    					mapItem["quantity"] = item.getAttribute('value');
+    					mapItem["price"] = item.getAttribute('data-price');
+    					mapItem["checked"] = item.getAttribute('data-checked');
+    					console.log(mapItem);
+    					
+    					listMaps.push(mapItem);
+    				}
+					if(sum != $("#cost-total-current").text()){
+						alert("금액이 일치하지 않습니다. 관리자에게 문의하세요");
+						return;
+					}
+					
+					//결제 유형: select
+					let paymentType = $("#field-paymentType").val();
+					if(!paymentType || paymentType == '---선택---'){
+						alert("결제 타입을 선택하세요");
+						return;
+					}
+					//카드사: select
+					let company = $("#field-company").val();
+					if(!company || company == '---선택---'){
+						alert("결제사를 선택하세요");
+						return;
+					}
+					//할부 개월: select
+					let monthlyInstallment = $("#field-monthlyInstallment").val();
+					if(!monthlyInstallment || monthlyInstallment == '---선택---'){
+						alert("할부 개월을 선택하세요");
+						return;
+					}
+					//결제자: input
+					let buyerName = $("#buyer-name").val().trim();
+					if(!buyerName || buyerName == '---선택---'){
+						alert("구매자 성명을 기재하십시오.");
+						return;
+					}
+					//결제자 연락처: input
+					let buyerPhoneNumber = $("#buyer-phone-number").val().trim();
+					if(!buyerPhoneNumber || buyerPhoneNumber == ''){
+						alert("구매자의 연락처를 기재하십시오.");
+						return;
+					}
+					//수령인: input
+					let receiverName = $("#receiver-name").val().trim();
+					if(!receiverName || receiverName == ''){
+						alert("수령자 성명을 기재하십시오.");
+						return;
+					}
+					//수령인 연락처: input
+					let receiverPhoneNumber = $("#receiver-phone-number").val().trim();
+					if(!receiverPhoneNumber || receiverPhoneNumber == ''){
+						alert("수령자 연락처를 기재하십시오.");
+						return;
+					}
+					//배송 주소: input
+					let address = $("#address").val().trim();
+					if(!address || address == ''){
+						alert("배송 주소를 기재하십시오.");
+						return;
+					}
+
+    				let params = {"listItemsOrdered": listMaps
+    							, "payment": sum
+    							, "paymentType": paymentType
+    							, "company": company
+    							, "monthlyInstallment": monthlyInstallment
+    							, "buyerName": buyerName
+    							, "buyerPhoneNumber": buyerPhoneNumber
+    							, "receiverName": receiverName
+    							, "receiverPhoneNumber": receiverPhoneNumber
+    							, "address": address}
+    				
+    				
+    				console.log(params);
+    				//url = "/invoice/payment";
+    				
+					/* $.post(url,params)
+					.done(function(data){
+							if(data.code == 200){
+								alert("결제 성공하였습니다.")
+								location.href="/product/product-list-view";
+							} else if(data.code == 403){
+								alert(data.error_message);
+								location.href="/user/sign-in-view";
+							} else {
+								alert(data.error_message);
+							}
+					})  */
+					$.ajax({
+    					type: "POST"
+    					, url: "/invoice/payment"
+    					, data: params
+    					, contentType: "json"
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+								alert("결제 성공하였습니다.")
+								location.href="/product/product-list-view";
+							} else if(data.code == 403){
+								alert(data.error_message);
+								location.href="/user/sign-in-view";
+							} else {
+								alert(data.error_message);
+							}
+    					}
+    					, error: function(error){
+    						alert("결제 시도가 실패하였습니다. 관리자에게 문의하세요.")
+    					}
+    					
+    				})//ajax POST 
+
+				}) //btn payment on click;
 				
-    		})//document ready
-    	
+    		}) //document ready
     	</script>
 	</th:block>
-	
 </html>
