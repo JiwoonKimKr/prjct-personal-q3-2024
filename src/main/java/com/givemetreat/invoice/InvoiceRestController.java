@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.givemetreat.invoice.bo.InvoiceBO;
@@ -22,11 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 public class InvoiceRestController {
 	private final InvoiceBO invoiceBO;
 
-	@PostMapping("/payment")
-	public Map<String, Object> payment(@RequestBody Map<String, Object> params
+	@PostMapping(value="/payment", produces = "application/json; charset=utf8")
+	public Map<String, Object> payment(@RequestBody String jsonString
 										, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
 
+		log.info("[InvoiceRestController payment()]"
+		+ " Json String From Request has arrived. jsonString:{}", jsonString);
+		
 		Integer userId = (Integer) session.getAttribute("userId");
 		
 		if(userId == null) {
@@ -35,18 +37,9 @@ public class InvoiceRestController {
 			result.put("error_message", "로그인 후 이용 가능합니다.");
 			return result;			
 		}
-
+		
 		//결제 요청; ★★★★★나중에 PG사 연동시켜서 확인해봐야!
-		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoice(params.get("listItemOrdered")
-																	, (Integer) params.get("payment")
-																	, (String) params.get("paymentType")
-																	, (String) params.get("company")
-																	, (String) params.get("monthlyInstallment")
-																	, (String) params.get("buyerName")
-																	, (String) params.get("buyerPhoneNumber")
-																	, (String) params.get("receiverName")
-																	, (String) params.get("receiverPhoneNumber")
-																	, (String) params.get("address"));
+		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoiceFromJsonString(jsonString);
 		
 		//결제 요청 실패 시
 		if(getPaymentSuccessMessage == false) {

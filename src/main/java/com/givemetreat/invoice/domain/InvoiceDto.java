@@ -1,17 +1,22 @@
 package com.givemetreat.invoice.domain;
 
-import java.util.*;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class InvoiceDto {
-	
-	@JsonProperty("listItemOrdered")
+
+	@JsonProperty(value = "listItemOrdered")
 	private List<ItemOrderedDto> listItemOrdered;
 
 	private int payment;

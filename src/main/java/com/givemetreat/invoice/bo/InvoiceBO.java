@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.givemetreat.invoice.domain.InvoiceDto;
 import com.givemetreat.invoice.domain.ItemOrderedDto;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
@@ -51,7 +54,7 @@ public class InvoiceBO {
 	 * @return Boolean
 	 */
 	@Transactional
-	public Boolean generateInvoice( Object list
+	public Boolean generateInvoice( List<ItemOrderedDto> listItemsOrdered
 									, Integer payment
 									, String paymentType
 									, String company
@@ -61,7 +64,6 @@ public class InvoiceBO {
 									, String receiverName
 									, String receiverPhoneNumber
 									, String address){
-		List<ItemOrderedDto> listItemsOrdered = (List<ItemOrderedDto>) list;
 		//요청 금액과 총 금액이 동일한지 점검
 		int sum = 0;
 		for(ItemOrderedDto mapItem : listItemsOrdered) {
@@ -104,6 +106,20 @@ public class InvoiceBO {
 		
 		
 		return true;
+	}
+
+	@Transactional
+	public Boolean generateInvoiceFromJsonString(String jsonString) {
+		log.info("[InvoiceBO generateInvoiceFromJsonString()] dto has arrived :{}", jsonString);
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		InvoiceDto invoiceDto = null;
+		try {
+			invoiceDto = objectMapper.readValue(jsonString, InvoiceDto.class);
+		} catch (JsonProcessingException e) {
+			log.warn("[InvoiceBO generateInvoiceFromJsonString()] failed to generated InvoiceDto. json String :{}", jsonString);
+		}
+		return false;
 	}
 
 }
