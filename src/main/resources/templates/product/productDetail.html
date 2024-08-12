@@ -75,7 +75,7 @@
 								</div>
 								<div class="btns-pay-or-not d-flex justify-content-start">
 <!-- 해당 항목 결제 버튼; 바로 결제 페이지 넘어가야 -->
-									<button class="btn-pay-product-current">
+									<button class="btn-pay-product-current" th:data-product-id="${product.id}">
 										해당 항목 결제
 									</button>
 <!-- 취소하기 버튼; 상품 리스트 페이지로 넘어가야 -->									
@@ -205,9 +205,21 @@
 					updateCostCurrent();
 				})// btn minus quantity current on click
 				
+				//input #count-order-product 숫자 변경 되었을 때
 				$("#count-order-product").on('keyup', function(){
 					updateCostCurrent();
-				});
+				}); //input #count-order-product on keyup
+    			
+				// btn-pay-product-current on click
+    			$(".btn-pay-product-current").on('click', function(){
+					let productId = $(this).data('product-id');
+					let quantity = $("#count-order-product").val();
+					console.log(quantity);
+					url = "/invoice/payment-specific-item-view?productId=" + productId +"&quantity=" + quantity;
+					console.log(`"[productDetail] product current directly go to payment page. productId = ${productId}, quantity = ${quantity}"`);
+					location.href = url;
+				})/*__end__ btn-pay-product-current on click */
+    			
 				
 				//해당 물품 장바구니 추가 버튼
 				$(".btn-add-to-cart").on('click', function(){

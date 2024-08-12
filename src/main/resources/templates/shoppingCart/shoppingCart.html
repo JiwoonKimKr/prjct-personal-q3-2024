@@ -293,10 +293,9 @@
 					let quantity = inputQuantity.getAttribute("value"); 
 					console.log(quantity);
 					url = "/invoice/payment-specific-item-view?productId=" + productId +"&quantity=" + quantity;
-					console.log(url);
-					return;
+					console.log("[shoppingCart]product current directly go to payment page. productId = ${productId}, quantity = ${quantity}");
 					location.href = url;
-				})// 
+				})// btn-pay-product-current on click
 				
 /* 해당 물품 취소 버튼: .btn-cancel-product-current*/				
 				$(".btn-cancel-product-current").on('click', function(){
