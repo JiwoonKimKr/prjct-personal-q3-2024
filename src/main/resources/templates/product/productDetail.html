@@ -82,13 +82,13 @@
 									<a class="btn-cancel-product-current ml-3" href="/product/product-list-view">
 										취소하기
 									</a>
-								</div>
-							</div>
-						</div>
-					</div>
+								</div> <!--__end__ .btns-pay-or-not -->
+							</div><!--__end__ .group-btns-cart-detail-product -->
+						</div><!--__end__ .group-right-upper-side-detail-product -->
+					</div><!--__end__ .group-upper-side-detail-product -->
 					<div class="group-lower-side-detail-product"> 
-					</div>
-				</div>
+					</div><!--__end__ .group-lower-side-detail-product -->
+				</div><!--__end__ .groups-detail-product-current -->
 <!-- 제품상세 내역 -->	
 				<div class="groups-buttom-cart-total">
 					<div class="group-cost-total-current">
@@ -229,7 +229,7 @@
 					//TODO count와 number가 숫자 형태로만 입력되었는지 체크해야
 
 					let productId = $(this).data('product-id');
-					let url = "/shopping-cart/add-product"
+					let url = "/shopping-cart/update-quantity"
 					console.log(url);
 					let params = {"productId": productId
 								,"quantity": count};

@@ -1525,7 +1525,7 @@ input::-webkit-inner-spin-button {
 
 .image-card-item-detail{
 	/* Rectangle 10 */
-	margin-left:10px;
+	margin-left: 10px;
 	width: 200px;
 	height: 200px;
 	
@@ -1534,7 +1534,7 @@ input::-webkit-inner-spin-button {
 
 .groups-right-side-card-item-detail{
 	margin: 15px;
-	width: 700px;
+	width: 675px;
 }
 
 .title-card-item-detail{
@@ -1661,7 +1661,7 @@ input::-webkit-inner-spin-button {
 
 .image-card-item-detail-invoice{
 	/* Rectangle 10 */
-	margin: auto 5px;
+	margin: auto 5px auto 20px;
 	width: 180px;
 	height: 180px;
 	overflow: hidden;

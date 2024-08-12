@@ -165,7 +165,7 @@
     		$(document).ready(function(e){
     			updateCostCurrentCartView();
 
-    			//우측 nav 메뉴 버튼들 관련
+/*우측 nav 메뉴 버튼들 관련*/
     			$("#btn-treat-menu-aside").on('click', function(){
     				location.href= "/product/product-list-view?category=treat"
     			})
@@ -173,6 +173,7 @@
     				location.href= "/product/product-list-view?category=kibble"
     			})
     			
+/* 현재 장바구니 합계 금액 갱신하는 메소드 */    			
     			function updateCostCurrentCartView (){
     				let listItems = $(".quantity-item-current");
     				//console.log(listItems);
@@ -189,7 +190,8 @@
     				$("#cost-total-current").text(sum);
     				console.log(`"[updateCostCurrentCartView())] current cost total: ${sum}"`)
     			}    			
-    			
+
+/* 형제 태그에서 수량 관련 Input 찾아서, 수량 변화 기입하는 메소드 */    			
     			function updateQuantity(e , num){
 					//형제 태그 중 숫자 인풋 찾기
 					
@@ -254,7 +256,7 @@
 					})//ajax
     			}
     			
-				//현재 물품 수량 추가 버튼
+/* 해당 물품 수량 추가 버튼: .btn-plus */
 				$(".btn-plus").on('click',function(){
 					updateQuantity($(this), 1);
 					
@@ -262,7 +264,7 @@
 					updateCostCurrentCartView();
 				}) // btn plus quantity current on click
 
-				//현재 물품 수량 감소 버튼
+/* 해당 물품 수량 감소 버튼: .btn-minus */
 				$(".btn-minus").on('click',function(){
 					updateQuantity($(this), -1);
 					
@@ -270,6 +272,7 @@
 					updateCostCurrentCartView();
 				})// btn minus quantity current on click
 				
+/* 해당 물품 수량 input: input.quantity-item-current */
 				$("input.quantity-item-current").on('keyup', function(){
 					//console.log($(this));
 					let cartItemId = $(this).data('cart-item-id');
@@ -284,6 +287,7 @@
 					updateCostCurrentCartView();
 				})//input.quantity-item-current on keyup
 				
+/* 해당 물품 취소 버튼: .btn-cancel-product-current*/				
 				$(".btn-cancel-product-current").on('click', function(){
 					let productId = $(this).data('product-id');
 					let cartItemId = $(this).data('cart-item-id');
@@ -310,6 +314,7 @@
 					})//ajax
 				})//btn-cancel-product-current on click
 				
+/*페이지 하단 장바구니 전체 취소 버튼: #btn-cancel-cart-total*/					
 				$("#btn-cancel-cart-total").on('click', function(){
 					let listItems = $(".quantity-item-current");
 					console.log(listItems);
