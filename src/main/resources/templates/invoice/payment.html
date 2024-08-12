@@ -481,7 +481,7 @@ th:data-product-id
 					};
 					console.log("[#btn-payment onclick]client agree to move to next payment phase.");
 					
-					let listMaps = [];
+					let listItemOrderedDto = [];
 					
 					let listItems = $("input.quantity-item-current");
     				//console.log(listItems);
@@ -503,16 +503,21 @@ th:data-product-id
 	    				price = Number(price);
     					sum += count * price;
 
-    					let mapItem = {}
+    					let mapItem = {};
     					mapItem["productId"] = item.getAttribute('data-product-id');
     					mapItem["cartItemId"] = item.getAttribute('data-cart-item-id');
     					mapItem["quantity"] = item.getAttribute('value');
     					mapItem["price"] = item.getAttribute('data-price');
     					mapItem["checked"] = item.getAttribute('data-checked');
-    					console.log(mapItem);
+    					let jsonString = JSON.stringify(mapItem)
+    					console.log(jsonString);
     					
-    					listMaps.push(mapItem);
+    					listItemOrderedDto.push(jsonString);
     				}
+					
+    				console.log(listItemOrderedDto.join(","));
+					
+    				/* 디버깅 편의상 막아놓음
 					if(sum != $("#cost-total-current").text()){
 						alert("금액이 일치하지 않습니다. 관리자에게 문의하세요");
 						return;
@@ -566,9 +571,27 @@ th:data-product-id
 						alert("배송 주소를 기재하십시오.");
 						return;
 					}
-
-    				let params = {"listItemsOrdered": listMaps
-    							, "payment": sum
+					*/
+					
+					let listItemsOrdered ={"listItemsOrdered": '['+ listItemOrderedDto.join(",") + ']'}
+					let url = "/invoice/payment-validation";
+					
+					$.post(url, listItemsOrdered)
+					.done(function(data){
+							if(data.code == 200){
+								console.log("결제 시도가 성공하였습니다.")
+							} else if(data.code == 403){
+								alert(data.error_message);
+								location.href="/user/sign-in-view";
+							} else {
+								alert(data.error_message);
+							}
+					}) //ajax POST 
+					
+					
+					
+					/*
+    				let params = {"payment": sum
     							, "paymentType": paymentType
     							, "company": company
     							, "monthlyInstallment": monthlyInstallment
@@ -582,25 +605,13 @@ th:data-product-id
     				let jsonString = JSON.stringify(params);
     				console.log(jsonString);
     				
-    				//url = "/invoice/payment";
-    				
-					/*$.post(url,params)
-					.done(function(data){
-							if(data.code == 200){
-								alert("결제 성공하였습니다.")
-								location.href="/product/product-list-view";
-							} else if(data.code == 403){
-								alert(data.error_message);
-								location.href="/user/sign-in-view";
-							} else {
-								alert(data.error_message);
-							}
-					})*/ //ajax POST 
+    				url = "/invoice/payment";
+					
 					$.ajax({
-						 method : "POST"
+						 type : "POST"
     					, url: "/invoice/payment"
-    					, contentType: 'application/json' // 보내는 데이터 json 일때 필수 옵션
-    					, data: jsonString
+    					, data: params
+    					//, contentType: 'application/json' // 보내는 데이터 json 일때 필수 옵션
     					
     					, success: function(data){
     						if(data.code == 200){
@@ -615,7 +626,7 @@ th:data-product-id
     						alert("결제에 실패하였습니다. 관리자에게 문의하시길 바랍니다.");
     					}
     					
-    				})//ajax POST
+    				})*/ //ajax POST
 
 
 				}) //btn payment on click;

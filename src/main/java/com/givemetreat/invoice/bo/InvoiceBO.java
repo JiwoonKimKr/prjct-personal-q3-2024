@@ -3,12 +3,12 @@ package com.givemetreat.invoice.bo;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.givemetreat.invoice.domain.InvoiceDto;
 import com.givemetreat.invoice.domain.ItemOrderedDto;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
@@ -39,86 +39,31 @@ public class InvoiceBO {
 		return listVOs;
 	}
 
-	/**
-	 *  결제 요청 메소드
-	 * @param listItemsOrdered
-	 * @param paymentType
-	 * @param company
-	 * @param monthlyInstallment
-	 * @param buyerName
-	 * @param buyerPhoneNumber
-	 * @param statusDelivery
-	 * @param receiverName
-	 * @param receiverPhoneNumber
-	 * @param address
-	 * @return Boolean
-	 */
-	@Transactional
-	public Boolean generateInvoice( List<ItemOrderedDto> listItemsOrdered
-									, Integer payment
-									, String paymentType
-									, String company
-									, String monthlyInstallment
-									, String buyerName
-									, String buyerPhoneNumber
-									, String receiverName
-									, String receiverPhoneNumber
-									, String address){
-		//요청 금액과 총 금액이 동일한지 점검
-		int sum = 0;
-		for(ItemOrderedDto mapItem : listItemsOrdered) {
-			Boolean hasChecked = (Boolean) mapItem.getChecked().equals("checked");
-			if(hasChecked == false) {
-				log.warn("[InvoiceBO generateInvoice()] Unchecked Item got submitted to server.");
-				return false;
-			}
-			
-			Integer productId = (Integer) mapItem.getProductId();
-			Integer quantity = (Integer) mapItem.getQuantity();
-			Integer price = (Integer) mapItem.getPrice();
-			int costCurrent = price * quantity;
-			
-			int priceProduct = productBO.getProducts(productId, null, null, null, null).get(0).getPrice();
-			if(costCurrent != priceProduct * costCurrent) {
-				log.warn("[InvoiceBO generateInvoice()] current order doesn't match with price of product. productId:{}", productId);
-				return false;
-			}
-			
-			sum += costCurrent;
-		}
+	public Boolean generateInvoiceFromJsonString(String jsonString){
+		JSONArray jsonArray = new JSONArray();
+		List<ItemOrderedDto> listItemOrderedDto = new ArrayList<>();
 		
-		if(sum != payment) {
-			log.warn("[InvoiceBO generateInvoice()] payment failed to pass validation. payment:{}", payment);
-		}
-		
-		//장바구니 내 정보와 일치하는지 
-		
-		//결제 요청; ★★★★★나중에 PG사 연동시켜서 확인해봐야!
-		Boolean hasPaymentSuccessed = true;
-		if(hasPaymentSuccessed == false) {
-			return false;
-		}
-		
-		//결제 성공 확인 후 Invoice 생성
-			//Invoice 생성후 productInvoice 생성
-				//productBuffer에 reserved 표시
-		
-		
-		
-		return true;
-	}
-
-	@Transactional
-	public Boolean generateInvoiceFromJsonString(String jsonString) {
-		log.info("[InvoiceBO generateInvoiceFromJsonString()] dto has arrived :{}", jsonString);
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		InvoiceDto invoiceDto = null;
 		try {
-			invoiceDto = objectMapper.readValue(jsonString, InvoiceDto.class);
-		} catch (JsonProcessingException e) {
-			log.warn("[InvoiceBO generateInvoiceFromJsonString()] failed to generated InvoiceDto. json String :{}", jsonString);
+			jsonArray = new JSONArray(jsonString);
+			for(int i=0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				ItemOrderedDto item = new ItemOrderedDto();
+				item.setCartItemId(Integer.parseInt(jsonObject.get("cartItemId").toString()));
+				item.setProductId(Integer.parseInt(jsonObject.get("productId").toString()));
+				item.setQuantity(Integer.parseInt(jsonObject.get("quantity").toString()));
+				item.setPrice(Integer.parseInt(jsonObject.get("price").toString()));
+				item.setChecked(jsonObject.get("checked").toString());
+				log.info(item.toString());
+				listItemOrderedDto.add(item);
+			}
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
+	
+		//
+		log.info("[InvoiceBO generateInvoiceFromJsonString()] Json String to listItemOrderedDto. listItemOrderedDto:{}", listItemOrderedDto.toString());
+				
 		return false;
 	}
 

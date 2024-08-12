@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.givemetreat.invoice.bo.InvoiceBO;
@@ -20,14 +20,17 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class InvoiceRestController {
 	private final InvoiceBO invoiceBO;
-
-	@PostMapping(value="/payment", produces = "application/json; charset=utf8")
-	public Map<String, Object> payment(@RequestBody String jsonString
+	//결제 요청; ★★★★★나중에 PG사 연동시켜서 확인해봐야!
+	
+	
+	//@PostMapping(value="/payment", produces = "application/json; charset=utf8")
+	@PostMapping("/payment-validation")
+	public Map<String, Object> payment(@RequestParam String listItemsOrdered
 										, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
 
 		log.info("[InvoiceRestController payment()]"
-		+ " Json String From Request has arrived. jsonString:{}", jsonString);
+		+ " RequestBody jsonString:{}", listItemsOrdered);
 		
 		Integer userId = (Integer) session.getAttribute("userId");
 		
@@ -38,8 +41,8 @@ public class InvoiceRestController {
 			return result;			
 		}
 		
-		//결제 요청; ★★★★★나중에 PG사 연동시켜서 확인해봐야!
-		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoiceFromJsonString(jsonString);
+		
+		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoiceFromJsonString(listItemsOrdered);
 		
 		//결제 요청 실패 시
 		if(getPaymentSuccessMessage == false) {
