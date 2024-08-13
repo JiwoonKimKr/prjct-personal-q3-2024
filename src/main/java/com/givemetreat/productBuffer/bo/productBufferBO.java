@@ -54,10 +54,12 @@ public class ProductBufferBO {
 		return listEntities;
 	}
 
+	@Transactional
 	public Integer getCount(int productId, boolean reserved, int productInvoiceId) {
 		return productBufferRepository.countByProductIdAndReservedAndProductInvoiceId(productId, reserved, productInvoiceId);
 	}
 
+	@Transactional
 	public List<ProductBufferEntity> updateProductBuffersInQuantity(int productId, Integer quantity,
 			int productInvoiceId) {
 		

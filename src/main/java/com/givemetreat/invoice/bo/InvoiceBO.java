@@ -94,7 +94,20 @@ public class InvoiceBO {
 		
 	//validation before Sending invoice to PG(Payment Gateway) company
 		//product Quantity Validation
-		
+		for(ItemOrderedDto item: listItemOrderedDto) {
+			int productId = item.getProductId();
+			
+			//productBuffer에서 count함수로 해당 물품 가용 재고 확인하기
+			//현재 가용 재고가 주문 수량보다 값이 커야한다!
+			Integer bufferAvailbale = productBufferBO.getCountAvailableByProductIdAndReserved(productId, false);
+			
+			if(ObjectUtils.isEmpty(bufferAvailbale) || bufferAvailbale < item.getQuantity()) {
+				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
+						+ " current item's stock is lower than quantity from order."
+						+ " productId:{}", productId);
+				return false;
+			}
+		}
 		
 		//Total Cost Validation;
 		if(payment != sumCost || payment != sumServerSide) {
