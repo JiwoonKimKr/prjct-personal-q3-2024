@@ -111,7 +111,7 @@ th:data-product-id
 										    <option data-field="paymentType">
 										    	---선택---
 									    	</option>
-										    <option class="CreditCard" data-field="paymentType" data-value="CreditCard">
+										    <option class="CreditCard" data-field="paymentType" value="CreditCard">
 										    	신용카드
 									    	</option>
 									    	<!-- ★★★★★ 일단 신용카드만 구현_12 08 2024 
@@ -131,10 +131,10 @@ th:data-product-id
 										    <option data-field="company">
 										    	---선택---
 									    	</option>
-										    <option class="SamJungCard" data-field="company" data-value="SamJungCard">
+										    <option class="SamJungCard" data-field="company" value="SamJungCard">
 										    	삼정카드
 									    	</option>
-										    <option class="HyunTaeCard" data-field="company" data-value="HyunTaeCard">
+										    <option class="HyunTaeCard" data-field="company" value="HyunTaeCard">
 										    	현태카드
 									    	</option>
 								  		</select>
@@ -147,13 +147,13 @@ th:data-product-id
 										    <option data-field="monthlyInstallment">
 										    	---선택---
 									    	</option>
-										    <option class="instance" data-field="monthlyInstallment" data-value="instance">
+										    <option class="instance" data-field="monthlyInstallment" value="instance">
 										    	일시불
 									    	</option>
-										    <option class="2M" data-field="monthlyInstallment" data-value="2M">
+										    <option class="2M" data-field="monthlyInstallment" value="2M">
 										    	2개월
 									    	</option>
-										    <option class="3M" data-field="monthlyInstallment" data-value="3M">
+										    <option class="3M" data-field="monthlyInstallment" value="3M">
 										    	3개월
 									    	</option>
 								  		</select>
@@ -515,9 +515,6 @@ th:data-product-id
     					listItemOrderedDto.push(jsonString);
     				}
 					
-    				console.log(listItemOrderedDto.join(","));
-					
-    				/* 디버깅 편의상 막아놓음
 					if(sum != $("#cost-total-current").text()){
 						alert("금액이 일치하지 않습니다. 관리자에게 문의하세요");
 						return;
@@ -529,6 +526,7 @@ th:data-product-id
 						alert("결제 타입을 선택하세요");
 						return;
 					}
+					
 					//카드사: select
 					let company = $("#field-company").val();
 					if(!company || company == '---선택---'){
@@ -541,6 +539,7 @@ th:data-product-id
 						alert("할부 개월을 선택하세요");
 						return;
 					}
+					
 					//결제자: input
 					let buyerName = $("#buyer-name").val().trim();
 					if(!buyerName || buyerName == '---선택---'){
@@ -571,12 +570,23 @@ th:data-product-id
 						alert("배송 주소를 기재하십시오.");
 						return;
 					}
-					*/
 					
-					let listItemsOrdered ={"listItemsOrdered": '['+ listItemOrderedDto.join(",") + ']'}
+					let params ={"listItemsOrdered": '['+ listItemOrderedDto.join(",") + ']'
+							,"payment": sum
+							,"paymentType": paymentType
+							, "company": company
+							, "monthlyInstallment": monthlyInstallment
+							, "buyerName": buyerName
+							, "buyerPhoneNumber": buyerPhoneNumber
+							, "receiverName": receiverName
+							, "receiverPhoneNumber": receiverPhoneNumber
+							, "address": address
+					}
 					let url = "/invoice/payment-validation";
 					
-					$.post(url, listItemsOrdered)
+					console.log(params);
+					
+					$.post(url, params)
 					.done(function(data){
 							if(data.code == 200){
 								console.log("결제 시도가 성공하였습니다.")
@@ -591,15 +601,6 @@ th:data-product-id
 					
 					
 					/*
-    				let params = {"payment": sum
-    							, "paymentType": paymentType
-    							, "company": company
-    							, "monthlyInstallment": monthlyInstallment
-    							, "buyerName": buyerName
-    							, "buyerPhoneNumber": buyerPhoneNumber
-    							, "receiverName": receiverName
-    							, "receiverPhoneNumber": receiverPhoneNumber
-    							, "address": address}
     				
     				//params json 문자열 화
     				let jsonString = JSON.stringify(params);

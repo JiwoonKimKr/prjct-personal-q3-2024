@@ -26,11 +26,32 @@ public class InvoiceRestController {
 	//@PostMapping(value="/payment", produces = "application/json; charset=utf8")
 	@PostMapping("/payment-validation")
 	public Map<String, Object> payment(@RequestParam String listItemsOrdered
+										, @RequestParam Integer payment
+										, @RequestParam String paymentType
+										, @RequestParam String company
+										, @RequestParam String monthlyInstallment
+										, @RequestParam String buyerName
+										, @RequestParam String buyerPhoneNumber
+										, @RequestParam String receiverName
+										, @RequestParam String receiverPhoneNumber
+										, @RequestParam String address
 										, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
 
 		log.info("[InvoiceRestController payment()]"
-		+ " RequestBody jsonString:{}", listItemsOrdered);
+		+ " @RequestParam jsonString:{}"
+		+ ", payment:{}"
+		+ ", paymentType:{}"
+		+ ", company:{}"
+		+ ", monthlyInstallment:{}"
+		+ ", buyerName:{}"
+		+ ", buyerPhoneNumber:{}"
+		+ ", receiverName:{}"
+		+ ", receiverPhoneNumber:{}"
+		+ ", address:{}"
+		, listItemsOrdered
+		, payment, paymentType, company, monthlyInstallment
+		, buyerName, buyerPhoneNumber, receiverName, receiverPhoneNumber, address);
 		
 		Integer userId = (Integer) session.getAttribute("userId");
 		
