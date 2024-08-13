@@ -9,26 +9,103 @@
 	<section layout:fragment="contents" class="contents w-100">
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article background-cards-list">
-				[[${invoice}]]				
- 				[[${listItems}]]
-<!-- 
-InvoiceVO(
-id=6
-, userId=4
-, payment=45000
-, paymentType=신용카드
-, company=SamJungCard
-, monthlyInstallment=일시불
-, hasCanceled=결제 완료
-, buyerName=김지운
-, buyerPhoneNumber=01057977251
-, statusDelivery=결제 완료
-, receiverName=김지운
-, receiverPhoneNumber=01031247251
-, address=서울시 용산구
-, createdAt=2024-08-13T14:06:30
-, updatedAt=2024-08-13T14:06:30)	
- --> 				
+ 				<div class="title-delivery-status-view">
+ 					<!-- icon-delivery-car -->
+ 					<div class="icon-delivery-car pb-2 mr-2">
+						<svg width="68" height="51" viewBox="0 0 68 51" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M21.8571 0H23.8571H65.6825H67.6825V2V38.6337V40.6337H65.6825H59.0453C59.0156 42.1653 58.6901 43.8983 57.8133 45.4814C56.3334 48.1532 53.481 50.0396 48.9527 50.0396C44.4243 50.0396 41.5719 48.1532 40.0921 45.4814C39.2152 43.8983 38.8897 42.1653 38.86 40.6337H30.4418C30.4121 42.1653 30.0866 43.8983 29.2097 45.4814C27.7299 48.1532 24.8775 50.0396 20.3491 50.0396C15.8208 50.0396 12.9684 48.1532 11.4886 45.4814C10.6117 43.8983 10.2862 42.1653 10.2565 40.6337H2H0V38.6337C0 29.2286 1.28333 22.174 2.93281 17.1414C4.55848 12.1815 6.59715 9.01795 8.25762 7.60158L8.81843 7.12321H9.55556H21.8571V2V0ZM41.054 36.6337C41.0286 36.6332 41.0033 36.6332 40.978 36.6337H28.3238C28.3109 36.6334 28.298 36.6333 28.2852 36.6333C28.2727 36.6333 28.2603 36.6334 28.2478 36.6337H25.8571V9.12321V4H63.6825V36.6337H56.9273C56.902 36.6332 56.8767 36.6332 56.8513 36.6337H41.054ZM42.8606 40.6337C42.8896 41.6056 43.0989 42.6545 43.5912 43.5433C44.2821 44.7907 45.6963 46.0396 48.9527 46.0396C52.209 46.0396 53.6232 44.7907 54.3141 43.5433C54.8064 42.6545 55.0157 41.6056 55.0447 40.6337H42.8606ZM25.7106 43.5433C26.2029 42.6545 26.4122 41.6056 26.4412 40.6337H23.8571H14.2571C14.2861 41.6056 14.4954 42.6545 14.9877 43.5433C15.6786 44.7907 17.0928 46.0396 20.3491 46.0396C23.6055 46.0396 25.0197 44.7907 25.7106 43.5433ZM21.8571 36.6337H12.4505C12.4251 36.6332 12.3998 36.6332 12.3745 36.6337H4.02054C4.18724 28.6013 5.34787 22.6159 6.73385 18.3873C8.01316 14.4841 9.44541 12.1905 10.3794 11.1232H21.8571V36.6337Z" fill="#51C3ED"/>
+						</svg>
+ 					</div>
+ 					<span>
+ 						배송조회
+					</span>
+ 				</div>			
+				<div class="list-detail-delivery-status">
+					<div class="group-icons-delivery-status">
+						<!-- 배송상태 다이어그램 형태로 도형으로 나타내야 -->
+					</div><!-- __end__group-icons-delivery-status -->
+					<div class="group-list-info-detail-invoice group-list-info-detail-delivery">
+<!-- Invoice -->
+						<div class="title-list-items-delivery mb-1">
+							배송 상세 정보
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								수령인
+							</div>
+							<div th:text="${invoice.receiverName}" class="text-item-info-detail-delivery">
+								서리태
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								수령인 연락처
+							</div>
+							<div th:text="${invoice.receiverPhoneNumber}" class="text-item-info-detail-delivery">
+								01012341234
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								배송 주소
+							</div>
+							<div th:text="${invoice.address}" class="text-item-info-detail-delivery">
+								서울시 서초구
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								결제자
+							</div>
+							<div th:text="${invoice.buyerName}" class="text-item-info-detail-delivery">
+								서리태
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								결제자 연락처
+							</div>
+							<div th:text="${invoice.buyerPhoneNumber}" class="text-item-info-detail-delivery">
+								01098769876
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								결제금액
+							</div>
+							<div th:text="'￦ '+${invoice.payment}" class="text-item-info-detail-delivery">
+								25000
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								결제 타입
+							</div>
+							<div th:text="${invoice.paymentType}" class="text-item-info-detail-delivery">
+								계좌이체
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								결제 회사
+							</div>
+							<div th:text="${invoice.company}" class="text-item-info-detail-delivery">
+								쉰한카드
+							</div>
+						</div>
+						<div class="group-item-info-detail-delivery">
+							<div class="label-item-info-detail-delivery">
+								할부 개월
+							</div>
+							<div th:text="${invoice.monthlyInstallment}" class="text-item-info-detail-delivery">
+								120개월 할부
+							</div>
+						</div>
+					</div> <!--__end__ group-list-info-detail-delivery -->
+					<div class="group-list-items-invoice group-list-info-detail-delivery mt-5">
+						<div class="title-list-items-delivery mb-1">
+							배송 물품 목록
+						</div>
 <!-- 
 [ItemOrderedVO(
 productInvoiceId=8
@@ -40,7 +117,24 @@ productInvoiceId=8
 , imgProfile=/images/productProfile_1723108839929/ì¤í¬ë¦°ì· 2024-08-08 181900.png
 , imgThumbnail=/images/productProfile_1723108839929/thumbna6il_ì¤í¬ë¦°ì· 2024-08-08 181900.png
 , quantity=3)]
- --> 				
+ -->						
+							<th:block th:each="item: ${listItems}">
+		 						<div class="card-item-detail-delivery-status">
+		 							<div class="image-card-item-detail">
+		 								<img th:src="${item.imgProfile}" width="200" height="200">
+		 							</div>
+		 							<div class="groups-right-side-card-item-detail">
+		 								<div class="title-card-item-detail">
+		 									<span th:text="${item.productName}"></span>
+		 									<span class="mr-3" th:text="|￦ ${item.price}|"></span>
+		 								</div>
+		 								<div class="group-btns-card-item-detail">								
+										</div>
+									</div><!--__end__ .groups-right-side-card-item-detail  --> 							
+		 						</div><!--__end__ .card-item-detail  -->
+	 						</th:block> 
+					</div>
+				</div><!--__end__list-detail-delivery-status  -->						
 			</article>
 <!-- 우측 nav 메뉴; groups-nav-aside -->			
 			<aside class="groups-nav-aside">

@@ -10,7 +10,7 @@
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article background-cards-list">							
  				<div class="">
- 					<div class="title-cart-view">
+ 					<div class="title-delivery-status-view">
  						<!-- icon-delivery-car -->
  						<div class="icon-delivery-car pb-2 mr-2">
 							<svg width="68" height="51" viewBox="0 0 68 51" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,9 +47,9 @@ id=6
 	 						</div>
 							<th:block th:each="invoice : ${listInvoices}">
 								<a type="button" class="btn-info-detail-delivery"
-								 th:text="|수령인:${invoice.receiverName}, 수령인 연락처:${invoice.receiverPhoneNumber}, 결제금액: ￦ ${invoice.payment}, 결제 시간: ${#temporals.format(invoice.createdAt, 'yyyy/MM/dd HH:mm')}|"
+								 th:text="|수령인: ${invoice.receiverName}, 수령인 연락처: ${invoice.receiverPhoneNumber}, 결제금액: ￦ ${invoice.payment}, 결제 시간: ${#temporals.format(invoice.createdAt, 'yyyy/MM/dd HH:mm')}|"
 								 th:href="@{/invoice/delivery-status-detail/{invoiceId}(invoiceId=${invoice.id})}">
-									Launch demo modal
+									수령인: 서리태, 수령인 연락처: 01012341234, 
 								</a>
 							</th:block>
 						</div>				 					
