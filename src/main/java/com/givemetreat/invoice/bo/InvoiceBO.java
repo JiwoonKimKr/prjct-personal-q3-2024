@@ -8,6 +8,7 @@ import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.validation.InvoiceParamsValidation;
 import com.givemetreat.invoice.domain.InvoiceEntity;
@@ -15,6 +16,10 @@ import com.givemetreat.invoice.domain.ItemOrderedDto;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
+import com.givemetreat.productBuffer.bo.ProductBufferBO;
+import com.givemetreat.productBuffer.domain.ProductBufferEntity;
+import com.givemetreat.productInvoice.bo.ProductInvoiceBO;
+import com.givemetreat.productInvoice.domain.ProductInvoiceEntity;
 import com.givemetreat.productShoppingCart.bo.ProductShoppingCartBO;
 import com.givemetreat.productShoppingCart.domain.ProductShoppingCartVO;
 
@@ -26,6 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class InvoiceBO {
 	private final InvoiceRepository invoiceRepository;
+	
+	private final ProductInvoiceBO productInvoiceBO;
+	private final ProductBufferBO productBufferBO;
 	
 	private final ProductShoppingCartBO productShoppingCartBO;
 	private final ProductBO productBO;
@@ -44,6 +52,7 @@ public class InvoiceBO {
 		return listVOs;
 	}
 
+	@Transactional
 	public Boolean generateInvoiceFromJsonString(String jsonString
 												, int userId
 												, Integer payment
@@ -119,7 +128,6 @@ public class InvoiceBO {
 		
 		
 		//Building Invoice Entity
-		
 		InvoiceEntity invoice = InvoiceEntity.builder()
 											.userId(userId)
 											.payment(payment)
@@ -134,12 +142,32 @@ public class InvoiceBO {
 											.receiverPhoneNumber(receiverPhoneNumber)
 											.address(address)
 											.build();
-		
+		invoiceRepository.save(invoice);
+		int invoiceId = invoice.getId();
 		
 		//ProductInvoice building
-		
-		//productBuffer building
-				
+		for(ItemOrderedDto item: listItemOrderedDto) {
+			int productId = item.getProductId();
+			ProductInvoiceEntity itemInvoice = productInvoiceBO.addProductInvoice(userId
+																		, invoiceId
+																		, productId);
+			if(ObjectUtils.isEmpty(itemInvoice)) {
+				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
+						+ " ProductInvoiceEntity failed to get saved."
+						+ " ItemOrderedDto:{}", item);
+				return false;
+			}
+			item.setProductInvoiceId(itemInvoice.getId());
+			
+			//productBuffer building
+			List<ProductBufferEntity> listItemQuantity = productBufferBO.addProductBuffersInQuantity(productId, item.getQuantity());
+			
+			if(ObjectUtils.isEmpty(listItemQuantity) || listItemQuantity.size() != item.getQuantity()) {
+				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
+						+ " ProductBufferEntity failed to get saved correctly."
+						+ " ItemOrderedDto:{}", item);
+			}
+		}
 		return false;
 	}
 

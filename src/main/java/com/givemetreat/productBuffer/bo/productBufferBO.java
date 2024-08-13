@@ -34,13 +34,13 @@ public class ProductBufferBO {
 		log.info("[productBufferBO: addProductBuffersInQuantity() Requested] productId:{}, quantity:{}"
 					, productId, quantity);
 		List<ProductBufferEntity> listEntities = new ArrayList<>();
+		ProductBufferEntity entity = ProductBufferEntity.builder()
+				.productId(productId)
+				.reserved(false)
+				.build();
 		
 		//해당 수량만큼 entity를 생성해서 DB에 저장
 		for(int i = 0; i < quantity; i ++) {
-			ProductBufferEntity entity = ProductBufferEntity.builder()
-					.productId(productId)
-					.reserved(false)
-					.build();
 			productBufferRepository.save(entity);
 			
 			listEntities.add(entity);

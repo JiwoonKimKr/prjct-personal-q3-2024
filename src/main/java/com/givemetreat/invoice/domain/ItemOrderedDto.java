@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ItemOrderedDto {
-	private int providerId; 
 
+	/**
+	 * 장바구니 productShoppingCart PK
+	 */
 	@JsonProperty(value = "cartItemId", required = false)
 	private Integer cartItemId;
 	
@@ -23,5 +25,10 @@ public class ItemOrderedDto {
 	private Integer price;
 	
 	private String checked; 
-	
+
+	/**
+	 * 결제 후 해당 invoice에 연동된 productInvoiceId PK
+	 */
+	@JsonProperty(value = "productInvoiceId", required = false)
+	private Integer productInvoiceId;
 }
