@@ -72,7 +72,7 @@ public class WordingValidation {
     // phone number checker
     // xxx-xxx-xxxx (형식만 비교)
     // - 은 없어야 함.
-    public static boolean isMob(String str) {
+    public static boolean isMobilePhone(String str) {
         return Pattern.matches("^\\d{2,3}\\d{3,4}\\d{4}$", str);
     }
 

@@ -1,5 +1,7 @@
 package com.givemetreat.common.utils;
 
+import java.util.*;
+
 public class StringTranslator {
 	/* 제품 상세 내용 관련 */
 	
@@ -41,6 +43,17 @@ public class StringTranslator {
 		if(type.equals("CreditCard")) return "신용카드";
 		if(type.equals("AccountTranster")) return "계좌이체";
 		return "";
+	}
+	
+	/**
+	 * 신용카드 회사 영문 목록
+	 * @return
+	 */
+	public static List<String> listCreditCardCompaniesE(){
+		List<String> listCompanies = new ArrayList<>(Arrays.asList("SamJungCard"
+																, "HyunTaeCard"));
+	
+		return listCompanies;
 	}
 	
 	/*

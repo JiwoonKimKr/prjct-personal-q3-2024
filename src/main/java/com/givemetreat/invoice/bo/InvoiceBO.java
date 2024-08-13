@@ -9,8 +9,10 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.givemetreat.common.validation.InvoiceParamsValidation;
 import com.givemetreat.invoice.domain.InvoiceEntity;
 import com.givemetreat.invoice.domain.ItemOrderedDto;
+import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.productShoppingCart.bo.ProductShoppingCartBO;
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class InvoiceBO {
+	private final InvoiceRepository invoiceRepository;
+	
 	private final ProductShoppingCartBO productShoppingCartBO;
 	private final ProductBO productBO;
 	
@@ -69,7 +73,7 @@ public class InvoiceBO {
 						+ " Current itemOrderedDto generated. item: {}", item.toString());
 				
 				sumCost += item.getPrice() * item.getQuantity();
-				int priceServerSide = productBO.getProducts(payment, receiverName, receiverPhoneNumber, payment, address).get(0).getPrice();
+				int priceServerSide = productBO.getProducts(item.getProductId(), null, null, null, null).get(0).getPrice();
 				sumServerSide += priceServerSide * item.getQuantity();
 				listItemOrderedDto.add(item);
 			}
@@ -79,8 +83,9 @@ public class InvoiceBO {
 		//List<ItemOrderedDto> generated
 		log.info("[InvoiceBO generateInvoiceFromJsonString()] Json String to listItemOrderedDto. listItemOrderedDto:{}", listItemOrderedDto.toString());
 		
-		//validation before Sending invoice to PG(Payment Gateway) company
-		//
+	//validation before Sending invoice to PG(Payment Gateway) company
+		//product Quantity Validation
+		
 		
 		//Total Cost Validation;
 		if(payment != sumCost || payment != sumServerSide) {
@@ -93,6 +98,22 @@ public class InvoiceBO {
 		
 		//validating each parameters for Invoice before sending payment invoice for PG Company
 		
+		Boolean hasParamsforInvoiceValidated = InvoiceParamsValidation.getParamsValidated(payment
+																						, paymentType
+																						, company
+																						, monthlyInstallment
+																						, buyerName
+																						, buyerPhoneNumber
+																						, receiverName
+																						, receiverPhoneNumber
+																						, address);
+		
+		if(hasParamsforInvoiceValidated == false) {
+			log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
+					+ " Some of values from Request Parameters failed to get validated."
+					+ " userId:{}", userId);
+			return false;
+		}
 		
 		//★★★★★sending payment invoice for PG Com 
 		
@@ -113,6 +134,7 @@ public class InvoiceBO {
 											.receiverPhoneNumber(receiverPhoneNumber)
 											.address(address)
 											.build();
+		
 		
 		//ProductInvoice building
 		
