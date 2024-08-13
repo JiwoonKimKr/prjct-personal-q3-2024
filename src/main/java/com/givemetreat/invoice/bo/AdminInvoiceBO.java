@@ -48,8 +48,10 @@ public class AdminInvoiceBO {
 	public List<AdminInvoiceVO> getListInvoicesPayedRecently() {
 		//주문 취소 X(DB값 0;취소하면 1) & 택배 상차 완료 X (포장까지만 완료)
 		
+		List<String> listString = new ArrayList<>(Arrays.asList("PaymentBilled", "PackingFinished"));
+		
 		List<InvoiceEntity> listInvoiceLatest = invoiceRepository.
-						findInvoiceByHasCanceledAndStatusDeliveryOrderByIdDesc(0, "PackingFinished");
+						findInvoiceByHasCanceledAndStatusDeliveryInOrderByIdDesc(0, listString);
 		//AdminInvoiceVO로 변환해서 Controller에 보낼 예정;
 		List<AdminInvoiceVO> listInvoiceVO = new ArrayList<>();
 		
