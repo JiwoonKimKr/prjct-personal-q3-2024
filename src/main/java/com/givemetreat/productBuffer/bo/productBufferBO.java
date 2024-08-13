@@ -2,8 +2,10 @@ package com.givemetreat.productBuffer.bo;
 
 import java.util.*;
 
+import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.productBuffer.domain.ProductBufferEntity;
 import com.givemetreat.productBuffer.repository.ProductBufferRepository;
@@ -54,6 +56,27 @@ public class ProductBufferBO {
 
 	public Integer getCount(int productId, boolean reserved, int productInvoiceId) {
 		return productBufferRepository.countByProductIdAndReservedAndProductInvoiceId(productId, reserved, productInvoiceId);
+	}
+
+	public List<ProductBufferEntity> updateProductBuffersInQuantity(int productId, Integer quantity,
+			int productInvoiceId) {
+		
+		List<ProductBufferEntity> listBuffers = productBufferRepository.findByProductIdAndReservedOrderById(productId, false, Limit.of(quantity));
+		if(ObjectUtils.isEmpty(listBuffers) || listBuffers.size() != quantity) {
+			log.warn("[productBufferBO: updateProductBuffersInQuantity()]"
+					+ " failed to select product_buffer list. productId:{}", productId);
+			return null;
+		}
+		for(ProductBufferEntity entity : listBuffers) {
+			productBufferRepository.save(entity.toBuilder()
+					.reserved(true)
+					.productInvoiceId(productInvoiceId)
+					.build());
+		}
+		log.info("[productBufferBO: updateProductBuffersInQuantity()]"
+				+ " List<ProductBufferEntity> get reserved. List<ProductBufferEntity>:{}", listBuffers);
+		
+		return listBuffers;
 	}
 
 }

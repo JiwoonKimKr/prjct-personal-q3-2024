@@ -157,10 +157,13 @@ public class InvoiceBO {
 						+ " ItemOrderedDto:{}", item);
 				return false;
 			}
-			item.setProductInvoiceId(itemInvoice.getId());
 			
-			//productBuffer building
-			List<ProductBufferEntity> listItemQuantity = productBufferBO.addProductBuffersInQuantity(productId, item.getQuantity());
+			int productInvoiceId = itemInvoice.getId();
+			item.setProductInvoiceId(productInvoiceId);
+			
+			//productBuffer update!(Building 아님!)
+				//기존 buffer 중 productId가 동일하고 가장 PK값이 낮은, 오래된 Buffer를 주문 수량만큼 'reserved'와 해당 productInvoiceId를 표시해야
+			List<ProductBufferEntity> listItemQuantity = productBufferBO.updateProductBuffersInQuantity(productId, item.getQuantity(), productInvoiceId);
 			
 			if(ObjectUtils.isEmpty(listItemQuantity) || listItemQuantity.size() != item.getQuantity()) {
 				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
@@ -168,7 +171,7 @@ public class InvoiceBO {
 						+ " ItemOrderedDto:{}", item);
 			}
 		}
-		return false;
+		return true;
 	}
 
 }

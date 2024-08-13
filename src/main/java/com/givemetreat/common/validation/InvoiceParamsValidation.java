@@ -58,7 +58,8 @@ public class InvoiceParamsValidation {
 		}
 		
 		//buyerName
-		if(WordingValidation.isAlphaNumeric(buyerName) == false) {
+		if(WordingValidation.isAlpha(buyerName) == false
+				&& WordingValidation.isKorean(buyerName) == false) {
 			log.warn("[InvoiceParamsValidation] buyerName isn't correct. buyerName:{}", buyerName);
 			return false;
 		}
@@ -68,7 +69,8 @@ public class InvoiceParamsValidation {
 			return false;
 		}
 		//receiverName
-		if(WordingValidation.isAlphaNumeric(receiverName) == false) {
+		if(WordingValidation.isAlpha(receiverName) == false
+				&& WordingValidation.isKorean(receiverName) == false) {
 			log.warn("[InvoiceParamsValidation] receiverName isn't correct. receiverName:{}", receiverName);
 			return false;
 		}
