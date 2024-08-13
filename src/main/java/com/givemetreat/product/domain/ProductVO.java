@@ -25,6 +25,7 @@ public class ProductVO {
 		this.imgProfile = product.getImgProfile();
 		this.imgThumbnail = product.getImgThumbnail();
 	};
+	private Integer productInvoiceId;
 	
 	private Integer id;
 	private String name;

@@ -95,6 +95,7 @@ public class StringTranslator {
 		if(status.equals("TerminalHub")) return "터미널 이동";
 		if(status.equals("EndPoint")) return "배송 상차";
 		if(status.equals("DeliveryCurrent")) return "배송중";
+		if(status.equals("DeliveryFinished")) return "배송완료";
 		return "";
 	}
 }

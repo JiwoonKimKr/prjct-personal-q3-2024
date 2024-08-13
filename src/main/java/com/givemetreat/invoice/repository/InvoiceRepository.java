@@ -12,6 +12,10 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Integer>
 
 	InvoiceEntity findInvoiceByIdAndUserId(int invoiceId, int userId);
 
+	List<InvoiceEntity> findByUserIdAndHasCanceledAndStatusDeliveryNotInOrderByIdDesc(Integer userId
+																					, int i
+																					, List<String> listString);
+
 
 
 }

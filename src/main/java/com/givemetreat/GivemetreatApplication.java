@@ -2,8 +2,9 @@ package com.givemetreat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@EnableScheduling
 @SpringBootApplication
 public class GivemetreatApplication {
 

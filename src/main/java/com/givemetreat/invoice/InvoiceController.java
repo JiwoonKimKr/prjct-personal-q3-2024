@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.givemetreat.invoice.bo.InvoiceBO;
+import com.givemetreat.invoice.domain.InvoiceVO;
+import com.givemetreat.productInvoice.domain.ItemOrderedVO;
 import com.givemetreat.productShoppingCart.domain.ProductShoppingCartVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -60,5 +63,38 @@ public class InvoiceController {
 		model.addAttribute("listItems", listItems);
 		
 		return "invoice/payment";
+	}
+	
+	@GetMapping("/delivery-status-view")
+	public String deliveryStatusView(HttpSession session
+									, Model model) {
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(userId == null) {
+			return "redirect:user/sign-in-view";
+		}
+		
+		List<InvoiceVO> listInvoiceVOs = invoiceBO.getListInvoicesById(userId);		
+		
+		model.addAttribute("listInvoices", listInvoiceVOs);
+		
+		return "invoice/deliveryStatus";
+	}
+	
+	@GetMapping("/delivery-status-detail/{invoiceId}")
+	public String invoiceSpecificDeliveryStatus(@PathVariable Integer invoiceId
+												, HttpSession session
+												, Model model) {
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(userId == null) {
+			return "redirect:user/sign-in-view";
+		}
+		
+		InvoiceVO invoice = invoiceBO.getInvoiceById(invoiceId);
+		List<ItemOrderedVO> listItems = invoiceBO.getItemsOrderedByUserIdAndInvoiceId(userId, invoiceId);
+		
+		model.addAttribute("invoice", invoice);
+		model.addAttribute("listItems", listItems);
+		return "invoice/deliveryStatusDetail";
 	}
 }

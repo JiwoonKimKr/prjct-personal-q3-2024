@@ -597,39 +597,6 @@ th:data-product-id
 								alert(data.error_message);
 							}
 					}) //ajax POST 
-					
-					
-					
-					/*
-    				
-    				//params json 문자열 화
-    				let jsonString = JSON.stringify(params);
-    				console.log(jsonString);
-    				
-    				url = "/invoice/payment";
-					
-					$.ajax({
-						 type : "POST"
-    					, url: "/invoice/payment"
-    					, data: params
-    					//, contentType: 'application/json' // 보내는 데이터 json 일때 필수 옵션
-    					
-    					, success: function(data){
-    						if(data.code == 200){
-    							alert("결제 성공하였습니다.");
-    							location.href="/product/product-list-view";
-    						} else {
-    							alert(data.error_message);
-    						}
-    						
-    					}
-    					, error: function(error){
-    						alert("결제에 실패하였습니다. 관리자에게 문의하시길 바랍니다.");
-    					}
-    					
-    				})*/ //ajax POST
-
-
 				}) //btn payment on click;
 				
     		}) //document ready

@@ -1,4 +1,4 @@
-package com.givemetreat.invoice.domain;
+package com.givemetreat.productInvoice.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

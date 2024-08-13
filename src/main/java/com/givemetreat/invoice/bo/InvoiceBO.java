@@ -1,7 +1,7 @@
 package com.givemetreat.invoice.bo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -12,13 +12,15 @@ import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.validation.InvoiceParamsValidation;
 import com.givemetreat.invoice.domain.InvoiceEntity;
-import com.givemetreat.invoice.domain.ItemOrderedDto;
+import com.givemetreat.invoice.domain.InvoiceVO;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.productBuffer.bo.ProductBufferBO;
 import com.givemetreat.productBuffer.domain.ProductBufferEntity;
 import com.givemetreat.productInvoice.bo.ProductInvoiceBO;
+import com.givemetreat.productInvoice.domain.ItemOrderedDto;
+import com.givemetreat.productInvoice.domain.ItemOrderedVO;
 import com.givemetreat.productInvoice.domain.ProductInvoiceEntity;
 import com.givemetreat.productShoppingCart.bo.ProductShoppingCartBO;
 import com.givemetreat.productShoppingCart.domain.ProductShoppingCartVO;
@@ -37,6 +39,21 @@ public class InvoiceBO {
 	
 	private final ProductShoppingCartBO productShoppingCartBO;
 	private final ProductBO productBO;
+	
+	@Transactional
+	public InvoiceVO getInvoiceById(Integer invoiceId) {
+		InvoiceEntity entity= invoiceRepository.findById(invoiceId).orElse(null);
+		return new InvoiceVO(entity);
+	}	
+	
+	@Transactional
+	public List<InvoiceVO> getListInvoicesById(Integer userId) {
+		List<String> listString = new ArrayList<>(Arrays.asList("DeliveryFinished"));
+		
+		List<InvoiceEntity> list = invoiceRepository.findByUserIdAndHasCanceledAndStatusDeliveryNotInOrderByIdDesc(userId, 0, listString);
+		List<InvoiceVO> listVOs = list.stream().map(entity -> new InvoiceVO(entity)).collect(Collectors.toList());
+		return listVOs;
+	}
 	
 	@Transactional
 	public List<ProductShoppingCartVO> getListProductsFromCartByUserId(Integer userId) {
@@ -187,4 +204,48 @@ public class InvoiceBO {
 		return true;
 	}
 
+	public List<ItemOrderedVO> getItemsOrderedByUserIdAndInvoiceId(Integer userId, Integer invoiceId) {
+		List<ProductInvoiceEntity> listProductInvoices = productInvoiceBO.getProductInvoicesByInvoiceIdAndUserId(invoiceId, userId);
+		
+		//1)product_buffer 갯수 Map구조로 수량 파악
+		Map<ProductVO, Integer> mapProductVOs = new HashMap<>();
+		
+		for(ProductInvoiceEntity productInvoice : listProductInvoices) {
+			int productInvoiceId = productInvoice.getId();
+			int productId = productInvoice.getProductId();
+
+			Integer count = productBufferBO.getCount(productId, true, productInvoiceId);
+
+			if(count == null) {
+				continue;
+			}
+			
+			ProductVO productVO = productBO.getProducts(productId, null, null, null, null).get(0);
+			
+			//productInvoiceId productVO에 기입
+			productVO.setProductInvoiceId(productInvoiceId);
+			
+			if(mapProductVOs.containsKey(productVO)) {
+				log.warn("[InvoiceBO getProductInvoicesByInvoiceIdAndUserId()]"
+						+ " item ordered in Current Invoice has shown duplicated in wrong way! invoiceId:{}", invoiceId);
+				continue;
+			}
+			mapProductVOs.put(productVO, count);
+		}
+		
+		//2) AdminProductInvoiceVO 리스트 반환
+		List<ItemOrderedVO> listVOs = new ArrayList<>();
+		
+		Set<ProductVO> keys = mapProductVOs.keySet();
+		Iterator<ProductVO> iter = keys.iterator();
+		
+		while(iter.hasNext()) {
+			ProductVO itemOrdered = iter.next();
+			
+			listVOs.add(new ItemOrderedVO(itemOrdered
+					, mapProductVOs.get(itemOrdered)));
+		}
+		
+		return listVOs;
+	}
 }

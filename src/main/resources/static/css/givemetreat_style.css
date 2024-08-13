@@ -1908,3 +1908,142 @@ input::-webkit-inner-spin-button {
 	color: #FFFFFF;	
 }
 
+/* 배송조회 페이지 */
+.list-detail-delivery-status{
+	margin: 10px 10px 20px 10px;
+	width: 1150px;
+	height: 710px;
+	overflow: auto;
+}
+
+.list-detail-delivery-status::-webkit-scrollbar{
+	width: 25px;
+}
+
+.list-detail-delivery-status::-webkit-scrollbar-thumb{
+	background-color: #51C3ED;
+	border-radius: 20px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
+}
+
+.list-detail-delivery-status::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+	
+}
+
+/* invoiceVO 목록들 */
+.group-list-invoices{
+	margin: 5px auto 20px auto;
+	width: 1020px;
+}
+
+.btn-info-detail-delivery{
+	padding-left: 25px;
+	width: 1020px;
+	height: 60px;
+	
+	background: #FFFFFF;
+	border-radius: 22px;
+	border-color:inherit;
+	
+	display: flex;
+	justify-content: start;
+	align-items:center;
+	
+	font-size: 20px;
+}
+
+
+.groups-info-detail-delivery{
+	margin-bottom: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;	
+}
+
+.group-icons-delivery-status{
+	position:relative;
+	margin: 5px auto 20px auto;
+	width: 930px;
+	height: 80px;
+	background-color: gray;
+}
+.title-list-items-delivery{
+	/* Group 7 */
+	width: 397px;
+	height: 55px;
+	
+	background: #FF6868;
+	border-radius: 20px;
+	
+	font-weight: 700;
+	font-size: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #FFFFFF;
+}
+.group-list-info-detail-delivery{
+	margin-bottom: 30px;
+	width: 1020px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+.group-item-info-detail-delivery{
+	position: relative;
+	width: 1020px;
+	height: 60px;
+	
+	background: #FFFFFF;
+	border-radius: 22px;
+
+}
+.label-item-info-detail-delivery{
+/* bg-btn-payment-ShoppingCart */
+	position: absolute;
+	width: 300px;
+	height: 60px;
+	left: 0px;
+	
+	background: #51C3ED;
+	border-radius: 22px;
+	
+	/* Recipient */
+	
+	font-weight: 700;
+	font-size: 26px;
+	line-height: 35px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #000000;
+}
+.text-item-info-detail-delivery{
+	position: absolute;
+	
+	padding-left:20px;
+	width: 700px;
+	height: 60px;
+	left: 300px;
+	
+	border-radius: 22px;
+	
+	/* Recipient */
+	
+	font-weight: 500;
+	font-size: 22px;
+	line-height: 35px;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	
+	color: #000000;	
+}

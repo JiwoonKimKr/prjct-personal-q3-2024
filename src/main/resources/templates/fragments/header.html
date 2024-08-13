@@ -179,27 +179,18 @@
 				
 				/* btn-pet-list-view 클릭 */
 				$("#btn-pet-list-view").on('click', function(){
-					let userId = /*[[${session.userId}]]*/ null;
-					console.log(userId);
-					if(!userId){
-						location.href= "/user/sign-in-view";
-						return;	
-					}
-					
 					location.href= "/pet/pet-list-view";
 				});// btn-pet-list-view on click
 				
 				/* btn-shopping-cart-view */
 				$("#btn-shopping-cart-view").on('click', function(){
-					let userId = /*[[${session.userId}]]*/ null;
-					console.log(userId);
-					if(!userId){
-						location.href= "/user/sign-in-view";
-						return;	
-					}
-					
 					location.href= "/shopping-cart/shopping-cart-view";
 				})//btn-shopping-cart-view on click
+				
+				/* btn-delivery-view */
+				$("#btn-delivery-view").on('click', function(){
+					location.href= "/invoice/delivery-status-view";
+				})
 				
 				
 				/* btn-log-out */
