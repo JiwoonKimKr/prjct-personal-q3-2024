@@ -63,7 +63,17 @@ public class InvoiceRestController {
 		}
 		
 		
-		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoiceFromJsonString(listItemsOrdered);
+		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoiceFromJsonString(listItemsOrdered
+																				, userId
+																				, payment
+																				, paymentType
+																				, company
+																				, monthlyInstallment
+																				, buyerName
+																				, buyerPhoneNumber
+																				, receiverName
+																				, receiverPhoneNumber
+																				, address);
 		
 		//결제 요청 실패 시
 		if(getPaymentSuccessMessage == false) {

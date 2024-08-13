@@ -9,6 +9,7 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.givemetreat.invoice.domain.InvoiceEntity;
 import com.givemetreat.invoice.domain.ItemOrderedDto;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
@@ -39,10 +40,21 @@ public class InvoiceBO {
 		return listVOs;
 	}
 
-	public Boolean generateInvoiceFromJsonString(String jsonString){
+	public Boolean generateInvoiceFromJsonString(String jsonString
+												, int userId
+												, Integer payment
+												, String paymentType
+												, String company
+												, String monthlyInstallment
+												, String buyerName
+												, String buyerPhoneNumber
+												, String receiverName
+												, String receiverPhoneNumber
+												, String address){
 		JSONArray jsonArray = new JSONArray();
 		List<ItemOrderedDto> listItemOrderedDto = new ArrayList<>();
-		
+		int sumCost = 0;
+		int sumServerSide = 0;
 		try {
 			jsonArray = new JSONArray(jsonString);
 			for(int i=0; i < jsonArray.length(); i++) {
@@ -53,16 +65,58 @@ public class InvoiceBO {
 				item.setQuantity(Integer.parseInt(jsonObject.get("quantity").toString()));
 				item.setPrice(Integer.parseInt(jsonObject.get("price").toString()));
 				item.setChecked(jsonObject.get("checked").toString());
-				log.info(item.toString());
+				log.info("[InvoiceBO generateInvoiceFromJsonString()]"
+						+ " Current itemOrderedDto generated. item: {}", item.toString());
+				
+				sumCost += item.getPrice() * item.getQuantity();
+				int priceServerSide = productBO.getProducts(payment, receiverName, receiverPhoneNumber, payment, address).get(0).getPrice();
+				sumServerSide += priceServerSide * item.getQuantity();
 				listItemOrderedDto.add(item);
 			}
-			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	
-		//
+		//List<ItemOrderedDto> generated
 		log.info("[InvoiceBO generateInvoiceFromJsonString()] Json String to listItemOrderedDto. listItemOrderedDto:{}", listItemOrderedDto.toString());
+		
+		//validation before Sending invoice to PG(Payment Gateway) company
+		//
+		
+		//Total Cost Validation;
+		if(payment != sumCost || payment != sumServerSide) {
+			log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
+					+ " Current passed from request doesn't match with cost summary."
+					+ " userId:{}, payment from Client:{}, total cost from Ordered Info:{}, total cost from Server"
+					, userId, payment, sumCost, sumServerSide);
+			return false;
+		}
+		
+		//validating each parameters for Invoice before sending payment invoice for PG Company
+		
+		
+		//★★★★★sending payment invoice for PG Com 
+		
+		
+		//Building Invoice Entity
+		
+		InvoiceEntity invoice = InvoiceEntity.builder()
+											.userId(userId)
+											.payment(payment)
+											.paymentType(paymentType)
+											.company(company)
+											.monthlyInstallment(monthlyInstallment)
+											.hasCanceled(0) //취소 안된, 결제 완료 상태일 때는 0
+											.buyerName(buyerName)
+											.buyerPhoneNumber(buyerPhoneNumber)
+											.statusDelivery("PaymentBilled")
+											.receiverName(receiverName)
+											.receiverPhoneNumber(receiverPhoneNumber)
+											.address(address)
+											.build();
+		
+		//ProductInvoice building
+		
+		//productBuffer building
 				
 		return false;
 	}
