@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.givemetreat.aop.TimeTraceStop;
 import com.givemetreat.common.EncryptUtils;
 import com.givemetreat.common.validation.WordingValidation;
 import com.givemetreat.user.bo.UserBO;
@@ -24,7 +23,6 @@ public class UserRestController {
 	private final UserBO userBO;
 	
 	//localhost/user/sign-in
-	@TimeTraceStop
 	@PostMapping("/sign-in")
 	public Map<String, Object> signIn(
 			@RequestParam String loginId
