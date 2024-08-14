@@ -4,12 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.givemetreat.aop.TimeTraceStart;
+
 import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/user")
 @Controller
 public class UserController {
 
+	@TimeTraceStart
 	@GetMapping("/sign-in-view")
 	public String signInView() {
 		return "user/signIn";

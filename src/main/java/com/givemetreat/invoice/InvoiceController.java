@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.givemetreat.aop.TimeTrace;
 import com.givemetreat.invoice.bo.InvoiceBO;
 import com.givemetreat.invoice.domain.InvoiceVO;
 import com.givemetreat.productInvoice.domain.ItemOrderedVO;
@@ -33,7 +32,6 @@ public class InvoiceController {
 */
 	
 	//장바구니에서 넘어온 productShoppingCart 목록들을 뿌려야
-	@TimeTrace
 	@GetMapping("/payment-view")
 	public String paymentView(HttpSession session
 							, Model model) {
