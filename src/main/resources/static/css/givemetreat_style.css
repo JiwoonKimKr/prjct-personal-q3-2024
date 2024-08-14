@@ -2116,3 +2116,28 @@ input::-webkit-inner-spin-button {
 	display: flex;
 	justify-content: flex-start;
 }
+
+/* 주문내역 조회 관련 */
+.list-invoice-detail{
+	margin: 10px 10px 20px 10px;
+	width: 1150px;
+	height: 775px;
+	overflow: auto;
+}
+
+.list-invoice-detail::-webkit-scrollbar{
+	width: 25px;
+}
+
+.list-invoice-detail::-webkit-scrollbar-thumb{
+	background-color: #FF8661;
+	border-radius: 20px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
+}
+
+.list-invoice-detail::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+	
+}

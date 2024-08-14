@@ -16,6 +16,6 @@ public interface InvoiceRepository extends JpaRepository<InvoiceEntity, Integer>
 																					, int i
 																					, List<String> listString);
 
-
+	List<InvoiceEntity> findByUserIdOrderByIdDesc(Integer userId);
 
 }

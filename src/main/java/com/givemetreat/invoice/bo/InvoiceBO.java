@@ -41,13 +41,20 @@ public class InvoiceBO {
 	private final ProductBO productBO;
 	
 	@Transactional
+	public List<InvoiceVO> getListInvoicesByUserId(Integer userId) {
+		List<InvoiceEntity> list = invoiceRepository.findByUserIdOrderByIdDesc(userId);
+		List<InvoiceVO> listVOs = list.stream().map(entity -> new InvoiceVO(entity)).collect(Collectors.toList());
+		return listVOs;
+	}	
+	
+	@Transactional
 	public InvoiceVO getInvoiceById(Integer invoiceId) {
 		InvoiceEntity entity= invoiceRepository.findById(invoiceId).orElse(null);
 		return new InvoiceVO(entity);
 	}	
 	
 	@Transactional
-	public List<InvoiceVO> getListInvoicesById(Integer userId) {
+	public List<InvoiceVO> getListInvoicesByIdDeliveryNotFinished(Integer userId) {
 		List<String> listString = new ArrayList<>(Arrays.asList("DeliveryFinished"));
 		
 		List<InvoiceEntity> list = invoiceRepository.findByUserIdAndHasCanceledAndStatusDeliveryNotInOrderByIdDesc(userId, 0, listString);
@@ -248,4 +255,5 @@ public class InvoiceBO {
 		
 		return listVOs;
 	}
+
 }
