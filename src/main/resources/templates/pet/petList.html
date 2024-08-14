@@ -59,7 +59,7 @@
 			<div class="pet-image-card-list mt-5">
 				<th:block th:each="pet : ${listPets}">
 					<button class="pet-image-card-registered" data-toggle="tooltip" data-placement="top" th:object="${pet}" th:title="|이름: ${pet.name}|">
-						<img src="" th:attr="src=${pet.imgProfile}" class="w-100 p-3">
+						<img src="" th:attr="src=${pet.imgProfile}" class="rounded-lg w-100 m-5" width="275" height="275">
 					</button>				
 				</th:block>
 			</div>

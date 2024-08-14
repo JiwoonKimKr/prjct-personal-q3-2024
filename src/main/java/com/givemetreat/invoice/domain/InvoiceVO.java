@@ -36,7 +36,9 @@ public class InvoiceVO {
 		
 		this.buyerName = invoice.getBuyerName();
 		this.buyerPhoneNumber = invoice.getBuyerPhoneNumber();
-		this.statusDelivery = StringTranslator.translateStatusDeliveryE2K(
+		
+		this.statusDelivery = invoice.getStatusDelivery();
+		this.statusDeliveryTranslatedK = StringTranslator.translateStatusDeliveryE2K(
 								invoice.getStatusDelivery());
 		
 		this.receiverName = invoice.getReceiverName();
@@ -73,6 +75,9 @@ public class InvoiceVO {
 	
 	@JsonProperty(value="statusDelivery")
 	private String statusDelivery;
+	
+	@JsonProperty(value="statusDeliveryTranslatedK")
+	private String statusDeliveryTranslatedK;
 	
 	@JsonProperty(value="receiverName")
 	private String receiverName;

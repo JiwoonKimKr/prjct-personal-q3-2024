@@ -1987,12 +1987,45 @@ input::-webkit-inner-spin-button {
 
 /* 배송상세 페이지 관련 */
 .group-icons-delivery-status{
-	position:relative;
-	margin: 5px auto 20px auto;
+	margin: 5px auto 50px auto;
 	width: 1020px;
 	height: 80px;
-	background-color: gray;
 }
+.list-rects-delivery-status{
+	display: flex;
+	height: 45px;
+	justify-content: space-between;
+	gap:10px;
+}
+
+.rect-delivery-status{
+	/* Rectangle 11 */
+	width: 150px;
+	height: 45px;
+	
+	background: #FFFFFF;
+	border-radius: 30px;
+	
+	font-weight: 400;
+	font-size: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #000;
+}
+
+/* 배송상태 표시 화살표 아이콘 관련 icon-arrow-delivery-status */
+.group-icon-arrows-delivery-status{
+	margin: 0px auto 0px auto;
+	width: 870px;
+	height: 35px;
+	display:flex;
+	justify-content: center;
+}
+.icon-arrow-delivery-status{
+	visibility: hidden;
+}
+
 .title-list-items-delivery{
 	/* Group 7 */
 	width: 397px;
@@ -2018,6 +2051,8 @@ input::-webkit-inner-spin-button {
 	align-items: flex-start;
 	gap: 10px;
 }
+
+/* 배송상세 페이지; 배송 물품 목록 */
 .group-item-info-detail-delivery{
 	position: relative;
 	width: 1020px;
