@@ -115,6 +115,7 @@ public class AdminInvoiceBO {
 	}
 
 	//★★★★★ 필드 하나만 선택해서 조회하도록 코딩해야;
+	//필드 여러 개 조회할 수 있도록 MyBatis 수정할 수 있었다!_14 08 2024
 	public List<AdminInvoiceVO> getInvoices(Integer invoiceId
 										, Integer userId
 										, Integer payment

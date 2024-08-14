@@ -23,10 +23,10 @@
  					</div>							
  					<div class="list-invoice-detail">
 <!-- invoice 필터링 dropdown 관련 -->
- 						<div class="groups-dropdown-select">
+ 						<div class="groups-filters-invoice-detail">
 <!-- Dropdown: 배송 상태 --> 						
-							<div class="group-dropdown-select">
-								<label for="field-agePetProper" class="label-for-select m-0">
+							<div class="group-filters-invoice-detail my-auto">
+								<label for="field-agePetProper" class="label-for-select-invoice-detail m-0">
 									배송 상태
 								</label>
 							  	<select id="field-agePetProper" name="agePetProper" class="btn-select-dropdown-specific custom-select">
@@ -56,32 +56,27 @@
 							    	</option>
 						  		</select>
 							</div> 						
-<!-- ★★★★★ 날짜 선택: 부터; dateSince --> 						
-	 						<div class="groups-dropdown-select">
-								<div class="group-dropdown-select">
-								  	<select id="field-dateSince" name="dateSince" class="btn-select-dropdown-specific custom-select">
-									    <option data-field="dateSince">
-									    	---일자 선택---
-								    	</option>
-							  		</select>
+							<div>
+<!-- 날짜 선택: 부터; dateSince -->
+<!-- ★★★★★ 달력라이브러리로 구현해야 --> 						
+								<div class="group-filters-invoice-detail">
+							  		<input id="field-dateSince" name="dataSince" class="input-specific-invoice-detail">
 									<label for="field-dateSince" class="label-for-select m-0">
 										부터
 									</label>
 								</div> 						
-	 						</div>
-<!-- ★★★★★ 날짜 선택: 까지; dateUntil --> 						
-	 						<div class="groups-dropdown-select">
-								<div class="group-dropdown-select">
-								  	<select id="field-dateUntil" name="dateUntil" class="btn-select-dropdown-specific custom-select">
-									    <option data-field="dateUntil">
-									    	---일자 선택---
-								    	</option>
-							  		</select>
+<!-- 날짜 선택: 까지; dateUntil -->
+<!-- ★★★★★ 달력라이브러리로 구현해야 --> 						
+								<div class="group-filters-invoice-detail mt-2">
+							  		<input id="field-dateUntil" name="dateUntil" class="input-specific-invoice-detail">
 									<label for="field-dateUntil" class="label-for-select m-0">
 										까지
 									</label>
 								</div> 						
-	 						</div>
+							</div>
+							<button type="button" id="btn-search-invoice-detail" class="btn-search-invoice-list">
+								검색
+							</button>
  						</div>
 						<div class="group-list-invoices">
 	 						<div class="title-list-items-delivery mt-3 mb-2">

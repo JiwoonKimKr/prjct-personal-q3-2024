@@ -1,6 +1,12 @@
 package com.givemetreat.invoice.bo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.boot.configurationprocessor.json.JSONArray;
@@ -34,11 +40,10 @@ import lombok.extern.slf4j.Slf4j;
 public class InvoiceBO {
 	private final InvoiceRepository invoiceRepository;
 	
+	private final ProductBO productBO;
 	private final ProductInvoiceBO productInvoiceBO;
 	private final ProductBufferBO productBufferBO;
-	
 	private final ProductShoppingCartBO productShoppingCartBO;
-	private final ProductBO productBO;
 	
 	@Transactional
 	public List<InvoiceVO> getListInvoicesByUserId(Integer userId) {

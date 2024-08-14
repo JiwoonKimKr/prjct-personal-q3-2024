@@ -23,49 +23,64 @@
 			`invoice`
 		<where>
 			<if test="id != null">
-				`id` = #{id}
+				AND
+					`id` = #{id}
 			</if>		
 			<if test="userId != null">
-				`userId` = #{userId}
+				AND
+					`userId` = #{userId}
 			</if>		
 			<if test="payment != null">
-				`payment` = #{payment}
+				AND
+					`payment` = #{payment}
 			</if>		
 			<if test="paymentType != null">
-				`payment` like LOWER(concat('%',#{paymentType},'%'))
+				AND
+					`payment` like LOWER(concat('%',#{paymentType},'%'))
 			</if>		
 			<if test="company != null">
-				`company` like LOWER(concat('%',#{company},'%'))
+				AND
+					`company` like LOWER(concat('%',#{company},'%'))
 			</if>		
 			<if test="monthlyInstallment != null">
-				`monthlyInstallment` like LOWER(concat('%',#{monthlyInstallment},'%'))
+				AND
+					`monthlyInstallment` like LOWER(concat('%',#{monthlyInstallment},'%'))
 			</if>		
 			<if test="hasCanceled != null">
-				`hasCanceled` = #{hasCanceled}
+				AND
+					`hasCanceled` = #{hasCanceled}
 			</if>		
 			<if test="buyerName != null">
-				`buyerName` like LOWER(concat('%',#{buyerName},'%'))
+				AND
+					`buyerName` like LOWER(concat('%',#{buyerName},'%'))
 			</if>		
 			<if test="buyerPhoneNumber != null">
-				`buyerPhoneNumber` like concat('%',#{buyerPhoneNumber},'%')
+				AND
+					`buyerPhoneNumber` like concat('%',#{buyerPhoneNumber},'%')
 			</if>		
 			<if test="statusDelivery != null">
-				`statusDelivery` = #{statusDelivery}
+				AND
+					`statusDelivery` = #{statusDelivery}
 			</if>		
 			<if test="receiverName != null">
-				`receiverName` like LOWER(concat('%',#{receiverName},'%'))
+				AND
+					`receiverName` like LOWER(concat('%',#{receiverName},'%'))
 			</if>		
 			<if test="receiverPhoneNumber != null">
-				`receiverPhoneNumber` like concat('%',#{receiverPhoneNumber},'%')
+				AND
+					`receiverPhoneNumber` like concat('%',#{receiverPhoneNumber},'%')
 			</if>		
 			<if test="address != null">
-				`address` like LOWER(concat('%',#{address},'%'))
+				AND
+					`address` like LOWER(concat('%',#{address},'%'))
 			</if>
 			<if test="createdAt != null">
-				`createdAt` = #{createdAt}
+				AND
+					`createdAt` = #{createdAt}
 			</if>		
 			<if test="updatedAt != null">
-				`updatedAt` = #{updatedAt}
+				AND
+					`updatedAt` = #{updatedAt}
 			</if>		
 		</where>
 		ORDER BY `ID`		
