@@ -57,16 +57,16 @@
 <!-- 날짜 선택: 부터; dateSince -->
 <!-- ★★★★★ 달력라이브러리로 구현해야 --> 						
 								<div class="group-filters-invoice-detail">
-							  		<input id="field-dateSince" name="dataSince" class="input-specific-invoice-detail">
-									<label for="field-dateSince" class="label-for-select m-0">
+							  		<input id="field-timeSince" name="dataSince" class="input-specific-invoice-detail">
+									<label for="field-timeSince" class="label-for-select m-0">
 										부터
 									</label>
 								</div> 						
 <!-- 날짜 선택: 까지; dateUntil -->
 <!-- ★★★★★ 달력라이브러리로 구현해야 --> 						
 								<div class="group-filters-invoice-detail mt-2">
-							  		<input id="field-dateUntil" name="dateUntil" class="input-specific-invoice-detail">
-									<label for="field-dateUntil" class="label-for-select m-0">
+							  		<input id="field-timeUntil" name="dateUntil" class="input-specific-invoice-detail">
+									<label for="field-timeUntil" class="label-for-select m-0">
 										까지
 									</label>
 								</div> 						
@@ -141,6 +141,34 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(e){
+    			
+    			updateFilteringCurrent();
+    			
+    			function updateFilteringCurrent(){
+    				let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				let keys = urlParams.keys();
+    				for(let key of keys){
+    					let value = urlParams.get(key);
+    					console.log(`key: ${key}, value: ${value}`);
+    					
+    					if(key == 'statusDelivery'){
+	    					let optionSelected = $('option.' + value)[0];
+	    					$('#field-statusDelivery').find(optionSelected).prop('selected', true);
+    						continue;
+    					}
+    					if(key == 'timeSince'|| key == 'timeUntil'){
+    						value = value.split("T")[0];
+    						
+    						$('#field-' + key).val(value);
+    						console.log(value);
+    					}
+    				}
+    			}
+    			
+    			
 				$("#btn-search-invoice-detail").on('click', function(){
 					let userId = /*[[${session.userId}]]*/null;
 					console.log(userId);
@@ -151,12 +179,16 @@
 					
 					let statusDelivery = $("#field-statusDelivery").children("option:selected").data('value');
 					console.log(statusDelivery);
-					let dateSince = $("#field-dateSince").val();
-					dateSince = dateSince.concat("T00:00:00");
-					console.log(dateSince);
-					let dateUntil = $("#field-dateUntil").val();
-					dateUntil = dateUntil.concat("T23:59:59");
-					console.log(dateUntil);
+					let timeSince = $("#field-timeSince").val();
+					if(timeSince){
+						timeSince = timeSince.concat("T00:00:00");
+					}
+					console.log(timeSince);
+					let timeUntil = $("#field-timeUntil").val();
+					if(timeUntil){
+						timeUntil = timeUntil.concat("T23:59:59");
+					}
+					console.log(timeUntil);
 					
 					let url = "/invoice/invoice-list-view?"
 					let count = 0;
@@ -164,6 +196,10 @@
 					if(statusDelivery == "---선택---"){
 						statusDelivery = null;
 						console.log(statusDelivery);
+					}
+					if(!timeSince || !timeUntil){
+						timeSince = null;
+						timeUntil = null;
 					}
 					
 					if(statusDelivery != null){
@@ -174,14 +210,14 @@
 						count ++;
 					}
 					
-					if(dateSince != null && dateUntil != null){
-						dateSince = "timeSince=" + dateSince;
-						dateUntil = "timeUntil=" + dateUntil;
+					if(timeSince != null && timeUntil != null){
+						timeSince = "timeSince=" + timeSince;
+						timeUntil = "timeUntil=" + timeUntil;
 						if(count > 0){
 							url = url + "&";
 						}
-							dateUntil = "&" + dateUntil;
-						url = url.concat(dateSince).concat(dateUntil)
+						timeUntil = "&" + timeUntil;
+						url = url.concat(timeSince).concat(timeUntil)
 						console.log(url);
 					}
 					
