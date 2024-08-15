@@ -2245,3 +2245,123 @@ input::-webkit-inner-spin-button {
 	background: #FFE397;
 	border-radius: 115px 0px 0px 0px;
 }
+
+.bar-search-keyword-community{
+/* bg_input search bar */
+	margin: 50px auto 30px auto;
+
+	position: relative;
+	width: 700px;
+	height: 55px;
+	
+	background: #FFFFFF;
+	box-shadow: inset 3px 3px 4.5px #838383;
+	border-radius: 20px;
+}
+.input-search-community{
+	position: absolute;
+	padding-left: 25px;
+	
+	width: 75%;
+	height: 100%;
+	
+	background-color: transparent;
+	border: 0px;
+	border-radius: 20px;
+	
+	font-size: 24px;
+}
+.btn-seartch-community{
+	position: absolute;
+	right: 0px;
+	width: 110px;
+	height: 100%;
+	
+	background: #ED5178;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 20px;
+	border-color: inherit;
+	
+	/* 검색 */
+	font-weight: 800;
+	font-size: 24px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #FFFFFF;
+}
+
+.groups-btns-community{
+	margin-bottom: 20px;
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	gap: 10px;	
+}
+
+.btn-filter-field-community{
+	/* Rectangle 5 */
+
+	width: 210px;
+	height: 65px;
+	
+	background: #FFFFFF;
+	border-radius: 40px;
+	border-color:inherit;
+
+	/* 생후 6개월 */
+	font-weight: 400;
+	font-size: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #000000;
+}
+
+.btn-write-new-post{
+/* bg-btn-Write-Post-Community */
+	margin-left: 50px;
+
+	width: 200px;
+	height: 65px;
+	
+	background: #FBAA63;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 15px;
+	border-color: inherit;
+	
+	/* 글쓰기 */
+
+	font-weight: 800;
+	font-size: 32px;
+	line-height: 39px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #FFFFFF;
+}
+
+.list-articles-latest{
+	margin: 40px auto 30px auto;
+	width: 1085px;
+}
+
+.card-post-rect-white-rounded{
+/* Article-community01 */
+	margin-bottom: 20px;
+	padding: auto 25px auto 30px;
+
+	width: 1085px;
+	height: 55px;
+	
+	background: #FFFFFF;
+	border-radius: 35px;
+	
+	font-size: 20px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
