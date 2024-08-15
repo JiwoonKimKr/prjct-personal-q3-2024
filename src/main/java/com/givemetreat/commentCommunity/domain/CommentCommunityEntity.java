@@ -1,4 +1,4 @@
-package com.givemetreat.postCommunity.domain;
+package com.givemetreat.commentCommunity.domain;
 
 import java.time.LocalDateTime;
 
@@ -22,24 +22,22 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @Getter
-@Table(name = "post_community")
+@Table(name="comment_community")
 @Entity
-public class PostCommunityEntity {
+public class CommentCommunityEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(name = "postId")
+	private int postId;
+	
 	@Column(name = "userId")
 	private int userId;
-	
-	private String title;
 	private String content;
 	
-	@Column(name = "agePetProper")
-	private String agePetProper;
-	
 	@CreationTimestamp
-	@Column(name = "createdAt")
+	@Column(name ="createdAt")
 	private LocalDateTime createdAt;
 	
 	@UpdateTimestamp

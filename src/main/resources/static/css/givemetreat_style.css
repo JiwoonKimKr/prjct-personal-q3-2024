@@ -2349,6 +2349,19 @@ input::-webkit-inner-spin-button {
 	width: 1085px;
 }
 
+.list-articles-latest::-webkit-scrollbar-thumb{
+	background-color: #ED5178;
+	border-radius: 20px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
+}
+
+.list-articles-latest::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+	
+}
+
 .card-post-rect-white-rounded{
 /* Article-community01 */
 	margin-bottom: 20px;
@@ -2364,4 +2377,19 @@ input::-webkit-inner-spin-button {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+}
+
+.card-comment-rect-white-rounded{
+	margin-bottom: 10px;
+
+	width: 1085px;
+	height: 35px;
+	
+	background: #FFFFFF;
+	border-radius: 35px;
+	
+	font-size: 15px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;	
 }

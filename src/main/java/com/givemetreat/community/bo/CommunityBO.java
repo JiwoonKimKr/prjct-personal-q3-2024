@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.givemetreat.commentCommunity.bo.CommentCommunityBO;
+import com.givemetreat.commentCommunity.domain.CommentCommunityVO;
 import com.givemetreat.postCommunity.bo.PostCommunityBO;
 import com.givemetreat.postCommunity.domain.PostCommunityVO;
 
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CommunityBO {
 	private final PostCommunityBO postCommunityBO;
+	private final CommentCommunityBO commentCommunityBO;
 	
 	public List<PostCommunityVO> getPostsLatestTop20() {
 		return postCommunityBO.getPostsLatestTop20();
@@ -20,6 +23,14 @@ public class CommunityBO {
 
 	public List<PostCommunityVO> getPostsByAgePetProperLimit20(String agePetProper) {
 		return postCommunityBO.getPostsByAgePetProPerLimit20(agePetProper);
+	}
+
+	public PostCommunityVO getPostByPostId(int postId) {
+		return postCommunityBO.getPostByPostId(postId);
+	}
+
+	public List<CommentCommunityVO> getCommentsByPostId(int postId) {
+		return commentCommunityBO.getCommentsByPostId(postId);
 	}
 
 }

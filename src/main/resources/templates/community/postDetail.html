@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/defaultLayout}">
+      
+	<head>
+		<title>간식줘집사 커뮤니티</title>
+	</head>
+	<section layout:fragment="contents" class="contents w-100">
+		<div class="d-flex justify-content-between w-100">
+			<article class="group-article community-cards-list">										
+				<div class="bar-search-keyword-community">
+					<input class="input-search-community" placeholder=" 🔎 Search">
+					<button class="btn-seartch-community">
+						검색
+					</button>
+				</div>
+				<div class="list-articles-latest">
+					<div class="card-post-rect-white-rounded">
+					 	<p class="pl-5 m-0" th:text="|작성자: ${post.nickname}, 제목: ${post.title}, 내용: ${#strings.abbreviate(post.content,25)}|"></p>
+					</div>
+					<div class="groups-list-comments">
+						<th:block th:each="comment:${listComments}">
+							<div class="card-comment-rect-white-rounded">
+								<p class="pl-5 m-0" th:text="|${comment.nickname}: ${#strings.abbreviate(comment.content,25)}|"></p>
+							</div>
+						</th:block>
+					</div>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script>
+    		$(document).ready(function(e){
+    			$("#groups-nav-header").css("background-color", "#ED5178");
+    			$(".groups-nav-aside").css("background-color", "#FFE397");
+
+    			$(".btn-filter-field-community").on('click', function(){
+    				let field = $(this).data('field');
+    				let value = $(this).data('value');
+    				
+    				console.log(`${field}, ${value}`);
+    				let url = "/community/community-main-view?".concat(field).concat('=').concat(value);
+    				
+    				console.log(url);
+    				location.href= url;
+    				
+    			})// btn-filter-field-community on click
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>
