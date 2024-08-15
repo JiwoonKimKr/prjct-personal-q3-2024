@@ -12,8 +12,12 @@
 		</header>
 		
 		<!-- content -->
-		<section layout:fragment="contents">
-		</section>
+		<div class="d-flex justify-content-between w-100">
+			<section layout:fragment="contents">
+			</section>
+			<div th:replace="~{/fragments/aside :: asideFragment}">
+			</div>
+		</div>
 		
 		<!-- script -->
 		<div layout:fragment="script">

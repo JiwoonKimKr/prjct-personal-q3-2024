@@ -620,7 +620,7 @@ input::-webkit-inner-spin-button {
 /* pet-list-view */
 .group-article-pet-list{
 	/* Rect_Background */
-	width: 1118px;
+	width: 1180px;
 	height: 929px;
 	padding-top: 75px;
 	
@@ -911,9 +911,10 @@ input::-webkit-inner-spin-button {
 }
 .groups-nav-aside{
 	position: relative;
+	top: -10px;
+	
 	width: 253px;
 	height: 945px;
-	top: -10px;
 	overflow: hidden;
 	
 	background: #D9D9D9;
@@ -921,7 +922,8 @@ input::-webkit-inner-spin-button {
 }
 
 .groups-dropdown-select{
-	margin: 50px 0px 10px 60px; 
+	padding-top: 50px;
+	margin: 0px 0px 10px 60px; 
 	
 	display: flex;
 	flex-wrap: wrap;
@@ -1116,6 +1118,10 @@ input::-webkit-inner-spin-button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.btn-magenta-menu-aside:hover{
+	text-decoration: none;
 }
 
 .margin-top-100px{
@@ -2211,4 +2217,31 @@ input::-webkit-inner-spin-button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+/* 커뮤니티 페이지 관련 */
+.community-cards-list{
+/* Rect_Background */
+
+	width: 1187px;
+	height: 932px;
+	
+	background: #51C3ED;
+	border-radius: 0px 215px 20px 0px;
+}
+.community-cards-list::-webkit-scrollbar-thumb{
+	background-color: #ED5178;
+	border-radius: 20px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
+}
+
+.community-cards-list::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+	
+}
+.groups-nav-aside-community{
+	background: #FFE397;
+	border-radius: 115px 0px 0px 0px;
 }
