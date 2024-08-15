@@ -29,29 +29,26 @@
 								<label for="field-agePetProper" class="label-for-select-invoice-detail m-0">
 									배송 상태
 								</label>
-							  	<select id="field-agePetProper" name="agePetProper" class="btn-select-dropdown-specific custom-select">
-								    <option data-field="agePetProper">
+							  	<select id="field-statusDelivery" name="statusDelivery" class="btn-select-dropdown-specific custom-select">
+								    <option data-field="statusDelivery">
 								    	---선택---
 							    	</option>
-								    <option data-field="agePetProper">
+								    <option class="PaymentBilled" data-field="statusDelivery" data-value="PaymentBilled">
 								    	결제 완료
 							    	</option>
-								    <option class="PaymentBilled" data-field="agePetProper" data-value="under6months">
+								    <option class="PackingFinished" data-field="statusDelivery" data-value="PackingFinished">
 								    	배송준비 완료
 							    	</option>
-								    <option class="PackingFinished" data-field="agePetProper" data-value="adult">
+								    <option class="TerminalHub" data-field="statusDelivery" data-value="TerminalHub">
 								    	터미널 이동
 							    	</option>
-								    <option class="TerminalHub" data-field="agePetProper" data-value="senior">
+								    <option class="EndPoint" data-field="statusDelivery" data-value="EndPoint">
 								    	배송 상차
 							    	</option>
-								    <option class="EndPoint" data-field="agePetProper" data-value="senior">
-								    	고령견
-							    	</option>
-								    <option class="DeliveryCurrent" data-field="agePetProper" data-value="senior">
+								    <option class="DeliveryCurrent" data-field="statusDelivery" data-value="DeliveryCurrent">
 								    	배송중
 							    	</option>
-								    <option class="DeliveryFinished" data-field="agePetProper" data-value="senior">
+								    <option class="DeliveryFinished" data-field="statusDelivery" data-value="DeliveryFinished">
 								    	배송완료
 							    	</option>
 						  		</select>
@@ -82,6 +79,7 @@
 	 						<div class="title-list-items-delivery mt-3 mb-2">
 	 							주문 목록
 	 						</div>
+	 						<!-- [[${listInvoices}]] -->
 							<th:block th:each="invoice : ${listInvoices}">
 								<a type="button" class="btn-info-detail-delivery"
 								 th:text="|수령인: ${invoice.receiverName}, 수령인 연락처: ${invoice.receiverPhoneNumber}, 결제금액: ￦ ${invoice.payment}, 결제 시간: ${#temporals.format(invoice.createdAt, 'yyyy/MM/dd HH:mm')}|"
@@ -141,9 +139,55 @@
 	</section>
 
 	<th:block layout:fragment="script">
-    	<script>
+    	<script th:inline="javascript">
     		$(document).ready(function(e){
-
+				$("#btn-search-invoice-detail").on('click', function(){
+					let userId = /*[[${session.userId}]]*/null;
+					console.log(userId);
+					if(userId == null){
+						alert("로그인 후 사용 가능합니다.")
+						return;
+					}
+					
+					let statusDelivery = $("#field-statusDelivery").children("option:selected").data('value');
+					console.log(statusDelivery);
+					let dateSince = $("#field-dateSince").val();
+					dateSince = dateSince.concat("T00:00:00");
+					console.log(dateSince);
+					let dateUntil = $("#field-dateUntil").val();
+					dateUntil = dateUntil.concat("T23:59:59");
+					console.log(dateUntil);
+					
+					let url = "/invoice/invoice-list-view?"
+					let count = 0;
+					
+					if(statusDelivery == "---선택---"){
+						statusDelivery = null;
+						console.log(statusDelivery);
+					}
+					
+					if(statusDelivery != null){
+						statusDelivery = "statusDelivery=".concat(statusDelivery);
+						console.log(statusDelivery);
+						url = url.concat(statusDelivery);
+						console.log(url);
+						count ++;
+					}
+					
+					if(dateSince != null && dateUntil != null){
+						dateSince = "timeSince=" + dateSince;
+						dateUntil = "timeUntil=" + dateUntil;
+						if(count > 0){
+							url = url + "&";
+						}
+							dateUntil = "&" + dateUntil;
+						url = url.concat(dateSince).concat(dateUntil)
+						console.log(url);
+					}
+					
+					location.href=url;
+				})//btn-search-invoice-detail on click
+				
     		})//document ready
     	
     	</script>

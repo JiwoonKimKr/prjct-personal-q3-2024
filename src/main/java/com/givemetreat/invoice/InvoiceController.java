@@ -1,5 +1,6 @@
 package com.givemetreat.invoice;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -103,6 +104,9 @@ public class InvoiceController {
 	//주문 내역 조회
 	@GetMapping("/invoice-list-view")
 	public String invoiceListView(HttpSession session
+								, @RequestParam(required = false) String statusDelivery
+								, @RequestParam(required = false) LocalDateTime	timeSince
+								, @RequestParam(required = false) LocalDateTime	timeUntil			
 								, Model model) {
 		
 		Integer userId = (Integer) session.getAttribute("userId");
@@ -110,7 +114,21 @@ public class InvoiceController {
 			return "redirect:user/sign-in-view";
 		}
 		
-		List<InvoiceVO> listInvoiceVOs = invoiceBO.getListInvoicesByUserId(userId);		
+		List<InvoiceVO> listInvoiceVOs = invoiceBO.getInvoices(null
+															, userId
+															, null
+															, null
+															, null
+															, null
+															, null
+															, null
+															, null
+															, statusDelivery
+															, null
+															, null
+															, null
+															, null, null
+															, timeSince, timeUntil);		
 		
 		model.addAttribute("listInvoices", listInvoiceVOs);
 		
@@ -120,8 +138,8 @@ public class InvoiceController {
 	//주문 내역 상세 조회
 	@GetMapping("/invoice-detail/{invoiceId}")
 	public String invoiceSpecificDetailView(@PathVariable Integer invoiceId
-												, HttpSession session
-												, Model model) {
+											, HttpSession session
+											, Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
 			return "redirect:user/sign-in-view";

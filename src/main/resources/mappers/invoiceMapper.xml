@@ -87,4 +87,89 @@
 		DESC
 		LIMIT 30
  	</select>
+ 	<select id="selectInvoicesBetweenDates" parameterType="map" resultType="com.givemetreat.invoice.domain.Invoice">
+ 		SELECT
+			 `id`
+			, `userId`
+			, `payment`
+			, `paymentType`
+			, `company`
+			, `monthlyInstallment`
+			, `hasCanceled`
+			, `buyerName`
+			, `buyerPhoneNumber`
+			, `statusDelivery`
+			, `receiverName`
+			, `receiverPhoneNumber`
+			, `address`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`invoice`
+		<where>
+			<if test="id != null">
+				AND
+					`id` = #{id}
+			</if>		
+			<if test="userId != null">
+				AND
+					`userId` = #{userId}
+			</if>		
+			<if test="payment != null">
+				AND
+					`payment` = #{payment}
+			</if>		
+			<if test="paymentType != null">
+				AND
+					`payment` LIKE LOWER(concat('%',#{paymentType},'%'))
+			</if>		
+			<if test="company != null">
+				AND
+					`company` LIKE LOWER(concat('%',#{company},'%'))
+			</if>		
+			<if test="monthlyInstallment != null">
+				AND
+					`monthlyInstallment` LIKE LOWER(concat('%',#{monthlyInstallment},'%'))
+			</if>		
+			<if test="hasCanceled != null">
+				AND
+					`hasCanceled` = #{hasCanceled}
+			</if>		
+			<if test="buyerName != null">
+				AND
+					`buyerName` LIKE LOWER(concat('%',#{buyerName},'%'))
+			</if>		
+			<if test="buyerPhoneNumber != null">
+				AND
+					`buyerPhoneNumber` LIKE concat('%',#{buyerPhoneNumber},'%')
+			</if>		
+			<if test="statusDelivery != null">
+				AND
+					`statusDelivery` = #{statusDelivery}
+			</if>		
+			<if test="receiverName != null">
+				AND
+					`receiverName` LIKE LOWER(concat('%',#{receiverName},'%'))
+			</if>		
+			<if test="receiverPhoneNumber != null">
+				AND
+					`receiverPhoneNumber` LIKE concat('%',#{receiverPhoneNumber},'%')
+			</if>		
+			<if test="address != null">
+				AND
+					`address` LIKE LOWER(concat('%',#{address},'%'))
+			</if>
+			<if test="createdAtSince != null and createdAtUntil != null">
+				AND
+					`createdAt` BETWEEN #{createdAtSince} and #{createdAtUntil}
+			</if>		
+			<if test="updatedAtSince != null and updatedAtUntil != null">
+				AND
+					`updatedAt` BETWEEN #{updatedAtSince} and #{updatedAtUntil}
+			</if>		
+		</where>
+		ORDER BY `ID`		
+		DESC
+		LIMIT 30
+ 	</select> 	
  </mapper>

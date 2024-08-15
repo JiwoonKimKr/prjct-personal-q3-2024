@@ -1,5 +1,6 @@
 package com.givemetreat.invoice.bo;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.validation.InvoiceParamsValidation;
+import com.givemetreat.invoice.domain.Invoice;
 import com.givemetreat.invoice.domain.InvoiceEntity;
 import com.givemetreat.invoice.domain.InvoiceVO;
+import com.givemetreat.invoice.mapper.InvoiceMapper;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
@@ -39,16 +42,55 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class InvoiceBO {
 	private final InvoiceRepository invoiceRepository;
+	private final InvoiceMapper invoiceMapper;
 	
 	private final ProductBO productBO;
 	private final ProductInvoiceBO productInvoiceBO;
 	private final ProductBufferBO productBufferBO;
 	private final ProductShoppingCartBO productShoppingCartBO;
 	
+	public List<InvoiceVO> getInvoices(Integer invoiceId
+										, Integer userId
+										, Integer payment
+										, String paymentType
+										, String company
+										, String monthlyInstallment
+										, Integer hasCanceled
+										, String buyerName
+										, String buyerPhoneNumber
+										, String statusDelivery
+										, String receiverName
+										, String receiverPhoneNumber
+										, String address
+										, LocalDateTime createdAtSince , LocalDateTime createdAtUntil 
+										, LocalDateTime updatedAtSince , LocalDateTime updatedAtUntil) {
+		List<Invoice> list = invoiceMapper.selectInvoicesBetweenDates( invoiceId
+																, userId
+																, payment
+																, paymentType
+																, company
+																, monthlyInstallment
+																, hasCanceled
+																, buyerName
+																, buyerPhoneNumber
+																, statusDelivery
+																, receiverName
+																, receiverPhoneNumber
+																, address
+																, createdAtSince, createdAtUntil
+																, updatedAtSince, updatedAtUntil);
+		
+		List<InvoiceVO> listVOs = list.stream()
+								.map(entity -> new InvoiceVO(entity))
+								.collect(Collectors.toList());
+		return listVOs;
+	}	
 	@Transactional
 	public List<InvoiceVO> getListInvoicesByUserId(Integer userId) {
 		List<InvoiceEntity> list = invoiceRepository.findByUserIdOrderByIdDesc(userId);
-		List<InvoiceVO> listVOs = list.stream().map(entity -> new InvoiceVO(entity)).collect(Collectors.toList());
+		List<InvoiceVO> listVOs = list.stream()
+									.map(entity -> new InvoiceVO(entity))
+									.collect(Collectors.toList());
 		return listVOs;
 	}	
 	

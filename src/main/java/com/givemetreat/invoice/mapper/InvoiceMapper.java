@@ -29,4 +29,22 @@ public interface InvoiceMapper {
 							, @Param("createdAt") LocalDateTime createdAt
 							, @Param("updatedAt") LocalDateTime updatedAt);
 
+	List<Invoice> selectInvoicesBetweenDates(@Param("id") Integer invoiceId
+											, @Param("userId") Integer userId
+											, @Param("payment") Integer payment
+											, @Param("paymentType") String paymentType
+											, @Param("company") String company
+											, @Param("monthlyInstallment") String monthlyInstallment
+											, @Param("hasCanceled") Integer hasCanceled
+											, @Param("buyerName") String buyerName
+											, @Param("buyerPhoneNumber") String buyerPhoneNumber
+											, @Param("statusDelivery") String statusDelivery
+											, @Param("receiverName") String receiverName
+											, @Param("receiverPhoneNumber") String receiverPhoneNumber
+											, @Param("address") String address
+											, @Param("createdAtSince") LocalDateTime createdAtSince
+											, @Param("createdAtUntil") LocalDateTime createdAtUntil
+											, @Param("updatedAtSince") LocalDateTime updatedAtSince
+											, @Param("updatedAtUntil") LocalDateTime updatedAtUntil);
+
 }
