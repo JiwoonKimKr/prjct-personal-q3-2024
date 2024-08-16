@@ -10,7 +10,7 @@
 		<div class="d-flex justify-content-between w-100">
 			<article class="group-article community-cards-list">										
 				<div class="bar-search-keyword-community">
-					<input class="input-search-community" placeholder=" 🔎 Search">
+					<input id="input-search-keyword-community" class="input-search-community" placeholder=" 🔎 Search">
 					<button class="btn-seartch-community">
 						검색
 					</button>
@@ -25,7 +25,7 @@
 					<button class="btn-filter-field-community" data-field="agePetProper" data-value="senior">
 						고령견
 					</button>
-					<button class="btn-write-new-post">
+					<button class="btn-write-new-post" type="button" data-toggle="modal" data-target="#modal-write-new-post">
 						<span>글쓰기</span>
 						<div class="icon-pencil">
 							<svg width="28" height="33" viewBox="0 0 28 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +34,52 @@
 							</svg>
 						</div>
 					</button>
+<!-- 새 글 쓰기 modal; #modal-write-new-post-->					
+					<div class="modal fade" id="modal-write-new-post" tabindex="-1" role="dialog" aria-labelledby="write-new-post" aria-hidden="true">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="write-new-post">
+										새 글 쓰기
+									</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">
+											&times;
+										</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div th:text="|작성자: ${session.userName}|">
+										
+									</div>
+									<div class="input-group modal-input-rounded">
+										<select class="custom-select modal-input-select-inside pl-5 w-100 h-100" id="agePetProper" aria-label="Example select with button addon">
+										    <option selected>---선택---</option>
+										    <option value="under6months">생후 6개월 미만</option>
+										    <option value="adult">성견</option>
+										    <option value="senior">고령견</option>
+										</select>
+									</div>	
+									<div class="form-group">
+										<label for="title-modal" class="col-form-label">
+											제목:
+										</label>
+										<input id="title-modal" type="text" class="form-control">
+									</div>
+									<div class="form-group">
+										<label for="content-modal" class="col-form-label">
+											내용:
+										</label>
+										<textarea id="content-modal" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+									<button id="btn-submit-new-post" type="button" class="btn btn-primary">작성하기</button>
+								</div>
+							</div>
+						</div>
+					</div>					
 				</div>
 				<div class="list-articles-latest">
 					<th:block th:each="post:${listPosts}">
@@ -64,6 +110,58 @@
     				location.href= url;
     				
     			})// btn-filter-field-community on click
+    			
+    			/* 글쓰기 버튼; btn-write-new-post*/
+    			$("#btn-submit-new-post").on('click', function(){
+    				let title = $("#title-modal").val().trim();
+    				let content = $("#content-modal").val().trim();
+    				let agePetProper = $("#agePetProper").children("option:selected").val();
+    				
+    				if(!title){
+    					alert("제목을 입력해주세요.")
+    					return;
+    				}
+    				
+    				if(!content){
+    					alert("내용을 입력해주세요.")
+    					return;
+    				}
+    				if(title.length > 30 || content.length > 500){
+    					alert("제목의 길이는 30자 이내, 내용은 500자 이내로 작성 가능합니다.")
+    					return;
+    				}
+    				
+    				if(agePetProper == '---선택---'){
+    					agePetProper = null;
+    				}
+    				
+    				console.log(`${title}, ${content}, ${agePetProper}`)
+    				
+    				let url = "/community/write-new-post";
+    				let params= { "title": title
+    							, "content": content
+    							, "agePetProper": agePetProper}
+    				
+    				if(confirm("현재 글을 게시하겠습니까?") == false){
+    					console.log("current post get rejected.");
+    					return;
+    				}
+    				
+    				$.post(url, params)
+    				.done(function(data){
+    					if(data.code == 200){
+    						alert(data.result);
+    						location.reload();
+    					} else if(data.code == 403){
+    						location.href = "user/sign-in-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    					
+    				})//ajax
+    				
+    			})
+    			
     		})//document ready
     	
     	</script>

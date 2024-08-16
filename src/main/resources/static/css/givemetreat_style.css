@@ -2393,3 +2393,41 @@ input::-webkit-inner-spin-button {
 	justify-content: flex-start;
 	align-items: center;	
 }
+
+.modal-input-rounded{
+/* input title_Writing Article */
+	margin: 10px 20px 10px auto;
+
+	width: 250px;
+	height: 50px;
+	
+	border-radius: 15px;
+	border: 1px solid #FBAA63;
+	
+	font-size: 24px;
+}
+
+.modal-input-select-inside{
+	border-color: transparent;
+	border-radius: 15px;
+	border-color:transparent;	
+	
+	font-size: 22px;
+}
+
+.card-post-rect-white-rounded-detail{
+	margin-bottom: 20px;
+	padding: auto 25px auto 30px;
+
+	width: 1085px;
+	height: 220px;
+	
+	background: #FFFFFF;
+	border-radius: 35px;
+	
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;	
+}

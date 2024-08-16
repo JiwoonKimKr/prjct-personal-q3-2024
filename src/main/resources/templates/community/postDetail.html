@@ -16,9 +16,12 @@
 					</button>
 				</div>
 				<div class="list-articles-latest">
-					<div class="card-post-rect-white-rounded">
-					 	<p class="pl-5 m-0" th:text="|작성자: ${post.nickname}, 제목: ${post.title}, 내용: ${#strings.abbreviate(post.content,25)}|"></p>
+					<div class="card-post-rect-white-rounded-detail">
+					 	<p class="pl-5 mb-4" th:text="|${post.nickname}|"></p>
+					 	<p class="pl-5 m-0" th:text="|제목: ${post.title}|"></p>
+					 	<p class="pl-5 m-0" th:text="|내용: ${post.content}|"></p>
 					</div>
+					 	
 					<div class="groups-list-comments">
 						<th:block th:each="comment:${listComments}">
 							<div class="card-comment-rect-white-rounded">

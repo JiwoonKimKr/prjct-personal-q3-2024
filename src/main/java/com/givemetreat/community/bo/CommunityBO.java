@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.givemetreat.commentCommunity.bo.CommentCommunityBO;
 import com.givemetreat.commentCommunity.domain.CommentCommunityVO;
 import com.givemetreat.postCommunity.bo.PostCommunityBO;
+import com.givemetreat.postCommunity.domain.PostCommunityEntity;
 import com.givemetreat.postCommunity.domain.PostCommunityVO;
 
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,10 @@ public class CommunityBO {
 
 	public List<CommentCommunityVO> getCommentsByPostId(int postId) {
 		return commentCommunityBO.getCommentsByPostId(postId);
+	}
+
+	public PostCommunityEntity addPost(Integer userId, String title, String content, String agePetProper) {
+		return postCommunityBO.addPost(userId, title, content, agePetProper);
 	}
 
 }

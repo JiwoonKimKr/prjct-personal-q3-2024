@@ -51,4 +51,13 @@ public class PostCommunityBO {
 		String nickname = user.getNickname();
 		return new PostCommunityVO(entity, loginId, nickname);
 	}
+
+	public PostCommunityEntity addPost(Integer userId, String title, String content, String agePetProper) {
+		return postCommunityRepository.save(PostCommunityEntity.builder()
+															.userId(userId)
+															.title(title)
+															.content(content)
+															.agePetProper(agePetProper)
+															.build());
+	}
 }
