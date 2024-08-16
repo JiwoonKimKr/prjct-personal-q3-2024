@@ -51,6 +51,45 @@
 			  		</select>
 				</div>
 			</div>
+			<div class="group-btns-paging">
+				<button data-direction="prev" id="btn-prev-page" class="arrow-paging">
+					<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g filter="url(#filter0_d_373_4)">
+							<path d="M0 26L45 51.9808V0.0192375L0 26Z" fill="#FF6868"/>
+						</g>
+						<defs>
+							<filter id="filter0_d_373_4" x="0" y="0.0192871" width="49" height="55.9614" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+								<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+								<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+								<feOffset dx="4" dy="4"/>
+								<feComposite in2="hardAlpha" operator="out"/>
+								<feColorMatrix type="matrix" values="0 0 0 0 0.45098 0 0 0 0 0.317647 0 0 0 0 0.929412 0 0 0 1 0"/>
+								<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_373_4"/>
+								<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_373_4" result="shape"/>
+							</filter>
+						</defs>
+					</svg>
+				</button>			
+				<button data-direction="next" id="btn-next-page" class="arrow-paging">
+					<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g filter="url(#filter0_d_373_2)">
+							<path d="M45 26L0 51.9808V0.0192375L45 26Z" fill="#FF6868"/>
+						</g>
+						<defs>
+						<filter id="filter0_d_373_2" x="0" y="0.0192871" width="49" height="55.9614" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+							<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+							<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+							<feOffset dx="4" dy="4"/>
+							<feComposite in2="hardAlpha" operator="out"/>
+							<feColorMatrix type="matrix" values="0 0 0 0 0.45098 0 0 0 0 0.317647 0 0 0 0 0.929412 0 0 0 1 0"/>
+							<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_373_2"/>
+							<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_373_2" result="shape"/>
+						</filter>
+						</defs>
+					</svg>
+				</button>
+							
+			</div>
 			<div class="groups-cards-collapsed">
 				<div class="groups-product-list">
 					<th:block th:each="unit : ${listProducts}">
@@ -78,8 +117,10 @@
 </section>
 
 	<th:block layout:fragment="script">
-    	<script>
+    	<script th:inline="javascript">
     		$(document).ready(function(e){
+    			indexingPagingButtons();
+    			
     			/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
     			let link = window.location.href;
 				let url = new URL(link.toString());
@@ -88,12 +129,43 @@
 				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
 				let keys = urlParams.keys();
 				for(let key of keys){
+					if(key == 'direction' || key == 'index') {
+						continue;
+					}
 					let value = urlParams.get(key);
 					console.log(`key: ${key}, value: ${value}`);
 					let selectCur = $('#field-' + key);
 					let optionSelected = $('option.' + value)[0];
 					selectCur.find(optionSelected).prop('selected', true);
 				}
+				
+				function indexingPagingButtons(){
+					/* 페이지 버튼; btn-prev-page btn-next-page data로 최소 최대 id값 넣기*/
+					let listProducts = /*[[${listProducts}]]*/null;
+					console.log(listProducts);
+					
+					if(!listProducts){
+						return;
+					}
+					let indexMax = listProducts[0].id;
+					let indexMin = listProducts[0].id;
+					
+					for(let i=1; i< listProducts.length; i ++){
+						let idCurrent = listProducts[i].id;
+						console.log(idCurrent);
+						if(listProducts[i].id < indexMin){
+							indexMin = idCurrent
+						}
+						if(listProducts[i].id > indexMax){
+							indexMax = idCurrent
+						}
+					}
+					console.log(`${indexMin}, ${indexMax}`);
+					
+					document.getElementById("btn-prev-page").setAttribute('data-index', indexMax);
+					document.getElementById("btn-next-page").setAttribute('data-index', indexMin);
+				}
+				
     			
     			$(".btn-select-dropdown-specific").on('change', function(e){
     				let link = window.location.href;
@@ -119,6 +191,25 @@
 	  				}
     				location.href= url;
     			})
+    			
+    			$(".arrow-paging").on('click', function(e){
+    				let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				let direction = $(this)[0].getAttribute('data-direction');
+    				let index = $(this)[0].getAttribute('data-index');
+    				
+  					urlParams.set('direction', direction);
+  					urlParams.set('index', index);
+    				
+    				console.log(`${direction}, ${index}`);
+    				console.log(url);
+
+    				location.href = url;
+    				
+    			})// arrow-paing on click
+    			
     		})//document ready
     	
     	</script>

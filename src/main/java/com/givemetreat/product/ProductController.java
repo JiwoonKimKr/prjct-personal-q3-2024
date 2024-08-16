@@ -26,9 +26,21 @@ public class ProductController {
 								, @RequestParam(required = false) String name 
 								, @RequestParam(required = false) String category
 								, @RequestParam(required = false) Integer price
-								, @RequestParam(required = false) String agePetProper			
+								, @RequestParam(required = false) String agePetProper
+								, @RequestParam(required = false) String direction
+								, @RequestParam(required = false) Integer index
 								, Model model) {
-		List<ProductVO> listProducts = productBO.getProducts(id, name, category, price, agePetProper);
+		
+		//페이징 prev 버튼 눌렸을 때, next 버튼 눌렸을 때, 맨 앞 맨 끝인지 파악해야!
+		//별도 Paging 관련 클래스 만들어서 접근해야 할 듯!
+		
+		List<ProductVO> listProducts = productBO.getProductsForPaging(id
+																	, name
+																	, category
+																	, price
+																	, agePetProper
+																	, direction
+																	, index);
 
 		model.addAttribute("listProducts", listProducts);
 		

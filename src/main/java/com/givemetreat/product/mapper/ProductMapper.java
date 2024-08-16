@@ -16,6 +16,15 @@ public interface ProductMapper {
 			, @Param("category") String category
 			, @Param("price") Integer price
 			, @Param("agePetProper") String agePetProper);
+	
+	public List<Product> selectProductForPaging(
+			@Param("id") Integer id
+			, @Param("name") String name
+			, @Param("category") String category
+			, @Param("price") Integer price
+			, @Param("agePetProper") String agePetProper
+			, @Param("direction") String direction
+			, @Param("index") Integer index);
 
 	public Integer insertProduct(Product product);
 	

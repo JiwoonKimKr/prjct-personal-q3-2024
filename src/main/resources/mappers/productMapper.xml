@@ -2,6 +2,61 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.givemetreat.product.mapper.ProductMapper">
+ 	<select id="selectProductForPaging" resultType="com.givemetreat.product.domain.Product">
+ 		SELECT
+			`id`
+			, `name`
+			, `category`
+			, `price`
+			, `agePetProper`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
+		<where>
+			<if test="id != null">
+				AND
+					`id` = #{id}
+			</if>
+			<if test="name != null">
+				AND			
+					`name` like LOWER(concat('%',#{name},'%'))
+			</if>	
+			<if test="category != null">
+				AND			
+					`category` = #{category}
+			</if>	
+			<if test="price != null">
+				AND			
+					`price` = #{price}
+			</if>	
+			<if test="agePetProper != null">
+				AND			
+					`agePetProper` = #{agePetProper}
+			</if>
+			<if test="direction != null and index != null">
+				<if test="direction == 'next'">
+					<![CDATA[
+						AND
+							`id` < #{index}
+					]]>
+					ORDER BY `id` DESC
+				</if>
+				<if test="direction == 'pref'">
+					<![CDATA[
+						AND
+							`id` > #{index}
+					]]>
+				</if>
+			</if>
+		</where>
+		<if test="direction == null">
+			ORDER BY `id` DESC
+		</if>
+		LIMIT 3;
+ 	</select> 
  	<select id="selectProduct" resultType="com.givemetreat.product.domain.Product">
  		SELECT
 			`id`
@@ -38,7 +93,7 @@
 			</if>
 		</where>
 		ORDER BY `id` DESC
-		LIMIT 50;
+		LIMIT 3;
  	</select>
  	
  	<insert id="insertProduct" parameterType="com.givemetreat.product.domain.Product"
