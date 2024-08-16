@@ -34,53 +34,8 @@
 							</svg>
 						</div>
 					</button>
-<!-- 새 글 쓰기 modal; #modal-write-new-post-->					
-					<div class="modal fade" id="modal-write-new-post" tabindex="-1" role="dialog" aria-labelledby="write-new-post" aria-hidden="true">
-						<div class="modal-dialog modal-lg" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="write-new-post">
-										새 글 쓰기
-									</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">
-											&times;
-										</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<div th:text="|작성자: ${session.userName}|">
-										
-									</div>
-									<div class="input-group modal-input-rounded">
-										<select class="custom-select modal-input-select-inside pl-5 w-100 h-100" id="agePetProper" aria-label="Example select with button addon">
-										    <option selected>---선택---</option>
-										    <option value="under6months">생후 6개월 미만</option>
-										    <option value="adult">성견</option>
-										    <option value="senior">고령견</option>
-										</select>
-									</div>	
-									<div class="form-group">
-										<label for="title-modal" class="col-form-label">
-											제목:
-										</label>
-										<input id="title-modal" type="text" class="form-control">
-									</div>
-									<div class="form-group">
-										<label for="content-modal" class="col-form-label">
-											내용:
-										</label>
-										<textarea id="content-modal" class="form-control"></textarea>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-									<button id="btn-submit-new-post" type="button" class="btn btn-primary">작성하기</button>
-								</div>
-							</div>
-						</div>
-					</div>					
 				</div>
+<!-- 글 리스트 -->				
 				<div class="list-articles-latest">
 					<th:block th:each="post:${listPosts}">
 						<div class="card-post-rect-white-rounded">
@@ -89,6 +44,53 @@
 						</div>
 					</th:block>
 				</div>
+				
+<!-- 새 글 쓰기 modal; #modal-write-new-post-->					
+				<div class="modal fade" id="modal-write-new-post" tabindex="-1" role="dialog" aria-labelledby="write-new-post" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="write-new-post">
+									새 글 쓰기
+								</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">
+										&times;
+									</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div id="userName-modal" th:text="|작성자: ${session.userName}|">
+									
+								</div>
+								<div class="input-group modal-input-rounded">
+									<select class="custom-select modal-input-select-inside pl-5 w-100 h-100" id="agePetProper" aria-label="Example select with button addon">
+									    <option selected>---선택---</option>
+									    <option value="under6months">생후 6개월 미만</option>
+									    <option value="adult">성견</option>
+									    <option value="senior">고령견</option>
+									</select>
+								</div>	
+								<div class="form-group">
+									<label for="title-modal" class="col-form-label">
+										제목:
+									</label>
+									<input id="title-modal" type="text" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="content-modal" class="col-form-label">
+										내용:
+									</label>
+									<textarea id="content-modal" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+								<button id="btn-submit-new-post" type="button" class="btn btn-primary">작성하기</button>
+							</div>
+						</div>
+					</div>
+				</div>					
 			</article>
 		</div>
 	</section>

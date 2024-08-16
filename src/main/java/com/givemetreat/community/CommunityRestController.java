@@ -25,7 +25,7 @@ public class CommunityRestController {
 	public Map<String, Object> writeNewPost(@RequestParam String title
 											, @RequestParam String content
 											, @RequestParam(required = false) String agePetProper
-											,HttpSession session){
+											, HttpSession session){
 		
 		Map<String, Object> result = new HashMap<>();
 		Integer userId = (Integer) session.getAttribute("userId");
@@ -48,4 +48,34 @@ public class CommunityRestController {
 		
 		return result;
 	}
+	
+	@PostMapping("/update-current-post")
+	public Map<String, Object> updateCurrentPost(@RequestParam int postId
+												, @RequestParam String title
+												, @RequestParam String content
+												, @RequestParam(required = false) String agePetProper
+												, HttpSession session
+												){
+		Map<String, Object> result = new HashMap<>();
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(ObjectUtils.isEmpty(userId)) {
+			result.put("code", 403);
+			result.put("code", "로그인 후 커뮤니티에 접근 가능합니다.");
+			return result;
+		}
+		
+		PostCommunityEntity post = communityBO.updatePost(postId, userId, title, content, agePetProper);
+		
+		if(ObjectUtils.isEmpty(post)) {
+			result.put("code", 500);
+			result.put("code", "글을 수정하지 못 하였습니다.");
+			return result;
+		}		
+		
+		result.put("code", 200);
+		result.put("result", "글을 수정하였습니다.");
+		
+		return result;	
+	}
+
 }

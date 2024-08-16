@@ -21,7 +21,16 @@
 					 	<p class="pl-5 m-0" th:text="|제목: ${post.title}|"></p>
 					 	<p class="pl-5 m-0" th:text="|내용: ${post.content}|"></p>
 					</div>
-					 	
+					
+					<button class="btn-update-post" type="button" data-toggle="modal" data-target="#modal-update-current-post">
+						<span>글 수정하기</span>
+						<div class="icon-pencil">
+							<svg width="28" height="33" viewBox="0 0 28 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M2.64819 28.7474L2.97117 31.2777L5.55141 30.3946L2.64819 28.7474Z" fill="white"/>
+								<path d="M1.60748 20.5944C1.60748 20.5944 12.2911 3.18904 13.8426 2.09263C18.5191 -1.21203 26.0965 3.67084 26.1006 9.04724C26.1014 9.97501 13.8655 27.549 13.8655 27.549M1.60748 20.5944L13.8655 27.549M1.60748 20.5944L2.64819 28.7474M13.8655 27.549L5.55141 30.3946M2.64819 28.7474L2.97117 31.2777L5.55141 30.3946M2.64819 28.7474L5.55141 30.3946" stroke="white" stroke-width="2"/>
+							</svg>
+						</div>
+					</button>
 					<div class="groups-list-comments">
 						<th:block th:each="comment:${listComments}">
 							<div class="card-comment-rect-white-rounded">
@@ -30,12 +39,58 @@
 						</th:block>
 					</div>
 				</div>
+<!-- 글 수정하기 modal; #modal-update-current-post-->					
+				<div class="modal fade" id="modal-update-current-post" tabindex="-1" role="dialog" aria-labelledby="update-current-post" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="update-current-post">
+									글 수정하기
+								</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">
+										&times;
+									</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div id="userName-modal" th:text="|작성자: ${session.userName}|">
+									
+								</div>
+								<div class="input-group modal-input-rounded">
+									<select class="custom-select modal-input-select-inside pl-5 w-100 h-100" id="agePetProper" aria-label="Example select with button addon">
+									    <option selected>---선택---</option>
+									    <option value="under6months">생후 6개월 미만</option>
+									    <option value="adult">성견</option>
+									    <option value="senior">고령견</option>
+									</select>
+								</div>	
+								<div class="form-group">
+									<label for="title-modal" class="col-form-label">
+										제목:
+									</label>
+									<input id="title-modal" type="text" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="content-modal" class="col-form-label">
+										내용:
+									</label>
+									<textarea id="content-modal" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+								<button id="btn-update-current-post" type="button" class="btn btn-primary">수정하기</button>
+							</div>
+						</div>
+					</div>
+				</div>					
 			</article>
-		</div>
+		</div>				
 	</section>
 
 	<th:block layout:fragment="script">
-    	<script>
+    	<script th:inline="javascript">
     		$(document).ready(function(e){
     			$("#groups-nav-header").css("background-color", "#ED5178");
     			$(".groups-nav-aside").css("background-color", "#FFE397");
@@ -49,10 +104,74 @@
     				
     				console.log(url);
     				location.href= url;
-    				
     			})// btn-filter-field-community on click
+    			
+    			$(".btn-update-post").on('click', function(){
+    				let title = /*[[${post.title}]]*/null;
+    				$("#title-modal").val(title);
+    				let content = /*[[${post.content}]]*/null;
+    				$("#content-modal").val(content);
+    				let agePetProper = /*[[${post.agePetProper}]]*/null;
+    				let options = $("#agePetProper").children();
+    				for(let option of options){
+    					let value = option.getAttribute('value');
+    					if(value == agePetProper){
+    						option.setAttribute('selected', true);
+    					}
+    				}
+    				console.log(`${title}, ${content}, ${agePetProper}`);
+    				
+    			})// btn-update-current-post on click
+    			
+    			$("#btn-update-current-post").on('click', function(){
+    				let title = $("#title-modal").val().trim();
+    				let content = $("#content-modal").val().trim();
+    				let agePetProper = $("#agePetProper").children("option:selected").val();
+    				
+    				if(!title){
+    					alert("제목을 입력해주세요.")
+    					return;
+    				}
+    				
+    				if(!content){
+    					alert("내용을 입력해주세요.")
+    					return;
+    				}
+    				if(title.length > 30 || content.length > 500){
+    					alert("제목의 길이는 30자 이내, 내용은 500자 이내로 작성 가능합니다.")
+    					return;
+    				}
+    				
+    				if(agePetProper == '---선택---'){
+    					agePetProper = null;
+    				}
+    				
+    				console.log(`${title}, ${content}, ${agePetProper}`)
+    				
+    				let url = "/community/update-current-post";
+    				let params= { "title": title
+    							, "content": content
+    							, "agePetProper": agePetProper}
+    				
+    				if(confirm("현재 글을 수정하겠습니까?") == false){
+    					console.log("current post get rejected.");
+    					return;
+    				}
+    				
+    				$.post(url, params)
+    				.done(function(data){
+    					if(data.code == 200){
+    						alert(data.result);
+    						location.reload();
+    					} else if(data.code == 403){
+    						location.href = "user/sign-in-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    					
+    				})//ajax
+    			})//btn update current post on click
     		})//document ready
-    	
     	</script>
 	</th:block>
 	

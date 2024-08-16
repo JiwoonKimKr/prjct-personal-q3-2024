@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.postCommunity.domain.PostCommunityEntity;
 import com.givemetreat.postCommunity.domain.PostCommunityVO;
@@ -13,7 +14,9 @@ import com.givemetreat.user.domain.UserEntity;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostCommunityBO {
@@ -44,14 +47,14 @@ public class PostCommunityBO {
 		PostCommunityEntity entity = postCommunityRepository.findById(postId).orElse(null);
 		return voFromEntity(entity);
 	}
-	
+	@Transactional
 	private PostCommunityVO voFromEntity(PostCommunityEntity entity) {
 		UserEntity user = userBO.getUserById(entity.getUserId()); 
 		String loginId = user.getLoginId();
 		String nickname = user.getNickname();
 		return new PostCommunityVO(entity, loginId, nickname);
 	}
-
+	@Transactional
 	public PostCommunityEntity addPost(Integer userId, String title, String content, String agePetProper) {
 		return postCommunityRepository.save(PostCommunityEntity.builder()
 															.userId(userId)
@@ -59,5 +62,24 @@ public class PostCommunityBO {
 															.content(content)
 															.agePetProper(agePetProper)
 															.build());
+	}
+	@Transactional
+	public PostCommunityEntity updatePost(int postId
+										, Integer userId
+										, String title
+										, String content,
+										String agePetProper) {
+		PostCommunityEntity entity = postCommunityRepository.findById(postId).orElse(null);
+		
+		if(ObjectUtils.isEmpty(entity)) {
+			log.warn("[PostCommunityBO updatePost()] post fail to get found. post ID:{}", postId );
+			return null;
+		}
+		
+		return postCommunityRepository.save(entity.toBuilder()
+											.title(title)
+											.content(content)
+											.agePetProper(agePetProper)
+											.build());
 	}
 }
