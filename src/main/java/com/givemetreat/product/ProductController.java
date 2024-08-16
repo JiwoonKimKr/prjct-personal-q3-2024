@@ -28,7 +28,7 @@ public class ProductController {
 								, @RequestParam(required = false) Integer price
 								, @RequestParam(required = false) String agePetProper
 								, @RequestParam(required = false) String direction
-								, @RequestParam(required = false) Integer index
+								, @RequestParam(required = false) Integer idRequested
 								, Model model) {
 		
 		//페이징 prev 버튼 눌렸을 때, next 버튼 눌렸을 때, 맨 앞 맨 끝인지 파악해야!
@@ -40,7 +40,7 @@ public class ProductController {
 																	, price
 																	, agePetProper
 																	, direction
-																	, index);
+																	, idRequested);
 
 		model.addAttribute("listProducts", listProducts);
 		

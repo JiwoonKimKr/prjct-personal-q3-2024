@@ -160,10 +160,10 @@
 							indexMax = idCurrent
 						}
 					}
-					console.log(`${indexMin}, ${indexMax}`);
+					console.log(`${indexMax}, ${indexMin}`);
 					
-					document.getElementById("btn-prev-page").setAttribute('data-index', indexMax);
-					document.getElementById("btn-next-page").setAttribute('data-index', indexMin);
+					document.getElementById("btn-prev-page").setAttribute('data-id-requested', indexMax);
+					document.getElementById("btn-next-page").setAttribute('data-id-requested', indexMin);
 				}
 				
     			
@@ -198,12 +198,12 @@
     				let urlParams = url.searchParams;
     				
     				let direction = $(this)[0].getAttribute('data-direction');
-    				let index = $(this)[0].getAttribute('data-index');
+    				let idRequested = $(this)[0].getAttribute('data-id-requested');
     				
   					urlParams.set('direction', direction);
-  					urlParams.set('index', index);
+  					urlParams.set('idRequested', idRequested);
     				
-    				console.log(`${direction}, ${index}`);
+    				console.log(`${direction}, ${idRequested}`);
     				console.log(url);
 
     				location.href = url;

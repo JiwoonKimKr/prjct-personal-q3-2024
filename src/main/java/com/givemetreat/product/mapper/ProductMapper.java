@@ -24,7 +24,8 @@ public interface ProductMapper {
 			, @Param("price") Integer price
 			, @Param("agePetProper") String agePetProper
 			, @Param("direction") String direction
-			, @Param("index") Integer index);
+			, @Param("index") Integer index
+			, @Param("limit") Integer limit);
 
 	public Integer insertProduct(Product product);
 	

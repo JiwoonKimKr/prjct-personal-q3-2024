@@ -55,7 +55,9 @@
 		<if test="direction == null">
 			ORDER BY `id` DESC
 		</if>
-		LIMIT 3;
+		<if test="limit != null">
+			LIMIT #{limit};
+		</if>
  	</select> 
  	<select id="selectProduct" resultType="com.givemetreat.product.domain.Product">
  		SELECT
