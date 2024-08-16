@@ -12,7 +12,9 @@ import com.givemetreat.postCommunity.domain.PostCommunityVO;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CommunityBO {
@@ -47,6 +49,14 @@ public class CommunityBO {
 										, String content,
 										String agePetProper) {
 		return postCommunityBO.updatePost(postId, userId, title, content, agePetProper);
+	}
+
+	public PostCommunityEntity deletePostAndCommentsByPostIdAndUserId(int postId, Integer userId) {
+		PostCommunityEntity entity = postCommunityBO.deleteByPostIdAndUserId(postId, userId);
+		commentCommunityBO.deleteCommentsByPostId(postId);
+		log.info("[CommunityBO deletePostAndCommentsByPostIdAndUserId()] post and comments get deleted."
+				+ " Post Id:{}, User Id:{}", postId, userId);
+		return entity;
 	}
 
 }

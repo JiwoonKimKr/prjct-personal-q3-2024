@@ -13,7 +13,9 @@ import com.givemetreat.user.domain.UserEntity;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CommentCommunityBO {
@@ -35,5 +37,12 @@ public class CommentCommunityBO {
 		String loginId = user.getLoginId();
 		String nickname = user.getNickname();
 		return new CommentCommunityVO(entity, loginId, nickname);
+	}
+
+
+	public void deleteCommentsByPostId(int postId) {
+		List<CommentCommunityEntity> listEntities = commentCommunityRepository.findByPostIdOrderByIdDesc(postId);
+		commentCommunityRepository.deleteAllInBatch(listEntities);
+		log.info("[CommentCommunityBO deleteCommentsByPostId()] comments are deleted. Post ID:{}", postId);
 	}
 }

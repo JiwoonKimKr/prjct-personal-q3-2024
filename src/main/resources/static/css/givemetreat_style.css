@@ -2433,12 +2433,33 @@ input::-webkit-inner-spin-button {
 }
 
 .btn-update-post{
-	margin: 10px auto 25px 20px;
 
 	width: 200px;
 	height: 65px;
 	
 	background: #ED5178	;
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 15px;
+	border-color: inherit;
+	
+	/* 글쓰기 */
+
+	font-weight: 800;
+	font-size: 24px;
+	line-height: 39px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	color: #FFFFFF;	
+}
+.btn-delete-post{
+	margin-left: 15px;
+	
+	width: 200px;
+	height: 65px;
+	
+	background: #FF6868	;
 	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 15px;
 	border-color: inherit;

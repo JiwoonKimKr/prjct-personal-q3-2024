@@ -82,4 +82,13 @@ public class PostCommunityBO {
 											.agePetProper(agePetProper)
 											.build());
 	}
+
+	public PostCommunityEntity deleteByPostIdAndUserId(int postId, Integer userId) {
+		PostCommunityEntity entity = postCommunityRepository.findById(postId).orElse(null);
+		postCommunityRepository.delete(entity);
+		log.info("[PostCommunityBO deleteByPostIdAndUserId()] post get deleted."
+				+ " Post Id:{}, User Id:{}", postId, userId);
+		
+		return entity;
+	}
 }

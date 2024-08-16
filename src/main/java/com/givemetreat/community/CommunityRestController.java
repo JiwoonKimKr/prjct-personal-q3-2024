@@ -3,6 +3,7 @@ package com.givemetreat.community;
 import java.util.*;
 
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,7 +69,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("code", "글을 수정하지 못 하였습니다.");
+			result.put("code", "글을 수정하지 못하였습니다.");
 			return result;
 		}		
 		
@@ -76,6 +77,31 @@ public class CommunityRestController {
 		result.put("result", "글을 수정하였습니다.");
 		
 		return result;	
+	}
+	
+	@DeleteMapping("/delete-current-post")
+	public Map<String, Object> deleteCurrentPost(@RequestParam int postId
+												, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		Integer userId = (Integer) session.getAttribute("userId");
+		if(ObjectUtils.isEmpty(userId)) {
+			result.put("code", 403);
+			result.put("code", "로그인 후 커뮤니티에 접근 가능합니다.");
+			return result;
+		}
+		
+		PostCommunityEntity post = communityBO.deletePostAndCommentsByPostIdAndUserId(postId, userId);
+		
+		if(ObjectUtils.isEmpty(post)) {
+			result.put("code", 500);
+			result.put("code", "글을 삭제하지 못하였습니다.");
+			return result;
+		}
+		
+		result.put("code", 200);
+		result.put("result", "글을 삭제하였습니다.");
+		
+		return result;
 	}
 
 }

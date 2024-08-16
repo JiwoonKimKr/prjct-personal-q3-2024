@@ -21,16 +21,22 @@
 					 	<p class="pl-5 m-0" th:text="|제목: ${post.title}|"></p>
 					 	<p class="pl-5 m-0" th:text="|내용: ${post.content}|"></p>
 					</div>
+					<div class="d-flex justify-content-center mr-5 mb-4">
+						<button class="btn-update-post" type="button" data-toggle="modal" data-target="#modal-update-current-post">
+							<span>글 수정하기</span>
+							<div class="icon-pencil">
+								<svg width="28" height="33" viewBox="0 0 28 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M2.64819 28.7474L2.97117 31.2777L5.55141 30.3946L2.64819 28.7474Z" fill="white"/>
+									<path d="M1.60748 20.5944C1.60748 20.5944 12.2911 3.18904 13.8426 2.09263C18.5191 -1.21203 26.0965 3.67084 26.1006 9.04724C26.1014 9.97501 13.8655 27.549 13.8655 27.549M1.60748 20.5944L13.8655 27.549M1.60748 20.5944L2.64819 28.7474M13.8655 27.549L5.55141 30.3946M2.64819 28.7474L2.97117 31.2777L5.55141 30.3946M2.64819 28.7474L5.55141 30.3946" stroke="white" stroke-width="2"/>
+								</svg>
+							</div>
+						</button>
+						<button class="btn-delete-post" type="button">
+							글 삭제하기
+						</button>
+					</div>
 					
-					<button class="btn-update-post" type="button" data-toggle="modal" data-target="#modal-update-current-post">
-						<span>글 수정하기</span>
-						<div class="icon-pencil">
-							<svg width="28" height="33" viewBox="0 0 28 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M2.64819 28.7474L2.97117 31.2777L5.55141 30.3946L2.64819 28.7474Z" fill="white"/>
-								<path d="M1.60748 20.5944C1.60748 20.5944 12.2911 3.18904 13.8426 2.09263C18.5191 -1.21203 26.0965 3.67084 26.1006 9.04724C26.1014 9.97501 13.8655 27.549 13.8655 27.549M1.60748 20.5944L13.8655 27.549M1.60748 20.5944L2.64819 28.7474M13.8655 27.549L5.55141 30.3946M2.64819 28.7474L2.97117 31.2777L5.55141 30.3946M2.64819 28.7474L5.55141 30.3946" stroke="white" stroke-width="2"/>
-							</svg>
-						</div>
-					</button>
+<!-- 댓글 리스트들 -->					
 					<div class="groups-list-comments">
 						<th:block th:each="comment:${listComments}">
 							<div class="card-comment-rect-white-rounded">
@@ -124,6 +130,7 @@
     			})// btn-update-current-post on click
     			
     			$("#btn-update-current-post").on('click', function(){
+					let postId = /*[[${post.postId}]]*/null;
     				let title = $("#title-modal").val().trim();
     				let content = $("#content-modal").val().trim();
     				let agePetProper = $("#agePetProper").children("option:selected").val();
@@ -146,10 +153,11 @@
     					agePetProper = null;
     				}
     				
-    				console.log(`${title}, ${content}, ${agePetProper}`)
+    				console.log(`${postId}, ${title}, ${content}, ${agePetProper}`)
     				
     				let url = "/community/update-current-post";
-    				let params= { "title": title
+    				let params= {"postId": postId
+    							, "title": title
     							, "content": content
     							, "agePetProper": agePetProper}
     				
@@ -171,6 +179,41 @@
     					
     				})//ajax
     			})//btn update current post on click
+
+				$(".btn-delete-post").on('click', function(){
+					let postId = /*[[${post.postId}]]*/null;
+					
+					if(confirm("해당 글을 삭제하시겠습니까?") == false){
+						console.log("current post reject to get deleted. post Id = ${postId}");
+						return;
+					}
+					console.log(postId);
+					$.ajax({
+					 	type: 'delete'
+						, url : "/community/delete-current-post"
+						, data : {'postId': postId}
+						, success : function(data){
+							if(data.code == 200){
+								alert("해당 글을 삭제하였습니다.")
+								location.href="/community/community-main-view";
+								return;
+							} else if(data.code == 403){
+								alert("로그인 후 이용 가능합니다.")
+								location.href="/user/sign-in-view";
+								return;
+							} else {
+								alert(data.error_message);
+								return;
+							}
+						}
+						, error : function(){
+							alert("해당 게시글를 삭제하지 못하였습니다. 관리자에게 문의하시길 바랍니다.");
+							return;
+						}
+					})//ajax
+
+				})// btn-delete-post on click
+
     		})//document ready
     	</script>
 	</th:block>
