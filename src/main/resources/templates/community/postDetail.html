@@ -35,12 +35,24 @@
 							글 삭제하기
 						</button>
 					</div>
+					<div class="group-input-write-comment d-flex justify-content-between">
+						<button id="btn-write-comment" class="form-control btn btn-warning rounded-lg col-3 h-100 mr-2">
+							댓글 작성하기
+						</button>
+						<input id="input-write-comment" class="form-control col-9 h-100" type="text" >
+					</div>
 					
 <!-- 댓글 리스트들 -->					
 					<div class="groups-list-comments">
 						<th:block th:each="comment:${listComments}">
 							<div class="card-comment-rect-white-rounded">
-								<p class="pl-5 m-0" th:text="|${comment.nickname}: ${#strings.abbreviate(comment.content,25)}|"></p>
+								<p class="pl-5 m-0" th:text="|${comment.nickname}: ${#strings.abbreviate(comment.content,500)}|"></p>
+								<button th:data-post-id="${comment.postId}"
+									th:data-comment-id="${comment.commentId}"
+									th:if="${comment.userId == session.userId}"
+									class="btn-delete-current-comment btn btn-danger rounded">
+									삭제
+								</button>
 							</div>
 						</th:block>
 					</div>
@@ -213,6 +225,64 @@
 					})//ajax
 
 				})// btn-delete-post on click
+
+				$("#btn-write-comment").on('click', function(){
+					let content = $("#input-write-comment").val().trim();
+					let postId = /*[[${post.postId}]]*/null;
+					console.log(`${content}, ${postId}`);
+					if(!content){
+						alert("댓글 내용을 입력해주세요.")
+						return;
+					}
+					
+					let url = "/community/write-comment"
+					let params = {"content": content
+								, "postId": postId}
+					
+					$.post(url, params)
+    				.done(function(data){
+    					if(data.code == 200){
+    						alert(data.result);
+    						location.reload();
+    					} else if(data.code == 403){
+    						location.href = "user/sign-in-view";
+    					} else {
+    						alert(data.error_message);
+    					}
+    				})//ajax
+				})// btn-write-comment on click
+
+				$(".btn-delete-current-comment").on('click', function(){
+					let postId = $(this).data('post-id');
+					let commentId = $(this).data('comment-id');
+					console.log(`${postId}, ${commentId}`);
+
+					$.ajax({
+					 	type: 'delete'
+						, url : "/community/delete-current-comment"
+						, data : {'postId': postId
+								, 'commentId': commentId}
+						, success : function(data){
+							if(data.code == 200){
+								alert("해당 댓글을 삭제하였습니다.")
+								location.reload();
+								return;
+							} else if(data.code == 403){
+								alert("로그인 후 이용 가능합니다.")
+								location.href="/user/sign-in-view";
+								return;
+							} else {
+								alert(data.error_message);
+								return;
+							}
+						}
+						, error : function(){
+							alert("해당 댓글를 삭제하지 못하였습니다. 관리자에게 문의하시길 바랍니다.");
+							return;
+						}
+					})//ajax
+
+				})// btn-current-comment on click
 
     		})//document ready
     	</script>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.givemetreat.commentCommunity.bo.CommentCommunityBO;
+import com.givemetreat.commentCommunity.domain.CommentCommunityEntity;
 import com.givemetreat.commentCommunity.domain.CommentCommunityVO;
 import com.givemetreat.postCommunity.bo.PostCommunityBO;
 import com.givemetreat.postCommunity.domain.PostCommunityEntity;
@@ -57,6 +58,19 @@ public class CommunityBO {
 		log.info("[CommunityBO deletePostAndCommentsByPostIdAndUserId()] post and comments get deleted."
 				+ " Post Id:{}, User Id:{}", postId, userId);
 		return entity;
+	}
+	
+/* 댓글 관련 */	
+	@Transactional
+	public CommentCommunityEntity addComment(int postId, Integer userId, String content) {
+		return commentCommunityBO.addComment(postId, userId, content);
+	}
+	
+	public CommentCommunityEntity deleteComment(int postId, int commentId, Integer userId) {
+		log.info("[CommunityBO deleteComment()] comment get deleted."
+				+ " Post Id:{}, Comment Id:{}, User Id:{}"
+				, postId, commentId, userId);
+		return commentCommunityBO.deleteComment(postId, commentId, userId);
 	}
 
 }

@@ -60,5 +60,4 @@ public class CommunityController {
 		
 		return "community/postDetail";
 	}
-	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.commentCommunity.domain.CommentCommunityEntity;
 import com.givemetreat.commentCommunity.domain.CommentCommunityVO;
@@ -31,7 +32,7 @@ public class CommentCommunityBO {
 		return listVOs;
 	}
 	
-	
+	@Transactional
 	private CommentCommunityVO voFromEntity(CommentCommunityEntity entity) {
 		UserEntity user = userBO.getUserById(entity.getUserId()); 
 		String loginId = user.getLoginId();
@@ -39,10 +40,34 @@ public class CommentCommunityBO {
 		return new CommentCommunityVO(entity, loginId, nickname);
 	}
 
-
+	@Transactional
 	public void deleteCommentsByPostId(int postId) {
 		List<CommentCommunityEntity> listEntities = commentCommunityRepository.findByPostIdOrderByIdDesc(postId);
 		commentCommunityRepository.deleteAllInBatch(listEntities);
 		log.info("[CommentCommunityBO deleteCommentsByPostId()] comments are deleted. Post ID:{}", postId);
+	}
+
+	@Transactional
+	public CommentCommunityEntity addComment(int postId, Integer userId, String content) {
+		return commentCommunityRepository.save(CommentCommunityEntity.builder()
+										.postId(postId)
+										.userId(userId)
+										.content(content)
+										.build());
+	}
+
+	@Transactional
+	public CommentCommunityEntity deleteComment(int postId, int commentId, Integer userId) {
+		CommentCommunityEntity entity = commentCommunityRepository.findByIdAndPostIdAndUserId(postId, commentId, userId);
+		if(ObjectUtils.isEmpty(entity)) {
+			log.warn("[CommentCommunityBO deleteComment()] failed to delete comment."
+					+ "Post ID:{}, Comment ID:{}, User ID:{}", postId, commentId, userId);
+			return null;
+		}
+		commentCommunityRepository.delete(entity);
+		log.info("[CommentCommunityBO deleteComment()] comment get deleted."
+				+ "Post ID:{}, Comment ID:{}, User ID:{}"
+				, postId, commentId, userId);
+		return entity;
 	}
 }

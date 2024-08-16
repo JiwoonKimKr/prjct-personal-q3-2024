@@ -10,4 +10,6 @@ public interface CommentCommunityRepository extends JpaRepository<CommentCommuni
 
 	List<CommentCommunityEntity> findByPostIdOrderByIdDesc(int postId);
 
+	CommentCommunityEntity findByIdAndPostIdAndUserId(int postId, int commentId, Integer userId);
+
 }
