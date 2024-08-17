@@ -1,4 +1,4 @@
-package com.givemetreat.common;
+package com.givemetreat.common.generic;
 
 import java.util.*;
 

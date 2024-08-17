@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.givemetreat.common.Page;
+import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.product.mapper.ProductMapper;

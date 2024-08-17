@@ -189,6 +189,11 @@
 	  				} else {
 	  					urlParams.append(field, value);
 	  				}
+	  				if(urlParams.has('direction') || urlParams.has('idRequested')){
+	  					urlParams.delete('direction');
+	  					urlParams.delete('idRequested');
+	  				}
+	  				
     				location.href= url;
     			})
     			
