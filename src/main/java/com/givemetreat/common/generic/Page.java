@@ -51,7 +51,7 @@ public class Page <T> {
 	private Boolean isCurrentIdFirst; 
 	private Boolean isCurrentIdLast; 
 
-	public List<T> returnPageList(){
+	public List<T> generateCurrentPageList(){
 		List<T> listVOs = new ArrayList<T>();
 		if(direction.equals("next")) {
 			numberPageCurrent ++;

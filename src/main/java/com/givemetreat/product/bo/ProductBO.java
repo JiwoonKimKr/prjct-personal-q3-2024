@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.domain.Product;
@@ -33,28 +34,13 @@ public class ProductBO {
 	 * @return List<{@link ProductVO}>
 	 */
 	@Transactional
-	public List<ProductVO> getProductsForPaging(Integer id
+	public Page<ProductVO> getProductsForPaging(Integer id
 										, String name
 										, String category
 										, Integer price
 										, String agePetProper
 										, String direction
 										, Integer idRequested) {
-		
-		if(direction == null || idRequested == null) {
-			List<Product> listProducts = productMapper.selectProductForPaging(id
-																			, name
-																			, category
-																			, price
-																			, agePetProper
-																			, direction
-																			, idRequested
-																			, LIMIT_SELECTION);
-			return listProducts.stream()
-								.map(product -> new ProductVO(product))
-								.collect(Collectors.toList());
-		}
-		
 		//direction이랑 paging이 필요한 경우
 		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
@@ -70,6 +56,15 @@ public class ProductBO {
 												.collect(Collectors.toList());
 		
 		Integer index = null;
+		//아무런 요청값이 없는, 메인 페이지를 띄울 때
+			//요청 id가 없고, 방향도 없는 경우; 요청 id는 가장 큰 id값(첫 번째)으로, 방향은 prev로
+		if(ObjectUtils.isEmpty(idRequested)) {
+			idRequested = listVOs.get(0).getId();
+		}
+		if(ObjectUtils.isEmpty(direction)) {
+			direction = "prev";
+		}
+		
 		for(int i = 0; i < listVOs.size(); i++) {
 			if(listVOs.get(i).getId() == idRequested) {
 				index = i;
@@ -86,7 +81,7 @@ public class ProductBO {
 		
 		log.info("[ProductBO getProductsForPaging()] new Page<ProductVO>:", pageInfo);
 		
-		return pageInfo.returnPageList();	
+		return pageInfo;	
 	}
 
 	@Transactional

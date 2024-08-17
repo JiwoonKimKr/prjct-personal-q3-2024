@@ -52,6 +52,7 @@
 				</div>
 			</div>
 			<div class="group-btns-paging">
+<!-- 전 페이지 화살표; btn-pref-page-->			
 				<button data-direction="prev" id="btn-prev-page" class="arrow-paging">
 					<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g filter="url(#filter0_d_373_4)">
@@ -69,7 +70,11 @@
 							</filter>
 						</defs>
 					</svg>
-				</button>			
+				</button>
+				<div class="list-indices-page d-flex justify-content-center align-items-center">
+				</div>
+				
+<!-- 다음 페이지 화살표; btn-next-page -->					
 				<button data-direction="next" id="btn-next-page" class="arrow-paging">
 					<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<g filter="url(#filter0_d_373_2)">
@@ -119,30 +124,35 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(e){
-    			indexingPagingButtons();
+    			updateFilteringsCurrentPage();
     			
-    			/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
-    			let link = window.location.href;
-				let url = new URL(link.toString());
-				let urlParams = url.searchParams;
-				
-				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
-				let keys = urlParams.keys();
-				for(let key of keys){
-					if(key == 'direction' || key == 'index') {
-						continue;
-					}
-					let value = urlParams.get(key);
-					console.log(`key: ${key}, value: ${value}`);
-					let selectCur = $('#field-' + key);
-					let optionSelected = $('option.' + value)[0];
-					selectCur.find(optionSelected).prop('selected', true);
-				}
+    			indexingPagingButtons();
+    			updatePagingIndices();
+    			
+    			function updateFilteringsCurrentPage(){
+    				/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
+        			let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
+    				let keys = urlParams.keys();
+    				for(let key of keys){
+    					if(key == 'direction' || key == 'index') {
+    						continue;
+    					}
+    					let value = urlParams.get(key);
+    					console.log(`key: ${key}, value: ${value}`);
+    					let selectCur = $('#field-' + key);
+    					let optionSelected = $('option.' + value)[0];
+    					selectCur.find(optionSelected).prop('selected', true);
+    				}
+    			}
 				
 				function indexingPagingButtons(){
 					/* 페이지 버튼; btn-prev-page btn-next-page data로 최소 최대 id값 넣기*/
 					let listProducts = /*[[${listProducts}]]*/null;
-					console.log(listProducts);
+					//console.log(listProducts);
 					
 					if(listProducts.length < 1){
 						alert("해당 상품이 존재하지 않습니다.");
@@ -166,6 +176,41 @@
 					
 					document.getElementById("btn-prev-page").setAttribute('data-id-requested', indexMax);
 					document.getElementById("btn-next-page").setAttribute('data-id-requested', indexMin);
+				}
+				
+				function updatePagingIndices(){
+					let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				if(urlParams.has('direction') || urlParams.has('idRequested')){
+	  					urlParams.delete('direction');
+	  					urlParams.delete('idRequested');
+	  				}
+    				console.log(url.toString());
+					
+					let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
+					let numberPageMax = /*[[${numberPageMax}]]*/null;
+					let limit = /*[[${limit}]]*/null;
+					console.log(`${numberPageCurrent}, ${numberPageMax}, ${limit}`);
+					
+					let anchors = $(".list-indices-page")[0];
+					console.log(anchors);
+					let indexStart = (numberPageCurrent - 2) > 0 ? (numberPageCurrent - 2) : 0;
+					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
+					
+					for(let i = 0; i < indexLast + 1; i ++){
+						let anchor = document.createElement('a');
+						urlParams.set('page', i);
+						anchor.setAttribute('href', url.toString());
+						anchor.classList.add('mx-2');
+						if(i == numberPageCurrent){
+							anchor.classList.add('font-weight-bold');
+						}
+						anchor.append(i + 1);
+						
+						anchors.append(anchor);
+					}
+					console.log(anchors);    				
 				}
 				
     			

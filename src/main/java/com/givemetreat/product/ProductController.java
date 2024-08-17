@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
 
@@ -31,18 +32,21 @@ public class ProductController {
 								, @RequestParam(required = false) Integer idRequested
 								, Model model) {
 		
-		//페이징 prev 버튼 눌렸을 때, next 버튼 눌렸을 때, 맨 앞 맨 끝인지 파악해야!
-		//별도 Paging 관련 클래스 만들어서 접근해야 할 듯!
+		Page<ProductVO> pageInfo = productBO.getProductsForPaging(id
+																, name
+																, category
+																, price
+																, agePetProper
+																, direction
+																, idRequested);
+		List<ProductVO> listProducts = pageInfo.generateCurrentPageList();
 		
-		List<ProductVO> listProducts = productBO.getProductsForPaging(id
-																	, name
-																	, category
-																	, price
-																	, agePetProper
-																	, direction
-																	, idRequested);
-
 		model.addAttribute("listProducts", listProducts);
+		model.addAttribute("numberPageCurrent", pageInfo.getNumberPageCurrent());
+		model.addAttribute("numberPageMax", pageInfo.getNumberPageMax());
+		model.addAttribute("limit", pageInfo.getLimit());
+		model.addAttribute("idFirst", pageInfo.getIdFirst());
+		model.addAttribute("idLast", pageInfo.getIdLast());
 		
 		return "/product/productList";
 	}
