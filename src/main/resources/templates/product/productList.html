@@ -144,7 +144,9 @@
 					let listProducts = /*[[${listProducts}]]*/null;
 					console.log(listProducts);
 					
-					if(!listProducts){
+					if(listProducts.length < 1){
+						alert("해당 상품이 존재하지 않습니다.");
+						location.href= "/product/product-list-view";
 						return;
 					}
 					let indexMax = listProducts[0].id;
@@ -172,6 +174,11 @@
     				let url = new URL(link.toString());
     				let urlParams = url.searchParams;
 
+    				if(urlParams.has('direction') || urlParams.has('idRequested')){
+	  					urlParams.delete('direction');
+	  					urlParams.delete('idRequested');
+	  				}
+    				
     				let field = $(this).children("option:selected").data('field'); 
     				let value = $(this).children("option:selected").data('value');
     				console.log(`${field}, ${value}`);
@@ -188,10 +195,6 @@
 	  					urlParams.set(field, value);
 	  				} else {
 	  					urlParams.append(field, value);
-	  				}
-	  				if(urlParams.has('direction') || urlParams.has('idRequested')){
-	  					urlParams.delete('direction');
-	  					urlParams.delete('idRequested');
 	  				}
 	  				
     				location.href= url;

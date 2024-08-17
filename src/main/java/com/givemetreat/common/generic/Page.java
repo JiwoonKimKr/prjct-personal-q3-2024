@@ -23,6 +23,8 @@ public class Page <T> {
 		this.limit = limit;
 		
 		this.numberPageCurrent = index / limit;
+		this.numberPageMax = (listVOs.size() - 1) / limit;
+		
 		this.direction = direction;
 		
 		this.indexCurrent = index;
@@ -38,6 +40,7 @@ public class Page <T> {
 	private Integer limit = 3;
 	
 	private Integer numberPageCurrent;
+	private Integer numberPageMax;
 	
 	private String direction;
 	
@@ -50,28 +53,19 @@ public class Page <T> {
 
 	public List<T> returnPageList(){
 		List<T> listVOs = new ArrayList<T>();
-		if(direction.equals("next") && !isCurrentIdLast) {
-			int indexStart = (numberPageCurrent + 1)* limit;
-			int indexFinish = (indexStart + limit) < listEntities.size() ? indexStart + limit : listEntities.size();
-			for(int i= indexStart; i < indexFinish ; i++) {
-				listVOs.add(listEntities.get(i));
-			}
-		} else if (direction.equals("next") && isCurrentIdLast) {
-			listVOs.add(listEntities.get(listEntities.size()-1));
-		}
+		if(direction.equals("next")) {
+			numberPageCurrent ++;
+			numberPageCurrent = numberPageCurrent < numberPageMax ? numberPageCurrent : numberPageMax;
 			
-		if(direction.equals("prev") && !isCurrentIdFirst) {
-			int indexStart = (numberPageCurrent - 1) * limit > 0 ? (numberPageCurrent - 1) * limit : 0;
-			int indexFinish = indexStart + limit;
-			for(int i= indexStart; i < indexFinish ; i++) {
-				listVOs.add(listEntities.get(i));
-			}
-		} else if(direction.equals("prev") && isCurrentIdFirst) {
-			for(int i= 0; i < limit ; i++) {
-				listVOs.add(listEntities.get(i));
-			}
+		} else { //pref 일 경우
+			numberPageCurrent --;
+			numberPageCurrent = numberPageCurrent > 0 ? numberPageCurrent : 0;
 		}
-		
+		int indexStart = numberPageCurrent * limit > 0 ? numberPageCurrent * limit : 0;
+		int indexFinish =(indexStart + limit) < listEntities.size() ? indexStart + limit : listEntities.size();
+		for(int i= indexStart; i < indexFinish ; i++) {
+			listVOs.add(listEntities.get(i));
+		}		
 		return listVOs;
 	}
 }
