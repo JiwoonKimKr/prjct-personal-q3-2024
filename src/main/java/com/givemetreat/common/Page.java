@@ -29,6 +29,9 @@ public class Page <T> {
 		this.idFirst = idFirst;
 		this.idLast = idLast;
 		
+		this.isCurrentIdFirst = idRequested >= idFirst;
+		this.isCurrentIdLast = idRequested <= idLast;
+		
 	}
 	
 	private List<T> listEntities;
@@ -42,8 +45,8 @@ public class Page <T> {
 	private Integer idFirst; 
 	private Integer idLast; 
 	
-	private Boolean isCurrentIdFirst; //아예 mapper에서 조회하도록 고쳐야!
-	private Boolean isCurrentIdLast; //아예 mapper에서 조회하도록 고쳐야!
+	private Boolean isCurrentIdFirst; 
+	private Boolean isCurrentIdLast; 
 
 	public List<T> returnPageList(){
 		List<T> listVOs = new ArrayList<T>();
@@ -54,11 +57,11 @@ public class Page <T> {
 				listVOs.add(listEntities.get(i));
 			}
 		} else if (direction.equals("next") && isCurrentIdLast) {
-			listVOs.add(listEntities.get(idLast));
+			listVOs.add(listEntities.get(listEntities.size()-1));
 		}
 			
 		if(direction.equals("prev") && !isCurrentIdFirst) {
-			int indexStart = (numberPageCurrent - 1) * limit > 0 ? numberPageCurrent - 1 : 0;
+			int indexStart = (numberPageCurrent - 1) * limit > 0 ? (numberPageCurrent - 1) * limit : 0;
 			int indexFinish = indexStart + limit;
 			for(int i= indexStart; i < indexFinish ; i++) {
 				listVOs.add(listEntities.get(i));

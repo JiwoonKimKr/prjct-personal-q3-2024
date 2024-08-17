@@ -1,7 +1,6 @@
 package com.givemetreat.product.bo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,10 +68,6 @@ public class ProductBO {
 		List<ProductVO> listVOs = listProductsWhole.stream()
 												.map(product -> new ProductVO(product))
 												.collect(Collectors.toList());
-		
-		if(direction.equals("prev")) {
-			Collections.reverse(listVOs);
-		}
 		
 		Integer index = null;
 		for(int i = 0; i < listVOs.size(); i++) {
