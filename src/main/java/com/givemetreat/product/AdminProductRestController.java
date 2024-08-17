@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.AdminProductVO;
 
@@ -58,17 +60,20 @@ public class AdminProductRestController {
 	
 	
 	//해당 검색 페이지에서 바로 뿌려주는 형식
-	@PostMapping("/product-list-view")
+	@GetMapping("/product-list")
 	public Map<String, Object> productListView(
 				@RequestParam(required = false) Integer id 
 				, @RequestParam(required = false) String name 
 				, @RequestParam(required = false) String category
 				, @RequestParam(required = false) Integer price
 				, @RequestParam(required = false) String agePetProper
+				, @RequestParam(required = false) String direction
+				, @RequestParam(required = false) Integer idRequested
+				, @RequestParam(required = false) Integer pageCurrent
+				, @RequestParam(required = false) Integer pageRequested
 				){
 		Map<String, Object> result = new HashMap<>();
-		log.info("[ADMIN-Product: productDetail] RequestParam for Searching product detail:{},{},{},{},{}"
-					, id, name, category, price, agePetProper);
+		log.info("[ADMIN-Product: productListView] RequestParam for Searching products get arrived at controller.");
 		
 		if(name != null && name.isBlank()) {
 			name = null;
@@ -80,13 +85,26 @@ public class AdminProductRestController {
 			agePetProper = null;
 		}
 		
-		List<AdminProductVO> listProducts = adminProductBO.getProduct(id, name, category, price, agePetProper);
-		log.info("[ADMIN-Product: productDetail] Ready to show products list for Searching product detail:{},{},{},{},{}]"
-					, id, name, category, price, agePetProper);
+		Page<AdminProductVO> pageInfo = adminProductBO.getProductsForPaging(id
+																		, name
+																		, category
+																		, price
+																		, agePetProper
+																		, direction
+																		, idRequested
+																		, pageCurrent
+																		, pageRequested);
+		
+		List<AdminProductVO> listProducts = pageInfo.generateCurrentPageList();
 		
 		result.put("code", 200);
 		result.put("result", "success");
 		result.put("listProducts", listProducts);
+		result.put("numberPageCurrent", pageInfo.getNumberPageCurrent());
+		result.put("numberPageMax", pageInfo.getNumberPageMax());
+		result.put("limit", pageInfo.getLimit());
+		result.put("idFirst", pageInfo.getIdFirst());
+		result.put("idLast", pageInfo.getIdLast());		
 		
 		return result;
 	}

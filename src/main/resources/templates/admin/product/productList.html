@@ -21,18 +21,8 @@
 					<span class="h3 text-white col-3">
 						검색 항목
 					</span>
-					<div class="input-group p-0 col-5">
-						<select id="dropDown-for-choosing-field" class="custom-select h-100" aria-label="Example select with button addon">
-						    <option selected>--------</option>
-						    <option value="field-id">품목 id</option>
-						    <option value="field-name">제품명</option>
-						    <option value="field-category">카테고리</option>
-						    <option value="field-price">가격</option>
-						    <option value="field-agePetProper">섭취 적정 연령</option>
-						</select>
-					</div>
 					<div class="d-flex justify-content-end col-4">
-						<button class="btn-search btn-danger btn-cancel-register w-100 mr-2">
+						<button id="btn-search-products" class="btn-search btn-danger btn-cancel-register w-100 mr-2">
 							SEARCH
 						</button>
 					</div>	
@@ -40,21 +30,21 @@
 				<!-- 숨겨진 검색 항목별 카테고리들 -->
 				<div class="groups-category-for-search" >
 					<!-- Dropdown: id -->
-					<div id="field-id" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-id" class="bg-secondary rounded justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							제품 고유번호
 						</span>
 						<input id="idProduct" type="text" class="form-control col-8">
 					</div>
 					<!-- Dropdown: name -->
-					<div id="field-name" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-name" class="bg-secondary rounded justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							제품명
 						</span>
 						<input id="nameProduct" type="text" class="form-control col-8">
 					</div>
 					<!-- Dropdown: category -->
-					<div id="field-category" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-category" class="bg-secondary rounded justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							카테고리
 						</span>
@@ -68,14 +58,14 @@
 					</div>
 					<!-- Dropdown: price -->
 						<!-- ※※※※※가격 쪽은 최대, 최소 등 범위 설정할 지 고민해야 -->
-					<div id="field-price" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-price" class="bg-secondary rounded justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							제품 가격
 						</span>
 						<input id="priceProduct" type="text" class="form-control col-8">
 					</div>
 					<!-- Dropdown: agePetProper -->
-					<div id="field-agePetProper" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-agePetProper" class="bg-secondary rounded justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							섭취 적정 연령
 						</span>
@@ -93,6 +83,53 @@
 				
 				<!-- 상품 조회 상세 내역 출력_시작 -->
 				<div class="mt-5">
+					<div class="group-btns-paging">
+<!-- 전 페이지 화살표; btn-pref-page-->			
+						<button data-direction="prev" id="btn-prev-page" class="arrow-paging">
+							<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g filter="url(#filter0_d_373_4)">
+									<path d="M0 26L45 51.9808V0.0192375L0 26Z" fill="#FF6868"/>
+								</g>
+								<defs>
+									<filter id="filter0_d_373_4" x="0" y="0.0192871" width="49" height="55.9614" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+										<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+										<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+										<feOffset dx="4" dy="4"/>
+										<feComposite in2="hardAlpha" operator="out"/>
+										<feColorMatrix type="matrix" values="0 0 0 0 0.45098 0 0 0 0 0.317647 0 0 0 0 0.929412 0 0 0 1 0"/>
+										<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_373_4"/>
+										<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_373_4" result="shape"/>
+									</filter>
+								</defs>
+							</svg>
+						</button>
+						<div class="list-indices-page d-flex justify-content-center align-items-center">
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+						</div>
+<!-- 다음 페이지 화살표; btn-next-page -->					
+						<button data-direction="next" id="btn-next-page" class="arrow-paging">
+							<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g filter="url(#filter0_d_373_2)">
+									<path d="M45 26L0 51.9808V0.0192375L45 26Z" fill="#FF6868"/>
+								</g>
+								<defs>
+								<filter id="filter0_d_373_2" x="0" y="0.0192871" width="49" height="55.9614" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+									<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+									<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+									<feOffset dx="4" dy="4"/>
+									<feComposite in2="hardAlpha" operator="out"/>
+									<feColorMatrix type="matrix" values="0 0 0 0 0.45098 0 0 0 0 0.317647 0 0 0 0 0.929412 0 0 0 1 0"/>
+									<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_373_2"/>
+									<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_373_2" result="shape"/>
+								</filter>
+								</defs>
+							</svg>
+						</button>
+					</div>					
 					<table class="table">
 						<thead>
 							<tr>
@@ -128,32 +165,81 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
-    			$("#dropDown-for-choosing-field").on('change', function(){
-    				/* 검색항목 초기화*/
-	    				/* 기존 입력값 초기화 */
-    				$("#idProduct").val('');
-    				$("#nameProduct").val('');
-					$("#categoryProduct").val('');
-					$("#priceProduct").val('');
-					$("#agePetProperProduct").val('');    				
-    				
-						/* 보여지던 필드 태그 초기화 */
-    				$(".bg-secondary").removeClass("d-flex");
-    				$(".bg-secondary").addClass("d-none");
-    				$("#tableBody").empty();
-    				
-    				let fieldChose = $("#dropDown-for-choosing-field").val();
-    				console.log(fieldChose);
-   				/* jQuery 변수로 ID 얻는 방법; 처음 발견한 방법! */
-    				let dropdownChose = $('#' + fieldChose);
-    				dropdownChose.removeClass("d-none");
-    				dropdownChose.addClass("d-flex");
-    			})// #dropDown-for-choosing-field on change
+				let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
+				let numberPageMax = /*[[${numberPageMax}]]*/null;
+				let limit = /*[[${limit}]]*/null;
+				let idFirst = /*[[${idFirst}]]*/null;
+				let idLast = /*[[${idLast}]]*/null;
     			
-     			$(".btn-search").on('click', function(){
+    			function updateFilteringsCurrentPage(){
+    				/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
+        			let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
+    				let keys = urlParams.keys();
+    				for(let key of keys){
+    					if(key == 'direction' || key == 'index') {
+    						continue;
+    					}
+    					let value = urlParams.get(key);
+    					console.log(`key: ${key}, value: ${value}`);
+    					let selectCur = $('#field-' + key);
+    					let optionSelected = $('option.' + value)[0];
+    					selectCur.find(optionSelected).prop('selected', true);
+    				}
+    			}//updateFilteringsCurrentPage()
+				
+				function indexingPagingButtons(){
+					/* 페이지 버튼; btn-prev-page btn-next-page data로 최소 최대 id값 넣기*/
+					let listProducts = /*[[${listProducts}]]*/null;
+					//console.log(listProducts);
+					
+					if(!listProducts || listProducts.length < 1){
+						return;
+					}
+					let idMax = listProducts[0].id;
+					let idMin = listProducts[0].id;
+					
+					for(let i=1; i< listProducts.length; i ++){
+						let idCurrent = listProducts[i].id;
+						console.log(idCurrent);
+						if(listProducts[i].id < idMin){
+							idMin = idCurrent
+						}
+						if(listProducts[i].id > idMax){
+							idMax = idCurrent
+						}
+					}
+					console.log(`${idMax}, ${idMin}`);
+					
+					document.getElementById("btn-prev-page").setAttribute('data-id-requested', idMax);
+					document.getElementById("btn-next-page").setAttribute('data-id-requested', idMin);
+				}// indexingPagingButtons()
+				
+				function updatePagingIndices(){
+					let anchors = $(".list-indices-page")[0];
+					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
+					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
+					for(let i = indexStart; i < indexLast + 1; i ++){
+						let anchor = document.createElement('a');
+						
+						anchor.setAttribute('href', '#');
+						anchor.setAttribute('data-page-current', numberPageCurrent);
+						anchor.setAttribute('data-page-requested', i);
+						anchor.classList.add('mx-2');
+						anchor.classList.add('anchor-index-page');
+						if(i == numberPageCurrent){
+							anchor.classList.add('font-weight-bold');
+						}
+						anchor.append(i + 1);
+						anchors.append(anchor);
+					}
+				}// updatePagingIndices()
+				
+     			$("#btn-search-products").on('click', function(e, data){
      				/* 기존 검색값 초기화 */
-     				$("#tableBody").empty();
-     				
     				let id = $("#idProduct").val().trim();
     				let name = $("#nameProduct").val().trim();
 					let category = $("#categoryProduct").val();
@@ -167,7 +253,7 @@
 						agePetProper = '';
 					}
     				
-					console.log(`${id}, ${name}, ${category}, ${price}, ${agePetProper}`);
+					//console.log(`${id}, ${name}, ${category}, ${price}, ${agePetProper}`);
 					let params = {
 									"id": id
 									, "name": name
@@ -175,14 +261,27 @@
 									, "price": price
 									, "agePetProper":agePetProper
 								}
-					let url = "/admin/product/product-list-view"
-					
+					if(data){
+						console.log(data);
+						params['pageCurrent'] = data.pageCurrent;
+						params['pageRequested'] = data.pageRequested;
+						console.log(params);
+					}
+					let url = "/admin/product/product-list"
 					$.ajax({
-						type: "POST"
+						type: "Get"
     					, url: url
     					, data: params
     					, success:function(data){
     						if(data.code == 200){
+    							numberPageCurrent = data.numberPageCurrent;
+    							numberPageMax = data.numberPageMax;
+    							limit = data.limit;
+    							idFirst = data.idFirst;
+    							idLast = data.idLast;
+    							
+    							$("#tableBody").empty();
+    							$(".list-indices-page").empty();
     							for(let i = 0; i< data.listProducts.length; i++){
     								let strUrlCurrent = '<a href="/admin/product/' + data.listProducts[i].id + '">';
     								let tableTd = '<tr>';
@@ -201,6 +300,24 @@
     								
     								$('#tableBody').append(tableTd);
     							}
+    							
+    							
+    			    			updateFilteringsCurrentPage();
+    			    			indexingPagingButtons();
+    			    			updatePagingIndices();
+    			    			
+    			    			//ajax의 경우 anchor태그가 삭제되어 새로 생기는 탓에 success 함수 안에 기재해줘야 했다!
+    			    			$("a.anchor-index-page").click(function(e){
+    								e.preventDefault();
+    								let pageCurrent = $(this).data('page-current');
+    								let pageRequested = $(this).data('page-requested');
+    								
+    								//console.log(`data-page-Current: ${pageCurrent}, data-page-Requested: ${pageRequested}`)
+    								let data = {'pageCurrent':pageCurrent
+    										, 'pageRequested':pageRequested}
+    								
+    								$("#btn-search-products").trigger('click', data);
+    							});
     						}
     					}
     					, error: function(error){

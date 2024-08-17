@@ -232,3 +232,15 @@ footer a:hover {
 	line-height: 95%;
 	color: #FFFFFF;
 }
+
+.group-btns-paging{
+	margin: 15px auto;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+.arrow-paging{
+	background-color: transparent;
+	border: none;
+}

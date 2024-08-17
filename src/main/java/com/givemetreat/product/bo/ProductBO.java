@@ -74,13 +74,13 @@ public class ProductBO {
 			&& ObjectUtils.isEmpty(pageCurrent) == false
 			&& ObjectUtils.isEmpty(pageRequested) == false){
 			direction = (pageRequested - pageCurrent) <= 0 ? "prev" : "next";
-				if(direction.equals("prev")) {
-					index = (pageRequested - 1) * LIMIT_SELECTION;
-					index = index > 0 ? index : 0;
-				} else if(direction.equals("next")) {
-					index = pageRequested * LIMIT_SELECTION - 1;
-					index = index <= listVOs.size() - 1 ? index : listVOs.size() - 1; 
-				}
+			if(direction.equals("prev")) {
+				index = (pageRequested - 1) * LIMIT_SELECTION;
+				index = index > 0 ? index : 0;
+			} else if(direction.equals("next")) {
+				index = pageRequested * LIMIT_SELECTION - 1;
+				index = index <= listVOs.size() - 1 ? index : listVOs.size() - 1; 
+			}
 			idRequested = listVOs.get(index).getId();
 		}
 		
