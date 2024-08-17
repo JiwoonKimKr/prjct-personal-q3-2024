@@ -30,6 +30,8 @@ public class ProductController {
 								, @RequestParam(required = false) String agePetProper
 								, @RequestParam(required = false) String direction
 								, @RequestParam(required = false) Integer idRequested
+								, @RequestParam(required = false) Integer pageCurrent
+								, @RequestParam(required = false) Integer pageRequested
 								, Model model) {
 		
 		Page<ProductVO> pageInfo = productBO.getProductsForPaging(id
@@ -38,7 +40,9 @@ public class ProductController {
 																, price
 																, agePetProper
 																, direction
-																, idRequested);
+																, idRequested
+																, pageCurrent
+																, pageRequested);
 		List<ProductVO> listProducts = pageInfo.generateCurrentPageList();
 		
 		model.addAttribute("listProducts", listProducts);

@@ -159,23 +159,23 @@
 						location.href= "/product/product-list-view";
 						return;
 					}
-					let indexMax = listProducts[0].id;
-					let indexMin = listProducts[0].id;
+					let idMax = listProducts[0].id;
+					let idMin = listProducts[0].id;
 					
 					for(let i=1; i< listProducts.length; i ++){
 						let idCurrent = listProducts[i].id;
 						console.log(idCurrent);
-						if(listProducts[i].id < indexMin){
-							indexMin = idCurrent
+						if(listProducts[i].id < idMin){
+							idMin = idCurrent
 						}
-						if(listProducts[i].id > indexMax){
-							indexMax = idCurrent
+						if(listProducts[i].id > idMax){
+							idMax = idCurrent
 						}
 					}
-					console.log(`${indexMax}, ${indexMin}`);
+					console.log(`${idMax}, ${idMin}`);
 					
-					document.getElementById("btn-prev-page").setAttribute('data-id-requested', indexMax);
-					document.getElementById("btn-next-page").setAttribute('data-id-requested', indexMin);
+					document.getElementById("btn-prev-page").setAttribute('data-id-requested', idMax);
+					document.getElementById("btn-next-page").setAttribute('data-id-requested', idMin);
 				}
 				
 				function updatePagingIndices(){
@@ -191,16 +191,21 @@
 					let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
 					let numberPageMax = /*[[${numberPageMax}]]*/null;
 					let limit = /*[[${limit}]]*/null;
+					let idFirst = /*[[${idFirst}]]*/null;
+					let idLast = /*[[${idLast}]]*/null;
 					console.log(`${numberPageCurrent}, ${numberPageMax}, ${limit}`);
 					
 					let anchors = $(".list-indices-page")[0];
 					console.log(anchors);
-					let indexStart = (numberPageCurrent - 2) > 0 ? (numberPageCurrent - 2) : 0;
+					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
 					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
 					
-					for(let i = 0; i < indexLast + 1; i ++){
+					for(let i = indexStart; i < indexLast + 1; i ++){
 						let anchor = document.createElement('a');
-						urlParams.set('page', i);
+						
+						urlParams.set('pageCurrent', numberPageCurrent);
+						urlParams.set('pageRequested', i);
+						
 						anchor.setAttribute('href', url.toString());
 						anchor.classList.add('mx-2');
 						if(i == numberPageCurrent){
