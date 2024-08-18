@@ -170,31 +170,11 @@
 				let limit = /*[[${limit}]]*/null;
 				let idFirst = /*[[${idFirst}]]*/null;
 				let idLast = /*[[${idLast}]]*/null;
-    			
-    			function updateFilteringsCurrentPage(){
-    				/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
-        			let link = window.location.href;
-    				let url = new URL(link.toString());
-    				let urlParams = url.searchParams;
-    				
-    				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
-    				let keys = urlParams.keys();
-    				for(let key of keys){
-    					if(key == 'direction' || key == 'index') {
-    						continue;
-    					}
-    					let value = urlParams.get(key);
-    					console.log(`key: ${key}, value: ${value}`);
-    					let selectCur = $('#field-' + key);
-    					let optionSelected = $('option.' + value)[0];
-    					selectCur.find(optionSelected).prop('selected', true);
-    				}
-    			}//updateFilteringsCurrentPage()
 				
-				function indexingPagingButtons(){
+				function indexingPagingButtons(data){
 					/* 페이지 버튼; btn-prev-page btn-next-page data로 최소 최대 id값 넣기*/
-					let listProducts = /*[[${listProducts}]]*/null;
-					//console.log(listProducts);
+					let listProducts = data;
+					console.log(listProducts);
 					
 					if(!listProducts || listProducts.length < 1){
 						return;
@@ -205,11 +185,11 @@
 					for(let i=1; i< listProducts.length; i ++){
 						let idCurrent = listProducts[i].id;
 						console.log(idCurrent);
+						if(listProducts[i].id >= idMax){
+							idMax = idCurrent
+						}
 						if(listProducts[i].id < idMin){
 							idMin = idCurrent
-						}
-						if(listProducts[i].id > idMax){
-							idMax = idCurrent
 						}
 					}
 					console.log(`${idMax}, ${idMin}`);
@@ -238,7 +218,7 @@
 					}
 				}// updatePagingIndices()
 				
-     			$("#btn-search-products").on('click', function(e, data){
+     			$("#btn-search-products").off('click').on('click', function(e, data){
      				/* 기존 검색값 초기화 */
     				let id = $("#idProduct").val().trim();
     				let name = $("#nameProduct").val().trim();
@@ -262,10 +242,11 @@
 									, "agePetProper":agePetProper
 								}
 					if(data){
-						console.log(data);
+						//console.log(data);
+						params['direction'] = data.direction;
+						params['idRequested'] = data.idRequested;
 						params['pageCurrent'] = data.pageCurrent;
 						params['pageRequested'] = data.pageRequested;
-						console.log(params);
 					}
 					let url = "/admin/product/product-list"
 					$.ajax({
@@ -301,13 +282,11 @@
     								$('#tableBody').append(tableTd);
     							}
     							
-    							
-    			    			updateFilteringsCurrentPage();
-    			    			indexingPagingButtons();
+    			    			indexingPagingButtons(data.listProducts);
     			    			updatePagingIndices();
     			    			
     			    			//ajax의 경우 anchor태그가 삭제되어 새로 생기는 탓에 success 함수 안에 기재해줘야 했다!
-    			    			$("a.anchor-index-page").click(function(e){
+    			    			$("a.anchor-index-page").off('click').on('click', function(e){
     								e.preventDefault();
     								let pageCurrent = $(this).data('page-current');
     								let pageRequested = $(this).data('page-requested');
@@ -318,6 +297,19 @@
     								
     								$("#btn-search-products").trigger('click', data);
     							});
+    			    			
+    			    			$("button.arrow-paging").off('click').on('click', function(e){
+    			    				let direction = $(this)[0].getAttribute('data-direction');
+    			    				let idRequested = $(this)[0].getAttribute('data-id-requested');
+    			    				
+    			    				let data = {'direction':direction
+    										, 'idRequested':idRequested}
+    			    				
+    			    				console.log(`arrow-paging get clicked: ${direction}, ${idRequested}`);
+
+    			    				$("#btn-search-products").trigger('click', data);
+    			    				
+    			    			})// arrow-paing on click
     						}
     					}
     					, error: function(error){
