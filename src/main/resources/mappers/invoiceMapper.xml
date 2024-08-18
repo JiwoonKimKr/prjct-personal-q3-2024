@@ -2,6 +2,109 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <mapper namespace="com.givemetreat.invoice.mapper.InvoiceMapper">
+  	<select id="selectInvoicesForPaging" parameterType="map" resultType="com.givemetreat.invoice.domain.Invoice">
+ 		SELECT
+			 `id`
+			, `userId`
+			, `payment`
+			, `paymentType`
+			, `company`
+			, `monthlyInstallment`
+			, `hasCanceled`
+			, `buyerName`
+			, `buyerPhoneNumber`
+			, `statusDelivery`
+			, `receiverName`
+			, `receiverPhoneNumber`
+			, `address`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`invoice`
+		<where>
+			<if test="id != null">
+				AND
+					`id` = #{id}
+			</if>		
+			<if test="userId != null">
+				AND
+					`userId` = #{userId}
+			</if>		
+			<if test="payment != null">
+				AND
+					`payment` = #{payment}
+			</if>		
+			<if test="paymentType != null">
+				AND
+					`payment` like LOWER(concat('%',#{paymentType},'%'))
+			</if>		
+			<if test="company != null">
+				AND
+					`company` like LOWER(concat('%',#{company},'%'))
+			</if>		
+			<if test="monthlyInstallment != null">
+				AND
+					`monthlyInstallment` like LOWER(concat('%',#{monthlyInstallment},'%'))
+			</if>		
+			<if test="hasCanceled != null">
+				AND
+					`hasCanceled` = #{hasCanceled}
+			</if>		
+			<if test="buyerName != null">
+				AND
+					`buyerName` like LOWER(concat('%',#{buyerName},'%'))
+			</if>		
+			<if test="buyerPhoneNumber != null">
+				AND
+					`buyerPhoneNumber` like concat('%',#{buyerPhoneNumber},'%')
+			</if>		
+			<if test="statusDelivery != null">
+				AND
+					`statusDelivery` = #{statusDelivery}
+			</if>		
+			<if test="receiverName != null">
+				AND
+					`receiverName` like LOWER(concat('%',#{receiverName},'%'))
+			</if>		
+			<if test="receiverPhoneNumber != null">
+				AND
+					`receiverPhoneNumber` like concat('%',#{receiverPhoneNumber},'%')
+			</if>		
+			<if test="address != null">
+				AND
+					`address` like LOWER(concat('%',#{address},'%'))
+			</if>
+			<if test="createdAt != null">
+				AND
+					`createdAt` = #{createdAt}
+			</if>		
+			<if test="updatedAt != null">
+				AND
+					`updatedAt` = #{updatedAt}
+			</if>
+			<if test="direction != null and index != null">
+				<if test="direction == 'next'">
+					<![CDATA[
+						AND
+							`id` < #{index}
+					]]>
+					ORDER BY `id` DESC
+				</if>
+				<if test="direction == 'pref'">
+					<![CDATA[
+						AND
+							`id` > #{index}
+					]]>
+				</if>
+			</if>	
+		</where>
+		<if test="direction == null">
+			ORDER BY `id` DESC
+		</if>
+		<if test="limit != null">
+			LIMIT #{limit};
+		</if>
+ 	</select>
  	<select id="selectInvoices" parameterType="map" resultType="com.givemetreat.invoice.domain.Invoice">
  		SELECT
 			 `id`

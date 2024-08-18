@@ -174,7 +174,7 @@
 				function indexingPagingButtons(data){
 					/* 페이지 버튼; btn-prev-page btn-next-page data로 최소 최대 id값 넣기*/
 					let listProducts = data;
-					console.log(listProducts);
+					//console.log(listProducts);
 					
 					if(!listProducts || listProducts.length < 1){
 						return;
@@ -184,7 +184,7 @@
 					
 					for(let i=1; i< listProducts.length; i ++){
 						let idCurrent = listProducts[i].id;
-						console.log(idCurrent);
+						//console.log(idCurrent);
 						if(listProducts[i].id >= idMax){
 							idMax = idCurrent
 						}
@@ -192,7 +192,7 @@
 							idMin = idCurrent
 						}
 					}
-					console.log(`${idMax}, ${idMin}`);
+					//console.log(`${idMax}, ${idMin}`);
 					
 					document.getElementById("btn-prev-page").setAttribute('data-id-requested', idMax);
 					document.getElementById("btn-next-page").setAttribute('data-id-requested', idMin);

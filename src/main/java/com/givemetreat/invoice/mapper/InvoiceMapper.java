@@ -47,4 +47,24 @@ public interface InvoiceMapper {
 											, @Param("updatedAtSince") LocalDateTime updatedAtSince
 											, @Param("updatedAtUntil") LocalDateTime updatedAtUntil);
 
+	List<Invoice> selectInvoicesForPaging(
+							@Param("id") Integer invoiceId
+							, @Param("userId") Integer userId
+							, @Param("payment") Integer payment
+							, @Param("paymentType") String paymentType
+							, @Param("company") String company
+							, @Param("monthlyInstallment") String monthlyInstallment
+							, @Param("hasCanceled") Integer hasCanceled
+							, @Param("buyerName") String buyerName
+							, @Param("buyerPhoneNumber") String buyerPhoneNumber
+							, @Param("statusDelivery") String statusDelivery
+							, @Param("receiverName") String receiverName
+							, @Param("receiverPhoneNumber") String receiverPhoneNumber
+							, @Param("address") String address
+							, @Param("createdAt") LocalDateTime createdAt
+							, @Param("updatedAt") LocalDateTime updatedAt
+							, @Param("direction") String direction
+							, @Param("idRequested") Integer idRequested
+							, @Param("limit") Integer limit);
+
 }

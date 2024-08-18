@@ -14,31 +14,12 @@ listInvoices
  -->	
 			<article class="group-article ">
 	 			<!-- Dropdown: Choosing Field for Searching -->
-	 			<div class="bg-info rounded d-flex justify-content-between py-3 px-3">
-					<span class="h3 text-white col-3">
+	 			<div class="bg-info rounded d-flex justify-content-between px-3">
+					<span class="h4 text-white col-3">
 						검색 항목
 					</span>
-					<div class="input-group p-0 col-5">
-						<select id="dropDown-for-choosing-field" class="custom-select h-100" aria-label="Example select with button addon">
-						    <option selected>--------</option>
-						    <option value="field-userId">결제자 PK</option>
-						    <option value="field-payment">결제금액</option>
-						    <option value="field-paymentType">결제타입</option>
-						    <option value="field-company">결제 회사</option>
-						    <option value="field-monthlyInstallment">할부 내역</option>
-						    <option value="field-hasCanceled">주문 취소 여부</option>
-						    <option value="field-buyerName">구매자 이름</option>
-						    <option value="field-buyerPhoneNumber">구매자 연락처</option>
-						    <option value="field-statusDelivery">배송 현황</option>
-						    <option value="field-receiverName">수령자 이름</option>
-						    <option value="field-receiverPhoneNumber">수령자 연락처</option>
-						    <option value="field-address">배송 주소</option>
-						    <option value="field-createdAt">기입 시간</option>
-						    <option value="field-updatedAt">수정 시간</option>
-						</select>
-					</div>
 					<div class="d-flex justify-content-end col-4">
-						<button class="btn-search btn-danger btn-cancel-register w-100 mr-2">
+						<button id="btn-search-invoices" class="btn-search btn-danger btn-cancel-register w-100 mr-2">
 							SEARCH
 						</button>
 					</div>	
@@ -46,22 +27,22 @@ listInvoices
 				<!-- 숨겨진 검색 항목별 카테고리들 -->
 				<div class="groups-category-for-search" >
 					<!-- Dropdown: userId -->
-					<div id="field-userId" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-userId" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							결제자PK
 						</span>
 						<input id="userId" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: payment -->
-					<div id="field-payment" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-payment" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							결제금액
 						</span>
 						<input id="payment" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: paymentType -->
-					<div id="field-paymentType" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-paymentType" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							결제 타입
 						</span>
 						<div class="input-group p-0 col-8">
@@ -73,22 +54,22 @@ listInvoices
 						</div>
 					</div>
 					<!-- Dropdown: company -->
-					<div id="field-company" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-company" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							결제 회사
 						</span>
 						<input id="company" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: monthlyInstallment -->
-					<div id="field-monthlyInstallment" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-monthlyInstallment" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							할부 내역
 						</span>
 						<input id="monthlyInstallment" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: hasCanceled -->
-					<div id="field-hasCanceled" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-hasCanceled" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							주문 취소 여부
 						</span>
 						<div class="input-group p-0 col-8">
@@ -100,22 +81,22 @@ listInvoices
 						</div>
 					</div>
 					<!-- Dropdown: buyerName -->
-					<div id="field-buyerName" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-buyerName" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							구매자 이름
 						</span>
 						<input id="buyerName" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: buyerPhoneNumber -->
-					<div id="field-buyerPhoneNumber" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-buyerPhoneNumber" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							구매자 연락처
 						</span>
 						<input id="buyerPhoneNumber" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: statusDelivery -->
-					<div id="field-statusDelivery" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-statusDelivery" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							배송 현황
 						</span>
 						<div class="input-group p-0 col-8">
@@ -130,36 +111,36 @@ listInvoices
 						</div>
 					</div>
 					<!-- Dropdown: receiverName -->
-					<div id="field-receiverName" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-receiverName" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							수령자 이름
 						</span>
 						<input id="receiverName" type="text" class="input-to-choose form-control col-8">
 					</div>	
 					<!-- Dropdown: receiverPhoneNumber -->
-					<div id="field-receiverPhoneNumber" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-receiverPhoneNumber" class="d-none bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							수령자 연락처
 						</span>
 						<input id="receiverPhoneNumber" type="text" class="input-to-choose form-control col-8">
 					</div>	
 					<!-- Dropdown: address -->
-					<div id="field-address" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-address" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							배송 주소
 						</span>
 						<input id="address" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: createdAt ★★★★★ jQuery 달력 라이브러리 활용해서 특정 기간 선택하도록 바꿔야-->
-					<div id="field-createdAt" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-createdAt" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							기입 시간
 						</span>
 						<input id="createdAt" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: updatedAt ★★★★★ jQuery 달력 라이브러리 활용해서 특정 기간 선택하도록 바꿔야 -->	
-					<div id="field-updatedAt" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
-						<span class="h3 text-white col-4">
+					<div id="field-updatedAt" class="bg-secondary rounded justify-content-between px-3">
+						<span class="h4 text-white col-4">
 							수정 시간
 						</span>
 						<input id="updatedAt" type="text" class="input-to-choose form-control col-8">
@@ -168,6 +149,53 @@ listInvoices
 				<!-- 상품 조회 선택항목 끝 -->			
 				<!-- 상품 조회 상세 내역 출력_시작 -->
 				<div class="mt-5">
+					<div class="group-btns-paging">
+<!-- 전 페이지 화살표; btn-pref-page-->			
+						<button data-direction="prev" id="btn-prev-page" class="arrow-paging">
+							<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g filter="url(#filter0_d_373_4)">
+									<path d="M0 26L45 51.9808V0.0192375L0 26Z" fill="#FF6868"/>
+								</g>
+								<defs>
+									<filter id="filter0_d_373_4" x="0" y="0.0192871" width="49" height="55.9614" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+										<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+										<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+										<feOffset dx="4" dy="4"/>
+										<feComposite in2="hardAlpha" operator="out"/>
+										<feColorMatrix type="matrix" values="0 0 0 0 0.45098 0 0 0 0 0.317647 0 0 0 0 0.929412 0 0 0 1 0"/>
+										<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_373_4"/>
+										<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_373_4" result="shape"/>
+									</filter>
+								</defs>
+							</svg>
+						</button>
+						<div class="list-indices-page d-flex justify-content-center align-items-center">
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+							<a class="anchor-index-page"></a>
+						</div>
+<!-- 다음 페이지 화살표; btn-next-page -->					
+						<button data-direction="next" id="btn-next-page" class="arrow-paging">
+							<svg width="49" height="56" viewBox="0 0 49 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g filter="url(#filter0_d_373_2)">
+									<path d="M45 26L0 51.9808V0.0192375L45 26Z" fill="#FF6868"/>
+								</g>
+								<defs>
+								<filter id="filter0_d_373_2" x="0" y="0.0192871" width="49" height="55.9614" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+									<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+									<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+									<feOffset dx="4" dy="4"/>
+									<feComposite in2="hardAlpha" operator="out"/>
+									<feColorMatrix type="matrix" values="0 0 0 0 0.45098 0 0 0 0 0.317647 0 0 0 0 0.929412 0 0 0 1 0"/>
+									<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_373_2"/>
+									<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_373_2" result="shape"/>
+								</filter>
+								</defs>
+							</svg>
+						</button>
+					</div>				
 					<table class="table-striped table-hover text-center w-100">
 						<thead>
 							<tr>
@@ -218,61 +246,176 @@ listInvoices
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
+				let numberPageMax = /*[[${numberPageMax}]]*/null;
+				let limit = /*[[${limit}]]*/null;
+				let idFirst = /*[[${idFirst}]]*/null;
+				let idLast = /*[[${idLast}]]*/null;
+				let error_message = /*[[${error_message}]]*/null;
+				
+				if(error_message){
+					alert(error_message);
+					location.href="http://localhost/admin/invoice/invoices-entire-view";
+					return;
+				}
     			
-    			// RequestParam 어떤 필드 선택되었는지 동적으로 구성하도록 바꿔야!
-    			$("#dropDown-for-choosing-field").on('change', function(){
-    				/* 검색항목 초기화*/
-	    				/* 기존 입력값 초기화 */
-    				$(".input-to-choose").val('');  				
-    				
-						/* 보여지던 필드 태그 초기화 */
-    				$(".bg-secondary").removeClass("d-flex");
-    				$(".bg-secondary").addClass("d-none");
-    				$("#tableBody").empty();
-    				
-    				let fieldChose = $("#dropDown-for-choosing-field").val();
-    				console.log(fieldChose);
-   				/* jQuery 변수로 ID 얻는 방법; 처음 발견한 방법! */
-    				let dropdownChose = $('#' + fieldChose);
-    				dropdownChose.removeClass("d-none");
-    				dropdownChose.addClass("d-flex");
-    			})// #dropDown-for-choosing-field on change
+				updateFilteringsCurrentPage();
+    			indexingPagingButtons();
+    			updatePagingIndices();
     			
-				$(".input-to-choose").on('change keyup', function(e){
-
-					let valueCurrent = $(this).val().trim();
-					let fieldCurrent = $(this).attr('id');
-					console.log(valueCurrent, fieldCurrent);
-
-					$(".btn-search").data('value-current', valueCurrent);
-					$(".btn-search").data('field-current', fieldCurrent);
-
-				})//input-to-choose on change
-
-     			$(".btn-search").on('click', function(){
-     				/* 기존 검색값 초기화 */
-     				$("#tableBody").empty();
-     				
-    				let value = $(this).data('value-current');
-    				let field = $(this).data('field-current');
+    			function updateFilteringsCurrentPage(){
+    				/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
+        			let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
     				
-					if(value == '--------'){
-						value = '';
-					}
-					if(field == '--------'){
-						field = '';
-					}
-    				
-					// 값 하나만 선택해서 넘겨야 
-					// 하지만 아무 값도 안 넘어가면 아예 서버에 요청 안 하도록
-					if(!value || !field){
-						alert("검색항목 값을 입력하여 주세요");
-						location.reload();
+    				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
+    				let keys = urlParams.keys();
+    				for(let key of keys){
+    					if(key == 'direction' || key == 'index') {
+    						continue;
+    					}
+    					let value = urlParams.get(key);
+    					console.log(`key: ${key}, value: ${value}`);
+    					let selectCur = $('#field-' + key);
+    					let optionSelected = $('option.' + value)[0];
+    					selectCur.find(optionSelected).prop('selected', true);
+    				}
+    			}
+    			
+    			function indexingPagingButtons(){
+					/* 페이지 버튼; btn-prev-page btn-next-page data로 최소 최대 id값 넣기*/
+					
+					let listInvoices = /*[[${listInvoices}]]*/null;
+					//console.log(listInvoices);
+					
+					if(!listInvoices || listInvoices.length < 1){
 						return;
 					}
+					let idMax = listInvoices[0].id;
+					let idMin = listInvoices[0].id;
 					
-					location.href= "/admin/invoice/invoices-entire-view?" + field + "=" + value;
-    			}) // btn-search on click
+					for(let i=1; i< listInvoices.length; i ++){
+						let idCurrent = listInvoices[i].id;
+						//console.log(idCurrent);
+						if(listInvoices[i].id >= idMax){
+							idMax = idCurrent
+						}
+						if(listInvoices[i].id < idMin){
+							idMin = idCurrent
+						}
+					}
+					//console.log(`${idMax}, ${idMin}`);
+					
+					document.getElementById("btn-prev-page").setAttribute('data-id-requested', idMax);
+					document.getElementById("btn-next-page").setAttribute('data-id-requested', idMin);
+				}// indexingPagingButtons()
+    			
+				function updatePagingIndices(){
+					let anchors = $(".list-indices-page")[0];
+					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
+					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
+					for(let i = indexStart; i < indexLast + 1; i ++){
+						let anchor = document.createElement('a');
+						
+						anchor.setAttribute('href', '#');
+						anchor.setAttribute('data-page-current', numberPageCurrent);
+						anchor.setAttribute('data-page-requested', i);
+						anchor.classList.add('mx-2');
+						anchor.classList.add('anchor-index-page');
+						if(i == numberPageCurrent){
+							anchor.classList.add('font-weight-bold');
+						}
+						anchor.append(i + 1);
+						anchors.append(anchor);
+					}
+				}// updatePagingIndices()
+
+     			$("#btn-search-invoices").on('click', function(){
+					let userId = $("#userId").val().trim();
+					//★★★★★ 결제 금액 관련 범위 넣어야
+					let payment = $("#payment").val().trim();
+					let paymentType = $("#paymentType").children("option:selected").val();
+					if(paymentType == '--------'){
+						paymentType = '';
+					}
+					let company = $("#company").val().trim();
+					let monthlyInstallment = $("#monthlyInstallment").val().trim();
+					let hasCanceled = $("#hasCanceled").children("option:selected").val();
+					if(hasCanceled == '--------'){
+						hasCanceled = '';
+					}
+					let buyerName = $("#buyerName").val().trim();
+					let buyerPhoneNumber = $("#buyerPhoneNumber").val().trim();
+					let statusDelivery = $("#statusDelivery").children("option:selected").val();
+					if(statusDelivery == '--------'){
+						statusDelivery = '';
+					}
+					let receiverName = $("#receiverName").val().trim();
+					let receiverPhoneNumber = $("#receiverName").val().trim();
+					let address = $("#receiverName").val().trim();
+					let createdAt = $("#receiverName").val().trim();
+					let updatedAt = $("#receiverName").val().trim();
+					
+					//★★★★★ client 쪽 JavaScript로 작성한 validation 넣어야	
+					
+					let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				console.log(`userId: ${userId}
+			    				, payment: ${payment}
+			    				 ,paymentType: ${paymentType}
+			    				, company: ${company}
+			    				, monthlyInstallment: ${monthlyInstallment}
+			    				, hasCanceled: ${hasCanceled}
+			    				, buyerName: ${buyerName}
+			    				, buyerPhoneNumber: ${buyerPhoneNumber}
+			    				, statusDelivery: ${statusDelivery}
+			    				, receiverName: ${receiverName}
+			    				, receiverPhoneNumber: ${receiverPhoneNumber}
+			    				, address: ${address}
+			    				, createdAt: ${createdAt}
+			    				, updatedAt: ${updatedAt}`);
+    				
+    				if(userId) urlParams.set('userId', userId);
+    				if(payment) urlParams.set('payment', payment);
+    				if(paymentType) urlParams.set('paymentType', paymentType);
+    				if(company) urlParams.set('company', company);
+    				if(monthlyInstallment ) urlParams.set('monthlyInstallment', monthlyInstallment);
+    				if(hasCanceled) urlParams.set('hasCanceled', hasCanceled);
+    				if(buyerName) urlParams.set('buyerName', buyerName);
+    				if(buyerPhoneNumber) urlParams.set('buyerPhoneNumber', buyerPhoneNumber);
+    				if(statusDelivery) urlParams.set('statusDelivery', statusDelivery);
+    				if(receiverName) urlParams.set('receiverName', receiverName);
+    				if(receiverPhoneNumber) urlParams.set('receiverPhoneNumber', receiverPhoneNumber);
+    				if(address) urlParams.set('address', address);
+    				if(createdAt) urlParams.set('createdAt', createdAt);
+    				if(updatedAt) urlParams.set('updatedAt', updatedAt);
+				
+					console.log(url.toString());
+					location.href= url;
+    			}) // #btn-search-invoices on click
+    			
+    			
+    			
+    			$(".arrow-paging").on('click', function(e){
+    				let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				let direction = $(this)[0].getAttribute('data-direction');
+    				let idRequested = $(this)[0].getAttribute('data-id-requested');
+    				
+  					urlParams.set('direction', direction);
+  					urlParams.set('idRequested', idRequested);
+    				
+    				console.log(`${direction}, ${idRequested}`);
+    				console.log(url);
+
+    				location.href = url;
+    				
+    			})// arrow-paing on click
     			
      			$(".btn-invoice-detail").on('click', function(){
      				let invoiceId = $(this).data('id');

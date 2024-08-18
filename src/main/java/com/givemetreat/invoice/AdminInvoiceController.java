@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.givemetreat.common.generic.Page;
 import com.givemetreat.invoice.bo.AdminInvoiceBO;
 import com.givemetreat.invoice.domain.AdminInvoiceVO;
 import com.givemetreat.productInvoice.domain.AdminProductInvoiceVO;
@@ -52,13 +54,13 @@ public class AdminInvoiceController {
 	
 	//전체 주문내역 조회 페이지; JPA가 아닌 MyBatis 방식 차용
 	@GetMapping("/invoices-entire-view")
-	public String invoiceEntireView(@RequestParam(required = false) Integer invoiceId //아예 입력이 안 되는 null도 고려해서, Integer
-										, @RequestParam(required = false) Integer userId //아예 입력이 안 되는 null도 고려해서 Integer
-										, @RequestParam(required = false) Integer payment //아예 입력이 안 되는 null도 고려해서 Integer
+	public String invoiceEntireView(@RequestParam(required = false) Integer invoiceId
+										, @RequestParam(required = false) Integer userId 
+										, @RequestParam(required = false) Integer payment
 										, @RequestParam(required = false) String paymentType
 										, @RequestParam(required = false) String company
 										, @RequestParam(required = false) String monthlyInstallment
-										, @RequestParam(required = false) Integer hasCanceled //아예 입력이 안 되는 null도 고려해서 Integer
+										, @RequestParam(required = false) Integer hasCanceled
 										, @RequestParam(required = false) String buyerName
 										, @RequestParam(required = false) String buyerPhoneNumber
 										, @RequestParam(required = false) String statusDelivery
@@ -67,10 +69,14 @@ public class AdminInvoiceController {
 										, @RequestParam(required = false) String address
 										, @RequestParam(required = false) LocalDateTime createdAt
 										, @RequestParam(required = false) LocalDateTime updatedAt
+										, @RequestParam(required = false) String direction
+										, @RequestParam(required = false) Integer idRequested
+										, @RequestParam(required = false) Integer pageCurrent
+										, @RequestParam(required = false) Integer pageRequested
 										, Model model) {
 		log.info("[AdminInvoiceController: invoiceEntireListView() Requested]");
 		
-		List<AdminInvoiceVO> listInvoicesEntire = adminInvoiceBO.getInvoices(invoiceId
+		Page<AdminInvoiceVO> pageInfo = adminInvoiceBO.getInvoicesForPaging(invoiceId
 																			, userId
 																			, payment
 																			, paymentType
@@ -84,9 +90,25 @@ public class AdminInvoiceController {
 																			, receiverPhoneNumber
 																			, address
 																			, createdAt
-																			, updatedAt);
+																			, updatedAt
+																			, direction
+																			, idRequested
+																			, pageCurrent
+																			, pageRequested);
 		
+		if(ObjectUtils.isEmpty(pageInfo)) {
+			log.info("[AdminInvoiceController invoiceEntireView()] current data get null result.");
+			model.addAttribute("error_message", "해당 결과를 찾지 못 하였습니다.");	
+			return "admin/invoice/invoiceEntire";
+		}
+		
+		List<AdminInvoiceVO> listInvoicesEntire = pageInfo.generateCurrentPageList();
 		model.addAttribute("listInvoices", listInvoicesEntire);
+		model.addAttribute("numberPageCurrent", pageInfo.getNumberPageCurrent());
+		model.addAttribute("numberPageMax", pageInfo.getNumberPageMax());
+		model.addAttribute("limit", pageInfo.getLimit());
+		model.addAttribute("idFirst", pageInfo.getIdFirst());
+		model.addAttribute("idLast", pageInfo.getIdLast());			
 		return "admin/invoice/invoiceEntire";
 	}
 	

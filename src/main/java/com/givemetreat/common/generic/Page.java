@@ -11,6 +11,16 @@ import lombok.NoArgsConstructor;
 @Data
 public class Page <T> {
 	
+	/**
+	 * 
+	 * @param listVOs
+	 * @param idFirst
+	 * @param idLast
+	 * @param direction
+	 * @param index
+	 * @param idRequested
+	 * @param limit
+	 */
 	public Page(List<T> listVOs
 			, Integer idFirst
 			, Integer idLast
