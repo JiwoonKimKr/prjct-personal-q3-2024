@@ -100,14 +100,14 @@ listInvoices
 							배송 현황
 						</span>
 						<div class="input-group p-0 col-8">
-							<select id="statusDelivery" class="input-to-choose custom-select input-select-inside w-100 h-100" aria-label="Example select with button addon">
+							<select id="statusDelivery" class="input-to-choose custom-select input-select-inside w-100" aria-label="Example select with button addon">
 							    <option selected>--------</option>
 							    <option value="PaymentBilled">결제 완료</option>
 							    <option value="PackingFinished">배송준비 완료</option>
 							    <option value="TerminalHub">터미널 이동</option>
 							    <option value="EndPoint">배송 상차</option>
 							    <option value="DeliveryCurrent">배송중</option>
-							</select>`
+							</select>
 						</div>
 					</div>
 					<!-- Dropdown: receiverName -->
@@ -270,7 +270,11 @@ listInvoices
     				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
     				let keys = urlParams.keys();
     				for(let key of keys){
-    					if(key == 'direction' || key == 'index') {
+    					if(key != 'paymentType'
+    						|| key != 'hasCanceled'
+    						|| key != 'statusDelivery') {
+    						let value = urlParams.get(key);
+    						$('#'+key).val(value);
     						continue;
     					}
     					let value = urlParams.get(key);
@@ -351,17 +355,17 @@ listInvoices
 						statusDelivery = '';
 					}
 					let receiverName = $("#receiverName").val().trim();
-					let receiverPhoneNumber = $("#receiverName").val().trim();
-					let address = $("#receiverName").val().trim();
-					let createdAt = $("#receiverName").val().trim();
-					let updatedAt = $("#receiverName").val().trim();
+					let receiverPhoneNumber = $("#receiverPhoneNumber").val().trim();
+					let address = $("#address").val().trim();
+					let createdAt = $("#createdAt").val().trim();
+					let updatedAt = $("#updatedAt").val().trim();
 					
 					//★★★★★ client 쪽 JavaScript로 작성한 validation 넣어야	
 					
 					let link = "http://localhost/admin/invoice/invoices-entire-view";
     				let url = new URL(link.toString());
     				let urlParams = url.searchParams;
-    				/*
+    				
     				console.log(`userId: ${userId}
 			    				, payment: ${payment}
 			    				 ,paymentType: ${paymentType}
@@ -376,7 +380,7 @@ listInvoices
 			    				, address: ${address}
 			    				, createdAt: ${createdAt}
 			    				, updatedAt: ${updatedAt}`);
-    				*/
+    				
     				if(userId) urlParams.set('userId', userId);
     				if(payment) urlParams.set('payment', payment);
     				if(paymentType) urlParams.set('paymentType', paymentType);

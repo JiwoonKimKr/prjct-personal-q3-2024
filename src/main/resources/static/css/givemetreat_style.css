@@ -1980,6 +1980,8 @@ input::-webkit-inner-spin-button {
 }
 
 .btn-info-detail-delivery{
+	margin-bottom: 10px;
+	
 	padding-left: 25px;
 	width: 1020px;
 	height: 60px;

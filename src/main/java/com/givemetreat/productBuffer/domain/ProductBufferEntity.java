@@ -30,12 +30,12 @@ public class ProductBufferEntity {
 	private int id;
 	
 	@Column(name = "productId")
-	private int productId;
+	private Integer productId;
 	
 	private boolean reserved;
 	
-	@Column(name = "productInvoiceId")
-	private int productInvoiceId;
+	@Column(name = "productInvoiceId", nullable = true)
+	private Integer productInvoiceId;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt")

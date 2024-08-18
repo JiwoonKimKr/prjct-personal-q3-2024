@@ -59,73 +59,41 @@ public class AdminUserBO {
 		if(loginId != null) {
 			//loginId라는 키워드로 넘어와서 여러 값의 user가 리스트로 넘어올 수 있다!
 			List<UserEntity> listUsers = userRepository.findByLoginIdStartingWithOrderByIdDesc(loginId);
-			for(UserEntity user: listUsers) {
-				List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-				AdminUserVO vo = new AdminUserVO(user, listPets);
-				listVOs.add(vo);
-			}
-			return listVOs;
+			return generateListVOsFromListEntities(listUsers);
 		}
 		
 		// nickname		
 		if(nickname != null) {
 			List<UserEntity> listUsers = userRepository.findByNicknameStartingWithOrderByIdDesc(nickname);
-			
-			for(UserEntity user: listUsers) {
-				List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-				AdminUserVO vo = new AdminUserVO(user, listPets);
-				listVOs.add(vo);
-			}
-			return listVOs;
+			return generateListVOsFromListEntities(listUsers);
 		}
 		
 		// selfDesc		
 		if(selfDesc != null) {
 			List<UserEntity> listUsers = userRepository.findBySelfDescContainingOrderByIdDesc(nickname);
-			
-			for(UserEntity user: listUsers) {
-				List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-				AdminUserVO vo = new AdminUserVO(user, listPets);
-				listVOs.add(vo);
-			}
-			return listVOs;
+			return generateListVOsFromListEntities(listUsers);
 		}
 		
 		//createdAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!
 		if(createdAt != null) {
 			List<UserEntity> listUsers = userRepository.findByCreatedAtOrderByIdDesc(createdAt);
-			
-			for(UserEntity user: listUsers) {
-				List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-				AdminUserVO vo = new AdminUserVO(user, listPets);
-				listVOs.add(vo);
-			}
-			return listVOs;
+			return generateListVOsFromListEntities(listUsers);
 		}
 		
 		//updatedAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!		
 		if(updatedAt != null) {
 			List<UserEntity> listUsers = userRepository.findByUpdatedAtOrderByIdDesc(updatedAt);
-			
-			for(UserEntity user: listUsers) {
-				List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-				AdminUserVO vo = new AdminUserVO(user, listPets);
-				listVOs.add(vo);
-			}
-			return listVOs;
+			return generateListVOsFromListEntities(listUsers);
 		}		
 		
 		//아무런 값도 넘어오지 않은 경우(쌩으로 다른 RequestParam 없이 진입하는 경우)
 		List<UserEntity> listUsers = userRepository.findAllTop10ByOrderByIdDesc();
+		generateListVOsFromListEntities(listUsers);
 		
-		for(UserEntity user: listUsers) {
-			List<Pet> listPets = petBO.getPetsByUserId(user.getId());
-			AdminUserVO vo = new AdminUserVO(user, listPets);
-			listVOs.add(vo);
-		}
-		
-		return listVOs;
+		return generateListVOsFromListEntities(listUsers);
 	}
+	
+
 
 	@Transactional
 	public AdminPetVO getPetByUserIdAndPetId(int userId, int petId) {
@@ -142,4 +110,18 @@ public class AdminUserBO {
 		return petBO.deletePetByUserIdAndPetId(userId, petId);
 	}
 
+	/**
+	 * 중복되는 코드 줄이기 위한 용도
+	 * @param listEntities
+	 * @return
+	 */
+	private List<AdminUserVO> generateListVOsFromListEntities(List<UserEntity> listEntities){
+		List<AdminUserVO> listVOs = new ArrayList<>();
+		for(UserEntity user: listEntities) {
+			List<Pet> listPets = petBO.getPetsByUserId(user.getId());
+			AdminUserVO vo = new AdminUserVO(user, listPets);
+			listVOs.add(vo);
+		}
+		return listVOs;
+	}
 }

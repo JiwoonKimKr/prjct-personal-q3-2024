@@ -47,12 +47,12 @@ public class InvoiceParamsValidation {
 		//monthlyInstallment
 		if(monthlyInstallment.equals("instance") == false) {
 			if(monthlyInstallment.endsWith("M") == false) {
-				log.warn("[InvoiceParamsValidation] monthlyInstallment isn't correct. monthlyInstallment:{}", monthlyInstallment);
+				log.warn("[InvoiceParamsValidation] char 'M', end of monthlyInstallment isn't correct. monthlyInstallment:{}", monthlyInstallment);
 				return false;
 			}
-			String substractedM = monthlyInstallment.substring(monthlyInstallment.length()-1);
+			String substractedM = monthlyInstallment.substring(0, monthlyInstallment.length()-1);
 			if(WordingValidation.isNumeric(substractedM) == false) {
-				log.warn("[InvoiceParamsValidation] monthlyInstallment isn't correct. monthlyInstallment:{}", monthlyInstallment);
+				log.warn("[InvoiceParamsValidation] numeric value of monthlyInstallment isn't correct. monthlyInstallment:{}", monthlyInstallment);
 				return false;
 			}
 		}
