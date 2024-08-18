@@ -36,7 +36,7 @@
 			</if>		
 			<if test="paymentType != null">
 				AND
-					`payment` like LOWER(concat('%',#{paymentType},'%'))
+					`paymentType` like LOWER(concat('%',#{paymentType},'%'))
 			</if>		
 			<if test="company != null">
 				AND
@@ -139,7 +139,7 @@
 			</if>		
 			<if test="paymentType != null">
 				AND
-					`payment` like LOWER(concat('%',#{paymentType},'%'))
+					`paymentType` like LOWER(concat('%',#{paymentType},'%'))
 			</if>		
 			<if test="company != null">
 				AND

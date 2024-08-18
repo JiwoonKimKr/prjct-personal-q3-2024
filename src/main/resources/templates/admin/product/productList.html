@@ -310,6 +310,9 @@
     			    				$("#btn-search-products").trigger('click', data);
     			    				
     			    			})// arrow-paing on click
+    						} else {
+    							alert(data.error_message);
+    							return;
     						}
     					}
     					, error: function(error){

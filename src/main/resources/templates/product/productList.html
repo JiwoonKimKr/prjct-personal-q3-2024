@@ -138,14 +138,17 @@
     				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
     				let keys = urlParams.keys();
     				for(let key of keys){
-    					if(key == 'direction' || key == 'index') {
+    					if(key == 'direction'
+    						|| key == 'idRequested'
+    						|| key == 'pageCurrent'
+    						|| key == 'pageRequested') {
     						continue;
     					}
     					let value = urlParams.get(key);
     					console.log(`key: ${key}, value: ${value}`);
-    					let selectCur = $('#field-' + key);
-    					let optionSelected = $('option.' + value)[0];
-    					selectCur.find(optionSelected).prop('selected', true);
+    					let selectCur = $(`#field-${key}`);
+    					let optionToFind = $(`[data-value=${value}]`);
+    					selectCur.find(optionToFind).prop('selected', true);
     				}
     			}
 				
@@ -196,7 +199,7 @@
 					console.log(`${numberPageCurrent}, ${numberPageMax}, ${limit}`);
 					
 					let anchors = $(".list-indices-page")[0];
-					console.log(anchors);
+					//console.log(anchors);
 					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
 					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
 					
@@ -215,7 +218,7 @@
 						
 						anchors.append(anchor);
 					}
-					console.log(anchors);    				
+					//console.log(anchors);    				
 				}
 				
     			

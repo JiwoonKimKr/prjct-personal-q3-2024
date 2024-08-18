@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -97,6 +98,11 @@ public class AdminProductRestController {
 		
 		List<AdminProductVO> listProducts = pageInfo.generateCurrentPageList();
 		
+		if(ObjectUtils.isEmpty(listProducts)) {
+			result.put("code", 500);
+			result.put("error_message", "해당 결과를 찾지 못하였습니다.");
+			return result;
+		}
 		result.put("code", 200);
 		result.put("result", "success");
 		result.put("listProducts", listProducts);
