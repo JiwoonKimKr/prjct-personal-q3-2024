@@ -30,12 +30,27 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	//Paging) findAll Top 10
 	Page<UserEntity> findAllTop10By(Pageable pageable);
 
-	//Paging) userId findAll
+	//Paging) userId
 	Page<UserEntity> findAllById(Integer userId, Pageable pageable);
 
+	//Paging) loginId
+	Page<UserEntity> findAllByLoginIdStartingWith(String loginId, Pageable pageable);
 	
-	//Paging) updatedAt findAll
+	//Paging) nickname
+	Page<UserEntity> findAllByNicknameStartingWith(String nickname, Pageable pageable);
+	
+	//Paging) selfDesc
+	Page<UserEntity> findAllBySelfDescContaining(String selfDesc, Pageable pageable);
+	
+	//Paging) createdAt
+	Page<UserEntity> findAllByCreatedAt(LocalDateTime createdAt, Pageable pageable);
+	
+	//Paging) updatedAt
 	Page<UserEntity> findAllByUpdatedAt(LocalDateTime updatedAt, Pageable pageable);
+
+
+	
+
 
 
 }

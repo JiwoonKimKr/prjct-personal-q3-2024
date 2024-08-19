@@ -40,7 +40,6 @@ public class AdminUserBO {
 											, Integer page
 											, Integer size
 											) {
-		List<AdminUserVO> listVOs = new ArrayList<>();
 		if(ObjectUtils.isEmpty(page) || ObjectUtils.isEmpty(size)) {
 			page = 0;
 			size = SIZE_PAGE_CURRENT;
@@ -56,46 +55,41 @@ public class AdminUserBO {
 			Page<AdminUserVO> pageVO = userPaged.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(userId)));
 			return pageVO;
 		}
-
-		/*
+		
 		// loginId
 		if(loginId != null) {
 			//loginId라는 키워드로 넘어와서 여러 값의 user가 리스트로 넘어올 수 있다!
-			List<UserEntity> listUsers = userRepository.findByLoginIdStartingWithOrderByIdDesc(loginId);
-			return generatePageVOFromPageEntity(listUsers);
+			Page<UserEntity> pageEntities = userRepository.findAllByLoginIdStartingWith(loginId, pageable);
+			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}
 		
 		// nickname		
 		if(nickname != null) {
-			List<UserEntity> listUsers = userRepository.findByNicknameStartingWithOrderByIdDesc(nickname);
-			return generatePageVOFromPageEntity(listUsers);
+			Page<UserEntity> pageEntities = userRepository.findAllByNicknameStartingWith(nickname, pageable);
+			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}
 		
 		// selfDesc		
 		if(selfDesc != null) {
-			List<UserEntity> listUsers = userRepository.findBySelfDescContainingOrderByIdDesc(nickname);
-			return generateListVOsFromListEntities(listUsers);
+			Page<UserEntity> pageEntities = userRepository.findAllBySelfDescContaining(selfDesc, pageable);
+			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}
 		
 		//createdAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!
 		if(createdAt != null) {
-			List<UserEntity> listUsers = userRepository.findByCreatedAtOrderByIdDesc(createdAt);
-			return generateListVOsFromListEntities(listUsers);
+			Page<UserEntity> pageEntities = userRepository.findAllByCreatedAt(createdAt, pageable);
+			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}
-		*/
 		
 		//updatedAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!		
 		if(updatedAt != null) {
 			Page<UserEntity> pageEntities = userRepository.findAllByUpdatedAt(updatedAt, pageable);
-			Page<AdminUserVO> pageVOs = pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
-			return pageVOs;
+			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}		
 		
 		//아무런 값도 넘어오지 않은 경우(쌩으로 다른 RequestParam 없이 진입하는 경우)
 		Page<UserEntity> pageEntities = userRepository.findAllTop10By(pageable);
-		Page<AdminUserVO> pageVOs = pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
-		
-		return pageVOs;
+		return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 	}	
 	
 	/**
