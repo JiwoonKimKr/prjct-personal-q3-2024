@@ -35,8 +35,10 @@ public class AdminUserBO {
 											, String loginId
 											, String nickname
 											, String selfDesc
-											, LocalDateTime createdAt
-											, LocalDateTime updatedAt
+											, LocalDateTime createdAtSince
+											, LocalDateTime createdAtUntil
+											, LocalDateTime updatedAtSince
+											, LocalDateTime updatedAtUntil
 											, Integer page
 											, Integer size
 											) {
@@ -75,15 +77,13 @@ public class AdminUserBO {
 			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}
 		
-		//createdAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!
-		if(createdAt != null) {
-			Page<UserEntity> pageEntities = userRepository.findAllByCreatedAt(createdAt, pageable);
+		if(createdAtSince != null && createdAtUntil != null) {
+			Page<UserEntity> pageEntities = userRepository.findAllByCreatedAtBetween(createdAtSince, createdAtUntil, pageable);
 			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}
 		
-		//updatedAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!		
-		if(updatedAt != null) {
-			Page<UserEntity> pageEntities = userRepository.findAllByUpdatedAt(updatedAt, pageable);
+		if(updatedAtSince != null && updatedAtUntil != null) {
+			Page<UserEntity> pageEntities = userRepository.findAllByUpdatedAtBetween(updatedAtSince, updatedAtUntil, pageable);
 			return pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
 		}		
 		
@@ -93,6 +93,7 @@ public class AdminUserBO {
 	}	
 	
 	/**
+	 * Pageable 활용해서 되서 결국 쓰는 곳이 없어짐ㅠ_19 08 2024
 	 * 변수가 아예 하나만 있거나 아예 없거나 두 경우만 고려
 	 * @param userid
 	 * @param loginId
@@ -102,6 +103,7 @@ public class AdminUserBO {
 	 * @param updatedAt
 	 * @return List <{@link AdminUserVO}>
 	 */
+	@Deprecated
 	@Transactional
 	public List<AdminUserVO> getListUserVOs(Integer userId
 											, String loginId

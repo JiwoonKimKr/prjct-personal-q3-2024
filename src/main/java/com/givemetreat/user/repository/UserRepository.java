@@ -43,10 +43,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	Page<UserEntity> findAllBySelfDescContaining(String selfDesc, Pageable pageable);
 	
 	//Paging) createdAt
-	Page<UserEntity> findAllByCreatedAt(LocalDateTime createdAt, Pageable pageable);
+	Page<UserEntity> findAllByCreatedAtBetween(LocalDateTime createdAtSince
+												, LocalDateTime createdAtUntil
+												, Pageable pageable);
 	
 	//Paging) updatedAt
-	Page<UserEntity> findAllByUpdatedAt(LocalDateTime updatedAt, Pageable pageable);
+	Page<UserEntity> findAllByUpdatedAtBetween(LocalDateTime updatedAtSince
+												, LocalDateTime updatedAtUntil
+												, Pageable pageable);
 
 
 	

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminDefaultLayout}">
+      layout:decorate="~{layouts/adminDefaultLayout4DatePicker}">
     <head>
     	<title>
     		사용자 상세 정보 조회 페이지
@@ -34,56 +34,51 @@
 				<!-- 숨겨진 검색 항목별 카테고리들 -->
 				<div class="groups-category-for-search" >
 					<!-- Dropdown: userid -->
-					<div id="field-userid" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-userid" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							사용자 PK
 						</span>
 						<input id="userId" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: loginId -->
-					<div id="field-loginId" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-loginId" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							로그인ID
 						</span>
 						<input id="loginId" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: nickname -->
-					<div id="field-nickname" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-nickname" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							닉네임
 						</span>
 						<input id="nickname" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: selfDesc -->
-					<div id="field-selfDesc" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-selfDesc" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							자기조개
 						</span>
 						<input id="selfDesc" type="text" class="input-to-choose form-control col-8">
 					</div>
 					<!-- Dropdown: createdAt ★★★★★ 달력 라이브러리 써서 시간 범위 선택하도록 보완해야 -->
-					<div id="field-createdAt" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-createdAt" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							가입 시간
 						</span>
-						<input id="createdAt" type="text" class="input-to-choose form-control col-8">
+						<input id="createdAtSince" type="text" class="input-time-between form-control col-4" placeholder="created From">
+						<input id="createdAtUntil" type="text" class="input-time-between form-control col-4" placeholder="created Until">
 					</div>	
 					<!-- Dropdown: updatedAt ★★★★★ 달력 라이브러리 써서 시간 범위 선택하도록 보완해야 -->
-					<div id="field-updatedAt" class="d-none bg-secondary rounded justify-content-between py-3 px-3">
+					<div id="field-updatedAt" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							수정 시간
 						</span>
-						<input id="updatedAt" type="text" class="input-to-choose form-control col-8">
+						<input id="updatedAtSince" type="text" class="input-time-between form-control col-4" placeholder="updated From">
+						<input id="updatedAtUntil" type="text" class="input-time-between form-control col-4" placeholder="updated Until">
 					</div>	
 				</div>
 				<!-- __end__ Dropdown: Choosing Field for Searching -->
-				
-				<div>
-				 [[${totalPages}]]
-				 [[${pageCurrent}]]
-				 [[${sizeCurrent}]]
-				</div>
-				
 				<!-- 상품 조회 상세 내역 출력_시작 -->
 				<div class="mt-5">
 					<div class="group-btns-paging">
@@ -179,8 +174,55 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			
+    			let errorMessage = /*[[${error_message}]]*/null;
+    			if(errorMessage){
+    				alert(errorMessage);
+    			}
+    			
     			updatePagingIndices();
 				
+    			/* jQuery UI datepicker__Start__*/
+    			$.datepicker.setDefaults({
+    				dateFormat : "yy-mm-dd"
+    				, monthNames: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ]
+                    , dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ]
+   					, showButtonPanel:true
+    			})// $.datepicker.setDefaults
+    			
+    			$.datepicker._gotoToday = function(id){
+    				$(id).datepicker('setDate', new Date()).datepicker('hide').blur();
+    			}
+
+				$("#createdAtSince").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#createdAtUntil").datepicker('option', 'minDate', dateText);
+					}
+				}) // #field-timeSince datepicker
+				
+				$("#createdAtUntil").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#createdAtSince").datepicker('option', 'maxDate', dateText);
+					}
+				}) //#field-timeUntil datepicker
+				
+				$("#updatedAtSince").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#updatedAtUntil").datepicker('option', 'minDate', dateText);
+					}
+				}) // #field-timeSince datepicker
+				
+				$("#updatedAtUntil").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#updatedAtSince").datepicker('option', 'maxDate', dateText);
+					}
+				}) //#field-timeUntil datepicker
+				/* __end__jQuery UI datepicker*/
+    			
     			/* JPA Pageable 라이브러리에 맞게 변형*/
 				function updatePagingIndices(){
 					let link = window.location.href;
@@ -254,8 +296,13 @@
      				/* 기존 검색값 초기화 */
      				$("#tableBody").empty();
      				
-    				let value = $(this).data('value-current');
     				let field = $(this).data('field-current');
+    				let value = $(this).data('value-current');
+    				
+    				let createdAtSince = $("#createdAtSince").val().trim();
+					let createdAtUntil = $("#createdAtUntil").val().trim();
+					let updatedAtSince = $("#updatedAtSince").val().trim();
+					let updatedAtUntil = $("#updatedAtUntil").val().trim();
     				
 					if(value == '--------'){
 						value = '';
@@ -263,17 +310,27 @@
 					if(field == '--------'){
 						field = '';
 					}
-					console.log(`${value}, ${field}`);
-    				
-					// 값 하나만 선택해서 넘겨야 
-					// 하지만 아무 값도 안 넘어가면 아예 서버에 요청 안 하도록
-					if(!value || !field){
-						alert("검색항목 값을 입력하여 주세요");
-						location.reload();
-						return;
-					}
+					console.log(`field: ${field}, value: ${value}`);
+
+					let link = "http://localhost/admin/user/user-detail-view";
+					let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
 					
-					location.href= "/admin/user/user-detail-view?" + field + "=" + value;
+    				if(field && value){
+    					urlParams.set(field, value);
+    				}
+    				
+    				if(createdAtSince) urlParams.set('createdAtSince', createdAtSince.concat("T00:00:00"));
+    				if(createdAtUntil) urlParams.set('createdAtUntil', createdAtUntil.concat("T23:59:59"));
+    				if(updatedAtSince) urlParams.set('updatedAtSince', updatedAtSince.concat("T00:00:00"));
+    				if(updatedAtUntil) urlParams.set('updatedAtUntil', updatedAtUntil.concat("T23:59:59"));
+					
+    				if(urlParams.size < 1){
+    					alert("검색할 값을 입력해 주세요.");
+    					return;
+    				}
+    				
+					location.href= url;
     			}) // btn-search on click
     			
     			/* JPA Pageable 라이브러리에 맞게 변형*/
