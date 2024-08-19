@@ -3,6 +3,8 @@ package com.givemetreat.user.repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.givemetreat.user.domain.UserEntity;
@@ -24,5 +26,16 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	List<UserEntity> findByUpdatedAtOrderByIdDesc(LocalDateTime updatedAt);
 
 	List<UserEntity> findAllTop10ByOrderByIdDesc(); //Top 숫자 (Limit)기능 뒤에 By 꼭 붙여야 ㅠㅠ
+	
+	//Paging) findAll Top 10
+	Page<UserEntity> findAllTop10By(Pageable pageable);
+
+	//Paging) userId findAll
+	Page<UserEntity> findAllById(Integer userId, Pageable pageable);
+
+	
+	//Paging) updatedAt findAll
+	Page<UserEntity> findAllByUpdatedAt(LocalDateTime updatedAt, Pageable pageable);
+
 
 }

@@ -4,8 +4,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.pet.bo.PetBO;
 import com.givemetreat.pet.domain.AdminPetVO;
@@ -21,7 +27,77 @@ import lombok.RequiredArgsConstructor;
 public class AdminUserBO {
 	private final UserRepository userRepository;
 	private final PetBO petBO;
+	
+	private final Integer SIZE_PAGE_CURRENT = 3;
+	
+	@Transactional
+	public Page<AdminUserVO> getListUserVOsForPaging(Integer userId
+											, String loginId
+											, String nickname
+											, String selfDesc
+											, LocalDateTime createdAt
+											, LocalDateTime updatedAt
+											, Integer page
+											, Integer size
+											) {
+		List<AdminUserVO> listVOs = new ArrayList<>();
+		if(ObjectUtils.isEmpty(page) || ObjectUtils.isEmpty(size)) {
+			page = 0;
+			size = SIZE_PAGE_CURRENT;
+		}
+		
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Direction.DESC, "id"));
+		
+		// userId
+		if(userId != null) {
+			//userId(PK)라서 값이 하나밖에 못 넘어온다
+			Page<UserEntity> userPaged = userRepository.findAllById(userId, pageable);
+			//DB에서 얻은 사용자값으로 VO 생성;
+			Page<AdminUserVO> pageVO = userPaged.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(userId)));
+			return pageVO;
+		}
 
+		/*
+		// loginId
+		if(loginId != null) {
+			//loginId라는 키워드로 넘어와서 여러 값의 user가 리스트로 넘어올 수 있다!
+			List<UserEntity> listUsers = userRepository.findByLoginIdStartingWithOrderByIdDesc(loginId);
+			return generatePageVOFromPageEntity(listUsers);
+		}
+		
+		// nickname		
+		if(nickname != null) {
+			List<UserEntity> listUsers = userRepository.findByNicknameStartingWithOrderByIdDesc(nickname);
+			return generatePageVOFromPageEntity(listUsers);
+		}
+		
+		// selfDesc		
+		if(selfDesc != null) {
+			List<UserEntity> listUsers = userRepository.findBySelfDescContainingOrderByIdDesc(nickname);
+			return generateListVOsFromListEntities(listUsers);
+		}
+		
+		//createdAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!
+		if(createdAt != null) {
+			List<UserEntity> listUsers = userRepository.findByCreatedAtOrderByIdDesc(createdAt);
+			return generateListVOsFromListEntities(listUsers);
+		}
+		*/
+		
+		//updatedAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!		
+		if(updatedAt != null) {
+			Page<UserEntity> pageEntities = userRepository.findAllByUpdatedAt(updatedAt, pageable);
+			Page<AdminUserVO> pageVOs = pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
+			return pageVOs;
+		}		
+		
+		//아무런 값도 넘어오지 않은 경우(쌩으로 다른 RequestParam 없이 진입하는 경우)
+		Page<UserEntity> pageEntities = userRepository.findAllTop10By(pageable);
+		Page<AdminUserVO> pageVOs = pageEntities.map(entity -> new AdminUserVO(entity, petBO.getPetsByUserId(entity.getId())));
+		
+		return pageVOs;
+	}	
+	
 	/**
 	 * 변수가 아예 하나만 있거나 아예 없거나 두 경우만 고려
 	 * @param userid
@@ -88,7 +164,6 @@ public class AdminUserBO {
 		
 		//아무런 값도 넘어오지 않은 경우(쌩으로 다른 RequestParam 없이 진입하는 경우)
 		List<UserEntity> listUsers = userRepository.findAllTop10ByOrderByIdDesc();
-		generateListVOsFromListEntities(listUsers);
 		
 		return generateListVOsFromListEntities(listUsers);
 	}

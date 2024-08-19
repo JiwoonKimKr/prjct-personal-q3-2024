@@ -1,8 +1,9 @@
 package com.givemetreat.user;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,11 +29,27 @@ public class AdminUserController {
 								, @RequestParam(required = false) String selfDesc
 								, @RequestParam(required = false) LocalDateTime createdAt
 								, @RequestParam(required = false) LocalDateTime updatedAt			
+								, @RequestParam(required = false) Integer page			
+								, @RequestParam(required = false) Integer size			
 								, Model model) {
 		
-		List<AdminUserVO> listUsers = adminUserBO.getListUserVOs(userId, loginId, nickname, selfDesc, createdAt, updatedAt);
+		Page<AdminUserVO> pageInfo = adminUserBO.getListUserVOsForPaging(userId
+																		, loginId
+																		, nickname
+																		, selfDesc
+																		, createdAt
+																		, updatedAt
+																		, page
+																		, size);
 		
+		List<AdminUserVO> listUsers = pageInfo.getContent();
+		Integer totalPages = pageInfo.getTotalPages();
+		Integer pageCurrent = pageInfo.getNumber();
+		Integer sizeCurrent = pageInfo.getSize();
 		model.addAttribute("listUsers", listUsers);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageCurrent", pageCurrent);
+		model.addAttribute("sizeCurrent", sizeCurrent);
 		return "/admin/user/userDetail";
 	}
 	
