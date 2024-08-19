@@ -67,8 +67,10 @@ public class AdminInvoiceController {
 										, @RequestParam(required = false) String receiverName
 										, @RequestParam(required = false) String receiverPhoneNumber
 										, @RequestParam(required = false) String address
-										, @RequestParam(required = false) LocalDateTime createdAt
-										, @RequestParam(required = false) LocalDateTime updatedAt
+										, @RequestParam(required = false) LocalDateTime createdAtSince
+										, @RequestParam(required = false) LocalDateTime createdAtUntil
+										, @RequestParam(required = false) LocalDateTime updatedAtSince
+										, @RequestParam(required = false) LocalDateTime updatedAtUntil
 										, @RequestParam(required = false) String direction
 										, @RequestParam(required = false) Integer idRequested
 										, @RequestParam(required = false) Integer pageCurrent
@@ -89,20 +91,23 @@ public class AdminInvoiceController {
 																			, receiverName
 																			, receiverPhoneNumber
 																			, address
-																			, createdAt
-																			, updatedAt
+																			, createdAtSince
+																			, createdAtUntil
+																			, updatedAtSince
+																			, updatedAtUntil
 																			, direction
 																			, idRequested
 																			, pageCurrent
 																			, pageRequested);
 		
-		if(ObjectUtils.isEmpty(pageInfo)) {
+		if(ObjectUtils.isEmpty(pageInfo) || ObjectUtils.isEmpty(pageInfo.getListEntities())) {
 			log.info("[AdminInvoiceController invoiceEntireView()] current data get null result.");
 			model.addAttribute("error_message", "해당 결과를 찾지 못 하였습니다.");	
 			return "admin/invoice/invoiceEntire";
 		}
 		
 		List<AdminInvoiceVO> listInvoicesEntire = pageInfo.generateCurrentPageList();
+		
 		model.addAttribute("listInvoices", listInvoicesEntire);
 		model.addAttribute("numberPageCurrent", pageInfo.getNumberPageCurrent());
 		model.addAttribute("numberPageMax", pageInfo.getNumberPageMax());

@@ -61,8 +61,10 @@ public interface InvoiceMapper {
 							, @Param("receiverName") String receiverName
 							, @Param("receiverPhoneNumber") String receiverPhoneNumber
 							, @Param("address") String address
-							, @Param("createdAt") LocalDateTime createdAt
-							, @Param("updatedAt") LocalDateTime updatedAt
+							, @Param("createdAtSince") LocalDateTime createdAtSince
+							, @Param("createdAtUntil") LocalDateTime createdAtUntil
+							, @Param("updatedAtSince") LocalDateTime updatedAtSince
+							, @Param("updatedAtUntil") LocalDateTime updatedAtUntil
 							, @Param("direction") String direction
 							, @Param("idRequested") Integer idRequested
 							, @Param("limit") Integer limit);

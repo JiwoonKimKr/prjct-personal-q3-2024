@@ -58,8 +58,10 @@ public class AdminInvoiceBO {
 													, String receiverName
 													, String receiverPhoneNumber
 													, String address
-													, LocalDateTime createdAt
-													, LocalDateTime updatedAt
+													, LocalDateTime createdAtSince
+													, LocalDateTime createdAtUntil
+													, LocalDateTime updatedAtSince
+													, LocalDateTime updatedAtUntil
 													, String direction
 													, Integer idRequested
 													, Integer pageCurrent
@@ -79,8 +81,10 @@ public class AdminInvoiceBO {
 																, receiverName
 																, receiverPhoneNumber
 																, address
-																, createdAt
-																, updatedAt
+																, createdAtSince
+																, createdAtUntil
+																, updatedAtSince
+																, updatedAtUntil
 																, null
 																, null
 																, null);

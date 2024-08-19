@@ -158,7 +158,6 @@
 						</tbody>
 					</table>
 				</div>
-				
 			</article>
 	</section>
 
@@ -198,11 +197,17 @@
 					document.getElementById("btn-next-page").setAttribute('data-id-requested', idMin);
 				}// indexingPagingButtons()
 				
-				function updatePagingIndices(){
+				function updatePagingIndices(data){
+					if(data){
+						numberPageCurrent = data.numberPageCurrent;
+						numberPageMax = data.numberPageMax;
+					}
 					let anchors = $(".list-indices-page")[0];
-					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
-					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
-					for(let i = indexStart; i < indexLast + 1; i ++){
+					let indexStart = parseInt(numberPageCurrent/5)*5;
+					indexStart = indexStart > 0 ? indexStart: 0;
+					let indexLast =  (parseInt(numberPageCurrent/5) + 1)* 5 //5의 배수
+					indexLast = indexLast < numberPageMax ? indexLast : numberPageMax + 1;
+					for(let i = indexStart; i < indexLast; i ++){
 						let anchor = document.createElement('a');
 						
 						anchor.setAttribute('href', '#');
@@ -283,7 +288,7 @@
     							}
     							
     			    			indexingPagingButtons(data.listProducts);
-    			    			updatePagingIndices();
+    			    			updatePagingIndices(data);
     			    			
     			    			//ajax의 경우 anchor태그가 삭제되어 새로 생기는 탓에 success 함수 안에 기재해줘야 했다!
     			    			$("a.anchor-index-page").off('click').on('click', function(e){

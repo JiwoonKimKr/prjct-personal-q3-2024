@@ -124,6 +124,18 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(e){
+    			let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
+    			let numberPageMax = /*[[${numberPageMax}]]*/null;
+    			let limit = /*[[${limit}]]*/null;
+    			let idFirst = /*[[${idFirst}]]*/null;
+    			let idLast = /*[[${idLast}]]*/null;
+    			
+    			console.log(`numberPageCurrent: ${numberPageCurrent}`);
+    			console.log(`numberPageMax: ${numberPageMax}`);
+    			console.log(`limit: ${limit}`);
+    			console.log(`idFirst: ${idFirst}`);
+    			console.log(`idLast :${idLast}`);
+    			
     			updateFilteringsCurrentPage();
     			
     			indexingPagingButtons();
@@ -145,7 +157,7 @@
     						continue;
     					}
     					let value = urlParams.get(key);
-    					console.log(`key: ${key}, value: ${value}`);
+    					//console.log(`key: ${key}, value: ${value}`);
     					let selectCur = $(`#field-${key}`);
     					let optionToFind = $(`[data-value=${value}]`);
     					selectCur.find(optionToFind).prop('selected', true);
@@ -167,7 +179,7 @@
 					
 					for(let i=1; i< listProducts.length; i ++){
 						let idCurrent = listProducts[i].id;
-						console.log(idCurrent);
+						//console.log(idCurrent);
 						if(listProducts[i].id < idMin){
 							idMin = idCurrent
 						}
@@ -175,7 +187,7 @@
 							idMax = idCurrent
 						}
 					}
-					console.log(`${idMax}, ${idMin}`);
+					//console.log(`${idMax}, ${idMin}`);
 					
 					document.getElementById("btn-prev-page").setAttribute('data-id-requested', idMax);
 					document.getElementById("btn-next-page").setAttribute('data-id-requested', idMin);
@@ -189,21 +201,23 @@
 	  					urlParams.delete('direction');
 	  					urlParams.delete('idRequested');
 	  				}
-    				console.log(url.toString());
+    				//console.log(url.toString());
 					
 					let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
 					let numberPageMax = /*[[${numberPageMax}]]*/null;
 					let limit = /*[[${limit}]]*/null;
 					let idFirst = /*[[${idFirst}]]*/null;
 					let idLast = /*[[${idLast}]]*/null;
-					console.log(`${numberPageCurrent}, ${numberPageMax}, ${limit}`);
+					//console.log(`${numberPageCurrent}, ${numberPageMax}, ${limit}`);
 					
 					let anchors = $(".list-indices-page")[0];
 					//console.log(anchors);
-					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
-					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
-					
-					for(let i = indexStart; i < indexLast + 1; i ++){
+					let indexStart = parseInt(numberPageCurrent/5)*5;
+					indexStart = indexStart > 0 ? indexStart: 0;
+					let indexLast = (parseInt(numberPageCurrent/5) + 1)* 5;
+					indexLast = indexLast < numberPageMax ? indexLast : numberPageMax + 1;
+					//console.log(`${indexStart}, ${indexLast}`);
+					for(let i = indexStart; i < indexLast; i ++){
 						let anchor = document.createElement('a');
 						
 						urlParams.set('pageCurrent', numberPageCurrent);

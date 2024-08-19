@@ -74,13 +74,13 @@
 				AND
 					`address` like LOWER(concat('%',#{address},'%'))
 			</if>
-			<if test="createdAt != null">
+			<if test="createdAtSince != null and createdAtUntil != null">
 				AND
-					`createdAt` = #{createdAt}
+					`createdAt` BETWEEN #{createdAtSince} and #{createdAtUntil}
 			</if>		
-			<if test="updatedAt != null">
+			<if test="updatedAtSince != null and updatedAtUntil != null">
 				AND
-					`updatedAt` = #{updatedAt}
+					`updatedAt` BETWEEN #{updatedAtSince} and #{updatedAtUntil}
 			</if>
 			<if test="direction != null and index != null">
 				<if test="direction == 'next'">

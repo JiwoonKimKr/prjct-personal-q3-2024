@@ -179,6 +179,46 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			updatePagingIndices();
+				
+    			/* JPA Pageable 라이브러리에 맞게 변형*/
+				function updatePagingIndices(){
+					let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+					let numberPageCurrent = /*[[${pageCurrent}]]*/null;
+	    			let numberPageMax = /*[[${totalPages}]]*/null;
+					let limit = /*[[${sizeCurrent}]]*/null;
+					
+					console.log(`numberPageCurrent =${numberPageCurrent}
+							\n, numberPageMax = ${numberPageMax}
+							\n, limit = ${limit}`);
+					
+					let anchors = $(".list-indices-page")[0];
+					
+					let indexStart = parseInt(numberPageCurrent/5)*5;
+					indexStart = indexStart > 0 ? indexStart: 0;
+					let indexLast = (parseInt(numberPageCurrent/5) + 1)* 5;
+					indexLast = indexLast < numberPageMax ? indexLast : numberPageMax;
+					
+					for(let i = indexStart; i < indexLast; i ++){
+						let anchor = document.createElement('a');
+						
+						urlParams.set('page', i);
+						urlParams.set('size', limit);
+						
+						anchor.setAttribute('href', url.toString());
+						
+						anchor.classList.add('mx-2');
+						anchor.classList.add('anchor-index-page');
+						if(i == numberPageCurrent){
+							anchor.classList.add('font-weight-bold');
+						}
+						anchor.append(i + 1);
+						anchors.append(anchor);
+					}
+				}// updatePagingIndices()
 
     			// RequestParam 어떤 필드 선택되었는지 동적으로 구성하도록 바꿔야!
     			$("#dropDown-for-choosing-field").on('change', function(){
@@ -236,6 +276,7 @@
 					location.href= "/admin/user/user-detail-view?" + field + "=" + value;
     			}) // btn-search on click
     			
+    			/* JPA Pageable 라이브러리에 맞게 변형*/
     			$(".arrow-paging").on('click', function(e){
     				let link = window.location.href;
     				let url = new URL(link.toString());

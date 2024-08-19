@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/adminDefaultLayout}">
+      layout:decorate="~{layouts/adminDefaultLayout4DatePicker}">
     <head>
     	<title>
     		최근 결제완료 주문 조회
@@ -136,14 +136,16 @@ listInvoices
 						<span class="h4 text-white col-4 text-right">
 							기입 시간
 						</span>
-						<input id="createdAt" type="text" class="input-to-choose form-control col-8">
+						<input id="createdAtSince" type="text" class="input-to-choose form-control col-4" placeholder="created From">
+						<input id="createdAtUntil" type="text" class="input-to-choose form-control col-4" placeholder="created Until">
 					</div>
 					<!-- Dropdown: updatedAt ★★★★★ jQuery 달력 라이브러리 활용해서 특정 기간 선택하도록 바꿔야 -->	
 					<div id="field-updatedAt" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							수정 시간
 						</span>
-						<input id="updatedAt" type="text" class="input-to-choose form-control col-8">
+						<input id="updatedAtSince" type="text" class="input-to-choose form-control col-4" placeholder="updated From">
+						<input id="updatedAtUntil" type="text" class="input-to-choose form-control col-4" placeholder="updated Until">
 					</div>	
 				</div>
 				<!-- 상품 조회 선택항목 끝 -->			
@@ -195,7 +197,7 @@ listInvoices
 								</defs>
 							</svg>
 						</button>
-					</div>				
+					</div>
 					<table class="table-striped table-hover text-center w-100">
 						<thead>
 							<tr>
@@ -246,12 +248,58 @@ listInvoices
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			$.datepicker.setDefaults({
+    				dateFormat : "yy-mm-dd"
+    				, monthNames: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ]
+                    , dayNamesMin: [ "일", "월", "화", "수", "목", "금", "토" ]
+   					, showButtonPanel:true
+    			})// $.datepicker.setDefaults
+    			
+    			$.datepicker._gotoToday = function(id){
+    				$(id).datepicker('setDate', new Date()).datepicker('hide').blur();
+    			}
+
+				$("#createdAtSince").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#createdAtUntil").datepicker('option', 'minDate', dateText);
+					}
+				}) // #field-timeSince datepicker
+				
+				$("#createdAtUntil").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#createdAtSince").datepicker('option', 'maxDate', dateText);
+					}
+				}) //#field-timeUntil datepicker
+				
+				$("#updatedAtSince").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#updatedAtUntil").datepicker('option', 'minDate', dateText);
+					}
+				}) // #field-timeSince datepicker
+				
+				$("#updatedAtUntil").datepicker({
+					maxDate: 0
+					, onSelect:function(dateText){
+						$("#updatedAtSince").datepicker('option', 'maxDate', dateText);
+					}
+				}) //#field-timeUntil datepicker
+    			
     			let numberPageCurrent = /*[[${numberPageCurrent}]]*/null;
 				let numberPageMax = /*[[${numberPageMax}]]*/null;
 				let limit = /*[[${limit}]]*/null;
 				let idFirst = /*[[${idFirst}]]*/null;
 				let idLast = /*[[${idLast}]]*/null;
 				let error_message = /*[[${error_message}]]*/null;
+				
+				console.log(`numberPageCurrent : ${numberPageCurrent}`);
+				console.log(`numberPageMax : ${numberPageMax}`);
+				console.log(`limit : ${limit}`);
+				console.log(`idFirst : ${idFirst}`);
+				console.log(`idLast : ${idLast}`);
+				console.log(`error_message : ${error_message}`);
 				
 				if(error_message){
 					alert(error_message);
@@ -315,15 +363,23 @@ listInvoices
 				}// indexingPagingButtons()
     			
 				function updatePagingIndices(){
+					let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+					
 					let anchors = $(".list-indices-page")[0];
-					let indexStart = (numberPageCurrent - 5) > 0 ? (numberPageCurrent - 5) : 0;
-					let indexLast = numberPageMax < 5 ? numberPageMax : 5;
-					for(let i = indexStart; i < indexLast + 1; i ++){
+					let indexStart = parseInt(numberPageCurrent / 5) * 5;
+					let indexLast = (numberPageCurrent / 5 + 1) * 5 < numberPageMax ? (numberPageCurrent / 5) * 5 : numberPageMax; //5의 배수
+					
+					for(let i = indexStart; i < indexLast; i ++){
 						let anchor = document.createElement('a');
+	    				
+						urlParams.delete('direction');
+	    				urlParams.delete('idRequested');
+	  					urlParams.set('pageCurrent', numberPageCurrent);
+	  					urlParams.set('pageRequested', i);
 						
-						anchor.setAttribute('href', '#');
-						anchor.setAttribute('data-page-current', numberPageCurrent);
-						anchor.setAttribute('data-page-requested', i);
+						anchor.setAttribute('href', url.toString());
 						anchor.classList.add('mx-2');
 						anchor.classList.add('anchor-index-page');
 						if(i == numberPageCurrent){
@@ -357,8 +413,10 @@ listInvoices
 					let receiverName = $("#receiverName").val().trim();
 					let receiverPhoneNumber = $("#receiverPhoneNumber").val().trim();
 					let address = $("#address").val().trim();
-					let createdAt = $("#createdAt").val().trim();
-					let updatedAt = $("#updatedAt").val().trim();
+					let createdAtSince = $("#createdAtSince").val().trim();
+					let createdAtUntil = $("#createdAtUntil").val().trim();
+					let updatedAtSince = $("#updatedAtSince").val().trim();
+					let updatedAtUntil = $("#updatedAtUntil").val().trim();
 					
 					//★★★★★ client 쪽 JavaScript로 작성한 validation 넣어야	
 					
@@ -378,8 +436,10 @@ listInvoices
 			    				, receiverName: ${receiverName}
 			    				, receiverPhoneNumber: ${receiverPhoneNumber}
 			    				, address: ${address}
-			    				, createdAt: ${createdAt}
-			    				, updatedAt: ${updatedAt}`);
+			    				, createdAtSince: ${createdAtSince}
+			    				, createdAtUntil: ${createdAtUntil}
+			    				, updatedAtSince: ${updatedAtSince}
+			    				, updatedAtUntil: ${updatedAtUntil}`);
     				
     				if(userId) urlParams.set('userId', userId);
     				if(payment) urlParams.set('payment', payment);
@@ -393,10 +453,13 @@ listInvoices
     				if(receiverName) urlParams.set('receiverName', receiverName);
     				if(receiverPhoneNumber) urlParams.set('receiverPhoneNumber', receiverPhoneNumber);
     				if(address) urlParams.set('address', address);
-    				if(createdAt) urlParams.set('createdAt', createdAt);
-    				if(updatedAt) urlParams.set('updatedAt', updatedAt);
+    				if(createdAtSince) urlParams.set('createdAtSince', createdAtSince.concat("T00:00:00"));
+    				if(createdAtUntil) urlParams.set('createdAtUntil', createdAtUntil.concat("T23:59:59"));
+    				if(updatedAtSince) urlParams.set('updatedAtSince', updatedAtSince.concat("T00:00:00"));
+    				if(updatedAtUntil) urlParams.set('updatedAtUntil', updatedAtUntil.concat("T23:59:59"));
 				
 					console.log(url.toString());
+					
 					location.href= url;
     			}) // #btn-search-invoices on click
     			
@@ -407,8 +470,22 @@ listInvoices
     				let url = new URL(link.toString());
     				let urlParams = url.searchParams;
     				
+    				urlParams.delete('pageCurrent');
+    				urlParams.delete('pageRequested');
+    				
     				let direction = $(this)[0].getAttribute('data-direction');
     				let idRequested = $(this)[0].getAttribute('data-id-requested');
+    				
+    				if(direction == 'prev' && idRequested >= idFirst){
+    					idRequested = idFirst;
+    					console.log("[arrow-paging on click] idRequested >= idFirst. idRequested:{}", idRequested)
+    					return;
+    				}
+    				if(direction == 'next' && idRequested <= idLast){
+    					idRequested = idLast;
+    					console.log("[arrow-paging on click] idRequested <= idLast. idRequested:{}", idRequested)
+    					return;
+    				}
     				
   					urlParams.set('direction', direction);
   					urlParams.set('idRequested', idRequested);

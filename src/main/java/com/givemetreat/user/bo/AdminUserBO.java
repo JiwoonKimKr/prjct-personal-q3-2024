@@ -162,8 +162,6 @@ public class AdminUserBO {
 		return generateListVOsFromListEntities(listUsers);
 	}
 	
-
-
 	@Transactional
 	public AdminPetVO getPetByUserIdAndPetId(int userId, int petId) {
 
