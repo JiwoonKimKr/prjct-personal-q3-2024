@@ -223,6 +223,30 @@
 				}) //#field-timeUntil datepicker
 				/* __end__jQuery UI datepicker*/
     			
+				
+				function updateFilteringsCurrentPage(){
+    				/* 처음 페이지 로딩 될 때, 해당 옵션 필터들 띄우기; option:selected 노출시키기 */
+        			let link = window.location.href;
+    				let url = new URL(link.toString());
+    				let urlParams = url.searchParams;
+    				
+    				//나중에 여러 Field(Select메뉴)들이 있는 경우, 반복문으로 돌려야!
+    				let keys = urlParams.keys();
+    				for(let key of keys){
+    					if(key == 'direction'
+    						|| key == 'idRequested'
+    						|| key == 'pageCurrent'
+    						|| key == 'pageRequested') {
+    						continue;
+    					}
+    					let value = urlParams.get(key);
+    					//console.log(`key: ${key}, value: ${value}`);
+    					let selectCur = $(`#field-${key}`);
+    					let optionToFind = $(`[data-value=${value}]`);
+    					selectCur.find(optionToFind).prop('selected', true);
+    				}
+    			}// updateFileringCurrentPage()
+				
     			/* JPA Pageable 라이브러리에 맞게 변형*/
 				function updatePagingIndices(){
 					let link = window.location.href;
@@ -233,10 +257,11 @@
 	    			let numberPageMax = /*[[${totalPages}]]*/null;
 					let limit = /*[[${sizeCurrent}]]*/null;
 					
+					/*
 					console.log(`numberPageCurrent =${numberPageCurrent}
 							\n, numberPageMax = ${numberPageMax}
 							\n, limit = ${limit}`);
-					
+					*/
 					let anchors = $(".list-indices-page")[0];
 					
 					let indexStart = parseInt(numberPageCurrent/5)*5;

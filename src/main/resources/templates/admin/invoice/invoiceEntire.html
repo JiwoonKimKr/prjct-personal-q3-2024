@@ -294,15 +294,17 @@ listInvoices
 				let idLast = /*[[${idLast}]]*/null;
 				let error_message = /*[[${error_message}]]*/null;
 				
+				/*
 				console.log(`numberPageCurrent : ${numberPageCurrent}`);
 				console.log(`numberPageMax : ${numberPageMax}`);
 				console.log(`limit : ${limit}`);
 				console.log(`idFirst : ${idFirst}`);
 				console.log(`idLast : ${idLast}`);
 				console.log(`error_message : ${error_message}`);
-				
+				*/
 				if(error_message){
 					alert(error_message);
+					return location.href= "http://localhost/admin/invoice/invoices-entire-view";
 				}
     			
 				updateFilteringsCurrentPage();
@@ -321,15 +323,16 @@ listInvoices
     					if(key != 'paymentType'
     						|| key != 'hasCanceled'
     						|| key != 'statusDelivery') {
-    						let value = urlParams.get(key);
+    						let value = urlParams.get(key).split("T")[0];
+    						console.log(value);
     						$('#'+key).val(value);
     						continue;
     					}
     					let value = urlParams.get(key);
-    					console.log(`key: ${key}, value: ${value}`);
+    					//console.log(`key: ${key}, value: ${value}`);
     					let selectCur = $('#field-' + key);
     					let optionSelected = $(`[value=${value}]`)[0];
-    					console.log(optionSelected);
+    					//console.log(optionSelected);
     					selectCur.find(optionSelected).prop('selected', true);
     				}
     			}
