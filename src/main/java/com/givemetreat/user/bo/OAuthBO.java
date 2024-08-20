@@ -10,11 +10,14 @@ import com.givemetreat.api.dto.UserInfoKakaoApi;
 import com.givemetreat.api.utils.PrivateKeysKakaoApi;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class OAuthBO {
+	private final PrivateKeysKakaoApi privateKeysKakaoApi;
 
 	@Transactional
 	public ResponseTokenKakaoApi postRequestWithCodeForToken(String code){
@@ -23,15 +26,15 @@ public class OAuthBO {
 		//body
 		
 		MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-		formData.add("grant_type", PrivateKeysKakaoApi.GRANT_TYPE);
-		formData.add("client_id", PrivateKeysKakaoApi.CLIENT_ID);
-		formData.add("redirect_uri", PrivateKeysKakaoApi.REDIRECT_URI);
+		formData.add("grant_type", privateKeysKakaoApi.grant_type);
+		formData.add("client_id", privateKeysKakaoApi.client_id);
+		formData.add("redirect_uri", privateKeysKakaoApi.redirect_uri);
 		formData.add("code", code);
-		formData.add("client_secret", PrivateKeysKakaoApi.CLIENT_SECRET);
+		formData.add("client_secret", privateKeysKakaoApi.client_secret);
 		
 		//Post Request Trial
 		WebClient webClient = WebClient.builder()
-										.baseUrl( PrivateKeysKakaoApi.URL_TOKEN_KAKAO_OAUTH)
+										.baseUrl( privateKeysKakaoApi.url_token)
 										.defaultHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8")
 										.build();
 		ResponseTokenKakaoApi response = webClient.post()
@@ -51,7 +54,7 @@ public class OAuthBO {
 	public UserInfoKakaoApi accessUserInfoWithAccessToken(String accessToken) {
 		WebClient webClient = WebClient.builder().build();
 		UserInfoKakaoApi userInfo = webClient.get()
-				.uri(PrivateKeysKakaoApi.URL_ACCESS_KAKAO_OAUTH)
+				.uri(privateKeysKakaoApi.url_access)
 				.header("Authorization", "Bearer " + accessToken)
 				.header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
 				.retrieve()
