@@ -2,15 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 	<head>
 	    <meta charset="utf-8">
-	    <script  src="/js/jquery-3.7.1.js"></script>    
-	    <link rel="stylesheet" href="/css/bootstrap.min.css">
-	    <script src="/js/bootstrap.bundle.min.js"></script>
-	    <link rel="stylesheet" href="/css/givemetreat_style.css">
 	</head>
 	<body>
-		<div id="wrap" class="mx-auto">
-			<img src="cid:logo.png">
-			<div class="d-flex justify-content-center col-6">
+		<div>
+			<img>
+			<div>
 				입력하셔야 할 코드는
 				<br><span th:text="${code}" class="text-weight-bold"></span>
 				<br>입니다.
@@ -21,14 +17,14 @@
 			</div>
 			
 			<div>
-				<a class="btn btn-outline-primary" href="http://localhost/user/verify-code-view">
+				<a href="http://localhost/user/verify-code-view">
 					🐶🐶코드 인증받기🐶🐶
 				</a>
 			</div>
 			
-			<footer class="mt-5">
-				<div class="mt-5 d-flex w-100 justify-content-center align-items-center h-100">
-					<address class="d-flex justify-content-between">
+			<footer>
+				<div>
+					<address>
 						<a href="#" class="mr-2">소개</a>	
 						<a href="#" class="mr-2">약관</a>
 						<a href="#" class="mr-2">개인정보처리방침</a>

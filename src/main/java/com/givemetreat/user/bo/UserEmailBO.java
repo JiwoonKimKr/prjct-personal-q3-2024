@@ -38,11 +38,15 @@ public class UserEmailBO {
 	private final Integer EXPIRATIOIN_TIME_IN_MINUTES = 5;
 	
 	public Boolean sendVerificationMailWithTemplate(String receiver, LocalDateTime timeMailSent) {
+		
+		//code 관련 entity 생성 & repository 저장
 		VerificationCodeEntity entity = VerificationCodeEntity.builder()
 														.code(UUID.randomUUID().toString())
 														.createdAt(timeMailSent)
 														.minutesAdded(EXPIRATIOIN_TIME_IN_MINUTES)
 														.build();
+		verificationCodeRepository.save(entity);
+		
 		Map<String, Object> templateModel = new HashMap<>();
 		//MVC의 model에 넣는 상황!
 		templateModel.put("code", entity.generatedCodeMessage().get(0));
@@ -53,7 +57,7 @@ public class UserEmailBO {
 		
 		Context thymeleafContext = new Context();
 		thymeleafContext.setVariables(templateModel);
-		String htmlBody = templateEngine.process("/emailLayouts/email4CodeVerification.html", thymeleafContext);
+		String htmlBody = templateEngine.process("emailLayouts/email4CodeVerification.html", thymeleafContext);
 		return sendHtmlMessage(receiver, subject, htmlBody);
 	}
 	

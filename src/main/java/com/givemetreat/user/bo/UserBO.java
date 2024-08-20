@@ -14,6 +14,14 @@ public class UserBO {
 	private final UserRepository userRepository;
 	
 	@Transactional
+	public UserEntity updatePassword(UserEntity user, String password, String salt) {
+		return userRepository.save(user.toBuilder()
+				.password(password)
+				.salt(salt)
+				.build());
+	}
+	
+	@Transactional
 	public UserEntity addUser(String loginId, String password, String salt, String nickname) {
 		return userRepository.save(UserEntity.builder()
 				.loginId(loginId)

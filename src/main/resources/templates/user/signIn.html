@@ -68,7 +68,7 @@
 							</button>
 						</div>
 						<div>
-							<button type="button" class="btn-find-id-pasword mt-4">아이디/비밀번호
+							<button type="button" class="btn-find-id-password mt-4">아이디/비밀번호
 								찾기
 							</button>
 						</div>
@@ -129,6 +129,9 @@
 					location.href = "/user/sign-up-view"
 				}); //btn-sign-up.on click
 				
+				$(".btn-find-id-password").on('click', function(){
+					location.href = "/user/find-email-view"
+				});//btn-find-id-password on click
 			}); // document.ready
 		</script>
 	</th:block>

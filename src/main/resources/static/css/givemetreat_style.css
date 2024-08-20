@@ -181,7 +181,7 @@ input::-webkit-inner-spin-button {
 	color: #FFFFFF;
 }
 
-.btn-find-id-pasword{
+.btn-find-id-password{
 	width: 375px;
 	height: 58px;
 	
@@ -266,6 +266,24 @@ input::-webkit-inner-spin-button {
 
 	font-weight: 400;
 	font-size: 48px;
+	
+	color: #FFFFFF;
+}
+
+/* 아이디 비밀번호 찾기 */
+.btn-verification{
+	margin-top: 45px;
+	
+	width: 675px;
+	height: 60px;
+	
+	background: #FF8661;
+	box-shadow: 8px 8px 0px #00D9FF;
+	border-radius: 47px;
+	border-color: inherit;
+
+	font-weight: 400;
+	font-size: 32px;
 	
 	color: #FFFFFF;
 }

@@ -18,13 +18,69 @@ import com.givemetreat.user.domain.UserEntity;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("/user")
 @RestController
 @RequiredArgsConstructor
 public class UserRestController {
 	private final UserBO userBO;
 	private final UserEmailBO userEmailBO;
+	
+	
+	
+	@PostMapping("/reset-password")
+	public Map<String, Object> resetPassword(
+			@RequestParam String loginId
+			, @RequestParam String password
+			, @RequestParam String passwordConfirm){
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		//서버쪽에서도 거치는 Validation 과정
+		//아이디
+		if(WordingValidation.isEmail(loginId) == false) {
+			result.put("code", 500);
+			result.put("error_message", "올바른 이메일 주소를 입력하여 주십시오.");
+			return result;
+		}
+		//비밀번호
+		if(WordingValidation.hasAlphaLowerUpperNumericSpecialLengthBetween8And16(password) == false
+			|| WordingValidation.hasAlphaLowerUpperNumericSpecialLengthBetween8And16(passwordConfirm) == false
+			) {
+			result.put("code", 500);
+			result.put("error_message", "비밀번호는 8~16자의 영어 대소문자, 숫자, 특수문자로 구성되어야 합니다.");
+			return result;			
+		}
+		if(password.equals(passwordConfirm) == false) {
+			result.put("code", 500);
+			result.put("error_message", "비밀번호가 일치하지 않습니다.");
+			return result;
+		}
+
+		UserEntity user = userBO.getUserByLoginId(loginId);
+		
+		String salt = EncryptUtils.getSalt();
+		
+		String hashedPassword = EncryptUtils.sha256(salt, password);
+		
+		user = userBO.updatePassword(user, hashedPassword, salt);
+		
+		if(ObjectUtils.isEmpty(user)) {
+			result.put("code", 500);
+			result.put("error_message", "새로운 비밀번호를 입력하는 시도가 실패하였습니다. 관리자에게 문의하시길 바랍니다.");
+		}
+		log.info("[UserRestController] new password get saved.");
+		
+		if(user != null) {
+			result.put("code", 200);
+			result.put("result", "success");
+		}
+		
+		return result;
+	}
+	
 	
 	//localhost/user/email-verification
 	/**
@@ -41,7 +97,7 @@ public class UserRestController {
 
 		if(hasEmailSent == false || ObjectUtils.isEmpty(hasEmailSent)) {
 			result.put("code", 500);
-			result.put("error_message", "failed to send email for sending verification code.");
+			result.put("error_message", "해당 이메일에 인증코드를 보내지 못 하였습니다. 관리자에게 문의하시길 바랍니다.");
 			return result;
 		}
 		
@@ -61,14 +117,33 @@ public class UserRestController {
 		if(getVerified == false) {
 			result.put("code", 500);
 			result.put("error_message", "코드 인증이 실패하였습니다.");
+			return result;
 		}
 		
 		result.put("code", 200);
 		result.put("result", "success");
 		
 		return result;
-	} 
+	}
 	
+	@PostMapping("/verify-loginId")
+	public Map<String, Object> verifyLoginId(@RequestParam String emailTyped){
+		Map<String, Object> result = new HashMap<>();
+
+		UserEntity user = userBO.getUserByLoginId(emailTyped);
+		
+		if(ObjectUtils.isEmpty(user)) {
+			result.put("code", 500);
+			result.put("error_message", "해당 이메일이 존재하지 않습니다.");
+			return result;
+		}
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		result.put("email", user.getLoginId());
+		
+		return result;
+	}
 	
 	//localhost/user/sign-in
 	@PostMapping("/sign-in")
@@ -144,13 +219,6 @@ public class UserRestController {
 		if(userHasExist != null) {
 			result.put("code", 500);
 			result.put("error_message", "해당 이메일은 이미 가입하였습니다.");
-			return result;
-		}
-		
-		//비밀번호 중복 체크-Server-side Validation
-		if(password.equals(passwordConfirm) == false) {
-			result.put("code", 500);
-			result.put("error_message", "비밀번호가 중복되었습니다.");
 			return result;
 		}
 		

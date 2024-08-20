@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/Layout4Encounter}">
     <head>
-    	<title>이메일 코드 입력하기</title>
+    	<title>이메일 아이디 찾기</title>
     </head>
 	<section layout:fragment="contents" class="contents">
 		<article class="group-article d-flex flex-column justify-content-center align-items-center">
@@ -41,7 +41,7 @@
 							</svg>
 						</div>
 						<!-- Input -->
-						<input id="code-verification" type="password" class="input-sign-up" placeholder="이메일에서 받은 코드를 입력하세요.">
+						<input id="find-email" type="text" class="input-sign-up" placeholder="가입하신 이메일을 입력하세요.">
 					</div>
 				</div>
 				<div class="group-warning-text">
@@ -49,8 +49,8 @@
 				</div>
 			</div>
 			<!-- 입력하기 버튼 -->
-			<button id="btn-code-verification" class="btn-verification">
-				인증 코드 입력하기
+			<button id="btn-find-email" class="btn-verification">
+				가입 이메일 입력하기
 			</button>
 		</article>
 	</section>
@@ -58,27 +58,51 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     	$(document).ready(function(){
-    		$("#btn-code-verification").on('click', function(){
-    			let code = $("#code-verification").val().trim();
+    		$("#btn-find-email").on('click', function(){
+    			let emailTyped = $("#find-email").val().trim();
     			
-    			if(!code){
+    			if(!emailTyped){
     				$("#text-warning-sign-up").text("🚫이메일을 입력하세요.");
     				return;
     			}
+
+    			let regexpEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    			if(!regexpEmail.test(emailTyped)){
+    				$("#text-warning-sign-up").text("🛑올바른 이메일 형식을 입력하세요.");
+    				$("#find-email").val('');
+    				return;
+    			}
     			
-    			let url = "/user/verification-code"
-    			let params = {"codeRequested" : code}
+    			
+    			let url = "/user/verify-loginId"
+    			let params = {"emailTyped" : emailTyped}
     			
     			$.post(url, params)
     			.done(function(data){
     				if(data.code == 200){
-    					alert("입력하신 코드가 일치합니다. 새로운 비밀번호를 입력해주세요.");
+    					let loginIdFound = data.email;
+    					console.log(loginIdFound)
+    					if(confirm(`해당 아이디는 ${loginIdFound}입니다. \n비밀번호를 찾으시겠습니까? \n해당 이메일로 인증 코드를 보내드립니다.`) == false){
+    	    				location.href="/user/sign-in-view";
+    	    				return;
+    	    			}
     					
-    					//새로운 비밀번호 입력하는 View Path로 이동시켜야
-    					location.href = "/user/reset-password-view";
+    					let paramEmail = {"userEmail": loginIdFound};
+    					
+    					/* 해당 이메일로 인증 코드를 보내기 */
+    					$.post("/user/email-verification", paramEmail)
+    					.done(function(data){
+    						if(data.code == 200){
+		    					alert(`인증 코드를 보내드렸습니다. \n${loginIdFound} \n이메일을 확인해주세요.`);
+		    					location.href = "/user/verify-code-view";
+    						} else{
+    							alert(data.error_message);
+    							location.href = "/user/sign-in-view";
+    						}
+    					})
     				} else {
-    					console.log(data.error_message);
-    					//location.href="/user/sign-in-view";
+    					alert(data.error_message);
+    					location.reload();
     				}
     			})// ajax
     			

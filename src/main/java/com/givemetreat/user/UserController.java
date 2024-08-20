@@ -37,8 +37,18 @@ public class UserController {
 		return "redirect:/user/sign-in-view";
 	}
 	
+	@GetMapping("/find-email-view")
+	public String findEmailView() {
+		return  "user/findEmail";
+	}
+	
 	@GetMapping("/verify-code-view")
 	public String verifyCodeView() {
 		return "user/verifyCode";
+	}
+	
+	@GetMapping("/reset-password-view")
+	public String resetPasswordView() {
+		return "user/resetPassword";
 	}
 }
