@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+	<head>
+	    <meta charset="utf-8">
+	    <script  src="/js/jquery-3.7.1.js"></script>    
+	    <link rel="stylesheet" href="/css/bootstrap.min.css">
+	    <script src="/js/bootstrap.bundle.min.js"></script>
+	    <link rel="stylesheet" href="/css/givemetreat_style.css">
+	</head>
+	<body>
+		<div id="wrap" class="mx-auto">
+			<img src="cid:logo.png">
+			<div class="d-flex justify-content-center col-6">
+				입력하셔야 할 코드는
+				<br><span th:text="${code}" class="text-weight-bold"></span>
+				<br>입니다.
+			</div>
+			<div>
+				<span>인증 종료 시간은</span>
+				<span th:text="|${timeExpiredAt}입니다.|"></span>
+			</div>
+			
+			<div>
+				<a class="btn btn-outline-primary" href="http://localhost/user/verify-code-view">
+					🐶🐶코드 인증받기🐶🐶
+				</a>
+			</div>
+			
+			<footer class="mt-5">
+				<div class="mt-5 d-flex w-100 justify-content-center align-items-center h-100">
+					<address class="d-flex justify-content-between">
+						<a href="#" class="mr-2">소개</a>	
+						<a href="#" class="mr-2">약관</a>
+						<a href="#" class="mr-2">개인정보처리방침</a>
+						<span class="ml-5">Copyright © 간식줘집사 2024</span>
+					</address>
+				</div>		
+			</footer>
+		</div>
+	</body>
+</html>

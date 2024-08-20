@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,8 +37,13 @@ public class UserRestController {
 		Map<String, Object> result = new HashMap<>();
 
 		LocalDateTime timeRequested = LocalDateTime.now();
-		userEmailBO.SendSimpeVerificationMail(userEmail, timeRequested);
+		Boolean hasEmailSent = userEmailBO.sendVerificationMailWithTemplate(userEmail, timeRequested);
 
+		if(hasEmailSent == false || ObjectUtils.isEmpty(hasEmailSent)) {
+			result.put("code", 500);
+			result.put("error_message", "failed to send email for sending verification code.");
+			return result;
+		}
 		
 		result.put("code", 200);
 		result.put("result", "success");
@@ -45,12 +51,17 @@ public class UserRestController {
 		return result;
 	}
 	
-	@PostMapping("/verificationi-code")
-	public Map<String, Object> verificationCode(@RequestParam String request){
+	@PostMapping("/verification-code")
+	public Map<String, Object> verificationCode(@RequestParam String codeRequested){
 		Map<String, Object> result = new HashMap<>();
 
 		LocalDateTime timeRequested = LocalDateTime.now();
-		userEmailBO.verifyCode(request, timeRequested);
+		Boolean getVerified = userEmailBO.verifyCode(codeRequested, timeRequested);
+		
+		if(getVerified == false) {
+			result.put("code", 500);
+			result.put("error_message", "코드 인증이 실패하였습니다.");
+		}
 		
 		result.put("code", 200);
 		result.put("result", "success");

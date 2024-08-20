@@ -36,4 +36,9 @@ public class UserController {
 		
 		return "redirect:/user/sign-in-view";
 	}
+	
+	@GetMapping("/verify-code-view")
+	public String verifyCodeView() {
+		return "user/verifyCode";
+	}
 }

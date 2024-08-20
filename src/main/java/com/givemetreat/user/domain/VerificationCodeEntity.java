@@ -2,6 +2,9 @@ package com.givemetreat.user.domain;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -45,13 +48,12 @@ public class VerificationCodeEntity {
 		return timeRequested.isAfter(timeExpired); 
 	}
 	
-	public String generatedCodeMessage() {
+	public List<String> generatedCodeMessage() {
 		String TimeExpiredformatted = createdAt
 								.plusMinutes(minutesAdded)
-								.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss"));
+								.format(DateTimeFormatter.ofPattern("yy-MM-dd HH시 mm분 ss초 까지"));
 		
-		return String.format("[VerificationCode]__code__: %s ,__Expired At__: %s"
-				+ "</html>",  code, TimeExpiredformatted);
-		
+		return new ArrayList<>(Arrays.asList( code
+										, TimeExpiredformatted));
 	}
 }
