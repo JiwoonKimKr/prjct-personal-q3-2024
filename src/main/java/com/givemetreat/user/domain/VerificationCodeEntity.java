@@ -50,7 +50,8 @@ public class VerificationCodeEntity {
 								.plusMinutes(minutesAdded)
 								.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss"));
 		
-		return String.format("[VerificationCode] {} Expired At : {}", code, TimeExpiredformatted);
+		return String.format("[VerificationCode]__code__: %s ,__Expired At__: %s"
+				+ "</html>",  code, TimeExpiredformatted);
 		
 	}
 }

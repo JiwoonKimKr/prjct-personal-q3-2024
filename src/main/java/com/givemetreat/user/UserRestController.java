@@ -43,7 +43,21 @@ public class UserRestController {
 		result.put("result", "success");
 		
 		return result;
-	}	
+	}
+	
+	@PostMapping("/verificationi-code")
+	public Map<String, Object> verificationCode(@RequestParam String request){
+		Map<String, Object> result = new HashMap<>();
+
+		LocalDateTime timeRequested = LocalDateTime.now();
+		userEmailBO.verifyCode(request, timeRequested);
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		
+		return result;
+	} 
+	
 	
 	//localhost/user/sign-in
 	@PostMapping("/sign-in")
