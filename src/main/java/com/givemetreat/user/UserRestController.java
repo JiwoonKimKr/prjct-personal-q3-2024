@@ -1,5 +1,6 @@
 package com.givemetreat.user;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.givemetreat.common.EncryptUtils;
 import com.givemetreat.common.validation.WordingValidation;
 import com.givemetreat.user.bo.UserBO;
+import com.givemetreat.user.bo.UserEmailBO;
 import com.givemetreat.user.domain.UserEntity;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +23,27 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserRestController {
 	private final UserBO userBO;
+	private final UserEmailBO userEmailBO;
+	
+	//localhost/user/email-verification
+	/**
+	 * 사용자 이메일(로그인아이디) 확인 후 해당 이메일로 인증코드 보내기;
+	 * @param userEmail
+	 * @return Map<String, Object>
+	 */
+	@PostMapping("/email-verification")
+	public Map<String, Object> emailVerification(@RequestParam String userEmail){
+		Map<String, Object> result = new HashMap<>();
+
+		LocalDateTime timeRequested = LocalDateTime.now();
+		userEmailBO.SendSimpeVerificationMail(userEmail, timeRequested);
+
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		
+		return result;
+	}	
 	
 	//localhost/user/sign-in
 	@PostMapping("/sign-in")
