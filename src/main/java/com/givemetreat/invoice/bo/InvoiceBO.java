@@ -52,9 +52,11 @@ public class InvoiceBO {
 	public List<InvoiceVO> getInvoices(Integer invoiceId
 										, Integer userId
 										, Integer payment
+										/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 										, String paymentType
 										, String company
 										, String monthlyInstallment
+										*/
 										, Integer hasCanceled
 										, String buyerName
 										, String buyerPhoneNumber
@@ -67,9 +69,11 @@ public class InvoiceBO {
 		List<Invoice> list = invoiceMapper.selectInvoicesBetweenDates( invoiceId
 																, userId
 																, payment
+																/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 																, paymentType
 																, company
 																, monthlyInstallment
+																*/
 																, hasCanceled
 																, buyerName
 																, buyerPhoneNumber
@@ -124,12 +128,9 @@ public class InvoiceBO {
 	}
 
 	@Transactional
-	public Boolean generateInvoiceFromJsonString(String jsonString
+	public InvoiceEntity generateInvoiceFromJsonString(String jsonString
 												, int userId
 												, Integer payment
-												, String paymentType
-												, String company
-												, String monthlyInstallment
 												, String buyerName
 												, String buyerPhoneNumber
 												, String receiverName
@@ -176,7 +177,7 @@ public class InvoiceBO {
 				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
 						+ " current item's stock is lower than quantity from order."
 						+ " productId:{}", productId);
-				return false;
+				return null;
 			}
 		}
 		
@@ -186,15 +187,12 @@ public class InvoiceBO {
 					+ " Current passed from request doesn't match with cost summary."
 					+ " userId:{}, payment from Client:{}, total cost from Ordered Info:{}, total cost from Server"
 					, userId, payment, sumCost, sumServerSide);
-			return false;
+			return null;
 		}
 		
 		//validating each parameters for Invoice before sending payment invoice for PG Company
 		
 		Boolean hasParamsforInvoiceValidated = InvoiceParamsValidation.getParamsValidated(payment
-																						, paymentType
-																						, company
-																						, monthlyInstallment
 																						, buyerName
 																						, buyerPhoneNumber
 																						, receiverName
@@ -205,19 +203,13 @@ public class InvoiceBO {
 			log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
 					+ " Some of values from Request Parameters failed to get validated."
 					+ " userId:{}", userId);
-			return false;
+			return null;
 		}
-		
-		//★★★★★sending payment invoice for PG Com 
-		
 		
 		//Building Invoice Entity
 		InvoiceEntity invoice = InvoiceEntity.builder()
 											.userId(userId)
 											.payment(payment)
-											.paymentType(paymentType)
-											.company(company)
-											.monthlyInstallment(monthlyInstallment)
 											.hasCanceled(0) //취소 안된, 결제 완료 상태일 때는 0
 											.buyerName(buyerName)
 											.buyerPhoneNumber(buyerPhoneNumber)
@@ -239,7 +231,7 @@ public class InvoiceBO {
 				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
 						+ " ProductInvoiceEntity failed to get saved."
 						+ " ItemOrderedDto:{}", item);
-				return false;
+				return null;
 			}
 			
 			int productInvoiceId = itemInvoice.getId();
@@ -255,7 +247,7 @@ public class InvoiceBO {
 						+ " ItemOrderedDto:{}", item);
 			}
 		}
-		return true;
+		return invoice;
 	}
 
 	public List<ItemOrderedVO> getItemsOrderedByUserIdAndInvoiceId(Integer userId, Integer invoiceId) {

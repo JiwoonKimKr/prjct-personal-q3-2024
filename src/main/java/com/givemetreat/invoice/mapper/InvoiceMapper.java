@@ -16,9 +16,11 @@ public interface InvoiceMapper {
 							@Param("id") Integer invoiceId
 							, @Param("userId") Integer userId
 							, @Param("payment") Integer payment
+							/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 							, @Param("paymentType") String paymentType
 							, @Param("company") String company
 							, @Param("monthlyInstallment") String monthlyInstallment
+							*/
 							, @Param("hasCanceled") Integer hasCanceled
 							, @Param("buyerName") String buyerName
 							, @Param("buyerPhoneNumber") String buyerPhoneNumber
@@ -32,9 +34,11 @@ public interface InvoiceMapper {
 	List<Invoice> selectInvoicesBetweenDates(@Param("id") Integer invoiceId
 											, @Param("userId") Integer userId
 											, @Param("payment") Integer payment
+											/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 											, @Param("paymentType") String paymentType
 											, @Param("company") String company
 											, @Param("monthlyInstallment") String monthlyInstallment
+											*/
 											, @Param("hasCanceled") Integer hasCanceled
 											, @Param("buyerName") String buyerName
 											, @Param("buyerPhoneNumber") String buyerPhoneNumber
@@ -51,9 +55,11 @@ public interface InvoiceMapper {
 							@Param("id") Integer invoiceId
 							, @Param("userId") Integer userId
 							, @Param("payment") Integer payment
+							/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 							, @Param("paymentType") String paymentType
 							, @Param("company") String company
 							, @Param("monthlyInstallment") String monthlyInstallment
+							*/
 							, @Param("hasCanceled") Integer hasCanceled
 							, @Param("buyerName") String buyerName
 							, @Param("buyerPhoneNumber") String buyerPhoneNumber

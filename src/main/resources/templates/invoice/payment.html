@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/defaultLayout}">
+      layout:decorate="~{layouts/defaultLayout4Payment}">
       
 	<head>
 		<title>결제 페이지</title>
@@ -100,7 +100,9 @@ th:data-product-id
 								</button>
 	 						</div><!--__end__ .card-item-detail-invoice-->
 	 					</th:block>
+	 					 
 	 					<div class="groups-inputs-payment-delivery-detail">
+	 						<!-- 포트원 결제 도입으로 수정_결제 관련 탭 모두 제거_21 08 2024
 	 						<div class="groups-inputs-payment groups-dropdown-select-invoice">
 								<div class="left-side-inputs-payment">
 									<div class="group-dropdown-select-invoice">
@@ -114,14 +116,14 @@ th:data-product-id
 										    <option class="CreditCard" data-field="paymentType" value="CreditCard">
 										    	신용카드
 									    	</option>
-									    	<!-- ★★★★★ 일단 신용카드만 구현_12 08 2024 
 										    <option class="AccountTranster" data-field="paymentType" data-value="AccountTranster">
 										    	계좌이체
 									    	</option>
-									    	 -->
+									    	 
 								  		</select>
 									</div>
-								</div><!--__end__ .left-side-inputs-payment -->
+								</div>
+								
 								<div class="right-side-inputs-payment">
 									<div class="group-dropdown-select-invoice">
 										<label for="field-company" class="label-for-select-invoice m-0">
@@ -138,7 +140,7 @@ th:data-product-id
 										    	현태카드
 									    	</option>
 								  		</select>
-									</div><!--__end__ 카드사 dropdown -->
+									</div>
 									<div class="group-dropdown-select-invoice mt-3">
 										<label for="field-monthlyInstallment" class="label-for-select-invoice m-0">
 											할부개월
@@ -157,9 +159,10 @@ th:data-product-id
 										    	3개월
 									    	</option>
 								  		</select>
-									</div><!--__end__ 할부개월 dropdown -->
-								</div><!--__end__ .right-side-inputs-payment  -->
-	 						</div><!--__end__ .groups-inputs-->
+									</div>
+								</div>
+	 						</div>
+	 						 -->
 <!-- 배송정보 기입 관련 -->	 						
 	 						<div class="groups-inputs-delivery">
 <!-- 결제자 -->	 				<div class="group-buyer">
@@ -196,13 +199,9 @@ th:data-product-id
 		 								<input id="address" class="input-delivery-invoice">
 	 								</div> <!-- __end__ 배송 주소 -->
 								</div>
-								
-
-	 							
-	 							
 	 						</div><!--__end__ .groups-inputs-delivery"  -->
-	 						
 	 					</div><!--__end__ .groups-inputs-payment-delivery-detail-->
+	 					
  					</div><!--__end__ .list-items-in-invoice -->
  					<!-- 제품상세 내역 -->	
 					<div class="groups-buttom-invoice-total">
@@ -459,7 +458,7 @@ th:data-product-id
     					mapItem["price"] = item.getAttribute('data-price');
     					mapItem["checked"] = item.getAttribute('data-checked');
     					let jsonString = JSON.stringify(mapItem)
-    					console.log(jsonString);
+    					//console.log(jsonString);
     					
     					listItemOrderedDto.push(jsonString);
     				}
@@ -470,24 +469,24 @@ th:data-product-id
 					}
 					
 					//결제 유형: select
-					let paymentType = $("#field-paymentType").val();
+					/* let paymentType = $("#field-paymentType").val();
 					if(!paymentType || paymentType == '---선택---'){
 						alert("결제 타입을 선택하세요");
 						return;
-					}
+					} */
 					
 					//카드사: select
-					let company = $("#field-company").val();
+					/* let company = $("#field-company").val();
 					if(!company || company == '---선택---'){
 						alert("결제사를 선택하세요");
 						return;
-					}
+					} */
 					//할부 개월: select
-					let monthlyInstallment = $("#field-monthlyInstallment").val();
+					/* let monthlyInstallment = $("#field-monthlyInstallment").val();
 					if(!monthlyInstallment || monthlyInstallment == '---선택---'){
 						alert("할부 개월을 선택하세요");
 						return;
-					}
+					} */
 					
 					//결제자: input
 					let buyerName = $("#buyer-name").val().trim();
@@ -522,9 +521,9 @@ th:data-product-id
 					
 					let params ={"listItemsOrdered": '['+ listItemOrderedDto.join(",") + ']'
 							,"payment": sum
-							,"paymentType": paymentType
-							, "company": company
-							, "monthlyInstallment": monthlyInstallment
+							/* ,"paymentType": paymentType */
+							/* , "company": company */
+							/* , "monthlyInstallment": monthlyInstallment */
 							, "buyerName": buyerName
 							, "buyerPhoneNumber": buyerPhoneNumber
 							, "receiverName": receiverName
@@ -533,13 +532,13 @@ th:data-product-id
 					}
 					let url = "/invoice/payment-validation";
 					
-					console.log(params);
+					//console.log(params);
 					
 					$.post(url, params)
 					.done(function(data){
 							if(data.code == 200){
-								console.log(`payment sucesseful. userId:${/*[[session.userId]]*/null}, loginId: ${/*[[${session.loginId}]]*/null}`)
-								alert("결제 시도가 성공하였습니다.");
+								console.log("PortOne Billing Method get Requested.")
+								requestPayment(data);
 								
 							} else if(data.code == 403){
 								alert(data.error_message);
@@ -549,6 +548,65 @@ th:data-product-id
 							}
 					}) //ajax POST 
 				}) //btn payment on click;
+	
+				/* 포트원 결제 호출_21 08 2024 */
+				async function requestPayment(data){
+					console.log(data);
+					
+					let params = {
+						/* StoreId: 스토어 아이디; 포트원 계정 고유 식별 값 */
+						'storeId': data.storeId
+						  
+						  /* channelKey: 콘솔 채널 연동시 생성된 채널 키 */
+						  , 'channelKey': data.channelKey
+						  
+						  /* 고객사 주문 고유 번호; 이미 승인된 경우 에러 */
+						  	/* invoiceEntity 먼저 생성하고, 그 다음 invoiceId를 넘겨받도록 수정_21 08 2024*/
+						  , 'paymentId': data.paymentId
+						  /* orderName:주문명;자유롭게"*/
+						  , orderName: data.orderName
+						  , totalAmount: data.totalAmount
+						  , currency: "KRW"
+						  , payMethod: "CARD"
+						  
+						  , 'customer': {
+								'fullName': data.fullName
+								, 'email': data.email
+								, 'phoneNumber': data.phoneNumber
+								, 'address':{
+									'addressLine1': data.addressLine1
+									, 'addressLine2': data.addressLine2
+								}
+						  }
+					}
+					console.log(params);
+					console.log("포트원 결재 요청");
+					const response = await PortOne.requestPayment(params);
+					
+					if (response.code != null) {
+					    // 오류 발생
+					    //★★★★★ 결제 시도 오류 발생했으면 DB에 저장된 기존 Invoice 삭제해야;
+					    
+					    
+					    return alert(response.message);
+				 	}
+					
+					return alert("결제 시도 성공, 이제 결제 내용과 서버 저장 내용 대조해봐야!");
+					// 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+					  // (다음 목차에서 설명합니다)
+			  		const notified = await fetch(`/payment/complete`, {
+					    method: "POST"
+					    , headers: { "Content-Type": "application/json" }
+					    // paymentId와 주문 정보를 서버에 전달합니다
+					    , body: JSON.stringify({
+				      		paymentId: paymentId
+				      		, orderName: `orderName-${data.orderName}`
+							, totalAmount: data.totalAmount
+							, currency: "CURRENCY_KRW"
+							, payMethod: "CARD"
+				    	})
+				  	});
+				} //requestPayment(data) ;
 				
     		}) //document ready
     	</script>

@@ -20,6 +20,7 @@ public class InvoiceVO {
 		this.userId = invoice.getUserId();
 		this.payment = invoice.getPayment();
 		
+		/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 		//결제 타입: 신용카드 등등
 		this.paymentType = StringTranslator.translatePaymentTypeE2K(
 							invoice.getPaymentType());
@@ -29,7 +30,8 @@ public class InvoiceVO {
 		//할부 타입: 일시불, 2개월 할부 등등
 		this.monthlyInstallment = StringTranslator.translateMonthlyInstallmentE2K(
 									invoice.getMonthlyInstallment());
-				
+		*/
+		
 		//결제 취소 여부: 1은 결제 취소,0 은 결제완료 그대로 
 		this.hasCanceled = StringTranslator.translateHasCanceledE2K(
 							invoice.getHasCanceled());
@@ -53,6 +55,7 @@ public class InvoiceVO {
 		this.userId = invoice.getUserId();
 		this.payment = invoice.getPayment();
 		
+		/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 		//결제 타입: 신용카드 등등
 		this.paymentType = StringTranslator.translatePaymentTypeE2K(
 							invoice.getPaymentType());
@@ -62,7 +65,8 @@ public class InvoiceVO {
 		//할부 타입: 일시불, 2개월 할부 등등
 		this.monthlyInstallment = StringTranslator.translateMonthlyInstallmentE2K(
 									invoice.getMonthlyInstallment());
-				
+		*/		
+		
 		//결제 취소 여부: 1은 결제 취소,0 은 결제완료 그대로 
 		this.hasCanceled = StringTranslator.translateHasCanceledE2K(
 							invoice.getHasCanceled());

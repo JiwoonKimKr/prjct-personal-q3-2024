@@ -3,12 +3,14 @@ package com.givemetreat.invoice;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.givemetreat.invoice.bo.InvoiceBO;
+import com.givemetreat.invoice.domain.InvoiceEntity;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,16 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class InvoiceRestController {
 	private final InvoiceBO invoiceBO;
-	//결제 요청; ★★★★★나중에 PG사 연동시켜서 확인해봐야!
-	
-	
-	//@PostMapping(value="/payment", produces = "application/json; charset=utf8")
+
+	//포트원 결제 적용으로 수정_21 08 2024
 	@PostMapping("/payment-validation")
 	public Map<String, Object> payment(@RequestParam String listItemsOrdered
 										, @RequestParam Integer payment
-										, @RequestParam String paymentType
-										, @RequestParam String company
-										, @RequestParam String monthlyInstallment
 										, @RequestParam String buyerName
 										, @RequestParam String buyerPhoneNumber
 										, @RequestParam String receiverName
@@ -41,17 +38,13 @@ public class InvoiceRestController {
 		log.info("[InvoiceRestController payment()]"
 		+ " @RequestParam jsonString:{}"
 		+ ", payment:{}"
-		+ ", paymentType:{}"
-		+ ", company:{}"
-		+ ", monthlyInstallment:{}"
 		+ ", buyerName:{}"
 		+ ", buyerPhoneNumber:{}"
 		+ ", receiverName:{}"
 		+ ", receiverPhoneNumber:{}"
 		+ ", address:{}"
 		, listItemsOrdered
-		, payment, paymentType, company, monthlyInstallment
-		, buyerName, buyerPhoneNumber, receiverName, receiverPhoneNumber, address);
+		, payment, buyerName, buyerPhoneNumber, receiverName, receiverPhoneNumber, address);
 		
 		Integer userId = (Integer) session.getAttribute("userId");
 		
@@ -63,12 +56,9 @@ public class InvoiceRestController {
 		}
 		
 		
-		Boolean getPaymentSuccessMessage = invoiceBO.generateInvoiceFromJsonString(listItemsOrdered
+		InvoiceEntity invoice = invoiceBO.generateInvoiceFromJsonString(listItemsOrdered
 																				, userId
 																				, payment
-																				, paymentType
-																				, company
-																				, monthlyInstallment
 																				, buyerName
 																				, buyerPhoneNumber
 																				, receiverName
@@ -76,16 +66,28 @@ public class InvoiceRestController {
 																				, address);
 		
 		//결제 요청 실패 시
-		if(getPaymentSuccessMessage == false) {
+		if(ObjectUtils.isEmpty(invoice) == true) {
 			log.info("[InvoiceRestController payment()] current invoice got failed to get paid.");
 			result.put("code", 500);
-			result.put("error_message", "결제 시도가 실패하였습니다.");
+			result.put("error_message", "주문 송장(Invoice) 생성 시도가 실패하였습니다.");
 			return result;			
 		}
 		
 		log.info("[InvoiceRestController payment()] current invoice has success to get paid.");
 		result.put("code", 200);
-		result.put("error_message", "결제 시도가 성공하였습니다.");
+		result.put("result", "주문 송장(Invoice) 생성 시도가 성공하였습니다.");
+		result.put("storeId", "store-2ef6fb64-16b3-406b-9080-f581ef4541f4");
+		result.put("channelKey", "channel-key-6855e0fa-5ce5-4e9c-a5c7-ff0aa14e2dd6");
+		result.put("paymentId", String.format("payment-%s",invoice.getId()));
+		result.put("orderName", String.format("orderName-%s-%s", invoice.getId(), invoice.getCreatedAt()));
+		result.put("totalAmount", invoice.getPayment());
+		result.put("fullName", invoice.getBuyerName());
+		result.put("email", session.getAttribute("loginId"));
+		result.put("phoneNumber", invoice.getBuyerPhoneNumber());
+		//★★★★★구매자 주소 1; addressLine1 ; 일반주소 
+		result.put("addressLine1", "서울특별시 강남구");
+		//★★★★★구매자 주소 2; addressLine2 ; 일반주소 		
+		result.put("addressLine2", "강남대로94길 13");
 		
 		return result;
 	}

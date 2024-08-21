@@ -113,9 +113,6 @@ public class InvoiceController {
 															, null
 															, null
 															, null
-															, null
-															, null
-															, null
 															, statusDelivery
 															, null
 															, null

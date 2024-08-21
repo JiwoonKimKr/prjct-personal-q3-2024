@@ -48,9 +48,11 @@ public class AdminInvoiceBO {
 	public Page<AdminInvoiceVO> getInvoicesForPaging(Integer invoiceId
 													, Integer userId
 													, Integer payment
+													/* 포트원 적용으로 삭제_21 08 2024
 													, String paymentType
 													, String company
 													, String monthlyInstallment
+													*/
 													, Integer hasCanceled
 													, String buyerName
 													, String buyerPhoneNumber
@@ -71,9 +73,11 @@ public class AdminInvoiceBO {
 		List<Invoice> listEntitiesWhole = invoiceMapper.selectInvoicesForPaging( invoiceId
 																, userId
 																, payment
+																/* 포트원 적용으로 삭제_21 08 2024
 																, paymentType
 																, company
 																, monthlyInstallment
+																*/
 																, hasCanceled
 																, buyerName
 																, buyerPhoneNumber
@@ -240,9 +244,11 @@ public class AdminInvoiceBO {
 	public List<AdminInvoiceVO> getInvoices(Integer invoiceId
 										, Integer userId
 										, Integer payment
+										/* 포트원 적용으로 삭제_21 08 2024
 										, String paymentType
 										, String company
 										, String monthlyInstallment
+										*/
 										, Integer hasCanceled
 										, String buyerName
 										, String buyerPhoneNumber
@@ -255,9 +261,11 @@ public class AdminInvoiceBO {
 		List<Invoice> listInvoices = invoiceMapper.selectInvoices( invoiceId
 											, userId
 											, payment
+											/* 포트원 적용으로 삭제_21 08 2024
 											, paymentType
 											, company
 											, monthlyInstallment
+											*/
 											, hasCanceled
 											, buyerName
 											, buyerPhoneNumber

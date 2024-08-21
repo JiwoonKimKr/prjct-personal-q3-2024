@@ -1,18 +1,11 @@
 package com.givemetreat.common.validation;
 
-import java.util.*;
-
-import com.givemetreat.common.utils.StringTranslator;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class InvoiceParamsValidation {
 
 	public static Boolean getParamsValidated(Integer payment
-											, String paymentType
-											, String company
-											, String monthlyInstallment
 											, String buyerName
 											, String buyerPhoneNumber
 											, String receiverName
@@ -24,6 +17,7 @@ public class InvoiceParamsValidation {
 			log.warn("[InvoiceParamsValidation] payment is not numeric. payment:{}", payment);
 			return false;
 		}
+		/*  포트원 결제하면서 수정_21 08 2024
 		//paymentType
 		if(paymentType.equals("CreditCard") == false
 			&& paymentType.equals("AccountTranster") == false) {
@@ -56,7 +50,7 @@ public class InvoiceParamsValidation {
 				return false;
 			}
 		}
-		
+		*/
 		//buyerName
 		if(WordingValidation.isAlpha(buyerName) == false
 				&& WordingValidation.isKorean(buyerName) == false) {

@@ -57,9 +57,11 @@ public class AdminInvoiceController {
 	public String invoiceEntireView(@RequestParam(required = false) Integer invoiceId
 										, @RequestParam(required = false) Integer userId 
 										, @RequestParam(required = false) Integer payment
+										/* 포트원 적용으로 삭제_21 08 2024
 										, @RequestParam(required = false) String paymentType
 										, @RequestParam(required = false) String company
 										, @RequestParam(required = false) String monthlyInstallment
+										*/
 										, @RequestParam(required = false) Integer hasCanceled
 										, @RequestParam(required = false) String buyerName
 										, @RequestParam(required = false) String buyerPhoneNumber
@@ -81,9 +83,11 @@ public class AdminInvoiceController {
 		Page<AdminInvoiceVO> pageInfo = adminInvoiceBO.getInvoicesForPaging(invoiceId
 																			, userId
 																			, payment
+																			/* 포트원 적용으로 삭제_21 08 2024
 																			, paymentType
 																			, company
 																			, monthlyInstallment
+																			*/
 																			, hasCanceled
 																			, buyerName
 																			, buyerPhoneNumber

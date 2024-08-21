@@ -7,9 +7,6 @@
 			 `id`
 			, `userId`
 			, `payment`
-			, `paymentType`
-			, `company`
-			, `monthlyInstallment`
 			, `hasCanceled`
 			, `buyerName`
 			, `buyerPhoneNumber`
@@ -33,19 +30,7 @@
 			<if test="payment != null">
 				AND
 					`payment` = #{payment}
-			</if>		
-			<if test="paymentType != null">
-				AND
-					`paymentType` like LOWER(concat('%',#{paymentType},'%'))
-			</if>		
-			<if test="company != null">
-				AND
-					`company` like LOWER(concat('%',#{company},'%'))
-			</if>		
-			<if test="monthlyInstallment != null">
-				AND
-					`monthlyInstallment` like LOWER(concat('%',#{monthlyInstallment},'%'))
-			</if>		
+			</if>			
 			<if test="hasCanceled != null">
 				AND
 					`hasCanceled` = #{hasCanceled}
@@ -110,9 +95,6 @@
 			 `id`
 			, `userId`
 			, `payment`
-			, `paymentType`
-			, `company`
-			, `monthlyInstallment`
 			, `hasCanceled`
 			, `buyerName`
 			, `buyerPhoneNumber`
@@ -136,19 +118,7 @@
 			<if test="payment != null">
 				AND
 					`payment` = #{payment}
-			</if>		
-			<if test="paymentType != null">
-				AND
-					`paymentType` like LOWER(concat('%',#{paymentType},'%'))
-			</if>		
-			<if test="company != null">
-				AND
-					`company` like LOWER(concat('%',#{company},'%'))
-			</if>		
-			<if test="monthlyInstallment != null">
-				AND
-					`monthlyInstallment` like LOWER(concat('%',#{monthlyInstallment},'%'))
-			</if>		
+			</if>			
 			<if test="hasCanceled != null">
 				AND
 					`hasCanceled` = #{hasCanceled}
@@ -195,9 +165,6 @@
 			 `id`
 			, `userId`
 			, `payment`
-			, `paymentType`
-			, `company`
-			, `monthlyInstallment`
 			, `hasCanceled`
 			, `buyerName`
 			, `buyerPhoneNumber`
@@ -221,19 +188,7 @@
 			<if test="payment != null">
 				AND
 					`payment` = #{payment}
-			</if>		
-			<if test="paymentType != null">
-				AND
-					`payment` LIKE LOWER(concat('%',#{paymentType},'%'))
-			</if>		
-			<if test="company != null">
-				AND
-					`company` LIKE LOWER(concat('%',#{company},'%'))
-			</if>		
-			<if test="monthlyInstallment != null">
-				AND
-					`monthlyInstallment` LIKE LOWER(concat('%',#{monthlyInstallment},'%'))
-			</if>		
+			</if>			
 			<if test="hasCanceled != null">
 				AND
 					`hasCanceled` = #{hasCanceled}

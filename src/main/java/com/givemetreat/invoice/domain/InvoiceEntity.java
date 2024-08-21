@@ -33,12 +33,14 @@ public class InvoiceEntity {
 	private int userId;
 	private int payment;
 	
+	/* 포트원 도입하면서 해당 Column 삭제_21 08 2024
 	@Column(name="paymentType")
 	private String paymentType;
 	private String company;
 	
 	@Column(name="monthlyInstallment")
 	private String monthlyInstallment;
+	*/
 	
 	@Column(name="hasCanceled")
 	private int hasCanceled;

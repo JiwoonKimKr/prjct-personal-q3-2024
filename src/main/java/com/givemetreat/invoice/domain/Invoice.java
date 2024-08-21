@@ -8,9 +8,11 @@ public class Invoice {
 	private int id;
 	private int userId;
 	private int payment;
+	/*
 	private String paymentType;
 	private String company;
 	private String monthlyInstallment;
+	*/
 	private int hasCanceled;
 	private String buyerName;
 	private String buyerPhoneNumber;
