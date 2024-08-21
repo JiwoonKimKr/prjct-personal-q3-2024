@@ -78,17 +78,39 @@ public class InvoiceRestController {
 		result.put("result", "주문 송장(Invoice) 생성 시도가 성공하였습니다.");
 		result.put("storeId", "store-2ef6fb64-16b3-406b-9080-f581ef4541f4");
 		result.put("channelKey", "channel-key-6855e0fa-5ce5-4e9c-a5c7-ff0aa14e2dd6");
-		result.put("paymentId", String.format("payment-%s",invoice.getId()));
+		//★★★★★productId; givemetreat-{invoice.id}-{invoice.createAt} 
+		result.put("paymentId", String.format("givemetreat-%s",invoice.getId()));
 		result.put("orderName", String.format("orderName-%s-%s", invoice.getId(), invoice.getCreatedAt()));
 		result.put("totalAmount", invoice.getPayment());
 		result.put("fullName", invoice.getBuyerName());
 		result.put("email", session.getAttribute("loginId"));
 		result.put("phoneNumber", invoice.getBuyerPhoneNumber());
+		result.put("invoiceId", invoice.getId());
 		//★★★★★구매자 주소 1; addressLine1 ; 일반주소 
 		result.put("addressLine1", "서울특별시 강남구");
 		//★★★★★구매자 주소 2; addressLine2 ; 일반주소 		
 		result.put("addressLine2", "강남대로94길 13");
 		
+		return result;
+	}
+	
+	@PostMapping("/delete-invoice")
+	public Map<String, Object> deleteInvoice(int invoiceId, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
+		
+		InvoiceEntity invoice = invoiceBO.getEntityById(invoiceId);
+		if(ObjectUtils.isEmpty(invoice)) {
+			log.info("[InvoiceRestController deleteInvoice()] invoice failed to be found. invoice Id:{}", invoiceId);
+			result.put("code", 500);
+			result.put("error_message", "기존 주문이 삭제되지 않았습니다. 관리자에게 문의하세요.");
+			return result;
+		}
+		
+		invoiceBO.deleteInvoiceAndResetBuffer(invoice, (int)session.getAttribute("userId"));
+				
+		log.info("[InvoiceRestController deleteInvoice()] current invoice get Deleted. invoice Id:{}", invoiceId);
+		result.put("code", 200);
+		result.put("result", "주문 송장(Invoice)이 삭제되었습니다.");
 		return result;
 	}
 }

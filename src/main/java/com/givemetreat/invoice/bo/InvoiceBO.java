@@ -99,6 +99,11 @@ public class InvoiceBO {
 	}	
 	
 	@Transactional
+	public InvoiceEntity getEntityById(Integer invoiceId) {
+		return invoiceRepository.findById(invoiceId).orElse(null);
+	}
+	
+	@Transactional
 	public InvoiceVO getInvoiceById(Integer invoiceId) {
 		InvoiceEntity entity= invoiceRepository.findById(invoiceId).orElse(null);
 		return new InvoiceVO(entity);
@@ -293,6 +298,38 @@ public class InvoiceBO {
 		}
 		
 		return listVOs;
+	}
+	
+	public void deleteInvoiceAndResetBuffer(InvoiceEntity invoice, int userId) {
+		int invoiceId = invoice.getId();
+		
+		List<ProductInvoiceEntity> listProductInvoiceEntities =
+				productInvoiceBO.getProductInvoicesByInvoiceIdAndUserId(invoiceId, userId);
+		
+		for(ProductInvoiceEntity productInvoice: listProductInvoiceEntities) {
+			int productInvoiceId = productInvoice.getId();
+			
+			//productBuffer 초기화
+			//invoice-productInvoice 테이블에 등록됬던 재고들 모두 초기화
+			List<ProductBufferEntity> listBuffers = productBufferBO.resetProductBuffersByProductInvoiceId(productInvoiceId);
+			if(ObjectUtils.isEmpty(listBuffers)) {
+				log.warn("[InvoiceBO deleteInvoice()]"
+						+ "List of ProductBuffers failed to get reset. productInvoiceId:{}", productInvoiceId);
+			}
+		}
+		
+		//ProductInvoice 삭제
+		Boolean hasProductInvoiceDeleted = productInvoiceBO.deleteListProductInvoiceEntities(listProductInvoiceEntities);
+		
+		if(hasProductInvoiceDeleted == false) {
+			log.warn("[InvoiceBO deleteInvoice()]"
+					+ "List of ProductInvoices failed to get deleted. Invoice Id:{}", invoiceId);
+		}
+		
+		//invoice 삭제
+		invoiceRepository.delete(invoice);
+		log.info("[InvoiceBO deleteInvoice()]"
+				+ "invoice get deleted. invoiceId:{}", invoiceId);
 	}
 
 }

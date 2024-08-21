@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/defaultLayout4Payment}">
+      layout:decorate="~{layouts/defaultLayout}">
       
 	<head>
 		<title>결제 페이지</title>
@@ -227,9 +227,10 @@ th:data-product-id
 			</article>
 		</div>
 	</section>
-
+	
 	<th:block layout:fragment="script">
-    	<script>
+    	<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    	<script th:inline="javascript">
     		$(document).ready(function(e){
 /* __end__ShoppingCart와 동일 */    			
     			updateCostCurrentInvoiceView();
@@ -579,31 +580,44 @@ th:data-product-id
 								}
 						  }
 					}
+					let invoiceId = data.invoiceId;
 					console.log(params);
-					console.log("포트원 결재 요청");
+					console.log(`포트원 결재 요청 invoiceId:${invoiceId}`);
 					const response = await PortOne.requestPayment(params);
 					
 					if (response.code != null) {
+						alert(response.message);
 					    // 오류 발생
 					    //★★★★★ 결제 시도 오류 발생했으면 DB에 저장된 기존 Invoice 삭제해야;
-					    
-					    
-					    return alert(response.message);
+					    let url = "/invoice/delete-invoice"
+					    let data = {"invoiceId": invoiceId};
+					    console.log("[payment.html requestPayment()] Payment trial in PortOne failed. invoice Id:${invoiceId}")
+					    $.post(url, data)
+					    .done(function(data){
+							if(data.code == 200){
+								console.log("Current invoice get delete. invoiceId:${data.invoiceId}")
+							} else if(data.code == 403){
+								alert(data.error_message);
+								location.href="/user/sign-in-view";
+							} else {
+								alert(data.error_message);
+							}
+							
+						})// ajax DELETE
+					    alert("결제가 실패하였습니다. 다시 시도해주시길 바랍니다.");
+					    return;
 				 	}
 					
 					return alert("결제 시도 성공, 이제 결제 내용과 서버 저장 내용 대조해봐야!");
 					// 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
 					  // (다음 목차에서 설명합니다)
-			  		const notified = await fetch(`/payment/complete`, {
+			  		const notified = await fetch(`localhost/invoice/payment/complete`, {
 					    method: "POST"
 					    , headers: { "Content-Type": "application/json" }
 					    // paymentId와 주문 정보를 서버에 전달합니다
 					    , body: JSON.stringify({
 				      		paymentId: paymentId
 				      		, orderName: `orderName-${data.orderName}`
-							, totalAmount: data.totalAmount
-							, currency: "CURRENCY_KRW"
-							, payMethod: "CARD"
 				    	})
 				  	});
 				} //requestPayment(data) ;

@@ -17,4 +17,6 @@ public interface ProductBufferRepository extends JpaRepository<ProductBufferEnti
 
 	List<ProductBufferEntity> findByProductIdAndReservedOrderById(int productId, boolean reserved, Limit limit);
 
+	List<ProductBufferEntity> findByProductInvoiceId(int productInvoiceId);
+
 }

@@ -81,4 +81,23 @@ public class ProductBufferBO {
 		return listBuffers;
 	}
 
+	public List<ProductBufferEntity> resetProductBuffersByProductInvoiceId(int productInvoiceId) {
+		List<ProductBufferEntity> listBuffers = productBufferRepository.findByProductInvoiceId(productInvoiceId);
+		if(ObjectUtils.isEmpty(listBuffers)) {
+			log.warn("[productBufferBO: resetProductBuffersByProductInvoiceId()]"
+					+ " failed to select product_buffer list. productInvoiceId:{}", productInvoiceId);
+			return null;
+		}
+		for(ProductBufferEntity entity : listBuffers) {
+			productBufferRepository.save(entity.toBuilder()
+									.reserved(false)
+									.productInvoiceId(null)
+									.build());
+		}
+		log.info("[productBufferBO: resetProductBuffersByProductInvoiceId()]"
+				+ " List<ProductBufferEntity> get reseted as status not reserved. List<ProductBufferEntity>:{}", listBuffers);
+		
+		return listBuffers;
+	}
+
 }

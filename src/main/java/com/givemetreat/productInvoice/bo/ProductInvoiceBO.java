@@ -31,4 +31,10 @@ public class ProductInvoiceBO {
 		
 		return productInvoiceRepository.findProductInvoiceByInvoiceIdAndUserId(invoiceId, userId);
 	}
+
+	public Boolean deleteListProductInvoiceEntities(List<ProductInvoiceEntity> listProductInvoiceEntities) {
+		productInvoiceRepository.deleteAllInBatch(listProductInvoiceEntities);
+		return true;
+	}
+
 }
