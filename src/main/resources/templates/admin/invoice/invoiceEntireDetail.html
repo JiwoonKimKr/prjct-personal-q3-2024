@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/adminDefaultLayout}">
     <head>
     	<title>
-    		최근 결제완료 주문 조회
+    		전체	주문조회 상세내역
     	</title>
     </head>
 	<section layout:fragment="contents" class="contents mt-5">
@@ -16,6 +16,7 @@
 							<tr>
 								<th>주문<br>고유번호</th>
 								<th>유저<br>로그인아이디</th>
+								<th>총 결제금액</th>
 								<th>주문<br>취소여부</th>
 								<th>구매자<br>이름</th>
 								<th>구매자<br>연락처</th>
@@ -39,6 +40,7 @@
 										결제자 로그인아이디
 									</button>
 								</th>
+								<td th:text="'￦' +${invoice.payment}"></td>
 								<td th:text="${invoice.hasCanceled}"></td>
 								<td th:text="${invoice.buyerName}"></td>
 								<td th:text="${invoice.buyerPhoneNumber}"></td>

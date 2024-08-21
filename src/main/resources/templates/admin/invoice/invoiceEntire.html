@@ -4,7 +4,7 @@
       layout:decorate="~{layouts/adminDefaultLayout4DatePicker}">
     <head>
     	<title>
-    		최근 결제완료 주문 조회
+    		전체 주문조회
     	</title>
     </head>
 	<section layout:fragment="contents" class="contents mt-5">
@@ -40,7 +40,9 @@ listInvoices
 						</span>
 						<input id="payment" type="text" class="input-to-choose form-control col-8">
 					</div>
+<!-- 포트원 적용으로 해당 field 3개 삭제__21 08 2024 -->					
 					<!-- Dropdown: paymentType -->
+					<!--
 					<div id="field-paymentType" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							결제 타입
@@ -53,20 +55,25 @@ listInvoices
 							</select>
 						</div>
 					</div>
+					-->
 					<!-- Dropdown: company -->
+					<!-- 
 					<div id="field-company" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							결제 회사
 						</span>
 						<input id="company" type="text" class="input-to-choose form-control col-8">
 					</div>
+					-->
 					<!-- Dropdown: monthlyInstallment -->
+					<!--
 					<div id="field-monthlyInstallment" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							할부 내역
 						</span>
 						<input id="monthlyInstallment" type="text" class="input-to-choose form-control col-8">
 					</div>
+					-->
 					<!-- Dropdown: hasCanceled -->
 					<div id="field-hasCanceled" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
@@ -203,7 +210,7 @@ listInvoices
 							<tr>
 								<th>주문<br>고유번호</th>
 								<th>유저<br>로그인아이디</th>
-								<th>주문<br>취소여부</th>
+								<th>주문 취소여부</th>
 								<th>구매자<br>이름</th>
 								<th>구매자<br>연락처</th>
 								<th>배송현황</th>
@@ -397,12 +404,14 @@ listInvoices
 					let userId = $("#userId").val().trim();
 					//★★★★★ 결제 금액 관련 범위 넣어야
 					let payment = $("#payment").val().trim();
+					/* 포트원 적용하면서 해당 3개 컬럼 삭제__21 08 2024
 					let paymentType = $("#paymentType").children("option:selected").val();
 					if(paymentType == '--------'){
 						paymentType = '';
 					}
 					let company = $("#company").val().trim();
 					let monthlyInstallment = $("#monthlyInstallment").val().trim();
+					*/
 					let hasCanceled = $("#hasCanceled").children("option:selected").val();
 					if(hasCanceled == '--------'){
 						hasCanceled = '';
@@ -429,9 +438,6 @@ listInvoices
     				
     				console.log(`userId: ${userId}
 			    				, payment: ${payment}
-			    				 ,paymentType: ${paymentType}
-			    				, company: ${company}
-			    				, monthlyInstallment: ${monthlyInstallment}
 			    				, hasCanceled: ${hasCanceled}
 			    				, buyerName: ${buyerName}
 			    				, buyerPhoneNumber: ${buyerPhoneNumber}
@@ -446,9 +452,11 @@ listInvoices
     				
     				if(userId) urlParams.set('userId', userId);
     				if(payment) urlParams.set('payment', payment);
+    				/* 포트원 적용하면서 해당 3개 컬럼 삭제__21 08 2024
     				if(paymentType) urlParams.set('paymentType', paymentType);
     				if(company) urlParams.set('company', company);
     				if(monthlyInstallment ) urlParams.set('monthlyInstallment', monthlyInstallment);
+    				*/
     				if(hasCanceled) urlParams.set('hasCanceled', hasCanceled);
     				if(buyerName) urlParams.set('buyerName', buyerName);
     				if(buyerPhoneNumber) urlParams.set('buyerPhoneNumber', buyerPhoneNumber);

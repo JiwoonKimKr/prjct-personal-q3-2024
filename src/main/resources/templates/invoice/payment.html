@@ -588,7 +588,7 @@ th:data-product-id
 					if (response.code != null) {
 						alert(response.message);
 					    // 오류 발생
-					    //★★★★★ 결제 시도 오류 발생했으면 DB에 저장된 기존 Invoice 삭제해야;
+					    // 결제 시도 오류 발생했으면 DB에 저장된 기존 DB에 기재된 Invoice를 삭제;
 					    let url = "/invoice/delete-invoice"
 					    let data = {"invoiceId": invoiceId};
 					    console.log("[payment.html requestPayment()] Payment trial in PortOne failed. invoice Id:${invoiceId}")
