@@ -20,14 +20,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Pet Controller", description = "[Client] Pet Controller")
+@Tag(name = "Pet Controller", description = "[Client] Pet Controller 반려견 페이지 관련 컨트롤러")
 @RequiredArgsConstructor
 @RequestMapping("/pet")
 @Controller
 public class PetController {
 	private final PetBO petBO;
 	
-	@Operation(summary = "petListView", description = "해당 사용자 관련 반려견 조회 페이지")
+	@Operation(summary = "petListView() 반려견 조회 페이지 ", description = "해당 사용자 관련 반려견 조회 페이지")
 	@Parameters({
 			@Parameter(name = "<HttpSession> session", description = "session")
 			, @Parameter(name = "<Model> model", description = "MVC Model")
@@ -51,7 +51,7 @@ public class PetController {
 	
 	@Operation(summary = "registerPetView", description = "해당 사용자 반려견 등록 페이지")
 	@ApiResponse(responseCode = "200"
-				, description = "/pet/registerPet.html <br> Model Attribute: \"listUsers\" ")
+				, description = "/pet/registerPet.html")
 	@GetMapping("/register-pet-view")
 	public String registerPetView() {
 		

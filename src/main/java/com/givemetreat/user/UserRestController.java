@@ -37,7 +37,7 @@ public class UserRestController {
 	private final UserEmailBO userEmailBO;
 	
 	
-	@Operation(summary = "resetPassword", description = "비밀번호 재설정.")
+	@Operation(summary = "resetPassword() 비밀번호 재설정", description = "비밀번호 재설정.")
 	@Parameters({
 		@Parameter(name = "<String> loginId", description = "로그인 아이디", example = "asdf")
 		, @Parameter(name = "<String> password", description = "비밀번호")
@@ -108,7 +108,7 @@ public class UserRestController {
 	 * @param userEmail
 	 * @return Map<String, Object>
 	 */
-	@Operation(summary = "email Verification", description = "사용자가 입력한 이메일(아이디)로 인증 코드를 발송함.")
+	@Operation(summary = "email Verification 이메일 코드 발송", description = "사용자가 입력한 이메일(아이디)로 인증 코드를 발송함.")
 	@Parameters({
 		@Parameter(name = "<String> userEmail", description = "이메일(아이디)", example = "example@exampleGivemeTreat.com")
 	})
@@ -135,7 +135,7 @@ public class UserRestController {
 		return result;
 	}
 	
-	@Operation(summary = "verification Code", description = "사용자가 이메일(아이디)로 받은 인증 코드를 입력한 후, 검증 절차를 거친다.")
+	@Operation(summary = "verification Code() 인증코드 검증", description = "사용자가 이메일(아이디)로 받은 인증 코드를 입력한 후, 검증 절차를 거친다.")
 	@Parameters({
 		@Parameter(name = "<String> codeRequested", description = "사용자가 입력한 코드")
 	})
@@ -162,7 +162,7 @@ public class UserRestController {
 		return result;
 	}
 	
-	@Operation(summary = "verify LoginId", description = "사용자가 입력한 이메일(아이디)가 기존 DB에 존재하는지 검증한다.")
+	@Operation(summary = "verifyLoginId() 이메일 검증", description = "사용자가 입력한 이메일(아이디)가 기존 DB에 존재하는지 검증한다.")
 	@Parameters({
 		@Parameter(name = "<String> emailTyped", description = "사용자가 입력한 이메일")
 	})
@@ -190,7 +190,7 @@ public class UserRestController {
 	}
 	
 	//localhost/user/sign-in
-	@Operation(summary = "signIn", description = "로그인")
+	@Operation(summary = "signIn() 로그인", description = "로그인")
 	@Parameters({
 		@Parameter(name = "<String> loginId", description = "로그인 아이디(이메일)")
 		, @Parameter(name = "<String> password", description = "비밀번호")
@@ -237,7 +237,7 @@ public class UserRestController {
 	}
 
 	//localhost/user/sign-up
-	@Operation(summary = "signUp", description = "회원가입")
+	@Operation(summary = "signUp() 회원가입", description = "회원가입")
 	@Parameters({
 		@Parameter(name = "<String> loginId", description = "로그인 아이디(이메일)")
 		, @Parameter(name = "<String> password", description = "비밀번호")

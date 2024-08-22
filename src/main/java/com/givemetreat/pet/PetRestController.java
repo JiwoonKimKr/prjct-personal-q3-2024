@@ -12,15 +12,35 @@ import org.springframework.web.multipart.MultipartFile;
 import com.givemetreat.pet.bo.PetBO;
 import com.givemetreat.pet.domain.Pet;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Pet RestController", description = "[Client] Pet RestAPI Controller 반려견 RestAPI 관련 컨트롤러")
 @RequestMapping("/pet")
 @RequiredArgsConstructor
 @RestController
 public class PetRestController {
 	private final PetBO petBO;
 
+	@Operation(summary = "addPetInfo() 반려견 등록", description = "해당 사용자가 반려견을 등록")
+	@Parameters({
+		@Parameter(name = "<String> name", description = "<RequestPart> 반려견 이름", example = "망고")
+		, @Parameter(name = "<String> age", description = "<RequestPart> 반려견 연령대 ('under6months', 'adult', 'senior')", example = "under6months")
+		, @Parameter(name = "<MultipartFile> imageProfile", description = "<RequestPart> 반려견 이미지", example = "manggo-puppy.img")
+		, @Parameter(name = "<HttpSession> session", description = "session")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500", description = "error_message: \"기존 이름과 중복됩니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500", description = "error_message: \"해당 반려견 정보를 추가하지 못 하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
+	})
 	@PostMapping("/register-pet")
 	public Map<String, Object> addPetInfo(
 			@RequestPart("name") String name

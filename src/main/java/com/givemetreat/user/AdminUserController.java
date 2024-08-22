@@ -34,7 +34,7 @@ public class AdminUserController {
 	private final AdminUserBO adminUserBO;
 
 	@GetMapping("/user-detail-view")
-	@Operation(summary = "사용자 상세 조회", description = "사용자 관련 정보로 조회 가능. 필터 다중 조회 가능.페이징 구현된 값을 응답")
+	@Operation(summary = "userDetailView() 사용자 상세조회 페이지", description = "사용자 관련 정보로 조회 가능. 필터 다중 조회 가능.페이징 구현된 값을 응답")
 	@Parameters({
 			@Parameter(name = "<Integer> userId", description = "사용자PK", example="1")
 			, @Parameter(name = "<String> loginId", description = "로그인 아이디", example="asdf")
@@ -95,7 +95,7 @@ public class AdminUserController {
 		return "/admin/user/userDetail";
 	}
 	
-	@Operation(summary = "해당 사용자 반려견 상세 정보 조회", description = "반려견 상세 정보 조회 페이지")
+	@Operation(summary = "userPetDetailView() 해당 사용자 반려견 상세조회 페이지", description = "반려견 상세 정보 조회 페이지")
 	@Parameters({
 		@Parameter(name = "<int> userId", description = "사용자 PK", example = "10")
 		, @Parameter(name = "<int> petId", description = "사용자 해당 반려견 PK", example = "1")

@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ShoppingCartRestController {
 	private final ProductShoppingCartBO productShoppingCartBO;
 	
-	@Operation(summary = "updateProductQuantity", description = "사용자가 요청한 장바구니 수량에 맞게 업데이트")
+	@Operation(summary = "updateProductQuantity() 장바구니 해당 상품 수량 업데이트", description = "사용자가 요청한 장바구니 수량에 맞게 업데이트")
 	@Parameters({
 		@Parameter(name = "<int> productId", description = "해당 상품 PK", example = "1")
 		, @Parameter(name = "<int> quantity", description = "물품 수량")
@@ -80,7 +80,7 @@ public class ShoppingCartRestController {
 		return result;
 	}
 	
-	@Operation(summary = "deleteProduct", description = "해당 제품을 장바구니 목록에서 삭제")
+	@Operation(summary = "deleteProduct() 해당 상품을 장바구니 목록에서 삭제", description = "해당 제품을 장바구니 목록에서 삭제")
 	@Parameters({
 		@Parameter(name = "<int> productId", description = "해당 상품 PK", example = "1")
 		, @Parameter(name = "<Integer> cartItemId", description = "(비필수) 장바구니ID(ProductShoppingCartEntity의 PK)")
@@ -125,7 +125,7 @@ public class ShoppingCartRestController {
 		return result;		
 	}
 	
-	@Operation(summary = "emptyCart", description = "사용자의 장바구니를 통채로 비운다")
+	@Operation(summary = "emptyCart() 장바구니 비우기", description = "사용자의 장바구니를 통채로 비운다")
 	@Parameters({
 		@Parameter(name = "<HttpSession> session", description = "session")
 	})

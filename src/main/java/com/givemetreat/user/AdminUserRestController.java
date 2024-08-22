@@ -18,14 +18,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Admin User RestController", description = "[Admin] User RestAPI Controller")
+@Tag(name = "Admin User RestController", description = "[Admin] User RestAPI Controller; 관리자 페이지 사용자 관련 RestAPI 컨트롤러")
 @RequestMapping("/admin/user")
 @RequiredArgsConstructor
 @RestController
 public class AdminUserRestController {
 	private final AdminUserBO adminUserBO;
 	
-	@Operation(summary = "사용자 등록 반려견 삭제", description = "등록된 반려견 삭제.")
+	@Operation(summary = "deleteUserPetCurrent() 사용자 등록 반려견 삭제", description = "등록된 반려견 삭제.")
 	@Parameters({
 		@Parameter(name = "<int> userId", description = "사용자 PK", example = "10")
 		, @Parameter(name = "<int> petId", description = "사용자 해당 반려견 PK", example = "1")

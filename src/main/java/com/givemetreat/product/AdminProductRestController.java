@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Tag(name = "Admin Product RestController", description = "[Admin] Product RestAPI Controller")
+@Tag(name = "Admin Product RestController", description = "[Admin] Product RestAPI Controller; 관리자 페이지 상품 관련 RestAPI 컨트롤러")
 @Slf4j
 @RequestMapping("/admin/product")
 @RequiredArgsConstructor
@@ -38,7 +38,7 @@ public class AdminProductRestController {
 	private final AdminProductBO adminProductBO;
 	
 	//localhost/admin/product/register-product
-	@Operation(summary = "registerProduct", description = "관리자페이지 상품 등록")
+	@Operation(summary = "registerProduct() 새 상품 등록", description = "관리자페이지 상품 등록")
 	@Parameters({
 		@Parameter(name = "<String> name", description = "상품명", example = "10")
 		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
@@ -83,7 +83,7 @@ public class AdminProductRestController {
 	
 	
 	//해당 검색 페이지에서 바로 뿌려주는 형식
-	@Operation(summary = "productListView", description = "상품 현 재고 조회")
+	@Operation(summary = "productListView() 상품 목록 조회", description = "재고 존재하는 모든 상품 대상 조회, 필터 중복 가능")
 	@Parameters({
 		@Parameter(name = "<Integer> id", description = "상품 pk", example = "10")
 		, @Parameter(name = "<String> name", description = "상품명", example = "나도간식줘")
@@ -160,9 +160,9 @@ public class AdminProductRestController {
 		return result;
 	}
 	
-	@Operation(summary = "deleteProduct", description = "상품 삭제")
+	@Operation(summary = "deleteProduct() 해당 상품 삭제", description = "상품 삭제")
 	@Parameters({
-		@Parameter(name = "<int> id", description = "상품 pk", example = "10")
+		@Parameter(name = "<int> id", description = "상품(product) pk", example = "10")
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "500", description = "error_message: \"해당 상품을 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))

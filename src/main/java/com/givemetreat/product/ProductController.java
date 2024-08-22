@@ -23,14 +23,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "Product Controller", description = "[Client] Product Controller")
+@Tag(name = "Product Controller", description = "[Client] Product Controller 상품 페이지 관련 컨트롤러")
 @RequiredArgsConstructor
 @RequestMapping("/product")
 @Controller
 public class ProductController {
 	private final ProductBO productBO;
 
-	@Operation(summary = "productListView", description = "상품 조회 페이지; 현 메인 페이지")
+	@Operation(summary = "productListView() 상품 조회 페이지;현 메인 페이지", description = "상품 조회 페이지; 현 메인 페이지 <br> 다양한 변수들 활용 가능 <br> 중복 필터 활용 가능")
 	@Parameters({
 		@Parameter(name = "<Integer> id", description = "상품 pk", example = "10")
 		, @Parameter(name = "<String> name", description = "상품명", example = "나도간식줘")
@@ -38,7 +38,7 @@ public class ProductController {
 		, @Parameter(name = "<String> price", description = "상품 가격, 원 단위", example = "10000")
 		, @Parameter(name = "<String> agePetProper", description = "반려견 적정 섭취 연령", example = "under6months")
 		, @Parameter(name = "<String> direction", description = "(direction과 idRequested) 페이지 방향; 'prev'와 'next' 둘 중 하나")
-		, @Parameter(name = "<Integer> idRequested", description = "(direction과 idRequested) 페이지 방향; 'prev'와 'next' 둘 중 하나")
+		, @Parameter(name = "<Integer> idRequested", description = "(direction과 idRequested) 요청받은 id(pk)값")
 		, @Parameter(name = "<Integer> pageCurrent", description = "(pageCurrent과 pageRequested) 현재 페이지 번호", example = "0")
 		, @Parameter(name = "<Integer> pageRequested", description = "(pageCurrent과 pageRequested) 요청받은 페이지 번호", example = "3")
 		, @Parameter(name = "<Model> model", description = "MVC Model")
@@ -46,7 +46,7 @@ public class ProductController {
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "/product/productList.html"
 																	+"<br> Model Attributtes"
-																	+"<br>, List&lt;AdminProductVO&gt; listProducts"
+																	+"<br>, List&lt;ProductVO&gt; listProducts"
 																	+"<br>, &lt;Integer&gt; numberPageCurrent"
 																	+"<br>, &lt;Integer&gt; numberPageMax"
 																	+"<br>, &lt;Integer&gt; limit"
@@ -88,7 +88,7 @@ public class ProductController {
 		return "/product/productList";
 	}
 	
-	@Operation(summary = "productDetailView", description = "상품 상세 조회 페이지")
+	@Operation(summary = "productDetailView() 상품 상세 조회 페이지", description = "상품 상세 조회 페이지")
 	@ApiResponse(responseCode = "200"
 				, description = "/product/productDetail.html"
 								+ "<br> Model Attributes"

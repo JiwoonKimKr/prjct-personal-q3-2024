@@ -9,11 +9,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Controller
-@Tag(name = "MainController", description = "메인 컨트롤러")
+@Tag(name = "MainController", description = "[client] Main Controller; 메인 컨트롤러")
 public class MainController {
 	
 	@GetMapping("/")
-	@Operation(summary = "초기 진입 화면", description = "로그인 불필요, product/product-list-view로 리다이렉트")
+	@Operation(summary = "initialIndexView() 초기 진입 화면", description = "로그인 불필요, product/product-list-view로 리다이렉트")
 	@ApiResponse(responseCode = "200"
 		, description = "redirect:product/product-list-view"
 		, content = @Content(mediaType = "TEXT_HTML"))

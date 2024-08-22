@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.givemetreat.common.utils.StringTranslator;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Schema(description = "주문(인보이스) VO")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

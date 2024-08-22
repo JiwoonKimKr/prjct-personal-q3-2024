@@ -33,7 +33,7 @@ public class OAuthController {
 	private final UserBO userBO;
 	private final OAuthBO oAuthBO;
 
-	@Operation(summary = "카카오 OAuth API", description = "카카오 Open Authorization API")
+	@Operation(summary = "redirectedFromKakaoSignUp() 카카오 OAuth API 리다이렉트", description = "카카오 Open Authorization API")
 	@Parameters({
 			@Parameter(name = "<String> code", description = "코드")
 			, @Parameter(name = "<String> error", description = "에러", example="access_denied")
