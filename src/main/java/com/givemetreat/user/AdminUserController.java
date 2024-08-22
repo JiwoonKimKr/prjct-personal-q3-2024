@@ -18,6 +18,8 @@ import com.givemetreat.user.domain.AdminUserVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,19 +33,20 @@ public class AdminUserController {
 	private final AdminUserBO adminUserBO;
 
 	@GetMapping("/user-detail-view")
-	@Operation(summary = "사용자 상세 조회", description = "사용자 관련 정보로 조회 가능.페이징 구현된 값을 응답")
+	@Operation(summary = "사용자 상세 조회", description = "사용자 관련 정보로 조회 가능. 필터 다중 조회 가능.페이징 구현된 값을 응답")
 	@Parameters({
-			@Parameter(name = "userId", description = "사용자PK", example="1")
-			, @Parameter(name = "loginId", description = "로그인 아이디", example="asdf")
-			, @Parameter(name = "nickname", description = "사용자 닉네임", example="butler")
-			, @Parameter(name = "selfDesc", description = "자기 소개", example="저는 강아지와 함께 지내는 집사입니다.")
-			, @Parameter(name = "createdAtSince", description = "가입시간 조회 출발시점", example="2024-08-01T06:30:45")
-			, @Parameter(name = "createdAtUntil", description = "가입시간 조회 종료시점", example="2024-08-01T06:30:45")
-			, @Parameter(name = "updatedAtSince", description = "수정시간 조회 종료시점", example="2024-08-01T06:30:45")
-			, @Parameter(name = "updatedAtUntil", description = "수정시간 조회 종료시점", example="2024-08-01T06:30:45")
-			, @Parameter(name = "page", description = "페이징 관련 페이지 숫자", example="1")
-			, @Parameter(name = "size", description = "페이징 전체 크기", example="5")
+			@Parameter(name = "<Integer> userId", description = "사용자PK", example="1")
+			, @Parameter(name = "<String> loginId", description = "로그인 아이디", example="asdf")
+			, @Parameter(name = "<String> nickname", description = "사용자 닉네임", example="butler")
+			, @Parameter(name = "<String> selfDesc", description = "자기 소개", example="저는 강아지와 함께 지내는 집사입니다.")
+			, @Parameter(name = "<LocalDateTime> createdAtSince", description = "가입시간 조회 출발시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "<LocalDateTime> createdAtUntil", description = "가입시간 조회 종료시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "<LocalDateTime> updatedAtSince", description = "수정시간 조회 종료시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "<LocalDateTime> updatedAtUntil", description = "수정시간 조회 종료시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "<Integer> page", description = "페이징 관련 페이지 숫자", example="1")
+			, @Parameter(name = "<Integer> size", description = "페이징 전체 크기", example="5")
 	})
+	@ApiResponse(responseCode = "200", description = "/admin/user/userDetail.html", content = @Content(mediaType = "TEXT_HTML"))
 	public String userDetailView( @RequestParam(required = false) Integer userId
 								, @RequestParam(required = false) String loginId
 								, @RequestParam(required = false) String nickname
@@ -85,6 +88,14 @@ public class AdminUserController {
 	}
 	
 	@GetMapping("/user-pet-detail-view")
+	@Operation(summary = "해당 사용자 반려견 상세 정보 조회", description = "반려견 상세 정보 조회 페이지")
+	@Parameters({
+		@Parameter(name = "<int> userId", description = "사용자 PK", example = "10")
+		, @Parameter(name = "<int> petId", description = "사용자 해당 반려견 PK", example = "1")
+	})
+	@ApiResponse(responseCode = "200"
+		, description = "/admin/user/userPetDetail.html"
+		, content = @Content(mediaType = "TEXT_HTML"))
 	public String userPetDetailView(@RequestParam int userId
 									, @RequestParam int petId
 									, Model model) {

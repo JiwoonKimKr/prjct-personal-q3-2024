@@ -9,14 +9,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.givemetreat.user.bo.AdminUserBO;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Admin User RestController", description = "[Admin] User RestAPI Controller")
 @RequestMapping("/admin/user")
 @RequiredArgsConstructor
 @RestController
 public class AdminUserRestController {
 	private final AdminUserBO adminUserBO;
 	
+	@Operation(summary = "사용자 등록 반려견 삭제", description = "등록된 반려견 삭제.")
+	@Parameters({
+		@Parameter(name = "<int> userId", description = "사용자 PK", example = "10")
+		, @Parameter(name = "<int> petId", description = "사용자 해당 반려견 PK", example = "1")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500", description = "error_message: \"회원가입에 실패하였습니다. 관리자에게 문의하시길 바랍니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
+	})
 	@DeleteMapping("/delete-user-pet-current")
 	public Map<String, Object> deleteUserPetCurrent(
 									@RequestParam int userId

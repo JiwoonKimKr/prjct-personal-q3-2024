@@ -14,10 +14,18 @@ import com.givemetreat.user.bo.OAuthBO;
 import com.givemetreat.user.bo.UserBO;
 import com.givemetreat.user.domain.UserEntity;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "OAuth Controller", description = "[Client] Open Authorization Controller; 현재는 카카오API만 구현되어 있음_22 08 2024")
 @Slf4j
 @RequiredArgsConstructor
 @Controller
@@ -25,6 +33,16 @@ public class OAuthController {
 	private final UserBO userBO;
 	private final OAuthBO oAuthBO;
 
+	@Operation(summary = "카카오 OAuth API", description = "카카오 Open Authorization API")
+	@Parameters({
+			@Parameter(name = "<String> code", description = "코드")
+			, @Parameter(name = "<String> error", description = "에러", example="access_denied")
+			, @Parameter(name = "<String> error_description", description = "에러 관련 설명")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "400", description = "\"redirect:/\" 등록 실패한 케이스, 메인 페이지로 리다이렉트")
+		, @ApiResponse(responseCode = "200", description = "\"redirect:/product/product-list-view\" 성공한 경우 회원가입 및 로그인 처리 후 상품 메인페이지로 이동", content = @Content(mediaType = "TEXT_HTML"))
+	})
 	@SuppressWarnings("unchecked")
 	@GetMapping("/OAuth/kakao-sign-up")
 	public String redirectedFromKakaoSignUp(
