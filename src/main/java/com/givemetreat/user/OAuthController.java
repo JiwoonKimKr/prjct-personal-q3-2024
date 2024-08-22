@@ -1,6 +1,6 @@
 package com.givemetreat.user;
 
-import java.util.*;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
@@ -41,7 +41,11 @@ public class OAuthController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "400", description = "\"redirect:/\" 등록 실패한 케이스, 메인 페이지로 리다이렉트")
-		, @ApiResponse(responseCode = "200", description = "\"redirect:/product/product-list-view\" 성공한 경우 회원가입 및 로그인 처리 후 상품 메인페이지로 이동", content = @Content(mediaType = "TEXT_HTML"))
+		, @ApiResponse(responseCode = "200"
+					, description = "\"redirect:/product/product-list-view\""
+							+ "\n 성공한 경우 회원가입 및 로그인 처리 후 상품 메인페이지로 이동"
+							+ " session에 &lt;int&gt; userId, &lt;String&gt; loginId, &lt;String&gt; userName 추가"
+					, content = @Content(mediaType = "TEXT_HTML"))
 	})
 	@SuppressWarnings("unchecked")
 	@GetMapping("/OAuth/kakao-sign-up")

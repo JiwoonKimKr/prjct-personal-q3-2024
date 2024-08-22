@@ -2,9 +2,11 @@ package com.givemetreat.product.domain;
 
 import java.time.LocalDateTime;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Schema(description = "[Admin] adminProductVO")
 @NoArgsConstructor
 @Data
 public class AdminProductVO {

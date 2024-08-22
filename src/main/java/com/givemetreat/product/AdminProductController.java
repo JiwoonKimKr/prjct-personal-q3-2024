@@ -9,26 +9,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.AdminProductVO;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Admin Product Controller", description = "[Admin] Product Controller")
 @RequiredArgsConstructor
 @RequestMapping("/admin/product")
 @Controller
 public class AdminProductController {
 	private final AdminProductBO adminProductBO;
 	
+	@Operation(summary = "productRegisterView", description = "새로운 상품 등록 페이지")
+	@ApiResponse(responseCode = "200", description = "/admin/product/productRegister.html", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/product-register-view")
 	public String productRegisterView() {
 		return "admin/product/productRegister";
 	}
 	
 	//상품 리스트 조회
+	@Operation(summary = "productListView", description = "기존 등록한 상품 목록 조회")
+	@ApiResponse(responseCode = "200", description = "/admin/product/productList.html", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/product-list-view")
 	public String productListView(){
 		return "admin/product/productList";
 	}
 	
 	//상품 상세 조회
+	@Operation(summary = "productListView", description = "기존 등록한 상품 목록 조회")
+	@Parameters({
+		@Parameter(name = "[PathVariable] <int> idProduct", description = "해당 상품 PK", example = "5")
+		, @Parameter(name = "<Model> model", description = "MVC Model")
+	})
+	@ApiResponse(responseCode = "200", description = "/admin/product/productDetail.html \n Model에 AdminProductVO\"productCurrent\"이 담긴다."
+		, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = AdminProductVO.class)))
 	@GetMapping("/{idProduct}")
 	public String productDetailView(@PathVariable int idProduct
 									, Model model) {

@@ -3,9 +3,11 @@ package com.givemetreat.productShoppingCart.domain;
 
 import com.givemetreat.product.domain.ProductVO;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Schema(description = "장바구니에 담긴 상품 VO(ProductShoppingCartVO)")
 @NoArgsConstructor
 @Data
 public class ProductShoppingCartVO {

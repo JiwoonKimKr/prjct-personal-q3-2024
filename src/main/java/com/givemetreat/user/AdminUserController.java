@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,14 @@ public class AdminUserController {
 			, @Parameter(name = "<Integer> page", description = "페이징 관련 페이지 숫자", example="1")
 			, @Parameter(name = "<Integer> size", description = "페이징 전체 크기", example="5")
 	})
-	@ApiResponse(responseCode = "200", description = "/admin/user/userDetail.html", content = @Content(mediaType = "TEXT_HTML"))
+	@ApiResponse(responseCode = "200"
+				, description = "/admin/user/userDetail.html Model Attribute: \"listUsers\" "
+								+ "<br> Model Attributes"
+								+ "<br> List &lt; AdminUserVO &gt; listUsers "
+								+ "<br> , &lt; Integer &gt; totalPages "
+								+ "<br> , &lt; Integer &gt; pageCurrent "
+								+ "<br> , &lt; Integer &gt; sizeCurrent "
+				, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = AdminUserVO.class)))
 	public String userDetailView( @RequestParam(required = false) Integer userId
 								, @RequestParam(required = false) String loginId
 								, @RequestParam(required = false) String nickname
@@ -87,15 +95,16 @@ public class AdminUserController {
 		return "/admin/user/userDetail";
 	}
 	
-	@GetMapping("/user-pet-detail-view")
 	@Operation(summary = "해당 사용자 반려견 상세 정보 조회", description = "반려견 상세 정보 조회 페이지")
 	@Parameters({
 		@Parameter(name = "<int> userId", description = "사용자 PK", example = "10")
 		, @Parameter(name = "<int> petId", description = "사용자 해당 반려견 PK", example = "1")
 	})
 	@ApiResponse(responseCode = "200"
-		, description = "/admin/user/userPetDetail.html"
-		, content = @Content(mediaType = "TEXT_HTML"))
+				, description = "/admin/user/userPetDetail.html <br>"
+								+ "&lt;AdminPetVO&gt; \"pet\""
+	, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = AdminPetVO.class)))
+	@GetMapping("/user-pet-detail-view")
 	public String userPetDetailView(@RequestParam int userId
 									, @RequestParam int petId
 									, Model model) {

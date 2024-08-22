@@ -51,7 +51,7 @@ public class UserController {
 	@Parameters({
 		@Parameter(name = "<HttpSession> session", description = "session")
 	})
-	@ApiResponse(responseCode = "200", description = "\"redirect:/user/sign-in-view\"")
+	@ApiResponse(responseCode = "200", description = "\"redirect:/user/sign-in-view\" session에서 &lt;int&gt; \"loginId\", &lt;int&gt; \"userId\", &lt;String&gt;\"userName\" 삭제하여 로그아웃 처리")
 	@RequestMapping(path = "/sign-out", method = {RequestMethod.GET, RequestMethod.POST})
 	public String signOut(HttpSession session) {
 		session.removeAttribute("loginId");
