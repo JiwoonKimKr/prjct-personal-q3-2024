@@ -18,9 +18,18 @@ import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.AdminProductVO;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "Admin Product RestController", description = "[Admin] Product RestAPI Controller")
 @Slf4j
 @RequestMapping("/admin/product")
 @RequiredArgsConstructor
@@ -29,6 +38,19 @@ public class AdminProductRestController {
 	private final AdminProductBO adminProductBO;
 	
 	//localhost/admin/product/register-product
+	@Operation(summary = "registerProduct", description = "관리자페이지 상품 등록")
+	@Parameters({
+		@Parameter(name = "<String> name", description = "상품명", example = "10")
+		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
+		, @Parameter(name = "<String> price", description = "상품 가격, 원 단위", example = "10000")
+		, @Parameter(name = "<String> agePetProper", description = "반려견 적정 섭취 연령", example = "under6months")
+		, @Parameter(name = "<MultipartFile> imageProduct", description = "상품 이미지", example = "treat03_givemetreat.png")
+		, @Parameter(name = "<String> quantity", description = "추가될 상품 재고, 유닛 단위", example = "100")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
+	})
 	@PostMapping("/register-product")
 	public Map<String, Object> registerProduct(
 			@RequestPart String name 
@@ -61,6 +83,29 @@ public class AdminProductRestController {
 	
 	
 	//해당 검색 페이지에서 바로 뿌려주는 형식
+	@Operation(summary = "productListView", description = "상품 현 재고 조회")
+	@Parameters({
+		@Parameter(name = "<Integer> id", description = "상품 pk", example = "10")
+		, @Parameter(name = "<String> name", description = "상품명", example = "나도간식줘")
+		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
+		, @Parameter(name = "<String> price", description = "상품 가격, 원 단위", example = "10000")
+		, @Parameter(name = "<String> agePetProper", description = "반려견 적정 섭취 연령", example = "under6months")
+		, @Parameter(name = "<String> direction", description = "(direction과 idRequested) 페이지 방향; 'prev'와 'next' 둘 중 하나")
+		, @Parameter(name = "<Integer> idRequested", description = "(direction과 idRequested) 페이지 방향; 'prev'와 'next' 둘 중 하나")
+		, @Parameter(name = "<Integer> pageCurrent", description = "(pageCurrent과 pageRequested) 현재 페이지 번호", example = "0")
+		, @Parameter(name = "<Integer> pageRequested", description = "(pageCurrent과 pageRequested) 요청받은 페이지 번호", example = "3")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500", description = "error_message: \"해당 결과를 찾지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\""
+																	+"<br>, List&lt;AdminProductVO&gt; listProducts"
+																	+"<br>, &lt;Integer&gt; numberPageCurrent"
+																	+"<br>, &lt;Integer&gt; numberPageMax"
+																	+"<br>, &lt;Integer&gt; limit"
+																	+"<br>, &lt;Integer&gt; idFirst"
+																	+"<br>, &lt;Integer&gt; idLast"
+		, content = @Content(mediaType = "APPLICATION_JSON", schema = @Schema(implementation = AdminProductVO.class)))
+	})
 	@GetMapping("/product-list")
 	public Map<String, Object> productListView(
 				@RequestParam(required = false) Integer id 
@@ -115,15 +160,26 @@ public class AdminProductRestController {
 		return result;
 	}
 	
+	@Operation(summary = "deleteProduct", description = "상품 삭제")
+	@Parameters({
+		@Parameter(name = "<int> id", description = "상품 pk", example = "10")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500", description = "error_message: \"해당 상품을 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
+	})
 	@DeleteMapping("/delete-product")
 	public Map<String, Object> deleteProduct(
-				@RequestParam(required = false)int id){
+				@RequestParam int id){
 		Map<String, Object> result = new HashMap<>();
 		 
 		int count = adminProductBO.deleteProduct(id);
 		
-		if(count < 0) {
+		if(count < 1) {
 			log.info("[ADMIN-Product: deleteProduct()] failed to delete current product; id:{}", id);
+			result.put("code", 500);
+			result.put("error_message", "해당 상품을 삭제하지 못하였습니다.");
+			return result;
 		}
 		
 		result.put("code", 200);

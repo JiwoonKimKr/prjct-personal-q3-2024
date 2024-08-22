@@ -4,9 +4,11 @@ import java.time.LocalDateTime;
 
 import com.givemetreat.common.utils.StringTranslator;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Schema(description = "상품 관련 정보 조회 VO")
 @NoArgsConstructor
 @Data
 public class ProductVO {

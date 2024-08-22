@@ -28,6 +28,11 @@ public class ProductBufferBO {
 	public Integer getCountAvailableByProductIdAndReserved(Integer productId, boolean reserved) {
 		return productBufferRepository.countByProductIdAndReserved(productId, reserved);
 	}	
+	
+	@Transactional
+	public List<ProductBufferEntity> getListProductBuffersByProductId(int productId) {
+		return null;
+	}	
 
 	@Transactional
 	public List<ProductBufferEntity> addProductBuffersInQuantity(
@@ -99,5 +104,14 @@ public class ProductBufferBO {
 		
 		return listBuffers;
 	}
+
+	@Transactional
+	public void deleteListBuffers(List<ProductBufferEntity> listBuffers) {
+		log.info("[productBufferBO: deleteListBuffers()]"
+				+ " List<ProductBufferEntity> get deleted. List<ProductBufferEntity>:{}", listBuffers);
+		productBufferRepository.deleteAllInBatch(listBuffers);
+	}
+
+
 
 }

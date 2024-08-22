@@ -24,14 +24,14 @@ public class UserController {
 	private final PrivateKeysKakaoApi privateKeysKakaoApi;
 
 	@Operation(summary = "signInView", description = "로그인 페이지")
-	@ApiResponse(responseCode = "200", description = "\"user/signIn.html\"", content = @Content(mediaType = "TEXT_HTML"))
+	@ApiResponse(responseCode = "200", description = "/user/signIn.html", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/sign-in-view")
 	public String signInView() {
 		return "user/signIn";
 	}	
 	
 	@Operation(summary = "signUpView", description = "회원가입 페이지")
-	@ApiResponse(responseCode = "200", description = "\"user/signUp.html\"", content = @Content(mediaType = "TEXT_HTML"))
+	@ApiResponse(responseCode = "200", description = "/user/signUp.html", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/sign-up-view")
 	public String signUpView() {
 		return "user/signUp";

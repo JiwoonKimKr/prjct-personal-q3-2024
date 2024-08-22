@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminProductController {
 	private final AdminProductBO adminProductBO;
 	
-	@Operation(summary = "productRegisterView", description = "새로운 상품 등록 페이지")
+	@Operation(summary = "productRegisterView", description = "새로운 상품 등록 페이지로 이동")
 	@ApiResponse(responseCode = "200", description = "/admin/product/productRegister.html", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/product-register-view")
 	public String productRegisterView() {
@@ -33,7 +33,7 @@ public class AdminProductController {
 	}
 	
 	//상품 리스트 조회
-	@Operation(summary = "productListView", description = "기존 등록한 상품 목록 조회")
+	@Operation(summary = "productListView", description = "상품 조회 페이지로 이동")
 	@ApiResponse(responseCode = "200", description = "/admin/product/productList.html", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/product-list-view")
 	public String productListView(){
@@ -41,12 +41,14 @@ public class AdminProductController {
 	}
 	
 	//상품 상세 조회
-	@Operation(summary = "productListView", description = "기존 등록한 상품 목록 조회")
+	@Operation(summary = "productDetailView", description = "기존 등록한 상품 목록 조회")
 	@Parameters({
 		@Parameter(name = "[PathVariable] <int> idProduct", description = "해당 상품 PK", example = "5")
 		, @Parameter(name = "<Model> model", description = "MVC Model")
 	})
-	@ApiResponse(responseCode = "200", description = "/admin/product/productDetail.html \n Model에 AdminProductVO\"productCurrent\"이 담긴다."
+	@ApiResponse(responseCode = "200", description = "/admin/product/productDetail.html "
+													+ "<br> Model Attributes"
+													+" <br> &lt;AdminProductVO&gt; \"productCurrent\""
 		, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = AdminProductVO.class)))
 	@GetMapping("/{idProduct}")
 	public String productDetailView(@PathVariable int idProduct

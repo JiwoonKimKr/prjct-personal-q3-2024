@@ -14,6 +14,7 @@ import com.givemetreat.product.domain.AdminProductVO;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.mapper.ProductMapper;
 import com.givemetreat.productBuffer.bo.ProductBufferBO;
+import com.givemetreat.productBuffer.domain.ProductBufferEntity;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AdminProductBO {
 	private final ProductMapper productMapper;
-	private final ProductBufferBO ProductBufferBO;
+	private final ProductBufferBO productBufferBO;
 
 	private final int LIMIT_SELECTION = 3;
 
@@ -66,9 +67,9 @@ public class AdminProductBO {
 			Integer productId = product.getId();
 			
 			//총 재고조회_배송예정 수량 포함
-			vo.setCountTotal(ProductBufferBO.getTotalCountByProductId(productId));
+			vo.setCountTotal(productBufferBO.getTotalCountByProductId(productId));
 			//가용 재고_배송예정 수량 제외
-			vo.setCountAvailable(ProductBufferBO.getCountAvailableByProductIdAndReserved(productId, false));
+			vo.setCountAvailable(productBufferBO.getCountAvailableByProductIdAndReserved(productId, false));
 			listVOs.add(vo);
 		}
 		
@@ -137,9 +138,9 @@ public class AdminProductBO {
 			Integer productId = product.getId();
 			
 			//총 재고조회_배송예정 수량 포함
-			vo.setCountTotal(ProductBufferBO.getTotalCountByProductId(productId));
+			vo.setCountTotal(productBufferBO.getTotalCountByProductId(productId));
 			//가용 재고_배송예정 수량 제외
-			vo.setCountAvailable(ProductBufferBO.getCountAvailableByProductIdAndReserved(productId, false));
+			vo.setCountAvailable(productBufferBO.getCountAvailableByProductIdAndReserved(productId, false));
 			listVOs.add(vo);
 		}
 		return listVOs;
@@ -178,17 +179,24 @@ public class AdminProductBO {
 		//바로 count를 controller에 return하기 전에
 		//productBufferBO에서 해당 quantity만큼 record들을 생성
 		
-		ProductBufferBO.addProductBuffersInQuantity(productToInsert.getId(), quantity);	
+		productBufferBO.addProductBuffersInQuantity(productToInsert.getId(), quantity);	
 		
 		log.info("[AdminProductBO] requested ProductBufferBO.addProductBuffersInQuantity(productId:{}, quantity:{})", productId, quantity);
 		
 		return countRecorded;
 	}
 
-	public int deleteProduct(int id) {
-		//해당 product의 product_buffer도 모두 삭제?!ㄷㄷㄷㄷ
+	public int deleteProduct(int productId) {
+		List<ProductBufferEntity> listBuffers = productBufferBO.getListProductBuffersByProductId(productId);
+		if(ObjectUtils.isEmpty(listBuffers)) {
+			log.warn("[AdminProductBO deleteProduct()] any product stock not found. productId:{}", productId);
+			return 0;
+		}
 		
-		return productMapper.deleteProduct(id);
+		productBufferBO.deleteListBuffers(listBuffers);
+		log.info("[AdminProductBO deleteProduct()] requested Product stocks get deleted. productId:{}", productId);
+		
+		return productMapper.deleteProduct(productId);
 	}
 
 }
