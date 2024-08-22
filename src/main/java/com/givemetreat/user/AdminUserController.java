@@ -15,9 +15,14 @@ import com.givemetreat.pet.domain.AdminPetVO;
 import com.givemetreat.user.bo.AdminUserBO;
 import com.givemetreat.user.domain.AdminUserVO;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@Tag(name = "Admin User Controller", description = "[Admin] User Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/admin/user")
@@ -26,6 +31,19 @@ public class AdminUserController {
 	private final AdminUserBO adminUserBO;
 
 	@GetMapping("/user-detail-view")
+	@Operation(summary = "사용자 상세 조회", description = "사용자 관련 정보로 조회 가능.페이징 구현된 값을 응답")
+	@Parameters({
+			@Parameter(name = "userId", description = "사용자PK", example="1")
+			, @Parameter(name = "loginId", description = "로그인 아이디", example="asdf")
+			, @Parameter(name = "nickname", description = "사용자 닉네임", example="butler")
+			, @Parameter(name = "selfDesc", description = "자기 소개", example="저는 강아지와 함께 지내는 집사입니다.")
+			, @Parameter(name = "createdAtSince", description = "가입시간 조회 출발시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "createdAtUntil", description = "가입시간 조회 종료시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "updatedAtSince", description = "수정시간 조회 종료시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "updatedAtUntil", description = "수정시간 조회 종료시점", example="2024-08-01T06:30:45")
+			, @Parameter(name = "page", description = "페이징 관련 페이지 숫자", example="1")
+			, @Parameter(name = "size", description = "페이징 전체 크기", example="5")
+	})
 	public String userDetailView( @RequestParam(required = false) Integer userId
 								, @RequestParam(required = false) String loginId
 								, @RequestParam(required = false) String nickname
