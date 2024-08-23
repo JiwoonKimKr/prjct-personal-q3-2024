@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Tag(name = "Admin Invoice RestController", description = "[Clinet] Invoice RestAPI Controller; 주문(인보이스) 관련 RestAPI 컨트롤러")
+@Tag(name = "Invoice RestController", description = "[Client] Invoice RestAPI Controller; 주문(인보이스) 관련 RestAPI 컨트롤러")
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/invoice")
