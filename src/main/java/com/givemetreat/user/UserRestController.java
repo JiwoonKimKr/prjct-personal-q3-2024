@@ -15,6 +15,7 @@ import com.givemetreat.common.validation.WordingValidation;
 import com.givemetreat.user.bo.UserBO;
 import com.givemetreat.user.bo.UserEmailBO;
 import com.givemetreat.user.domain.UserEntity;
+import com.givemetreat.user.domain.VerificationCodeEntity;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -148,16 +149,19 @@ public class UserRestController {
 		Map<String, Object> result = new HashMap<>();
 
 		LocalDateTime timeRequested = LocalDateTime.now();
-		Boolean getVerified = userEmailBO.verifyCode(codeRequested, timeRequested);
+		VerificationCodeEntity codeEntity = userEmailBO.verifyCode(codeRequested, timeRequested);
 		
-		if(getVerified == false) {
+		if(ObjectUtils.isEmpty(codeEntity)) {
 			result.put("code", 500);
 			result.put("error_message", "코드 인증이 실패하였습니다.");
 			return result;
 		}
 		
+		String loginId = codeEntity.getLoginId();
+		
 		result.put("code", 200);
 		result.put("result", "success");
+		result.put("loginId", loginId);
 		
 		return result;
 	}

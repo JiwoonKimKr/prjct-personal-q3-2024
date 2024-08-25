@@ -32,8 +32,8 @@ public class VerificationCodeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "userId")
-	private int userId;
+	@Column(name = "loginId")
+	private String loginId;
 	private String code;
 	
 	@Column(name = "minutesAdded")

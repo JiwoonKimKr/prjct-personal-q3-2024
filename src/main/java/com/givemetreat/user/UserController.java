@@ -1,9 +1,11 @@
 package com.givemetreat.user;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.givemetreat.api.utils.PrivateKeysKakaoApi;
 
@@ -76,9 +78,16 @@ public class UserController {
 	}
 	
 	@Operation(summary = "resetPasswordView() 비밀번호 새로 입력 페이지", description = "비밀번호 새로 입력")
+	@Parameters({
+		@Parameter(name = "<String> loginId", description = "Verification-code에서 넘어온 사용자 loginId", example = "example@examplegivemetreat.com")
+		, @Parameter(name = "<Model> model", description = "MVC Model")
+	})
 	@ApiResponse(responseCode = "200", description = "\"user/resetPassword.html\"", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/reset-password-view")
-	public String resetPasswordView() {
+	public String resetPasswordView(@RequestParam String loginId
+									, Model model) {
+		
+		model.addAttribute("loginId", loginId);
 		return "user/resetPassword";
 	}
 }

@@ -41,6 +41,7 @@ public class UserEmailBO {
 		
 		//code 관련 entity 생성 & repository 저장
 		VerificationCodeEntity entity = VerificationCodeEntity.builder()
+														.loginId(receiver)
 														.code(UUID.randomUUID().toString())
 														.createdAt(timeMailSent)
 														.minutesAdded(EXPIRATIOIN_TIME_IN_MINUTES)
@@ -92,10 +93,11 @@ public class UserEmailBO {
 				+ " E-mail Verification for %s", receiver));
 		
 		VerificationCodeEntity entity = VerificationCodeEntity.builder()
-				.code(UUID.randomUUID().toString())
-				.createdAt(timeMailSent)
-				.minutesAdded(EXPIRATIOIN_TIME_IN_MINUTES)
-				.build();
+									.loginId(receiver)
+									.code(UUID.randomUUID().toString())
+									.minutesAdded(EXPIRATIOIN_TIME_IN_MINUTES)
+									.createdAt(timeMailSent)
+									.build();
 		
 		
 		verificationCodeRepository.save(entity);
@@ -107,22 +109,22 @@ public class UserEmailBO {
 	}
 	
 	
-	public Boolean verifyCode(String code, LocalDateTime timeRequested) {
+	public VerificationCodeEntity verifyCode(String code, LocalDateTime timeRequested) {
 		VerificationCodeEntity entity = verificationCodeRepository.findByCode(code);
 		
 		if(ObjectUtils.isEmpty(entity)) {
 			log.info("[UserEmailBO verifyCode()] Requeseted code not found. code:{}, time requested:{}", code, timeRequested);
-			return false;
+			return null;
 		}
 		
 		if(entity.doesGotExpired(timeRequested)) {
 			log.info("[UserEmailBO verifyCode()] Requeseted code got out of time. code:{}, time requested:{}", code, timeRequested);
-			return false;
+			return null;
 		}
 		
 		log.info("[UserEmailBO verifyCode()] Requeseted code get validated normaly. code:{}, time requested:{}", code, timeRequested);
 		verificationCodeRepository.delete(entity);
-		return true;
+		return entity;
 	}
 	
 }
