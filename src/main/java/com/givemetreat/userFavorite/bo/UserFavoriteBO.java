@@ -39,4 +39,9 @@ public class UserFavoriteBO {
 															.category(category)
 															.build());
 	}
+
+	@Transactional
+	public UserFavoriteEntity getEntityByUserId(Integer userId) {
+		return userFavoriteRepository.findByUserId(userId);
+	}
 }

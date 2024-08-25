@@ -96,6 +96,33 @@
 							
 			</div>
 			<div class="groups-cards-collapsed">
+<!-- 사용자 추천 아이템;현재는 로그인한 경우에만 띄우도록 작성_25 08 2024 -->			
+				<div class="groups-product-list-recommended" th:if="${listProductsRecommended}">
+					<th:block th:each="unit : ${listProductsRecommended}">
+<!-- 추천 unit의 경우 240px X 240px -->					
+						<div class="unit-card-product-recommended">
+							<div class="icon-red-spangle">
+								<svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M15.8537 1.16185C16.4046 -0.387286 18.5954 -0.387283 19.1463 1.16185L20.8635 5.9907C21.2104 6.96626 22.3248 7.42785 23.2599 6.98334L27.8887 4.78307C29.3737 4.07721 30.9228 5.62635 30.2169 7.1113L28.0167 11.7401C27.5721 12.6752 28.0337 13.7896 29.0093 14.1365L33.8381 15.8537C35.3873 16.4046 35.3873 18.5954 33.8381 19.1463L29.0093 20.8635C28.0337 21.2104 27.5721 22.3248 28.0167 23.2599L30.2169 27.8887C30.9228 29.3737 29.3736 30.9228 27.8887 30.2169L23.2599 28.0167C22.3248 27.5721 21.2104 28.0337 20.8635 29.0093L19.1463 33.8381C18.5954 35.3873 16.4046 35.3873 15.8537 33.8381L14.1365 29.0093C13.7896 28.0337 12.6752 27.5721 11.7401 28.0167L7.1113 30.2169C5.62635 30.9228 4.07721 29.3736 4.78308 27.8887L6.98334 23.2599C7.42785 22.3248 6.96626 21.2104 5.9907 20.8635L1.16185 19.1463C-0.387286 18.5954 -0.387283 16.4046 1.16185 15.8537L5.9907 14.1365C6.96626 13.7896 7.42785 12.6752 6.98334 11.7401L4.78307 7.1113C4.07721 5.62635 5.62635 4.07721 7.1113 4.78308L11.7401 6.98334C12.6752 7.42785 13.7896 6.96626 14.1365 5.9907L15.8537 1.16185Z" fill="#ED5178"/>
+								</svg>
+							</div>
+							<a class="d-flex justify-content-center my-2" th:href="@{/product/product-detail-view/{productId}(productId=${unit.id})}">
+								<img class="img-unit-list-view" th:src="${unit.imgProfile}" width="180" height="180">
+							</a>
+							<div class="group-link-from-unit-recommended">
+								<a class="name-unit-list-view-recommended anchor-unit-list-view-recommended" th:data-field="name" th:data-value="${unit.name}" th:href="@{/product/product-detail-view/{productId}(productId=${unit.id})}">
+									<span th:text="${unit.name}"></span>
+								</a>
+								<a class="category-unit-list-view-recommended anchor-unit-list-view-recommended" th:data-field="category" th:data-value="${unit.category}" th:href="@{/product/product-detail-view/{productId}(productId=${unit.id})}">
+									<span th:text="${unit.categoryTranslatedK}"></span>
+								</a>
+								<a class="agePetProper-unit-list-view-recommended anchor-unit-list-view-recommended" th:data-field="agePetProper" th:data-value="${unit.agePetProper}" th:href="@{/product/product-detail-view/{productId}(productId=${unit.id})}">
+									<span th:text="${unit.agePetProperTranslatedK}"></span>
+								</a>
+							</div>
+						</div>
+					</th:block>
+				</div>
 				<div class="groups-product-list">
 					<th:block th:each="unit : ${listProducts}">
 <!-- 하나의 Card Unit이 320px X 320px; -->
@@ -116,7 +143,7 @@
 							</div>
 						</div>
 					</th:block>
-			</div>
+				</div>
 			</div>
 		</article>
 </section>

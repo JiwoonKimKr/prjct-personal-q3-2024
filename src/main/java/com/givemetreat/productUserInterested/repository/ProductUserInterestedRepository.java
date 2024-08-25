@@ -6,4 +6,6 @@ import com.givemetreat.productUserInterested.domain.ProductUserInterestedEntity;
 
 public interface ProductUserInterestedRepository extends JpaRepository<ProductUserInterestedEntity, Integer> {
 
+	ProductUserInterestedEntity findTop1ByUserIdOrderByCreatedAtDesc(Integer userId);
+
 }

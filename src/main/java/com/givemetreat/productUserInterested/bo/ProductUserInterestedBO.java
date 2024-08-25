@@ -13,6 +13,11 @@ import lombok.RequiredArgsConstructor;
 public class ProductUserInterestedBO {
 	private final ProductUserInterestedRepository productUserInterestedRepository;
 
+	@Transactional
+	public ProductUserInterestedEntity getListProductsFavoredLatest(Integer userId) {
+		return productUserInterestedRepository.findTop1ByUserIdOrderByCreatedAtDesc(userId);
+	}
+	
 	/**
 	 * 
 	 * ProductController productDetailView()로 넘어오는 경우에는
@@ -41,5 +46,7 @@ public class ProductUserInterestedBO {
 																				.fromPayment(fromPayment)
 																				.build());
 	}
+
+
 
 }

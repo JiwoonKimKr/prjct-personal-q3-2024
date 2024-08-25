@@ -12,6 +12,10 @@ import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.product.mapper.ProductMapper;
+import com.givemetreat.productUserInterested.bo.ProductUserInterestedBO;
+import com.givemetreat.productUserInterested.domain.ProductUserInterestedEntity;
+import com.givemetreat.userFavorite.bo.UserFavoriteBO;
+import com.givemetreat.userFavorite.domain.UserFavoriteEntity;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductBO {
 	private final ProductMapper productMapper;
+	private final UserFavoriteBO userFavoriteBO;
+	private final ProductUserInterestedBO productUserInterestedBO;
 	
 	private final int LIMIT_SELECTION = 3;
+	private final int LIMIT_SELECTION_RECOMMNEDATION = 4;
 
 	/**
 	 * 
@@ -127,5 +134,53 @@ public class ProductBO {
 		}
 		
 		return listVOs;	
+	}
+
+	/**
+	 * 상품 추천 관련 API
+	 * @param userId
+	 * @param category
+	 * @param agePetProper
+	 * @return
+	 */
+	@Transactional
+	public List<ProductVO> getListProductsRecommended(Integer userId, String category, String agePetProper) {
+		
+		//Keyword 관련한 것을 넣어도 좋을 듯;
+		String categoryFavored = category;
+		String agePetProperFavored = agePetProper;
+		
+		UserFavoriteEntity userInfo = userFavoriteBO.getEntityByUserId(userId);
+		if(ObjectUtils.isEmpty(userInfo) == false) {
+			if(ObjectUtils.isEmpty(userInfo.getCategory()) == false) {
+				categoryFavored = userInfo.getCategory();
+			}
+			if(ObjectUtils.isEmpty(userInfo.getAgePetProper()) == false) {
+				agePetProperFavored = userInfo.getAgePetProper();
+			}
+		}
+		
+		ProductUserInterestedEntity itemViewed =productUserInterestedBO.getListProductsFavoredLatest(userId);
+		if(ObjectUtils.isEmpty(itemViewed) == false) {
+			int productId = itemViewed.getProductId();
+			
+			ProductVO product = getProducts(productId, null, null, null, null).get(0);
+			if(ObjectUtils.isEmpty(null) == false) {
+				categoryFavored = product.getCategory();
+				agePetProperFavored = product.getAgePetProper();
+			}
+		}
+		
+		if(ObjectUtils.isEmpty(userInfo) && ObjectUtils.isEmpty(agePetProperFavored)) {
+			return null;
+		}
+		
+		List<Product> listProduct = productMapper.selectTop4ProductsRecommended(categoryFavored, agePetProperFavored, LIMIT_SELECTION_RECOMMNEDATION);
+				
+		List<ProductVO> listProductsRecommended = listProduct.stream()
+													.map(product -> new ProductVO(product))
+													.collect(Collectors.toList());
+		
+		return listProductsRecommended;
 	}
 }

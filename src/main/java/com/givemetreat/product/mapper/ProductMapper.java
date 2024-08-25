@@ -30,6 +30,11 @@ public interface ProductMapper {
 			, @Param("index") Integer index
 			, @Param("limit") Integer limit);
 
+	public List<Product> selectTop4ProductsRecommended(
+			@Param("category") String category
+			, @Param("agePetProper") String agePetProper
+			, @Param("limit") int limit);
+	
 	public Integer insertProduct(Product product);
 	
 //	public int insertProduct(
@@ -41,5 +46,7 @@ public interface ProductMapper {
 //			, @Param("imgThumbnail") String pathImageThumbnail);
 
 	public int deleteProduct(int id);
+
+	
 	
 }

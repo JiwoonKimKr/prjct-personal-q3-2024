@@ -925,7 +925,7 @@ input::-webkit-inner-spin-button {
 	min-height: 932px;
 	
 	background: #FFE397;
-	border-radius: 0px 215px 20px 0px;
+	border-radius: 20px 215px 20px 0px;
 }
 .groups-nav-aside{
 	position: relative;
@@ -1002,68 +1002,12 @@ input::-webkit-inner-spin-button {
 }
 
 .groups-cards-collapsed{
-	display: flex;
 	padding: 0px, 40px;
-	justify-content: center;
-}
-
-.group-scroll-bar{
-	position: relative;
-	margin-right: 30px;
-	width: 42px;
-	height: 800px;
-	
-	background: #FFFFFF;
-	border-radius: 32px;
 	
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
-
-.scroll-bar{
-	margin-top: 15px;
-	position: absolute;
-	width: 32px;
-	height: 300px;
-	
-	background: #51C3ED;
-	border-radius: 32px;
-	
-}
-
-.groups-product-list{
-	margin-right: 30px;
-	margin-bottom: 50px;
-	
-	width: 1075px;
-	height: 800px;
-	overflow: auto;
-
-	/* Auto layout */
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: flex-start;
-	align-content: flex-start;
-	padding: 0px;
-	gap: 30px;
-}
-
-/* groups-product-list 내 스크롤바 scrollbar 스타일 */
-.groups-product-list::-webkit-scrollbar{
-	width: 25px;
-}
-.groups-product-list::-webkit-scrollbar-thumb{
-	background-color: #51C3ED;
-	border-radius: 15px;
-	background-clip: padding-box;
-    border: 5px solid transparent;
-}
-.groups-product-list::-webkit-scrollbar-track{
-	background-color: #FFF;
-	border-radius: 15px;
-}
-
 
 /* 상품 리스트 단위 하나의 유닛 */
 .unit-card-product{
@@ -1158,6 +1102,118 @@ input::-webkit-inner-spin-button {
 .margin-top-100px{
 	margin-top: 300px;
 }
+
+.icon-red-spangle{
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	left: 14px;
+	top: 13px;
+}
+
+.groups-product-list{
+	margin-right: 30px;
+	margin-bottom: 50px;
+	
+	width: 1042px;
+	height: 800px;
+	overflow: auto;
+
+	/* Auto layout */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	padding: 0px;
+	gap: 30px;
+}
+
+/* groups-product-list 내 스크롤바 scrollbar 스타일 */
+.groups-product-list::-webkit-scrollbar{
+	width: 25px;
+}
+.groups-product-list::-webkit-scrollbar-thumb{
+	background-color: #51C3ED;
+	border-radius: 15px;
+	background-clip: padding-box;
+    border: 5px solid transparent;
+}
+.groups-product-list::-webkit-scrollbar-track{
+	background-color: #FFF;
+	border-radius: 15px;
+}
+
+/* ProductListView 사용자 개인 추천 상품 노출 */
+/* Recommendation System */
+.groups-product-list-recommended{
+	margin: 5px auto 15px auto;
+	
+	width: 1042px;
+	overflow: auto;
+
+	/* Auto layout */
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: flex-start;
+	padding: 0px;
+	gap: 27px;
+}
+
+.unit-card-product-recommended{
+	width: 240px;
+	height: 240px;
+	
+	position: relative;
+	box-sizing: border-box;
+	
+	width: 240px;
+	height: 240px;
+	
+	background: #FFFFFF;
+	border: 3px solid #ED5178;
+	border-radius: 35px;
+}
+
+.group-link-from-unit-recommended{
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items:center;
+}
+
+.anchor-unit-list-view-recommended{
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.anchor-unit-list-view-recommended:hover{
+	text-decoration: none;
+}
+
+.name-unit-list-view-recommended{
+	margin-right: 10px;
+	color: #555;
+}
+
+.category-unit-list-view-recommended{
+	margin-right: 10px;
+	color: #7351ED;
+	
+	background-color: #DDD;
+}
+
+.agePetProper-unit-list-view-recommended{
+	color: #FF6868;
+	font-size: 10px;
+	
+	background-color: #EEE;
+}
+
+
 
 /* 상품 카드 unit 단위 Thumbnail 관련*/
 .unit-card-product{

@@ -48,6 +48,7 @@ public class ProductController {
 		, @Parameter(name = "<Integer> idRequested", description = "(direction과 idRequested) 요청받은 id(pk)값")
 		, @Parameter(name = "<Integer> pageCurrent", description = "(pageCurrent과 pageRequested) 현재 페이지 번호", example = "0")
 		, @Parameter(name = "<Integer> pageRequested", description = "(pageCurrent과 pageRequested) 요청받은 페이지 번호", example = "3")
+		, @Parameter(name = "<HttpSession> session", description = "session")
 		, @Parameter(name = "<Model> model", description = "MVC Model")
 	})
 	@ApiResponses({
@@ -72,6 +73,7 @@ public class ProductController {
 								, @RequestParam(required = false) Integer idRequested
 								, @RequestParam(required = false) Integer pageCurrent
 								, @RequestParam(required = false) Integer pageRequested
+								, HttpSession session
 								, Model model) {
 		
 		Page<ProductVO> pageInfo = productBO.getProductsForPaging(id
@@ -91,6 +93,14 @@ public class ProductController {
 		model.addAttribute("limit", pageInfo.getLimit());
 		model.addAttribute("idFirst", pageInfo.getIdFirst());
 		model.addAttribute("idLast", pageInfo.getIdLast());
+		
+		//로그인한 경우 사용자 개인화 추천시스템으로 상품 4개 추천_25 08 2024
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		if(ObjectUtils.isEmpty(userId) == false) {
+			List<ProductVO> listProductsRecommended = productBO.getListProductsRecommended(userId, category, agePetProper);
+			model.addAttribute("listProductsRecommended", listProductsRecommended);
+		}
 		
 		return "/product/productList";
 	}

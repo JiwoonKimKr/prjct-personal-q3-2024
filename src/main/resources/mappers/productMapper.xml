@@ -97,7 +97,34 @@
 		ORDER BY `id` DESC
 		LIMIT 3;
  	</select>
- 	
+ 	<select id="selectTop4ProductsRecommended" resultType="com.givemetreat.product.domain.Product">
+ 		SELECT
+			`id`
+			, `name`
+			, `category`
+			, `price`
+			, `agePetProper`
+			, `imgProfile`
+			, `imgThumbnail`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`product`
+		<where>
+			<if test="category != null">
+				AND			
+					`category` = #{category}
+			</if>	
+			<if test="agePetProper != null">
+				AND			
+					`agePetProper` = #{agePetProper}
+			</if>
+		</where>
+		ORDER BY `id` DESC
+		<if test="limit != null">
+			LIMIT #{limit};
+		</if>
+ 	</select> 	
  	<insert id="insertProduct" parameterType="com.givemetreat.product.domain.Product"
  	 useGeneratedKeys="true" keyProperty="id">
  		INSERT INTO
