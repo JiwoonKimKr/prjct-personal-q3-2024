@@ -68,7 +68,7 @@ public class UserController {
 		return  "user/findEmail";
 	}
 	
-	@Operation(summary = "verifyCodeView() '비밀번호 찾기' 인증코드 입력하기", description = "이메일로 송신된 코드 확인 페이지")
+	@Operation(summary = "verifyCodeView() '비밀번호 찾기' 인증코드 입력 페이지", description = "이메일로 송신된 코드 확인 페이지")
 	@ApiResponse(responseCode = "200", description = "\"user/verifyCode.html\"", content = @Content(mediaType = "TEXT_HTML"))
 	@GetMapping("/verify-code-view")
 	public String verifyCodeView() {

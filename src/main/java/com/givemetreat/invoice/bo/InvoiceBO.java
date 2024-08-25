@@ -251,6 +251,8 @@ public class InvoiceBO {
 						+ " ProductBufferEntity failed to get saved correctly."
 						+ " ItemOrderedDto:{}", item);
 			}
+			
+			//TODO 사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가해야_24 08 2024
 		}
 		return invoice;
 	}

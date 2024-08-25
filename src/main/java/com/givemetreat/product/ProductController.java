@@ -98,6 +98,8 @@ public class ProductController {
 	public String productDetailView(@PathVariable int productId
 									, Model model){
 		
+		//TODO 사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가해야_24 08 2024
+		
 		ProductVO product = productBO.getProducts(productId, null, null, null, null).get(0);
 		
 		model.addAttribute("product", product);

@@ -5,11 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.givemetreat.aop.TrackUsersFavor;
 import com.givemetreat.product.domain.Product;
 
 @Mapper
 public interface ProductMapper {
 
+	@TrackUsersFavor
 	public List<Product> selectProduct(
 			@Param("id") Integer id
 			, @Param("name") String name
@@ -17,6 +19,7 @@ public interface ProductMapper {
 			, @Param("price") Integer price
 			, @Param("agePetProper") String agePetProper);
 	
+	@TrackUsersFavor
 	public List<Product> selectProductForPaging(
 			@Param("id") Integer id
 			, @Param("name") String name
