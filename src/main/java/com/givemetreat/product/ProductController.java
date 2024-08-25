@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.bo.ProductBO;
 import com.givemetreat.product.domain.ProductVO;
+import com.givemetreat.productUserInterested.bo.ProductUserInterestedBO;
+import com.givemetreat.productUserInterested.domain.ProductUserInterestedEntity;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,14 +24,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Tag(name = "Product Controller", description = "[Client] Product Controller 상품 페이지 관련 컨트롤러")
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/product")
 @Controller
 public class ProductController {
 	private final ProductBO productBO;
+	private final ProductUserInterestedBO productUserInterestedBO;
 
 	@Operation(summary = "productListView() 상품 조회 페이지;현 메인 페이지", description = "상품 조회 페이지; 현 메인 페이지 <br> 다양한 변수들 활용 가능 <br> 중복 필터 활용 가능")
 	@Parameters({
@@ -89,6 +96,11 @@ public class ProductController {
 	}
 	
 	@Operation(summary = "productDetailView() 상품 상세 조회 페이지", description = "상품 상세 조회 페이지")
+	@Parameters({
+		@Parameter(name = "<Integer> productId", description = "[pathVariable] 상품 pk", example = "10")
+		, @Parameter(name = "<HttpSession> session", description = "session; 현재 페이지는 비로그인 상태에서도 접근 가능")
+		, @Parameter(name = "<Model> model", description = "MVC Model")
+	})
 	@ApiResponse(responseCode = "200"
 				, description = "/product/productDetail.html"
 								+ "<br> Model Attributes"
@@ -96,11 +108,25 @@ public class ProductController {
 				, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = ProductVO.class)))
 	@GetMapping("/product-detail-view/{productId}")
 	public String productDetailView(@PathVariable int productId
+									, HttpSession session
 									, Model model){
 		
-		//TODO 사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가해야_24 08 2024
 		
 		ProductVO product = productBO.getProducts(productId, null, null, null, null).get(0);
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		
+		//사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가_24 08 2024
+		if(ObjectUtils.isEmpty(userId) == false) {
+			ProductUserInterestedEntity recordProductOrdered = 
+					productUserInterestedBO.addRecordForProductUserInterested(userId, productId, true, false, null);
+			
+			if(ObjectUtils.isEmpty(recordProductOrdered)) {
+				log.warn("[ProductController productDetailView()]" 
+						+ " ProductUserInterestedEntity failed to get saved correctly."
+						+ " productId:{}", productId);
+			}
+		}
 		
 		model.addAttribute("product", product);
 		

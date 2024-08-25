@@ -33,6 +33,8 @@ import com.givemetreat.productInvoice.domain.ItemOrderedVO;
 import com.givemetreat.productInvoice.domain.ProductInvoiceEntity;
 import com.givemetreat.productShoppingCart.bo.ProductShoppingCartBO;
 import com.givemetreat.productShoppingCart.domain.ProductShoppingCartVO;
+import com.givemetreat.productUserInterested.bo.ProductUserInterestedBO;
+import com.givemetreat.productUserInterested.domain.ProductUserInterestedEntity;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +50,8 @@ public class InvoiceBO {
 	private final ProductInvoiceBO productInvoiceBO;
 	private final ProductBufferBO productBufferBO;
 	private final ProductShoppingCartBO productShoppingCartBO;
+	
+	private final ProductUserInterestedBO productUserInterestedBO;
 	
 	public List<InvoiceVO> getInvoices(Integer invoiceId
 										, Integer userId
@@ -250,9 +254,17 @@ public class InvoiceBO {
 				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
 						+ " ProductBufferEntity failed to get saved correctly."
 						+ " ItemOrderedDto:{}", item);
+				return null;
 			}
 			
-			//TODO 사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가해야_24 08 2024
+			//사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가_25 08 2024
+			ProductUserInterestedEntity recordProductOrdered = productUserInterestedBO.addRecordForProductUserInterested(userId, productId, false, true, listItemQuantity.size());
+			
+			if(ObjectUtils.isEmpty(recordProductOrdered)) {
+				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
+						+ " ProductUserInterestedEntity failed to get saved correctly."
+						+ " ItemOrderedDto:{}", item);
+			}
 		}
 		return invoice;
 	}
