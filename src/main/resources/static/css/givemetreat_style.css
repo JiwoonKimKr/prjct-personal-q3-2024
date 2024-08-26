@@ -947,7 +947,22 @@ input::-webkit-inner-spin-button {
 }
 /* update-pet-view 관련 */
 
+.btn-delete-pet-registered{
+	/* bg-btn Cancel Article */
+	margin-right: 10px;
+	width: 170.89px;
+	height: 90.15px;
+	
+	background: #7351ED;
+	box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.25);
+	border-radius: 22px;
+	border-color: transparent;
 
+	/* 취소하기 */
+	font-weight: 800;
+	font-size: 32px;
+	color: #FFFFFF;
+}
 
 /* /product/product-list-view 메인 뷰 관련 */
 

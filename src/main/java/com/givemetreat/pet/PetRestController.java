@@ -142,5 +142,43 @@ public class PetRestController {
 		result.put("code", 200);
 		result.put("result", "success");
 		return result;
-	}	
+	}
+	
+	@Operation(summary = "deletePetInfo() 반려견 정보 삭제", description = "해당 반려견 정보 삭제")
+	@Parameters({
+		@Parameter(name = "<int> petId", description = "반려견 PK", example = "3")
+		, @Parameter(name = "<HttpSession> session", description = "session")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500", description = "error_message: \"해당 반려견 정보가 존재하지 않습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500", description = "error_message: \"해당 반려견 정보를 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
+	})
+	@PostMapping("/delete-pet")
+	public Map<String, Object> deletePetInfo(@RequestParam int petId
+											, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		
+		int userId = (int) session.getAttribute("userId");
+		
+		Pet pet = petBO.getPetByUserIdAndPetId(userId, petId);
+		
+		if(ObjectUtils.isEmpty(pet)) {
+			result.put("code", 500);
+			result.put("error_message", "해당 반려견 정보가 존재하지 않습니다.");
+			return result;
+		}
+		
+		int count = petBO.deletePetByUserIdAndPetId(userId, petId);
+		
+		if(count < 1) {
+			result.put("code", 500);
+			result.put("error_message", "해당 반려견 정보가 삭제하지 못 하였습니다. 관리자에게 문의하십시오.");
+			return result;
+		}
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		return result;
+	}
 }
