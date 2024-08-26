@@ -29,4 +29,13 @@ public interface PetMapper {
 	int deletePetByIdAndUserId(
 			@Param("id") int id
 			, @Param("userId") int userId);
+
+	Integer countPetsByUserId(
+			@Param("userId") int userId);
+
+	void updatePet(@Param("id") int id
+				, @Param("name") String name
+				, @Param("age") String age
+				, @Param("imagePathProfile") String imagePathProfile
+				, @Param("imagePathThumbnail") String imagePathThumbnail);
 }

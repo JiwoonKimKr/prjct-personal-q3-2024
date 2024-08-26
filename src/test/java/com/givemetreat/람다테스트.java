@@ -30,4 +30,15 @@ class 람다테스트 {
 		log.info("[람다테스트: 람다테스트2] fruits:{}", fruits);
 	}
 
+	
+	@Test
+	void 메소드레퍼런스() {
+		List<String> fruits =  List.of("apple", "banana", "cherry");
+		
+		fruits = fruits
+				.stream()
+				.map(String::toUpperCase) // element -> element.toUpperCase() 람다식을 변환한 것과 동일하다!
+				.collect(Collectors.toList());
+		log.info("[🚧🚧🚧💡💡💡 메소드레퍼런스] fruits{}", fruits);
+	}
 }

@@ -53,6 +53,14 @@
 			`userId` = #{userId} 		
  	</select>
  	 	
+ 	<select id="countPetsByUserId" resultType="int">
+ 		SELECT
+ 			COUNT(1)
+		FROM
+			`pet`
+		WHERE
+			`userId` = #{userId}
+ 	</select>
  	<insert id="insertPet" parameterType="map">
 		INSERT INTO `pet`
 		(
@@ -75,6 +83,16 @@
 			, NOW()
 		)
  	</insert>
+ 	<update id="updatePet" parameterType="map" >
+ 		UPDATE `pet`
+ 		SET
+ 			`name` = #{name}
+ 			,`age` = #{age}
+ 			,`imgProfile` = #{imagePathProfile}
+ 			,`imgThumbnail` = #{imagePathThumbnail}
+		WHERE
+			`id` = #{id}
+ 	</update>
  	
  	<delete id="deletePetByIdAndUserId" parameterType="map">
  		DELETE FROM `pet`

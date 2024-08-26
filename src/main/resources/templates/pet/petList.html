@@ -3,12 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/defaultLayout}">
 	<head>
-		<title>반려견 리스트</title>
+		<title>반려견 페이지</title>
 	</head>
 	<section layout:fragment="contents" class="contents">
 		<article class="group-article-pet-list">
 			<div class="title-article-list">
-				<span>반려견 추가 페이지</span>
+				<span>반려견 페이지</span>
 			</div>
 <!-- 마우스오버 툴팁 -->			
 			<div id="tooltip-btn-click-add-pet">
@@ -58,14 +58,14 @@
 			<!-- 기존 반려견 리스트 -->	
 			<div class="pet-image-card-list mt-5">
 				<th:block th:each="pet : ${listPets}">
-					<button class="pet-image-card-registered" data-toggle="tooltip" data-placement="top" th:object="${pet}" th:title="|이름: ${pet.name}|">
+					<button class="pet-image-card-registered" data-toggle="tooltip" data-placement="top"
+						 th:title="|클릭하시면 수정 가능합니다.|" th:data-pet-id="${pet.id}">
 						<img src="" th:attr="src=${pet.imgProfile}" class="rounded-lg w-100 m-5" width="275" height="275">
 					</button>				
 				</th:block>
-			</div>
-			<!-- 반려견 추가 버튼들 -->
-			<div class="pet-image-card-list mt-4">
-				<button class="pet-image-card">
+<!-- 반려견 추가 버튼들 -->
+				
+				<button class="pet-image-card" th:if="${#arrays.length(listPets)} < 4">
 					<svg width="142" height="143" viewBox="0 0 142 143" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M60.4806 19.7743C60.4806 12.4929 66.3834 6.59009 73.6648 6.59009C80.9463 6.59009 86.849 12.4929 86.849 19.7743V129.015C86.849 136.296 80.9463 142.199 73.6648 142.199C66.3834 142.199 60.4806 136.296 60.4806 129.015V19.7743Z" fill="#223455"/>
 						<path d="M128.285 61.2104C135.567 61.2104 141.469 67.1131 141.469 74.3946C141.469 81.676 135.567 87.5788 128.285 87.5788L19.0446 87.5788C11.7631 87.5788 5.86035 81.676 5.86035 74.3946C5.86035 67.1131 11.7631 61.2104 19.0446 61.2104L128.285 61.2104Z" fill="#223455"/>
@@ -73,7 +73,7 @@
 						<path d="M122.635 55.56C129.916 55.56 135.819 61.4627 135.819 68.7442C135.819 76.0256 129.916 81.9284 122.635 81.9284L13.3942 81.9284C6.11273 81.9284 0.209961 76.0256 0.209961 68.7442C0.209961 61.4627 6.11273 55.56 13.3942 55.56L122.635 55.56Z" fill="#8FF4FF"/>
 					</svg>
 				</button>
-				<button class="pet-image-card">
+				<button class="pet-image-card" th:if="${#arrays.length(listPets)} < 5">
 					<svg width="142" height="143" viewBox="0 0 142 143" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M60.4806 19.7743C60.4806 12.4929 66.3834 6.59009 73.6648 6.59009C80.9463 6.59009 86.849 12.4929 86.849 19.7743V129.015C86.849 136.296 80.9463 142.199 73.6648 142.199C66.3834 142.199 60.4806 136.296 60.4806 129.015V19.7743Z" fill="#223455"/>
 						<path d="M128.285 61.2104C135.567 61.2104 141.469 67.1131 141.469 74.3946C141.469 81.676 135.567 87.5788 128.285 87.5788L19.0446 87.5788C11.7631 87.5788 5.86035 81.676 5.86035 74.3946C5.86035 67.1131 11.7631 61.2104 19.0446 61.2104L128.285 61.2104Z" fill="#223455"/>
@@ -114,6 +114,15 @@
     			$(".pet-image-card").on('click', function(){
     				location.href = "/pet/register-pet-view";
     			})
+    			
+    			$(".pet-image-card-registered").on('click', function(){
+    				if(confirm("해당 반려견 정보를 수정하시겠습니까?") == false){
+    					return;
+    				}
+    				let petId = $(this).data('pet-id');
+    				location.href= "/pet/update-pet-view?petId=" + petId;
+    				
+    			})// pet-image-card-registed on click
 
     		})//document ready
     	</script>

@@ -667,7 +667,7 @@ input::-webkit-inner-spin-button {
 .group-article-pet-list{
 	/* Rect_Background */
 	width: 1180px;
-	height: 929px;
+	min-height: 929px;
 	padding-top: 75px;
 	
 	background: #FFE397;
@@ -696,9 +696,11 @@ input::-webkit-inner-spin-button {
 
 .pet-image-card-list{
 	margin-left: 30px;
-	column-gap: 30px;	
+	width: 1030px;
 	
 	display: flex;
+	flex-wrap:wrap;
+	gap: 15px;	
 	
 }
 
@@ -787,7 +789,7 @@ input::-webkit-inner-spin-button {
 /* register-pet-view */
 .group-register-pet{
 	/* Rect_Background */
-	width: 1440px;
+	width: 1180px;
 	height: 940px;
 	padding-top: 75px;
 	
@@ -943,6 +945,9 @@ input::-webkit-inner-spin-button {
 	
 	font-size: 28px;
 }
+/* update-pet-view 관련 */
+
+
 
 /* /product/product-list-view 메인 뷰 관련 */
 

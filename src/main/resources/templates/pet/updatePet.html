@@ -3,34 +3,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/defaultLayout}">
 	<head>
-		<title>반려견 등록 및 수정</title>
+		<title>반려견 정보 수정</title>
 	</head>
 	<section layout:fragment="contents" class="contents">
 		<article class="group-register-pet d-flex flex-column align-items-center">
 			<div class="title-article-list mx-auto">
-				<span>반려견 등록 및 수정</span>
+				<span>반려견 정보 수정</span>
 			</div>
 			<div class="groups-form-register-Pet mx-auto">
 				<div class="groups-form-upper">
 					<div class="group-btn-pet-image-upload">
-						<button class="btn-pet-image-upload">
-							<div class="icon-dog-footprint">
-								<svg width="74" height="67" viewBox="0 0 74 67" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M16.3832 10.2394C11.1535 12.3936 10.4998 33.9362 27.4964 33.9362C30.3291 33.9362 35.3408 31.4947 32.726 21.7287C29.4574 9.52129 21.613 8.08512 16.3832 10.2394Z" fill="white"/>
-									<path d="M45.0271 2.7132C39.3402 2.64475 29.5075 21.4039 44.9879 27.8031C47.5679 28.8696 53.1795 28.6025 54.9854 19.0023C57.2429 7.00208 50.714 2.78165 45.0271 2.7132Z" fill="white"/>
-									<path d="M3.23124 37.6067C0.534325 41.1646 9.4388 54.0156 21.2453 46.5357C23.213 45.289 25.6337 41.6596 19.5748 37.115C12.0011 31.4342 5.92815 34.0489 3.23124 37.6067Z" fill="white"/>
-									<path d="M69.587 16.3104C67.3894 12.5977 54.8812 14.648 57.9971 27.5416C58.5164 29.6905 60.8392 33.2039 65.9759 30.0659C72.3967 26.1436 71.7846 20.023 69.587 16.3104Z" fill="white"/>
-									<path d="M51.5669 61.0148C38.9737 62.8779 25.8067 60.1102 24.1466 51.4967C21.4305 41.5403 36.9643 35.2896 44.3693 34.6302C51.7743 33.9709 66.8565 33.6476 68.2451 41.2654C69.6337 48.8832 64.1601 59.1517 51.5669 61.0148Z" fill="white"/>
-								</svg>
-							</div>
-							<div class="mt-3">
-								<span class="text-image-upload">
-									IMAGE<br>
-									UPLOAD
-								</span>
-							</div>
+						<button class="btn-pet-image-update btn btn-white">
+							<img id="imagePetPreview" th:src="${pet.imgProfile}"  class="rounded" width="400" height="400">
 						</button>
-						<img id="imagePetPreview" class="d-none rounded" width="400" height="400">
 						<input id="inputImagePet" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
 					</div>
 					<div class="group-btns-submit mr-5 mt-5">
@@ -56,7 +41,7 @@
 					<div class="text-label-input-row">
 						<span>이름</span>
 					</div>		
-					<input id="namePet" type="text" class="input-rounded-white pl-5">
+					<input id="namePet" type="text" class="input-rounded-white pl-5" th:value="${pet.name}">
 				</div>
 <!-- 연령 입력 -->				
 				<div class="group-input-orange">
@@ -91,51 +76,46 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			let imagePathPrev = $("#imagePetPreview").attr('src');
+    			let hasImageChanged = false;
+    			console.log(imagePathPrev);
     			
-    			$(".btn-pet-image-upload").on('click', function(){
+    			let age = /*[[${pet.age}]]*/null;
+    			$(`option[value=${age}]`).prop('selected', true);
+    			
+    			$(".btn-pet-image-update").on('click', function(){
     				$("#inputImagePet").trigger('click');
     			})// btn-pet-image-upload on click
     			
     			$("#inputImagePet").on('change', function(e){
     				let file = e.target.files[0];
+    				
 					if(file == null){
-						$(".btn-pet-image-upload").removeClass('d-none');
-						$("#imagePetPreview").attr('src', '');
-						$(this).val("");
+						alert("새로운 이미지를 등록해 주세요.");
 						return;
 					}
     				
 					let reader = new FileReader();
 					reader.onload = function(event){
-						$("#imagePetPreview").removeClass('d-none');
 						$("#imagePetPreview").attr('src', event.target.result);
+						hasImageChanged = true;
 					};
 					reader.readAsDataURL(file);
-    				
-					$(".btn-pet-image-upload").addClass('d-none');
 					
     			})// imagePet on change
 
-    			/*    			
- 				function readURL(input) {
-					if (input.files && input.files[0]) {
-						var reader = new FileReader();
-						reader.onload = function(e) {
-						document.getElementById('preview').src = e.target.result;
-						};
-						reader.readAsDataURL(input.files[0]);
-					} else {
-						document.getElementById('preview').src = "";
-					}
-				} 
-				*/
-
     			$(".btn-submit").on('click', function(){
+    				let petId = /*[[${pet.id}]]*/null;
     				let name = $("#namePet").val().trim();
     				let age = $("#agePet").val();
     				let pathFile = $("#inputImagePet").val();
     				
-    				console.log(`${name}, ${age}, ${pathFile}`);
+    				//console.log(pathFile);
+    				
+    				if(!petId){
+    					alert("잘못된 접근입니다.");
+    					return location.href="/pet/pet-list-view";
+    				}
     				
     				if(!name){
     					alert("반려견 이름을 기재해 주세요.");
@@ -161,13 +141,17 @@
     				
     				let formData = new FormData();
     				
+    				formData.append("petId", petId);
     				formData.append("name", name);
     				formData.append("age", age);
+    				formData.append("hasImageChanged", hasImageChanged ? "true" : "false");
     				formData.append("imageProfile", $("#inputImagePet")[0].files[0]);
     				
+    				console.log(`name: ${name}, age: ${age}, imageChanged: ${hasImageChanged}, imageProfile: ${pathFile}`)
+
     				$.ajax({
     					type: "POST"
-    					, url: "/pet/register-pet"
+    					, url: "/pet/update-pet"
     					, data: formData
     					, enctype: 'multipart/form-data'
     					, processData: false
@@ -175,7 +159,7 @@
     					
     					, success: function(data){
     						if(data.code == 200){
-    							alert("🐶🥰반려견 추가 등록 성공하였습니다.");
+    							alert("🐶🥰반려견 정보를 수정하였습니다.");
     							location.href= "/pet/pet-list-view";
     						} else {
     							alert(data.error_message);
@@ -191,8 +175,10 @@
     			})// btn-submit on click
 
     			$(".btn-cancel-register").on('click',function(){
-    				
-    				location.reload();
+    				if(confirm("해당 정보 수정을 취소하시겠습니까?")== false){
+    					return;
+    				}
+    				location.href="/pet/pet-list-view";
     			})// btn-cancel-register on click
     			
     		})//document ready
