@@ -18,7 +18,7 @@
 						</button>
 						<input id="inputImagePet" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
 					</div>
-					<div class="group-btns-submit mr-1 mt-5">
+					<div class="group-btns-update-pet-info">
 						<button id="btn-delete-pet-current" class="btn-delete-pet-registered">
 							 삭제하기
 						</button>
@@ -27,6 +27,9 @@
 						</button>
 						<button class="btn-submit ml-2">
 							제출하기
+						</button>
+						<button class="btn-delete-image-profile-pet">
+							 프로필 <br> 이미지 삭제
 						</button>
 					</div>
 				</div>
@@ -133,6 +136,13 @@
     				
     				
     			})// #btn-delete-pet-current on click
+    			
+    			$(".btn-delete-image-profile-pet").on('click', function(){
+    				//기존 이미지 모두 삭제
+    				$("#imagePetPreview").attr('src', '');
+    				$("#inputImagePet").val('');
+    				hasImageChanged = true;
+    			})// .btn-delete-image-profile-pet on click
     			
     			$(".btn-submit").on('click', function(){
     				let petId = /*[[${pet.id}]]*/null;
