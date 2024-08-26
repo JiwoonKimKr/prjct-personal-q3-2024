@@ -90,6 +90,7 @@
  			,`age` = #{age}
  			,`imgProfile` = #{imagePathProfile}
  			,`imgThumbnail` = #{imagePathThumbnail}
+ 			, `updatedAt` = NOW()
 		WHERE
 			`id` = #{id}
  	</update>
