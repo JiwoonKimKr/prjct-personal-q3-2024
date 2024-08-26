@@ -317,8 +317,8 @@ public class UserRestController {
 	}
 	
 	@PostMapping("/register-image-profile")
-	public  Map<String, Object> signUp(
-			@RequestPart(name = "imageProfile", required = false) MultipartFile file
+	public  Map<String, Object> updateImageProfile(
+			@RequestPart(value = "imageProfile") MultipartFile file
 			, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
 		
@@ -333,6 +333,8 @@ public class UserRestController {
 			result.put("error_message", "프로필 이미지를 등록하지 못 하였습니다.");
 			return result;
 		}
+		
+		session.setAttribute("imageProfile", user.getImgProfile());
 		
 		result.put("code", 200);
 		result.put("result", "success");

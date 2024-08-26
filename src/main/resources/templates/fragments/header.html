@@ -101,7 +101,10 @@
 					</svg>
 				</div>
 				<button id="btn-update-image-profile">
-					<img id="imagePreview" class="d-none image-preview-circle" width="400" height="400">
+					<th:block>
+						<img th:if="${session.imageProfile}" id="imagePreview" class="image-preview-circle" width="400" height="400" th:src="${session.imageProfile}">
+						<img th:unless="${session.imageProfile}" id="imagePreview" class="d-none image-preview-circle" width="400" height="400">
+					</th:block>
 				</button>
 				<input id="imageProfile" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
 			</div>
@@ -251,6 +254,7 @@
 												: "none");
 							});// toggle-aside-dropdown
 
+/* 측면 삼선 버튼(숨겨진 메뉴 열기) 눌렸을 때: btn-dropdown-asie */							
 					$(".btn-dropdown-aside").on('click', function() {
 						let userId = /*[[${session.userId}]]*/null;
 						//console.log(userId);
@@ -261,11 +265,14 @@
 						}
 					}); //btn-dropdown-aside on click
 
+/*프로필 이미지 추가 버튼 눌렀을 때: btn-add-profile-image */
+//아예 등록된 이미지 없는 경우
 					$("#btn-add-profile-image").on('click', function() {
 						$("#imageProfile").click();
 					})//btn-add-profile-image on click
 					
-					$("btn-update-image-profile").on('click', function(){
+/*프로필 이미지 변경: btn-update-image-profile */					
+					$("#btn-update-image-profile").on('click', function(){
 						$("#imageProfile").click();
 						
 					})//btn-update-image-profile on click
@@ -278,8 +285,8 @@
 							$(this).val("");
 							return;
 						}
+						//console.log(file);
 	    				
-						//
 						let pathFile = $("#imageProfile").val();
 						
 						let extension = pathFile.split(".").pop().toLowerCase();
@@ -294,7 +301,7 @@
 	    				formData.append("imageProfile", $("#imageProfile")[0].files[0]);
 						
 	    				console.log(formData);
-	    				return;
+	    				
 	    				$.ajax({
 	    					type: "POST"
 	    					, url: "/user/register-image-profile"
@@ -307,16 +314,7 @@
 	    						if(data.code == 200){
 	    							alert("🤩🥳프로필 이미지 등록 성공하였습니다.");
 	    							
-	    							let reader = new FileReader();
-	    							reader.onload = function(event){
-	    								$("#imagePreview").removeClass('d-none');
-	    								$("#imagePreview").attr('src', event.target.result);
-	    							};
-	    							reader.readAsDataURL(file);
-	    		    				
-	    							$("#btn-add-profile-image").addClass('d-none');
-	    							$("#bg-add-profile-image").addClass('d-none');
-	    							
+	    							location.reload();
 	    						} else {
 	    							alert(data.error_message);
 	    						}
