@@ -24,9 +24,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				, "/css/**"
 				, "/img/**"
 				, "/user/sign-out"
+				, "/user/register-image-profile"
+				, "/user/register-self-description"
 				, "/admin/sign-in-view"
 				, "/admin/sign-in"
-				, "/user/register-image-profile"
 				);
 	}
 	

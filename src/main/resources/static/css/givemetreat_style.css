@@ -502,7 +502,8 @@ input::-webkit-inner-spin-button {
 	
 	border-color: transparent;
 	background-color: transparent;
-	font-size: 25px;
+	font-size: 15px;
+	font-weight: bold;
 	
 }
 

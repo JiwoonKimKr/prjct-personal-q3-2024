@@ -237,6 +237,7 @@ public class UserRestController {
 		session.setAttribute("loginId", user.getLoginId());
 		session.setAttribute("userName", user.getNickname());
 		session.setAttribute("imageProfile", user.getImgProfile());
+		session.setAttribute("selfDescription", user.getSelfDesc());
 		
 		result.put("code", 200);
 		result.put("result", "success");
@@ -317,7 +318,7 @@ public class UserRestController {
 	}
 	
 	@PostMapping("/register-image-profile")
-	public  Map<String, Object> updateImageProfile(
+	public Map<String, Object> updateImageProfile(
 			@RequestPart(value = "imageProfile") MultipartFile file
 			, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
@@ -335,6 +336,35 @@ public class UserRestController {
 		}
 		
 		session.setAttribute("imageProfile", user.getImgProfile());
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		return result;
+	}
+	
+	@PostMapping("/register-self-description")
+	public Map<String, Object> updateImageProfile(
+									@RequestParam String selfDescription
+									, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		
+		if(WordingValidation.hasLiteralsOnly(selfDescription) == false) {
+			result.put("code", 500);
+			result.put("error_message", "문자열만 입력 가능합니다.");
+			return result;
+		}
+		
+		int userId = (int) session.getAttribute("userId");
+		UserEntity user = userBO.updateSelfDescription(userId, selfDescription.trim());
+		
+		if(ObjectUtils.isEmpty(user.getSelfDesc())
+				|| selfDescription.trim().equals(user.getSelfDesc()) == false) {
+			result.put("code", 500);
+			result.put("error_message", "자기소개를 등록하지 못 하였습니다.");
+			return result;
+		}
+		
+		session.setAttribute("selfDescription", user.getSelfDesc());
 		
 		result.put("code", 200);
 		result.put("result", "success");

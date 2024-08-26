@@ -110,8 +110,7 @@
 			</div>
 			<!-- 자기소개 버튼 -->
 			<div id="group-input-self-description" class="btn-dropdown-aside">
-				<input id="input-self-description" type="text"
-					placeholder="✋자기소개 하기">
+				<textarea id="input-self-description" class="form-control" th:text="${session.selfDescription} ?: ${session.selfDescription}">[[${session.selfDescription}]]</textarea>
 				<button id="btn-self-description" type="button">
 					<div class="icon-plus">
 						<svg width="42" height="42" viewBox="0 0 42 42" fill="none"
@@ -327,6 +326,43 @@
 	    				
 	    			})// imagePet on change
 
+	    			/*btn-self-description */
+	    			$("#btn-self-description").on('click', function(){
+	    				let selfDescription = $("#input-self-description").val().trim();
+	    				if(!selfDescription || selfDescription == "✋자기소개 하기"){
+	    					alert("자기 소개를 입력해주세요 🙃🙃🙃");
+	    					$("#input-self-description").val('✋자기소개 하기');
+	    					return;
+	    				}
+	    				
+	    				if(selfDescription.length > 500){
+	    					alert("500자 이내로 자기 소개를 적어주세요");
+	    					return;
+	    				}
+	    				
+	    				console.log(`자기소개: ${selfDescription}`);
+	    				$.ajax({
+	    					type: "POST"
+	    					, url: "/user/register-self-description"
+	    					, data: {"selfDescription": selfDescription}
+	    					
+	    					, success: function(data){
+	    						if(data.code == 200){
+	    							alert("🥳🥳자기 소개를 추가하였습니다.");
+	    							location.reload();
+	    						} else {
+	    							alert(data.error_message);
+	    						}
+	    						
+	    					}
+	    					, error: function(error){
+	    						alert("반려견 등록에 실패하였습니다. 관리자에게 문의하세요.")
+	    					}
+	    					
+	    				})//ajax POST	
+	    				
+	    			}); // btn-self-description on click
+	    			
 					/* btn-pet-list-view 클릭 */
 					$("#btn-pet-list-view").on('click', function() {
 						location.href = "/pet/pet-list-view";

@@ -85,4 +85,12 @@ public class UserBO {
 		return user;
 	}
 
+	@Transactional
+	public UserEntity updateSelfDescription(int userId, String selfDescription) {
+		UserEntity user = userRepository.findById(userId).orElse(null);
+		return userRepository.save(user.toBuilder()
+				.selfDesc(selfDescription)
+				.build());
+	}
+
 }

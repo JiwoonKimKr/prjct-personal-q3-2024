@@ -24,6 +24,10 @@ public class WordingValidation {
 		return Pattern.matches("(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,16}", str);
 	}
 	
+	public static boolean hasLiteralsOnly(String str){
+		return Pattern.matches("[!@#$%^&*]", str) == false;
+	}
+	
     // 숫자 검사기
     public static boolean isNumeric(String str) {
         return Pattern.matches("^[0-9]*$", str);
