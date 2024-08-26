@@ -110,7 +110,7 @@ public class FileManagerService {
 		return listPathImages;
 	}
 	
-	public void deleteFile(String imagePath) {
+	public static void deleteFile(String imagePath) {
 		Path path = Paths.get(FILE_UPLOAD_PATH + imagePath.replace("/images/", ""));
 		
 		if(Files.exists(path)) {

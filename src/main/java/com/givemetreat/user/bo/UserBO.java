@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.FileManagerService;
@@ -11,7 +12,9 @@ import com.givemetreat.user.domain.UserEntity;
 import com.givemetreat.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserBO {
@@ -63,10 +66,22 @@ public class UserBO {
 	public UserEntity updateImageProfile(int userId, String loginId, MultipartFile file) {
 		List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
 		UserEntity user = userRepository.findById(userId).orElse(null);
-		userRepository.save(user.toBuilder()
+		
+		String imgProfilePrev = user.getImgProfile();
+		String imgThumbnailPrev = user.getImgThumbnail();
+		
+		user = userRepository.save(user.toBuilder()
 								.imgProfile(imagePathProfile.get(0))
 								.imgThumbnail(imagePathProfile.get(1))
 								.build());
+		
+		if(ObjectUtils.isEmpty(user.getImgProfile()) == false
+				&& user.getImgProfile().equals(imgProfilePrev) == false) {
+			FileManagerService.deleteFile(imgProfilePrev);
+			FileManagerService.deleteFile(imgThumbnailPrev);
+			log.info("[UserBO updateImageProfile()] previous profile images got deleted. usesId:{}", userId);
+		}
+		
 		return user;
 	}
 
