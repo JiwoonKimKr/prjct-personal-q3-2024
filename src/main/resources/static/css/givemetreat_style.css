@@ -1112,11 +1112,10 @@ input::-webkit-inner-spin-button {
 }
 
 .groups-product-list{
-	margin-right: 30px;
-	margin-bottom: 50px;
+	margin: 20px auto 30px auto;
 	
 	width: 1042px;
-	height: 800px;
+	height: 350px;
 	overflow: auto;
 
 	/* Auto layout */
@@ -1126,7 +1125,7 @@ input::-webkit-inner-spin-button {
 	align-items: flex-start;
 	align-content: flex-start;
 	padding: 0px;
-	gap: 30px;
+	gap: 24px;
 }
 
 /* groups-product-list 내 스크롤바 scrollbar 스타일 */

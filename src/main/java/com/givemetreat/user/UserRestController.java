@@ -206,10 +206,9 @@ public class UserRestController {
 		, @ApiResponse(responseCode = "200", description = "result: \"success\", \n 로그인 성공 시 session에 \"userId\", \"loginId\", \"userName\" 세 값 추가", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/sign-in")
-	public Map<String, Object> signIn(
-			@RequestParam String loginId
-			, @RequestParam String password
-			, HttpSession session){
+	public Map<String, Object> signIn(@RequestParam String loginId
+									, @RequestParam String password
+									, HttpSession session){
 		
 		Map<String, Object> result = new HashMap<>();
 
@@ -301,7 +300,7 @@ public class UserRestController {
 		
 		UserEntity user = userBO.addUser(loginId, hashedPassword, salt, nickname);
 		
-		if(user != null) {
+		if(ObjectUtils.isEmpty(user) == false) {
 			result.put("code", 200);
 			result.put("result", "success");
 		} else {

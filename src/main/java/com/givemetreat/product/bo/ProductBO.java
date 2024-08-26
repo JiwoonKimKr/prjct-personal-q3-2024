@@ -28,7 +28,7 @@ public class ProductBO {
 	private final UserFavoriteBO userFavoriteBO;
 	private final ProductUserInterestedBO productUserInterestedBO;
 	
-	private final int LIMIT_SELECTION = 3;
+	private final int LIMIT_SELECTION = 5;
 	private final int LIMIT_SELECTION_RECOMMNEDATION = 4;
 
 	/**

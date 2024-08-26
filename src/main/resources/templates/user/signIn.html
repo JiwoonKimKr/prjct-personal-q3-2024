@@ -85,6 +85,13 @@
 					location.href="/product/product-list-view";
 				})
 				
+				/* input 태그에서 바로 EnterKey를 눌렀을 때 */
+				$("input").on('keyup', function(key){
+					if(key.keyCode == 13){
+						$(".btn-sign-in").trigger('click');
+					}
+				})// .input on keyup
+				
 				/* 로그인 버튼 클릭 */
 				$(".btn-sign-in").on('click', function(){
 					/* 
@@ -99,6 +106,14 @@
 						alert("이메일을 입력하세요.");
 						return;
 					}
+					
+					let regexpEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+	    			if(!regexpEmail.test(loginId)){
+	    				alert("🛑올바른 이메일 형식을 입력하세요.");
+	    				$("#loginId-sign-in").val('');
+	    				return;
+	    			}
+					
 					if(!password){
 						alert("비밀번호를 입력하세요.");
 						return;

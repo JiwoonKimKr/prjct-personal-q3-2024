@@ -58,6 +58,14 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     	$(document).ready(function(){
+    		
+    		/* input 태그에서 바로 EnterKey를 눌렀을 때 */
+			$("input").on('keyup', function(key){
+				if(key.keyCode == 13){
+					$("#btn-find-email").trigger('click');
+				}
+			})// .input on keyup
+    		
     		$("#btn-find-email").on('click', function(){
     			let emailTyped = $("#find-email").val().trim();
     			
