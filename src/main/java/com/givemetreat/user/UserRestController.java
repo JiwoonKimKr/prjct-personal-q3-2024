@@ -8,7 +8,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.EncryptUtils;
 import com.givemetreat.common.validation.WordingValidation;
@@ -229,9 +231,12 @@ public class UserRestController {
 			result.put("error_message", "비밀번호를 확인해 주세요.");
 			return result;
 		}
+		
+		//Session에 값 추가
 		session.setAttribute("userId", user.getId());
 		session.setAttribute("loginId", user.getLoginId());
 		session.setAttribute("userName", user.getNickname());
+		session.setAttribute("imageProfile", user.getImgProfile());
 		
 		result.put("code", 200);
 		result.put("result", "success");
@@ -308,6 +313,29 @@ public class UserRestController {
 			result.put("error_message", "회원가입에 실패하였습니다. 관리자에게 문의하시길 바랍니다.");
 		}
 		
+		return result;
+	}
+	
+	@PostMapping("/register-image-profile")
+	public  Map<String, Object> signUp(
+			@RequestPart(name = "imageProfile", required = false) MultipartFile file
+			, HttpSession session){
+		Map<String, Object> result = new HashMap<>();
+		
+		int userId = (int) session.getAttribute("userId");
+		String loginId = (String) session.getAttribute("loginId");
+		
+		UserEntity user = userBO.updateImageProfile(userId, loginId, file);
+		
+		if(ObjectUtils.isEmpty(user.getImgProfile()) 
+				|| ObjectUtils.isEmpty(user.getImgThumbnail())) {
+			result.put("code", 500);
+			result.put("error_message", "프로필 이미지를 등록하지 못 하였습니다.");
+			return result;
+		}
+		
+		result.put("code", 200);
+		result.put("result", "success");
 		return result;
 	}
 }

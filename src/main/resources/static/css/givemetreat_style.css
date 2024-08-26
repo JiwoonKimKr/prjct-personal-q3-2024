@@ -455,6 +455,33 @@ input::-webkit-inner-spin-button {
 #bg-add-profile-image{
 	position:absolute;
 	z-index: 4;
+	
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+/* 사용자 프로필 이미지가 이미 존재하는 경우 */
+#btn-update-image-profile{
+	position:absolute;
+	z-index: 4;
+	
+	/* 👇 프로필 이미지를 추가하세요 */
+	background-color: transparent;
+	border-color: transparent;
+	
+	/* 👇 프로필 이미지를 추가하세요 */
+	font-size: 16px;
+	font-weight: 799;
+	line-height: 23px;
+	color: #000000;
+	
+}
+.image-preview-circle{
+	width: 200px;
+	height: 200px;
+	border: 15px solid #FFF;
+	border-radius: 70%;
+	overflow: hidden;
 }
 
 #group-input-self-description{
@@ -1115,7 +1142,7 @@ input::-webkit-inner-spin-button {
 	margin: 20px auto 30px auto;
 	
 	width: 1042px;
-	height: 350px;
+	height: 600px;
 	overflow: auto;
 
 	/* Auto layout */

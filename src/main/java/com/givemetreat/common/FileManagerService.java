@@ -56,6 +56,13 @@ public class FileManagerService {
 		return "/images/" + directoryName + "/" + nameEncoded;
 	}
 	
+	/**
+	 * List<@link String> imagePathProfile과 imagePathThumbnale을
+	 * 각각 index 0와 index 1로 반환한다.
+	 * @param file
+	 * @param loginId
+	 * @return List<{@link} String>
+	 */
 	public static List<String> uploadImageWithThumbnail(MultipartFile file, String loginId) {
 		String directoryName = loginId + "_" + System.currentTimeMillis();
 		String filePath = FILE_UPLOAD_PATH + directoryName + "/";
