@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.FileManagerService;
 import com.givemetreat.common.generic.Page;
+import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.product.domain.AdminProductVO;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.mapper.ProductMapper;
@@ -53,11 +54,13 @@ public class AdminProductBO {
 										, Integer pageRequested) {
 		//direction이랑 paging이 필요한 경우
 		
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name
 																			, category
 																			, price
-																			, agePetProper
+																			, agePetCurrent
 																			, null
 																			, null
 																			, null);
@@ -130,7 +133,12 @@ public class AdminProductBO {
 								, String category
 								, Integer price
 								, String agePetProper) {
-		List<Product> listProducts = productMapper.selectProduct(id, name, category, price, agePetProper);
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		List<Product> listProducts = productMapper.selectProduct(id
+																, name
+																, category
+																, price
+																, agePetCurrent);
 		//Product를 VO로 변환 후 List 형태로 반환
 		List<AdminProductVO> listVOs = new ArrayList<>();
 		for(Product product : listProducts) {

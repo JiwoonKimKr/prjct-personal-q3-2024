@@ -34,7 +34,7 @@
 			</if>	
 			<if test="agePetProper != null">
 				AND			
-					`agePetProper` = #{agePetProper}
+					`agePetProper` = #{agePetProper.agePetE}
 			</if>
 			<if test="direction != null and index != null">
 				<if test="direction == 'next'">
@@ -91,7 +91,7 @@
 			</if>	
 			<if test="agePetProper != null">
 				AND			
-					`agePetProper` = #{agePetProper}
+					`agePetProper` = #{agePetProper.agePetE}
 			</if>
 		</where>
 		ORDER BY `id` DESC
@@ -117,7 +117,7 @@
 			</if>	
 			<if test="agePetProper != null">
 				AND			
-					`agePetProper` = #{agePetProper}
+					`agePetProper` = #{agePetProper.agePetE}
 			</if>
 		</where>
 		ORDER BY `id` DESC
@@ -144,7 +144,7 @@
 			#{name}
 			, #{category}
 			, #{price}
-			, #{agePetProper}
+			, #{agePetProper.agePetE}
 			, #{imgProfile}
 			, #{imgThumbnail}
 			, NOW()

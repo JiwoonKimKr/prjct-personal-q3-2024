@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.generic.Page;
+import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.product.mapper.ProductMapper;
@@ -51,12 +52,12 @@ public class ProductBO {
 										, Integer pageCurrent
 										, Integer pageRequested) {
 		//direction이랑 paging이 필요한 경우
-		
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name
 																			, category
 																			, price
-																			, agePetProper
+																			, agePetCurrent
 																			, null
 																			, null
 																			, null);
@@ -121,11 +122,12 @@ public class ProductBO {
 										, String category
 										, Integer price
 										, String agePetProper) {
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		List<Product> listProducts = productMapper.selectProduct(id
 																, name
 																, category
 																, price
-																, agePetProper);
+																, agePetCurrent);
 		List<ProductVO> listVOs = new ArrayList<>();
 		
 		for(Product product : listProducts) {
@@ -148,7 +150,7 @@ public class ProductBO {
 		
 		//Keyword 관련한 것을 넣어도 좋을 듯;
 		String categoryFavored = category;
-		String agePetProperFavored = agePetProper;
+		AgePet agePetProperFavored = AgePet.findAgeCurrent(agePetProper, null, null);
 		
 		UserFavoriteEntity userInfo = userFavoriteBO.getEntityByUserId(userId);
 		if(ObjectUtils.isEmpty(userInfo) == false) {
@@ -156,7 +158,7 @@ public class ProductBO {
 				categoryFavored = userInfo.getCategory();
 			}
 			if(ObjectUtils.isEmpty(userInfo.getAgePetProper()) == false) {
-				agePetProperFavored = userInfo.getAgePetProper();
+				agePetProperFavored = AgePet.findAgeCurrent(userInfo.getAgePetProper(), null, null);
 			}
 		}
 		
@@ -167,7 +169,7 @@ public class ProductBO {
 			ProductVO product = getProducts(productId, null, null, null, null).get(0);
 			if(ObjectUtils.isEmpty(null) == false) {
 				categoryFavored = product.getCategory();
-				agePetProperFavored = product.getAgePetProper();
+				agePetProperFavored = AgePet.findAgeCurrent(userInfo.getAgePetProper(), null, null);
 			}
 		}
 		

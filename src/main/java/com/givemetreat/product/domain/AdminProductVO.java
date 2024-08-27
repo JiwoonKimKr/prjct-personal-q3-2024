@@ -15,7 +15,7 @@ public class AdminProductVO {
 		this.name = product.getName();
 		this.category = product.getCategory();
 		this.price = product.getPrice();
-		this.agePetProper = product.getAgePetProper();
+		this.agePetProper = product.getAgePetProper().getAgePetE();
 		this.imgProfile = product.getImgProfile();
 		this.imgThumbnail = product.getImgThumbnail();
 		this.createdAt = product.getCreatedAt();

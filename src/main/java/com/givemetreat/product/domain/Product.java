@@ -2,6 +2,8 @@ package com.givemetreat.product.domain;
 
 import java.time.LocalDateTime;
 
+import com.givemetreat.pet.domain.AgePet;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,7 +21,7 @@ public class Product {
 		this.name = name;
 		this.category = category;
 		this.price = price;
-		this.agePetProper = agePetProper;
+		this.agePetProper = AgePet.findAgeCurrent(agePetProper, null, null);
 		this.imgProfile = imgProfile;
 		this.imgThumbnail = imgThumbnail;
 	};
@@ -28,7 +30,7 @@ public class Product {
 	private String name;
 	private String category;
 	private int price;
-	private String agePetProper;
+	private AgePet agePetProper;
 	private String imgProfile;
 	private String imgThumbnail;
 	private LocalDateTime createdAt;

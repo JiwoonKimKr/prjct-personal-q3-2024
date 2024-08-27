@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.givemetreat.common.converter.AgePetConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,6 +41,7 @@ public class UserFavoriteEntity {
 	@Column(nullable = true)
 	private String category;
 	
+	@Convert(converter = AgePetConverter.class)
 	@Column(name = "agePetProper", nullable = true)
 	private String agePetProper;
 	

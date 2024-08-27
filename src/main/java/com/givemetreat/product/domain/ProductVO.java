@@ -21,8 +21,8 @@ public class ProductVO {
 		
 		this.price = product.getPrice();
 		
-		this.agePetProper = product.getAgePetProper();
-		this.agePetProperTranslatedK = StringTranslator.translateAgePetProperE2K(product.getAgePetProper());
+		this.agePetProper = product.getAgePetProper().getAgePetE();
+		this.agePetProperTranslatedK = product.getAgePetProper().getAgePetK();
 		
 		this.imgProfile = product.getImgProfile();
 		this.imgThumbnail = product.getImgThumbnail();
