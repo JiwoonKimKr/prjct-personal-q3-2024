@@ -82,21 +82,30 @@ public class PetBO {
 		}
 		if(ObjectUtils.isEmpty(file) && hasImageChanged) {
 			//이미지 파일이 넘어오지 않은 경우
-			imgProfileCur = null;
-			imgThumbnailCur = null;
+			petMapper.updatePet(petId
+					, nameCur
+					, ageCur
+					, null
+					, null);
+			
 		} else if(ObjectUtils.isEmpty(file) == false){
 			//이미지 파일을 받은 경우
 			List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
 			imgProfileCur = imagePathProfile.get(0);
 			imgThumbnailCur = imagePathProfile.get(1);
 			
+			petMapper.updatePet(petId
+					, nameCur
+					, ageCur
+					, imgProfileCur
+					, imgThumbnailCur);
+		} else { // 파일이 바뀐 것이 없는 경우; hasImageChanged= false인 경우
+			petMapper.updatePet(petId
+					, nameCur
+					, ageCur
+					, imgProfileCur
+					, imgThumbnailCur);
 		}
-		petMapper.updatePet(petId
-				, nameCur
-				, ageCur
-				, imgProfileCur
-				, imgThumbnailCur);
-		
 		
 		//update된 Record로 가져옴;
 		pet = petMapper.selectPetByIdAndUserId(petId, userId);
