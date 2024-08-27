@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.givemetreat.aop.TrackUsersFavor;
 import com.givemetreat.pet.domain.AgePet;
+import com.givemetreat.product.domain.CategoryProduct;
 import com.givemetreat.product.domain.Product;
 
 @Mapper
@@ -16,7 +17,7 @@ public interface ProductMapper {
 	public List<Product> selectProduct(
 			@Param("id") Integer id
 			, @Param("name") String name
-			, @Param("category") String category
+			, @Param("category") CategoryProduct category
 			, @Param("price") Integer price
 			, @Param("agePetProper") AgePet agePetProper);
 	
@@ -24,7 +25,7 @@ public interface ProductMapper {
 	public List<Product> selectProductForPaging(
 			@Param("id") Integer id
 			, @Param("name") String name
-			, @Param("category") String category
+			, @Param("category") CategoryProduct category
 			, @Param("price") Integer price
 			, @Param("agePetProper") AgePet agePetProper
 			, @Param("direction") String direction
@@ -32,7 +33,7 @@ public interface ProductMapper {
 			, @Param("limit") Integer limit);
 
 	public List<Product> selectTop4ProductsRecommended(
-			@Param("category") String category
+			@Param("category") CategoryProduct category
 			, @Param("agePetProper") AgePet agePetProper
 			, @Param("limit") int limit);
 	

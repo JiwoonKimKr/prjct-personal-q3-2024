@@ -6,6 +6,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.givemetreat.common.converter.AgePetConverter;
+import com.givemetreat.common.converter.CategoryProductConverter;
+import com.givemetreat.pet.domain.AgePet;
+import com.givemetreat.product.domain.CategoryProduct;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -38,12 +41,19 @@ public class UserFavoriteEntity {
 	@Column(nullable = true)
 	private String keyword;
 	
+	/**
+	 * {@link CategoryProduct} Enum 타입 활용
+	 */
+	@Convert(converter = CategoryProductConverter.class)
 	@Column(nullable = true)
-	private String category;
+	private CategoryProduct category;
 	
+	/**
+	 * {@link AgePet} Enum 타입 활용
+	 */
 	@Convert(converter = AgePetConverter.class)
 	@Column(name = "agePetProper", nullable = true)
-	private String agePetProper;
+	private AgePet agePetProper;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt")

@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 public enum AgePet {
-	under6months("under6months", "6개월 미만", 1)
-	, adult("adult", "성견", 2)
-	, senior("senior", "고령견", 3);
+	under6months("under6months", "6개월 미만", 0)
+	, adult("adult", "성견", 1)
+	, senior("senior", "고령견", 2);
 
 	@Getter
 	private final String agePetE;

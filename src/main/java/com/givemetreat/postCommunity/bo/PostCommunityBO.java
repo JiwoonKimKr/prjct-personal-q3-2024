@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.postCommunity.domain.PostCommunityEntity;
 import com.givemetreat.postCommunity.domain.PostCommunityVO;
 import com.givemetreat.postCommunity.repository.PostCommunityRepository;
@@ -34,7 +35,9 @@ public class PostCommunityBO {
 
 	@Transactional
 	public List<PostCommunityVO> getPostsByAgePetProPerLimit20(String agePetProper) {
-		List<PostCommunityEntity> listEntities = postCommunityRepository.findTop20ByAgePetProperOrderByIdDesc(agePetProper);
+		//Enum 타입 도입_27 08 2024
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		List<PostCommunityEntity> listEntities = postCommunityRepository.findTop20ByAgePetProperOrderByIdDesc(agePetCurrent);
 		List<PostCommunityVO> listVOs = listEntities.stream()
 									.map(entity -> voFromEntity(entity))
 									.collect(Collectors.toList());
@@ -56,11 +59,13 @@ public class PostCommunityBO {
 	}
 	@Transactional
 	public PostCommunityEntity addPost(Integer userId, String title, String content, String agePetProper) {
+		//Enum 타입 도입_27 08 2024
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		return postCommunityRepository.save(PostCommunityEntity.builder()
 															.userId(userId)
 															.title(title)
 															.content(content)
-															.agePetProper(agePetProper)
+															.agePetProper(agePetCurrent)
 															.build());
 	}
 	@Transactional
@@ -76,10 +81,12 @@ public class PostCommunityBO {
 			return null;
 		}
 		
+		//Enum 타입 도입_27 08 2024
+		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		return postCommunityRepository.save(entity.toBuilder()
 											.title(title)
 											.content(content)
-											.agePetProper(agePetProper)
+											.agePetProper(agePetCurrent)
 											.build());
 	}
 

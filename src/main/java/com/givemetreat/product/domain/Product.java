@@ -19,7 +19,7 @@ public class Product {
 			, String imgProfile
 			, String imgThumbnail) {
 		this.name = name;
-		this.category = category;
+		this.category = CategoryProduct.findCategoryProduct(category, null, null) ;
 		this.price = price;
 		this.agePetProper = AgePet.findAgeCurrent(agePetProper, null, null);
 		this.imgProfile = imgProfile;
@@ -28,8 +28,16 @@ public class Product {
 	
 	private Integer id;
 	private String name;
-	private String category;
+	
+	/**
+	 *  {@link CategoryProduct} Enum 타입 활용
+	 */
+	private CategoryProduct category;
 	private int price;
+	
+	/**
+	 *  {@link AgePet} Enum 타입 활용
+	 */
 	private AgePet agePetProper;
 	private String imgProfile;
 	private String imgThumbnail;

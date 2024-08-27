@@ -15,8 +15,10 @@ import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.generic.Page;
 import com.givemetreat.invoice.domain.AdminInvoiceVO;
+import com.givemetreat.invoice.domain.HasCanceled;
 import com.givemetreat.invoice.domain.Invoice;
 import com.givemetreat.invoice.domain.InvoiceEntity;
+import com.givemetreat.invoice.domain.StatusDelivery;
 import com.givemetreat.invoice.mapper.InvoiceMapper;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.AdminProductBO;
@@ -70,6 +72,9 @@ public class AdminInvoiceBO {
 													, Integer pageRequested) {
 		//direction이랑 paging이 필요한 경우
 		
+		// Enum Type 추가_27 08 2024
+		HasCanceled hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(hasCanceled, null);
+		StatusDelivery statusCurrent = StatusDelivery.findStatusDelivery(statusDelivery, null, null);
 		List<Invoice> listEntitiesWhole = invoiceMapper.selectInvoicesForPaging( invoiceId
 																, userId
 																, payment
@@ -78,10 +83,10 @@ public class AdminInvoiceBO {
 																, company
 																, monthlyInstallment
 																*/
-																, hasCanceled
+																, hasCanceledCurrent
 																, buyerName
 																, buyerPhoneNumber
-																, statusDelivery
+																, statusCurrent
 																, receiverName
 																, receiverPhoneNumber
 																, address
@@ -174,10 +179,12 @@ public class AdminInvoiceBO {
 	public List<AdminInvoiceVO> getListInvoicesPayedRecently() {
 		//주문 취소 X(DB값 0;취소하면 1) & 택배 상차 완료 X (포장까지만 완료)
 		
-		List<String> listString = new ArrayList<>(Arrays.asList("PaymentBilled", "PackingFinished"));
+		List<StatusDelivery> listStatus = new ArrayList<>(Arrays.asList(StatusDelivery.PaymentBilled, StatusDelivery.PackingFinished));
 		
+		// Enum Type 추가 _ 27 08 2024
+		HasCanceled ifCanceled = HasCanceled.billed;  
 		List<InvoiceEntity> listInvoiceLatest = invoiceRepository.
-				findInvoiceByHasCanceledAndStatusDeliveryInOrderByIdDesc(0, listString);
+				findInvoiceByHasCanceledAndStatusDeliveryInOrderByIdDesc(ifCanceled, listStatus);
 		//AdminInvoiceVO로 변환해서 Controller에 보낼 예정;
 		List<AdminInvoiceVO> listInvoiceVO = new ArrayList<>();
 		
@@ -258,6 +265,9 @@ public class AdminInvoiceBO {
 										, String address
 										, LocalDateTime createdAt
 										, LocalDateTime updatedAt) {
+		// Enum Type 추가_27 08 2024
+		HasCanceled hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(hasCanceled, null);
+		StatusDelivery statusCurrent = StatusDelivery.findStatusDelivery(statusDelivery, null, null);
 		List<Invoice> listInvoices = invoiceMapper.selectInvoices( invoiceId
 											, userId
 											, payment
@@ -266,10 +276,10 @@ public class AdminInvoiceBO {
 											, company
 											, monthlyInstallment
 											*/
-											, hasCanceled
+											, hasCanceledCurrent
 											, buyerName
 											, buyerPhoneNumber
-											, statusDelivery
+											, statusCurrent
 											, receiverName
 											, receiverPhoneNumber
 											, address

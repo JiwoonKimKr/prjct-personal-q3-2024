@@ -18,9 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.validation.InvoiceParamsValidation;
+import com.givemetreat.invoice.domain.HasCanceled;
 import com.givemetreat.invoice.domain.Invoice;
 import com.givemetreat.invoice.domain.InvoiceEntity;
 import com.givemetreat.invoice.domain.InvoiceVO;
+import com.givemetreat.invoice.domain.StatusDelivery;
 import com.givemetreat.invoice.mapper.InvoiceMapper;
 import com.givemetreat.invoice.repository.InvoiceRepository;
 import com.givemetreat.product.bo.ProductBO;
@@ -70,6 +72,9 @@ public class InvoiceBO {
 										, String address
 										, LocalDateTime createdAtSince , LocalDateTime createdAtUntil 
 										, LocalDateTime updatedAtSince , LocalDateTime updatedAtUntil) {
+		// Enum Type 추가_27 08 2024
+		HasCanceled hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(hasCanceled, null);
+		StatusDelivery statusCurrent = StatusDelivery.findStatusDelivery(statusDelivery, null, null);
 		List<Invoice> list = invoiceMapper.selectInvoicesBetweenDates( invoiceId
 																, userId
 																, payment
@@ -78,10 +83,10 @@ public class InvoiceBO {
 																, company
 																, monthlyInstallment
 																*/
-																, hasCanceled
+																, hasCanceledCurrent
 																, buyerName
 																, buyerPhoneNumber
-																, statusDelivery
+																, statusCurrent
 																, receiverName
 																, receiverPhoneNumber
 																, address
@@ -115,9 +120,10 @@ public class InvoiceBO {
 	
 	@Transactional
 	public List<InvoiceVO> getListInvoicesByIdDeliveryNotFinished(Integer userId) {
-		List<String> listString = new ArrayList<>(Arrays.asList("DeliveryFinished"));
+		List<StatusDelivery> listStatus = new ArrayList<>(Arrays.asList(StatusDelivery.DeliveryFinished));
 		
-		List<InvoiceEntity> list = invoiceRepository.findByUserIdAndHasCanceledAndStatusDeliveryNotInOrderByIdDesc(userId, 0, listString);
+		HasCanceled ifCanceled = HasCanceled.billed;
+		List<InvoiceEntity> list = invoiceRepository.findByUserIdAndHasCanceledAndStatusDeliveryNotInOrderByIdDesc(userId, ifCanceled, listStatus);
 		List<InvoiceVO> listVOs = list.stream().map(entity -> new InvoiceVO(entity)).collect(Collectors.toList());
 		return listVOs;
 	}
@@ -215,14 +221,17 @@ public class InvoiceBO {
 			return null;
 		}
 		
+		//Enum 타입 추가_27 08 2024
+		HasCanceled hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(0, null);
+		StatusDelivery statusCurrent = StatusDelivery.PaymentBilled;
 		//Building Invoice Entity
 		InvoiceEntity invoice = InvoiceEntity.builder()
 											.userId(userId)
 											.payment(payment)
-											.hasCanceled(0) //취소 안된, 결제 완료 상태일 때는 0
+											.hasCanceled(hasCanceledCurrent) //취소 안된, 결제 완료 상태일 때는 0
 											.buyerName(buyerName)
 											.buyerPhoneNumber(buyerPhoneNumber)
-											.statusDelivery("PaymentBilled")
+											.statusDelivery(statusCurrent)
 											.receiverName(receiverName)
 											.receiverPhoneNumber(receiverPhoneNumber)
 											.address(address)

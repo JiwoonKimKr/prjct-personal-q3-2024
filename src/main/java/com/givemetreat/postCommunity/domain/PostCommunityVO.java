@@ -18,7 +18,7 @@ public class PostCommunityVO {
 		this.userId = entity.getUserId();
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
-		this.agePetProper = entity.getAgePetProper();
+		this.agePetProper = entity.getAgePetProper().getAgePetK();
 		this.createdAt = entity.getCreatedAt();
 		this.updatedAt = entity.getUpdatedAt();
 		

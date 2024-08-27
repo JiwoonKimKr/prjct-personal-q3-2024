@@ -13,10 +13,15 @@ public class Invoice {
 	private String company;
 	private String monthlyInstallment;
 	*/
-	private int hasCanceled;
+	
+	
+	private HasCanceled hasCanceled;
 	private String buyerName;
 	private String buyerPhoneNumber;
-	private String statusDelivery;
+	/**
+	 *  {@link StatusDelivery} Enum 타입 활용
+	 */
+	private StatusDelivery statusDelivery;
 	private String receiverName;
 	private String receiverPhoneNumber;
 	private String address;

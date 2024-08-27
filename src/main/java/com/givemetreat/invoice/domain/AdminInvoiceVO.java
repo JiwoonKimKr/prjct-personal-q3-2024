@@ -3,7 +3,6 @@ package com.givemetreat.invoice.domain;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.givemetreat.common.utils.StringTranslator;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,13 +30,11 @@ public class AdminInvoiceVO {
 		*/
 				
 		//결제 취소 여부: 1은 결제 취소,0 은 결제완료 그대로 
-		this.hasCanceled = StringTranslator.translateHasCanceledE2K(
-							invoice.getHasCanceled());
+		this.hasCanceled = invoice.getHasCanceled().getStatusK();
 		
 		this.buyerName = invoice.getBuyerName();
 		this.buyerPhoneNumber = invoice.getBuyerPhoneNumber();
-		this.statusDelivery = StringTranslator.translateStatusDeliveryE2K(
-								invoice.getStatusDelivery());
+		this.statusDelivery = invoice.getStatusDelivery().getStatusK();
 		
 		this.receiverName = invoice.getReceiverName();
 		this.receiverPhoneNumber = invoice.getReceiverPhoneNumber();
@@ -63,13 +60,11 @@ public class AdminInvoiceVO {
 									invoice.getMonthlyInstallment());
 		*/	
 		//결제 취소 여부: 1은 결제 취소,0 은 결제완료 그대로 
-		this.hasCanceled = StringTranslator.translateHasCanceledE2K(
-							invoice.getHasCanceled());
+		this.hasCanceled = invoice.getHasCanceled().getStatusK();
 		
 		this.buyerName = invoice.getBuyerName();
 		this.buyerPhoneNumber = invoice.getBuyerPhoneNumber();
-		this.statusDelivery = StringTranslator.translateStatusDeliveryE2K(
-								invoice.getStatusDelivery());
+		this.statusDelivery = invoice.getStatusDelivery().getStatusK();
 		
 		this.receiverName = invoice.getReceiverName();
 		this.receiverPhoneNumber = invoice.getReceiverPhoneNumber();

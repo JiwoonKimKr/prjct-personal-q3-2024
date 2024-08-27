@@ -5,7 +5,11 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.givemetreat.common.converter.AgePetConverter;
+import com.givemetreat.pet.domain.AgePet;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,8 +39,9 @@ public class PostCommunityEntity {
 	private String title;
 	private String content;
 	
+	@Convert(converter = AgePetConverter.class)
 	@Column(name = "agePetProper")
-	private String agePetProper;
+	private AgePet agePetProper;
 	
 	@CreationTimestamp
 	@Column(name = "createdAt")

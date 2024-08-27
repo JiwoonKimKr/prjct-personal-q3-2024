@@ -10,6 +10,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.generic.Page;
 import com.givemetreat.pet.domain.AgePet;
+import com.givemetreat.product.domain.CategoryProduct;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.product.mapper.ProductMapper;
@@ -52,10 +53,14 @@ public class ProductBO {
 										, Integer pageCurrent
 										, Integer pageRequested) {
 		//direction이랑 paging이 필요한 경우
+		
+		//Enum 타입 추가_27 08 2024
+		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name
-																			, category
+																			, categoryCurrent
 																			, price
 																			, agePetCurrent
 																			, null
@@ -122,10 +127,12 @@ public class ProductBO {
 										, String category
 										, Integer price
 										, String agePetProper) {
+		//Enum 타입 추가_27 08 2024
+		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		List<Product> listProducts = productMapper.selectProduct(id
 																, name
-																, category
+																, categoryCurrent
 																, price
 																, agePetCurrent);
 		List<ProductVO> listVOs = new ArrayList<>();
@@ -149,7 +156,8 @@ public class ProductBO {
 	public List<ProductVO> getListProductsRecommended(Integer userId, String category, String agePetProper) {
 		
 		//Keyword 관련한 것을 넣어도 좋을 듯;
-		String categoryFavored = category;
+		//Enum 타입 추가_27 08 2024
+		CategoryProduct categoryFavored = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetProperFavored = AgePet.findAgeCurrent(agePetProper, null, null);
 		
 		UserFavoriteEntity userInfo = userFavoriteBO.getEntityByUserId(userId);
@@ -158,7 +166,7 @@ public class ProductBO {
 				categoryFavored = userInfo.getCategory();
 			}
 			if(ObjectUtils.isEmpty(userInfo.getAgePetProper()) == false) {
-				agePetProperFavored = AgePet.findAgeCurrent(userInfo.getAgePetProper(), null, null);
+				agePetProperFavored = userInfo.getAgePetProper();
 			}
 		}
 		
@@ -168,8 +176,8 @@ public class ProductBO {
 			
 			ProductVO product = getProducts(productId, null, null, null, null).get(0);
 			if(ObjectUtils.isEmpty(null) == false) {
-				categoryFavored = product.getCategory();
-				agePetProperFavored = AgePet.findAgeCurrent(userInfo.getAgePetProper(), null, null);
+				categoryFavored = CategoryProduct.findCategoryProduct(product.getCategory(), agePetProper, userId) ;
+				agePetProperFavored = userInfo.getAgePetProper();
 			}
 		}
 		

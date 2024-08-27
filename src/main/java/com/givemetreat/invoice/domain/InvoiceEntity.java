@@ -5,7 +5,11 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.givemetreat.common.converter.HasCanceledConverter;
+import com.givemetreat.common.converter.StatusDeliveryConverter;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,9 +45,12 @@ public class InvoiceEntity {
 	@Column(name="monthlyInstallment")
 	private String monthlyInstallment;
 	*/
-	
+	/**
+	 *  {@link HasCanceled} Enum 타입 활용
+	 */
+	@Convert(converter = HasCanceledConverter.class)
 	@Column(name="hasCanceled")
-	private int hasCanceled;
+	private HasCanceled hasCanceled;
 	
 	@Column(name="buyerName")
 	private String buyerName;
@@ -51,8 +58,12 @@ public class InvoiceEntity {
 	@Column(name="buyerPhoneNumber")
 	private String buyerPhoneNumber;
 	
+	/**
+	 *  {@link StatusDelivery} Enum 타입 활용
+	 */
+	@Convert(converter = StatusDeliveryConverter.class)
 	@Column(name="statusDelivery")
-	private String statusDelivery;
+	private StatusDelivery statusDelivery;
 	
 	@Column(name="receiverName")
 	private String receiverName;

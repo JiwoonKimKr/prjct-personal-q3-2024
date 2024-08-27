@@ -13,7 +13,7 @@ public class AdminProductVO {
 	public AdminProductVO(Product product){
 		this.id = product.getId();
 		this.name = product.getName();
-		this.category = product.getCategory();
+		this.category = product.getCategory().getTypeE();
 		this.price = product.getPrice();
 		this.agePetProper = product.getAgePetProper().getAgePetE();
 		this.imgProfile = product.getImgProfile();

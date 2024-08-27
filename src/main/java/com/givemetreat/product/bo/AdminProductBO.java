@@ -12,6 +12,7 @@ import com.givemetreat.common.FileManagerService;
 import com.givemetreat.common.generic.Page;
 import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.product.domain.AdminProductVO;
+import com.givemetreat.product.domain.CategoryProduct;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.mapper.ProductMapper;
 import com.givemetreat.productBuffer.bo.ProductBufferBO;
@@ -54,11 +55,13 @@ public class AdminProductBO {
 										, Integer pageRequested) {
 		//direction이랑 paging이 필요한 경우
 		
+		//Enum 타입 추가_27 08 2024
+		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name
-																			, category
+																			, categoryCurrent
 																			, price
 																			, agePetCurrent
 																			, null
@@ -133,10 +136,12 @@ public class AdminProductBO {
 								, String category
 								, Integer price
 								, String agePetProper) {
+		//Enum 타입 추가_27 08 2024
+		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		List<Product> listProducts = productMapper.selectProduct(id
 																, name
-																, category
+																, categoryCurrent
 																, price
 																, agePetCurrent);
 		//Product를 VO로 변환 후 List 형태로 반환

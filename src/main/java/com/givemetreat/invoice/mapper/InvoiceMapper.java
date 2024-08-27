@@ -6,7 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.givemetreat.invoice.domain.HasCanceled;
 import com.givemetreat.invoice.domain.Invoice;
+import com.givemetreat.invoice.domain.StatusDelivery;
 
 @Mapper
 public interface InvoiceMapper {
@@ -21,10 +23,10 @@ public interface InvoiceMapper {
 							, @Param("company") String company
 							, @Param("monthlyInstallment") String monthlyInstallment
 							*/
-							, @Param("hasCanceled") Integer hasCanceled
+							, @Param("hasCanceled") HasCanceled hasCanceled
 							, @Param("buyerName") String buyerName
 							, @Param("buyerPhoneNumber") String buyerPhoneNumber
-							, @Param("statusDelivery") String statusDelivery
+							, @Param("statusDelivery") StatusDelivery statusDelivery
 							, @Param("receiverName") String receiverName
 							, @Param("receiverPhoneNumber") String receiverPhoneNumber
 							, @Param("address") String address
@@ -39,10 +41,10 @@ public interface InvoiceMapper {
 											, @Param("company") String company
 											, @Param("monthlyInstallment") String monthlyInstallment
 											*/
-											, @Param("hasCanceled") Integer hasCanceled
+											, @Param("hasCanceled") HasCanceled hasCanceled
 											, @Param("buyerName") String buyerName
 											, @Param("buyerPhoneNumber") String buyerPhoneNumber
-											, @Param("statusDelivery") String statusDelivery
+											, @Param("statusDelivery") StatusDelivery statusDelivery
 											, @Param("receiverName") String receiverName
 											, @Param("receiverPhoneNumber") String receiverPhoneNumber
 											, @Param("address") String address
@@ -60,10 +62,10 @@ public interface InvoiceMapper {
 							, @Param("company") String company
 							, @Param("monthlyInstallment") String monthlyInstallment
 							*/
-							, @Param("hasCanceled") Integer hasCanceled
+							, @Param("hasCanceled") HasCanceled hasCanceled
 							, @Param("buyerName") String buyerName
 							, @Param("buyerPhoneNumber") String buyerPhoneNumber
-							, @Param("statusDelivery") String statusDelivery
+							, @Param("statusDelivery") StatusDelivery statusDelivery
 							, @Param("receiverName") String receiverName
 							, @Param("receiverPhoneNumber") String receiverPhoneNumber
 							, @Param("address") String address

@@ -9,6 +9,10 @@ public class Pet {
 	private int id;
 	private int userId;
 	private String name;
+	
+	/**
+	 *  {@link AgePet} Enum 타입 활용
+	 */
 	private AgePet age;
 	private String imgProfile;
 	private String imgThumbnail;

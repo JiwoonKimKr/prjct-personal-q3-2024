@@ -2,8 +2,6 @@ package com.givemetreat.product.domain;
 
 import java.time.LocalDateTime;
 
-import com.givemetreat.common.utils.StringTranslator;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,8 +14,8 @@ public class ProductVO {
 	public ProductVO (Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
-		this.category = product.getCategory();
-		this.categoryTranslatedK = StringTranslator.translateCategoryE2K(product.getCategory());
+		this.category = product.getCategory().getTypeE();
+		this.categoryTranslatedK = product.getCategory().getTypeK();
 		
 		this.price = product.getPrice();
 		
