@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.pet.domain.Pet;
 
 @Mapper
@@ -18,7 +19,7 @@ public interface PetMapper {
 	int insertPet(
 			@Param("userId") int userId
 			, @Param("name") String name
-			, @Param("age") String age
+			, @Param("age") AgePet age
 			, @Param("imagePathProfile") String imagePathProfile
 			, @Param("imagePathThumbnail") String imagePathThumbnail);
 
@@ -35,7 +36,7 @@ public interface PetMapper {
 
 	void updatePet(@Param("id") int id
 				, @Param("name") String name
-				, @Param("age") String age
+				, @Param("age") AgePet age
 				, @Param("imagePathProfile") String imagePathProfile
 				, @Param("imagePathThumbnail") String imagePathThumbnail);
 }

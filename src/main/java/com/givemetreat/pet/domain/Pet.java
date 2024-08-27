@@ -9,7 +9,7 @@ public class Pet {
 	private int id;
 	private int userId;
 	private String name;
-	private String age;
+	private AgePet age;
 	private String imgProfile;
 	private String imgThumbnail;
 	private LocalDateTime createdAt;

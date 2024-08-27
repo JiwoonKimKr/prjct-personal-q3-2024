@@ -17,7 +17,7 @@ public class AdminPetVO {
 		this.userNickname = nickname;
 		
 		this.name = pet.getName();
-		this.age = pet.getAge();
+		this.age = pet.getAge().getAgePetE();
 		this.imgProfile = pet.getImgProfile();
 		this.imgThumbnail = pet.getImgThumbnail();
 		this.createdAt = pet.getCreatedAt();

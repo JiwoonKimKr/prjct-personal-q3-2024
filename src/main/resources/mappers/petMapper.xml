@@ -76,7 +76,7 @@
 		(
 			#{userId}
 			, #{name}
-			, #{age}
+			, #{age.agePetE}
 			, #{imagePathProfile}
 			, #{imagePathThumbnail}
 			, NOW()
@@ -87,7 +87,7 @@
  		UPDATE `pet`
  		SET
  			`name` = #{name}
- 			,`age` = #{age}
+ 			,`age` = #{age.agePetE}
  			,`imgProfile` = #{imagePathProfile}
  			,`imgThumbnail` = #{imagePathThumbnail}
  			, `updatedAt` = NOW()

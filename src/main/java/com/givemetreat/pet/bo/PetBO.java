@@ -8,6 +8,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.FileManagerService;
+import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.pet.domain.Pet;
 import com.givemetreat.pet.mapper.PetMapper;
 
@@ -23,11 +24,12 @@ public class PetBO {
 	public int addPet(int userId, String loginId, String name, String age, MultipartFile file) {
 		List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
 		
+		AgePet agePetCurrent = AgePet.findAgeCurrent(age, null, null);
 		//TODO imageThumbnail도 생성해서 DB에 넣을 때 Thumbnail 경로도 추가해야 한다!
 		return petMapper.insertPet(
 								userId
 								, name
-								, age
+								, agePetCurrent
 								, imagePathProfile.get(0)
 								, imagePathProfile.get(1));
 	}
@@ -70,7 +72,7 @@ public class PetBO {
 		}
 		
 		String nameCur = pet.getName();
-		String ageCur = pet.getAge();
+		AgePet ageCur = pet.getAge();
 		String imgProfileCur = pet.getImgProfile();
 		String imgThumbnailCur = pet.getImgThumbnail();
 		
@@ -78,7 +80,7 @@ public class PetBO {
 			nameCur = name;
 		}
 		if(ObjectUtils.isEmpty(age) == false) {
-			ageCur = age;
+			ageCur = AgePet.findAgeCurrent(age, null, null);
 		}
 		if(ObjectUtils.isEmpty(file) && hasImageChanged) {
 			//이미지 파일이 넘어오지 않은 경우
