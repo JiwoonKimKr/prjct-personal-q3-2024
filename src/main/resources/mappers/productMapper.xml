@@ -28,9 +28,17 @@
 				AND			
 					`category` = #{category.typeE}
 			</if>	
-			<if test="price != null">
-				AND			
-					`price` = #{price}
+			<if test="priceFrom != null">
+				<![CDATA[
+					AND
+						`price` >= #{priceFrom}
+				]]>
+			</if>	
+			<if test="priceUntil != null">
+				<![CDATA[
+					AND
+						`price` <= #{priceUntil}
+				]]>
 			</if>	
 			<if test="agePetProper != null">
 				AND			

@@ -26,7 +26,8 @@ public interface ProductMapper {
 			@Param("id") Integer id
 			, @Param("name") String name
 			, @Param("category") CategoryProduct category
-			, @Param("price") Integer price
+			, @Param("priceFrom") Integer priceFrom
+			, @Param("priceUntil") Integer priceUntil
 			, @Param("agePetProper") AgePet agePetProper
 			, @Param("direction") String direction
 			, @Param("index") Integer index

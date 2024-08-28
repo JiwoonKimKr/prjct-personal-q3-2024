@@ -62,7 +62,8 @@
 						<span class="h3 text-white col-4">
 							제품 가격
 						</span>
-						<input id="priceProduct" type="text" class="form-control col-8">
+						<input id="priceProductFrom" type="text" class="form-control col-4" placeholder="￦~부터">
+						<input id="priceProductUntil" type="text" class="form-control col-4" placeholder="￦~까지">
 					</div>
 					<!-- Dropdown: agePetProper -->
 					<div id="field-agePetProper" class="bg-secondary rounded justify-content-between py-3 px-3">
@@ -228,9 +229,10 @@
     				let id = $("#idProduct").val().trim();
     				let name = $("#nameProduct").val().trim();
 					let category = $("#categoryProduct").val();
-					let price = $("#priceProduct").val().trim();
+					let priceFrom = $("#priceProductFrom").val().trim();
+					let priceUntil = $("#priceProductUntil").val().trim();
 					let agePetProper = $("#agePetProperProduct").val();
-    				
+					
 					if(category == '--------'){
 						category = '';
 					}
@@ -238,14 +240,25 @@
 						agePetProper = '';
 					}
     				
-					//console.log(`${id}, ${name}, ${category}, ${price}, ${agePetProper}`);
+					//javascript Validation 추가해야
+					
+					
+					
 					let params = {
 									"id": id
 									, "name": name
 									, "category": category
-									, "price": price
+									, "priceFrom": priceFrom
+									, "priceUntil": priceUntil
 									, "agePetProper":agePetProper
 								}
+					console.log(`id: ${id}
+							, name: ${name}
+							, category: ${category}
+							, priceFrom: ${priceFrom}
+							, priceUntil: ${priceUntil}
+							, ${agePetProper}`);
+					
 					if(data){
 						//console.log(data);
 						params['direction'] = data.direction;

@@ -88,7 +88,8 @@ public class AdminProductRestController {
 		@Parameter(name = "<Integer> id", description = "상품 pk", example = "10")
 		, @Parameter(name = "<String> name", description = "상품명", example = "나도간식줘")
 		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
-		, @Parameter(name = "<String> price", description = "상품 가격, 원 단위", example = "10000")
+		, @Parameter(name = "<String> priceFrom", description = "상품 가격, 원 단위", example = "10000")
+		, @Parameter(name = "<String> priceUntil", description = "상품 가격, 원 단위", example = "10000")
 		, @Parameter(name = "<String> agePetProper", description = "반려견 적정 섭취 연령", example = "under6months")
 		, @Parameter(name = "<String> direction", description = "(direction과 idRequested) 페이지 방향; 'prev'와 'next' 둘 중 하나")
 		, @Parameter(name = "<Integer> idRequested", description = "(direction과 idRequested) 페이지 방향; 'prev'와 'next' 둘 중 하나")
@@ -111,7 +112,8 @@ public class AdminProductRestController {
 				@RequestParam(required = false) Integer id 
 				, @RequestParam(required = false) String name 
 				, @RequestParam(required = false) String category
-				, @RequestParam(required = false) Integer price
+				, @RequestParam(required = false) Integer priceFrom
+				, @RequestParam(required = false) Integer priceUntil
 				, @RequestParam(required = false) String agePetProper
 				, @RequestParam(required = false) String direction
 				, @RequestParam(required = false) Integer idRequested
@@ -134,7 +136,8 @@ public class AdminProductRestController {
 		Page<AdminProductVO> pageInfo = adminProductBO.getProductsForPaging(id
 																		, name
 																		, category
-																		, price
+																		, priceFrom
+																		, priceUntil
 																		, agePetProper
 																		, direction
 																		, idRequested

@@ -46,7 +46,8 @@ public class ProductBO {
 	public Page<ProductVO> getProductsForPaging(Integer id
 										, String name
 										, String category
-										, Integer price
+										, Integer priceFrom
+										, Integer priceUntil
 										, String agePetProper
 										, String direction
 										, Integer idRequested
@@ -61,7 +62,8 @@ public class ProductBO {
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name
 																			, categoryCurrent
-																			, price
+																			, priceFrom
+																			, priceUntil
 																			, agePetCurrent
 																			, null
 																			, null

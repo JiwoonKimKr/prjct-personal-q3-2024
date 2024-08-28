@@ -67,7 +67,8 @@ public class ProductController {
 								@RequestParam(required = false) Integer id 
 								, @RequestParam(required = false) String name 
 								, @RequestParam(required = false) String category
-								, @RequestParam(required = false) Integer price
+								, @RequestParam(required = false) Integer priceFrom
+								, @RequestParam(required = false) Integer priceUntil
 								, @RequestParam(required = false) String agePetProper
 								, @RequestParam(required = false) String direction
 								, @RequestParam(required = false) Integer idRequested
@@ -79,7 +80,8 @@ public class ProductController {
 		Page<ProductVO> pageInfo = productBO.getProductsForPaging(id
 																, name
 																, category
-																, price
+																, priceFrom
+																, priceUntil
 																, agePetProper
 																, direction
 																, idRequested

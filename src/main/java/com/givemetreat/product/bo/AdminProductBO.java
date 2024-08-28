@@ -47,7 +47,8 @@ public class AdminProductBO {
 	public Page<AdminProductVO> getProductsForPaging(Integer id
 										, String name
 										, String category
-										, Integer price
+										, Integer priceFrom
+										, Integer priceUntil
 										, String agePetProper
 										, String direction
 										, Integer idRequested
@@ -59,10 +60,18 @@ public class AdminProductBO {
 		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		
+		// 출발 금액이 상한 금액 보다 클 때 맞바꾸도록
+		if(ObjectUtils.isEmpty(priceFrom) == false 
+				&& ObjectUtils.isEmpty(priceFrom) == false) {
+			priceFrom = priceUntil > priceFrom ? priceFrom : priceUntil;
+			priceUntil = priceFrom < priceUntil ? priceUntil : priceFrom;
+		}
+		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name
 																			, categoryCurrent
-																			, price
+																			, priceFrom
+																			, priceUntil
 																			, agePetCurrent
 																			, null
 																			, null
