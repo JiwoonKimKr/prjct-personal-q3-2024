@@ -73,8 +73,15 @@ public class AdminInvoiceBO {
 		//direction이랑 paging이 필요한 경우
 		
 		// Enum Type 추가_27 08 2024
-		HasCanceled hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(hasCanceled, null);
-		StatusDelivery statusCurrent = StatusDelivery.findStatusDelivery(statusDelivery, null, null);
+		HasCanceled hasCanceledCurrent = null;
+		StatusDelivery statusCurrent = null;
+		
+		if(ObjectUtils.isEmpty(hasCanceledCurrent) == false) {
+			hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(hasCanceled, null);
+		}
+		if(ObjectUtils.isEmpty(hasCanceledCurrent) == false) {
+			statusCurrent = StatusDelivery.findStatusDelivery(statusDelivery, null, null);
+		}
 		List<Invoice> listEntitiesWhole = invoiceMapper.selectInvoicesForPaging( invoiceId
 																, userId
 																, payment

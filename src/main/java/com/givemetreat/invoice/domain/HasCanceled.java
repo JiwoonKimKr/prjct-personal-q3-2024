@@ -20,6 +20,7 @@ public enum HasCanceled {
 	}
 	
 	public static HasCanceled findIfPaymentCanceled(Integer index, String statusK) {
+		
 		HasCanceled[] arrStatus = HasCanceled.values();
 		for(HasCanceled status : arrStatus) {
 			if(ObjectUtils.isEmpty(index) == false && index == status.getIndex()) {

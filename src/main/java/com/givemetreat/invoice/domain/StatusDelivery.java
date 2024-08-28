@@ -27,6 +27,7 @@ public enum StatusDelivery {
 	}
 	
 	public static StatusDelivery findStatusDelivery(String statusE, String statusK, Integer index) {
+		
 		StatusDelivery[] arrStatus = StatusDelivery.values();
 		for(StatusDelivery status : arrStatus) {
 			if(ObjectUtils.isEmpty(statusE) == false && statusE.equals(status.getStatusE())) {

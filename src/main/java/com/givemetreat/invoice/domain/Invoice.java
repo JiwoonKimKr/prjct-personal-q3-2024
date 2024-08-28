@@ -1,7 +1,9 @@
 package com.givemetreat.invoice.domain;
 
 import java.time.LocalDateTime;
+
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 public class Invoice {
@@ -16,6 +18,16 @@ public class Invoice {
 	
 	
 	private HasCanceled hasCanceled;
+
+	public void setHasCanceled(Integer index) {
+		if(index == 0) {
+			this.hasCanceled = HasCanceled.billed;
+		}
+		if(index == 1) {
+			this.hasCanceled = HasCanceled.canceled;
+		}
+	}
+	
 	private String buyerName;
 	private String buyerPhoneNumber;
 	/**

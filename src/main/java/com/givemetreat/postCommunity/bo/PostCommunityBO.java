@@ -62,6 +62,7 @@ public class PostCommunityBO {
 	@Transactional
 	public PostCommunityEntity addPost(Integer userId, String title, String content, AgePet agePetProper) {
 		//Enum 타입 도입_27 08 2024
+		//AOP 도입에 해당 AgePet Enum 클래스가 직접 Argument로 포함되어 있어야 하는 탓에, 이 메소드만 보완하였다_28 08 2024
 		return postCommunityRepository.save(PostCommunityEntity.builder()
 															.userId(userId)
 															.title(title)
