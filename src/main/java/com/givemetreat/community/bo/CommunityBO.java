@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.givemetreat.aop.TrackUsersFavor;
 import com.givemetreat.commentCommunity.bo.CommentCommunityBO;
 import com.givemetreat.commentCommunity.domain.CommentCommunityEntity;
 import com.givemetreat.commentCommunity.domain.CommentCommunityVO;
+import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.postCommunity.bo.PostCommunityBO;
 import com.givemetreat.postCommunity.domain.PostCommunityEntity;
 import com.givemetreat.postCommunity.domain.PostCommunityVO;
@@ -39,10 +39,11 @@ public class CommunityBO {
 	public List<CommentCommunityVO> getCommentsByPostId(int postId) {
 		return commentCommunityBO.getCommentsByPostId(postId);
 	}
-	@TrackUsersFavor
+	
 	@Transactional
 	public PostCommunityEntity addPost(Integer userId, String title, String content, String agePetProper) {
-		return postCommunityBO.addPost(userId, title, content, agePetProper);
+		AgePet agePetcurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		return postCommunityBO.addPost(userId, title, content, agePetcurrent);
 	}
 
 	@Transactional

@@ -1,5 +1,7 @@
 package com.givemetreat.common.converter;
 
+import org.springframework.util.ObjectUtils;
+
 import com.givemetreat.product.domain.CategoryProduct;
 
 import jakarta.persistence.AttributeConverter;
@@ -8,6 +10,9 @@ public class CategoryProductConverter implements AttributeConverter<CategoryProd
 
 	@Override
 	public String convertToDatabaseColumn(CategoryProduct category) {
+		if(ObjectUtils.isEmpty(category)) {
+			return null;
+		}
 		return category.getTypeE();
 	}
 

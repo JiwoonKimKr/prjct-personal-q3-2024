@@ -171,11 +171,15 @@ public class ProductBO {
 		}
 		
 		ProductUserInterestedEntity itemViewed =productUserInterestedBO.getListProductsFavoredLatest(userId);
+		
 		if(ObjectUtils.isEmpty(itemViewed) == false) {
 			int productId = itemViewed.getProductId();
+			//조회한 상품 상세 페이지가 필터링 선택보다 나중에 발생한 이벤트인 경우에만
+			Boolean isRecordRecent = itemViewed.getUpdatedAt().isAfter(userInfo.getUpdatedAt());
 			
 			ProductVO product = getProducts(productId, null, null, null, null).get(0);
-			if(ObjectUtils.isEmpty(null) == false) {
+			
+			if(isRecordRecent && ObjectUtils.isEmpty(product) == false) {
 				categoryFavored = CategoryProduct.findCategoryProduct(product.getCategory(), agePetProper, userId) ;
 				agePetProperFavored = userInfo.getAgePetProper();
 			}

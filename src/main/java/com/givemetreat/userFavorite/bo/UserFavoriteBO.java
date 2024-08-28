@@ -23,26 +23,25 @@ public class UserFavoriteBO {
 	 * @return
 	 */
 	@Transactional
-	public UserFavoriteEntity updateUserFavors(Integer userId, String category, String agePetProper) {
+	public UserFavoriteEntity updateUserFavors(Integer userId, Object category, Object agePetProper) {
 		
 		//userId에 대한 기존 Entity가 존재하면 record를 update하도록
 		UserFavoriteEntity entity = userFavoriteRepository.findByUserId(userId);
 		
 		//AgePet Enum 형식으로 변경_ 27 08 2024
-		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
-		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		
 		if(ObjectUtils.isEmpty(entity) == false) {
 			return userFavoriteRepository.save(entity.toBuilder()
-													.category(categoryCurrent)
-													.agePetProper(agePetCurrent)
+													.category(ObjectUtils.isEmpty(category) ? null: (CategoryProduct) category)
+													.agePetProper(ObjectUtils.isEmpty(agePetProper) ? null: (AgePet) agePetProper)
 													.build());
 		}
 		
 		//생성된 적이 없다면 새 Entity 생성
 		return userFavoriteRepository.save(UserFavoriteEntity.builder()
 															.userId(userId)
-															.category(categoryCurrent)
+															.category(ObjectUtils.isEmpty(category) ? null: (CategoryProduct) category)
+															.agePetProper(ObjectUtils.isEmpty(agePetProper) ? null: (AgePet) agePetProper)
 															.build());
 	}
 

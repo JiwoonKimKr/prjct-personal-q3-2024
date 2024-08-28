@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import com.givemetreat.aop.TrackUsersFavor;
 import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.postCommunity.domain.PostCommunityEntity;
 import com.givemetreat.postCommunity.domain.PostCommunityVO;
@@ -57,15 +58,15 @@ public class PostCommunityBO {
 		String nickname = user.getNickname();
 		return new PostCommunityVO(entity, loginId, nickname);
 	}
+	@TrackUsersFavor
 	@Transactional
-	public PostCommunityEntity addPost(Integer userId, String title, String content, String agePetProper) {
+	public PostCommunityEntity addPost(Integer userId, String title, String content, AgePet agePetProper) {
 		//Enum 타입 도입_27 08 2024
-		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
 		return postCommunityRepository.save(PostCommunityEntity.builder()
 															.userId(userId)
 															.title(title)
 															.content(content)
-															.agePetProper(agePetCurrent)
+															.agePetProper(agePetProper)
 															.build());
 	}
 	@Transactional

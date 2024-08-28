@@ -8,6 +8,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.givemetreat.pet.domain.AgePet;
+import com.givemetreat.product.domain.CategoryProduct;
 import com.givemetreat.userFavorite.bo.UserFavoriteBO;
 import com.givemetreat.userFavorite.domain.UserFavoriteEntity;
 
@@ -38,32 +40,29 @@ public class TrackUsersFavorAop {
 		int countNull = 0;
 		for(Object parameter : targetParameters) {
 			if(ObjectUtils.isEmpty(parameter)
-					|| parameter instanceof String == false) {
+					|| parameter instanceof Enum == false) {
 				countNull ++;
 				continue;
 			}
-			String paramCurrent = parameter.toString();
 			
-			if(paramCurrent.equals("kibble")
-					|| paramCurrent.equals("treat")) {
-				log.info("[💡💡💡💡💡TrackUsersFavorAop execute()] current Category parameter:{}", paramCurrent);
+			if(parameter instanceof CategoryProduct) {
 				
-				UserFavoriteEntity entity = userFavoriteBO.updateUserFavors(userId, paramCurrent, null); 
+				log.info("[💡💡💡💡💡TrackUsersFavorAop execute()] current Category parameter:{}", parameter);
+				
+				UserFavoriteEntity entity = userFavoriteBO.updateUserFavors(userId, parameter, null); 
 				
 				if(ObjectUtils.isEmpty(entity)) {
-					log.warn("[⚠️⚠️⚠️⚠️⚠️TrackUsersFavorAop execute()] entity for userFavorite table not made. parameter:{}", paramCurrent);
+					log.warn("[⚠️⚠️⚠️⚠️⚠️TrackUsersFavorAop execute()] entity for userFavorite table not made. parameter:{}", parameter);
 				}
 				
 			}
-			if(paramCurrent.equals("under6months")
-					|| paramCurrent.equals("adult")
-					|| paramCurrent.equals("senior")) {
-				log.info("[💡💡💡💡💡TrackUsersFavorAop execute()] current AgePetProper parameter:{}", paramCurrent);
+			if(parameter instanceof AgePet) {
+				log.info("[💡💡💡💡💡TrackUsersFavorAop execute()] current AgePetProper parameter:{}", parameter);
 				
-				UserFavoriteEntity entity = userFavoriteBO.updateUserFavors(userId, null, paramCurrent);
+				UserFavoriteEntity entity = userFavoriteBO.updateUserFavors(userId, null, parameter);
 				
 				if(ObjectUtils.isEmpty(entity)) {
-					log.warn("[⚠️⚠️⚠️⚠️⚠️TrackUsersFavorAop execute()] entity for userFavorite table not made. parameter:{}", paramCurrent);
+					log.warn("[⚠️⚠️⚠️⚠️⚠️TrackUsersFavorAop execute()] entity for userFavorite table not made. parameter:{}", parameter);
 				}
 			}
 		}
