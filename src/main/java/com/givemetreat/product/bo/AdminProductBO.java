@@ -218,6 +218,13 @@ public class AdminProductBO {
 		productBufferBO.deleteListBuffers(listBuffers);
 		log.info("[AdminProductBO deleteProduct()] requested Product stocks get deleted. productId:{}", productId);
 		
+		//제품 이미지 삭제
+		AdminProductVO product = getProduct(productId, null, null, null, null).get(0);
+		String imageProfile = product.getImgProfile();
+		String imageThumbnail = product.getImgThumbnail();
+		
+		FileManagerService.deleteImageOriginAndThumbnail(imageProfile, imageThumbnail);
+		
 		return productMapper.deleteProduct(productId);
 	}
 

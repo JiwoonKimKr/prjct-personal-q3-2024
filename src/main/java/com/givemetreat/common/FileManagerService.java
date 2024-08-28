@@ -134,5 +134,39 @@ public class FileManagerService {
 		}
 	}
 	
+	public static void deleteImageOriginAndThumbnail(String imageOrigin, String imageThumbnail) {
+		Path path = Paths.get(FILE_UPLOAD_PATH + imageOrigin.replace("/images/", ""));
+		
+		if(Files.exists(path)) {
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				log.info("[FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				return;
+			}
+		}
+		path = Paths.get(FILE_UPLOAD_PATH + imageThumbnail.replace("/images/", ""));
+		
+		if(Files.exists(path)) {
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				log.info("[FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				return;
+			}
+		}
+		
+		path = path.getParent();
+		if(Files.exists(path)) {
+			
+			try {
+				Files.delete(path);
+			} catch (IOException e) {
+				log.info("[FileManagerService] Trial to delete directory has failed. path:{}", path.toString());
+			}
+			
+		}
+		log.info("[FileManagerService] current image get deleted. path:{}", imageOrigin);
+	}
 	
 }

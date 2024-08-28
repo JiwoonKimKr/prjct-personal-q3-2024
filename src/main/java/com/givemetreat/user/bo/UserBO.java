@@ -78,9 +78,8 @@ public class UserBO {
 		//정상적으로 저장되었고, 기존 파일과 다르면 이제 삭제한다!
 		if(ObjectUtils.isEmpty(user.getImgProfile()) == false 
 				&& user.getImgProfile().equals(imgProfilePrev) == false) {
-			FileManagerService.deleteFile(imgProfilePrev);
-			FileManagerService.deleteFile(imgThumbnailPrev);
-			log.info("[UserBO updateImageProfile()] previous profile images got deleted. usesId:{}", userId);
+			log.info("[UserBO updateImageProfile()] trial to delete previous profile images. usesId:{}", userId);
+			FileManagerService.deleteImageOriginAndThumbnail(imgProfilePrev, imgThumbnailPrev);
 		}
 		
 		return user;
