@@ -30,7 +30,7 @@ public enum HasCanceled {
 				return status;
 			}
 		}
-		log.warn("[HasCanceled findIfPaymentCanceled()] Enum value of HasCanceled not found."
+		log.info("[HasCanceled findIfPaymentCanceled()] Enum value of HasCanceled not found."
 				+ " index:{}, statusK:{}", index, statusK);
 		return null;
 	}

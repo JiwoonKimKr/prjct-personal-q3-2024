@@ -53,7 +53,7 @@
 			<div id="group-input-keyword-search-header">
 				<input id="search-keyword" type="text" placeholder="🔎검색하기"
 					class="form-control m-0 p-0">
-				<button type="button" class="btn-search-keyword">검색</button>
+				<button id="btn-search-keyword" type="button">검색</button>
 			</div>
 			<!-- button search-keyword __end__ -->
 			<div class="group-right-side-header d-flex">
@@ -243,7 +243,24 @@
 	<script type="text/javascript" th:inline="javascript">
 		$(document).ready(
 				function() {
+					$("#btn-search-keyword").on('click', function(){
+						let keyword = $("#search-keyword").val().trim();
+						if(!keyword){
+							alert("검색하실 상품명을 입력해 주세요.");
+							return;
+						}
+						if(keyword.length > 32){
+							alert("검색어 길이는 최대 30 입니다.")
+							return;
+						}
 
+						console.log(`#search-keyword: ${keyword}`);
+						return;
+
+						location.href= "/product/product-list-view?keyword=" + keyword;
+
+					});// btn-search-keyword on click
+					
 					$("#toggle-aside-dropdown").on('click', function() {
 								let asideDisplay = $(".groups-aside-dropdown")
 										.css("display");

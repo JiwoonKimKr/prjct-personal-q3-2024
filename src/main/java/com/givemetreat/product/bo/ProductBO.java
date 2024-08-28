@@ -43,7 +43,8 @@ public class ProductBO {
 	 * @return List<{@link ProductVO}>
 	 */
 	@Transactional
-	public Page<ProductVO> getProductsForPaging(Integer id
+	public Page<ProductVO> getProductsForPaging(String keyword
+										, Integer id
 										, String name
 										, String category
 										, Integer priceFrom

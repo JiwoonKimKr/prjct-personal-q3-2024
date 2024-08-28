@@ -38,7 +38,7 @@ public enum AgePet {
 				return age;
 			}
 		}
-		log.warn("[AgePet findAgeCurrent()] Enum value of AgePet not found. agePetE:{}, agePetK:{}, agePetCode:{}", agePetE, agePetK, agePetCode);
+		log.info("[AgePet findAgeCurrent()] Enum value of AgePet not found. agePetE:{}, agePetK:{}, agePetCode:{}", agePetE, agePetK, agePetCode);
 		return null;
 	}
 }

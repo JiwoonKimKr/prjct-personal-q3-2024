@@ -39,7 +39,8 @@ public class ProductController {
 
 	@Operation(summary = "productListView() 상품 조회 페이지;현 메인 페이지", description = "상품 조회 페이지; 현 메인 페이지 <br> 다양한 변수들 활용 가능 <br> 중복 필터 활용 가능")
 	@Parameters({
-		@Parameter(name = "<Integer> id", description = "상품 pk", example = "10")
+		@Parameter(name = "<String> keyword", description = "header Fragment의 검색 버튼 이벤트로 넘어온 키워드", example = "성견 간식")
+		, @Parameter(name = "<Integer> id", description = "상품 pk", example = "10")
 		, @Parameter(name = "<String> name", description = "상품명", example = "나도간식줘")
 		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
 		, @Parameter(name = "<String> price", description = "상품 가격, 원 단위", example = "10000")
@@ -64,7 +65,8 @@ public class ProductController {
 	})
 	@GetMapping("/product-list-view")
 	public String productListView(
-								@RequestParam(required = false) Integer id 
+								@RequestParam(required = false) String keyword 
+								, @RequestParam(required = false) Integer id 
 								, @RequestParam(required = false) String name 
 								, @RequestParam(required = false) String category
 								, @RequestParam(required = false) Integer priceFrom
@@ -77,7 +79,8 @@ public class ProductController {
 								, HttpSession session
 								, Model model) {
 		
-		Page<ProductVO> pageInfo = productBO.getProductsForPaging(id
+		Page<ProductVO> pageInfo = productBO.getProductsForPaging(keyword
+																, id
 																, name
 																, category
 																, priceFrom

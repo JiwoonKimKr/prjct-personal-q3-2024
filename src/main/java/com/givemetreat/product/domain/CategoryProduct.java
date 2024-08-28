@@ -34,7 +34,7 @@ public enum CategoryProduct {
 				return type;
 			}
 		}
-		log.warn("[CategoryProduct findCategoryProduct()] Enum value of CategoryProduct not found."
+		log.info("[CategoryProduct findCategoryProduct()] Enum value of CategoryProduct not found."
 				+ " typeE:{}, typeK:{}, index:{}", typeE, typeK, index);
 		return null;
 	}

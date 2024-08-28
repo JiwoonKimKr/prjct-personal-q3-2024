@@ -40,7 +40,7 @@ public enum StatusDelivery {
 				return status;
 			}
 		}
-		log.warn("[StatusDelivery findStatusDelivery()] Enum value of StatusDelivery not found."
+		log.info("[StatusDelivery findStatusDelivery()] Enum value of StatusDelivery not found."
 				+ " statusE:{}, statusK:{}, index:{}", statusE, statusK, index);
 		return null;
 	}
