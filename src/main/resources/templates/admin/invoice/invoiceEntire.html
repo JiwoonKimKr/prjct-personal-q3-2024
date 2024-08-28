@@ -38,7 +38,8 @@ listInvoices
 						<span class="h4 text-white col-4 text-right">
 							결제금액
 						</span>
-						<input id="payment" type="text" class="input-to-choose form-control col-8">
+						<input id="paymentFrom" type="text" class="input-to-choose form-control col-4" placeholder="￦부터">
+						<input id="paymentUntil" type="text" class="input-to-choose form-control col-4" placeholder="￦까지">
 					</div>
 <!-- 포트원 적용으로 해당 field 3개 삭제__21 08 2024 -->					
 					<!-- Dropdown: paymentType -->
@@ -210,6 +211,7 @@ listInvoices
 							<tr>
 								<th>주문<br>고유번호</th>
 								<th>유저<br>로그인아이디</th>
+								<th>결제금액</th>
 								<th>주문 취소여부</th>
 								<th>구매자<br>이름</th>
 								<th>구매자<br>연락처</th>
@@ -234,6 +236,7 @@ listInvoices
 											결제자 로그인아이디
 										</button>
 									</th>
+									<td th:text="|￦ ${invoice.payment}|"></td>
 									<td th:text="${invoice.hasCanceled}"></td>
 									<td th:text="${invoice.buyerName}"></td>
 									<td th:text="${invoice.buyerPhoneNumber}"></td>
@@ -403,7 +406,9 @@ listInvoices
      			$("#btn-search-invoices").on('click', function(){
 					let userId = $("#userId").val().trim();
 					//★★★★★ 결제 금액 관련 범위 넣어야
-					let payment = $("#payment").val().trim();
+					let paymentFrom = $("#paymentFrom").val().trim();
+					let paymentUntil = $("#paymentUntil").val().trim();
+
 					/* 포트원 적용하면서 해당 3개 컬럼 삭제__21 08 2024
 					let paymentType = $("#paymentType").children("option:selected").val();
 					if(paymentType == '--------'){
@@ -437,7 +442,8 @@ listInvoices
     				let urlParams = url.searchParams;
     				
     				console.log(`userId: ${userId}
-			    				, payment: ${payment}
+			    				, paymentFrom: ${paymentFrom}
+			    				, paymentUntil: ${paymentUntil}
 			    				, hasCanceled: ${hasCanceled}
 			    				, buyerName: ${buyerName}
 			    				, buyerPhoneNumber: ${buyerPhoneNumber}
@@ -451,7 +457,9 @@ listInvoices
 			    				, updatedAtUntil: ${updatedAtUntil}`);
     				
     				if(userId) urlParams.set('userId', userId);
-    				if(payment) urlParams.set('payment', payment);
+    				if(paymentFrom) urlParams.set('paymentFrom', paymentFrom);
+    				if(paymentUntil) urlParams.set('paymentUntil', paymentUntil);
+
     				/* 포트원 적용하면서 해당 3개 컬럼 삭제__21 08 2024
     				if(paymentType) urlParams.set('paymentType', paymentType);
     				if(company) urlParams.set('company', company);

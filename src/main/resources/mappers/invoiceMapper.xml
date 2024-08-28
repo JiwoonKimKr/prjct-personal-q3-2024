@@ -27,9 +27,17 @@
 				AND
 					`userId` = #{userId}
 			</if>		
-			<if test="payment != null">
-				AND
-					`payment` = #{payment}
+			<if test="paymentFrom != null">
+				<![CDATA[
+					AND
+						`payment` >= #{paymentFrom}
+				]]>
+			</if>			
+			<if test="paymentUntil != null">
+				<![CDATA[
+					AND
+						`payment` <= #{paymentUntil}
+				]]>
 			</if>			
 			<if test="hasCanceled != null">
 				AND

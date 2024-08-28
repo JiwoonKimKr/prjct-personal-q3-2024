@@ -62,9 +62,11 @@ public class AdminProductBO {
 		
 		// 출발 금액이 상한 금액 보다 클 때 맞바꾸도록
 		if(ObjectUtils.isEmpty(priceFrom) == false 
-				&& ObjectUtils.isEmpty(priceFrom) == false) {
+				&& ObjectUtils.isEmpty(priceUntil) == false) {
 			priceFrom = priceUntil > priceFrom ? priceFrom : priceUntil;
 			priceUntil = priceFrom < priceUntil ? priceUntil : priceFrom;
+			log.info("[AdminProductBO getProductsForPaging()]"
+					+ " priceFrom & priceUntil get swapped. priceFrom:{}, priceUntil:{}", priceFrom, priceUntil);
 		}
 		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null

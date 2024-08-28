@@ -49,7 +49,8 @@ public class AdminInvoiceBO {
 	@Transactional
 	public Page<AdminInvoiceVO> getInvoicesForPaging(Integer invoiceId
 													, Integer userId
-													, Integer payment
+													, Integer paymentFrom
+													, Integer paymentUntil
 													/* 포트원 적용으로 삭제_21 08 2024
 													, String paymentType
 													, String company
@@ -76,6 +77,15 @@ public class AdminInvoiceBO {
 		HasCanceled hasCanceledCurrent = null;
 		StatusDelivery statusCurrent = null;
 		
+		// 출발 금액이 상한 금액 보다 클 때 맞바꾸도록
+		if(ObjectUtils.isEmpty(paymentFrom) == false 
+				&& ObjectUtils.isEmpty(paymentUntil) == false) {
+			paymentFrom = paymentUntil > paymentFrom ? paymentFrom : paymentUntil;
+			paymentUntil = paymentFrom < paymentUntil ? paymentUntil : paymentFrom;
+			log.info("[AdminInvoiceBO getInvoicesForPaging()]"
+					+ " paymentFrom & paymentUntil get swapped. paymentFrom:{}, paymentUntil:{}", paymentFrom, paymentUntil);
+		}
+		
 		if(ObjectUtils.isEmpty(hasCanceledCurrent) == false) {
 			hasCanceledCurrent = HasCanceled.findIfPaymentCanceled(hasCanceled, null);
 		}
@@ -84,7 +94,8 @@ public class AdminInvoiceBO {
 		}
 		List<Invoice> listEntitiesWhole = invoiceMapper.selectInvoicesForPaging( invoiceId
 																, userId
-																, payment
+																, paymentFrom
+																, paymentUntil
 																/* 포트원 적용으로 삭제_21 08 2024
 																, paymentType
 																, company

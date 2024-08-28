@@ -91,7 +91,8 @@ public class AdminInvoiceController {
 	@Parameters({
 		@Parameter(name = "<Integer> invoiceId", description = "주문(invoice) pk", example = "10")
 		, @Parameter(name = "<Integer> userId", description = "사용자 PK", example = "5")
-		, @Parameter(name = "<Integer> payment", description = "결제 금액; 원 단위", example = "25000")
+		, @Parameter(name = "<Integer> paymentFrom", description = "결제 금액, 해당 금액 이상; 원 단위", example = "25000")
+		, @Parameter(name = "<Integer> paymentUntil", description = "결제 금액, 해당 금액 이하; 원 단위", example = "50000")
 		, @Parameter(name = "<Integer> hasCanceled", description = "결제 취소 여부 (enum type: true(1=결제취소), false(0=결제완료))", example = "0")
 		, @Parameter(name = "<String> buyerName", description = "구매자 성명", example = "유재석")
 		, @Parameter(name = "<String> buyerPhoneNumber", description = "구매자 연락처(휴대폰)", example = "01012345678")
@@ -122,7 +123,8 @@ public class AdminInvoiceController {
 	@GetMapping("/invoices-entire-view")
 	public String invoiceEntireView(@RequestParam(required = false) Integer invoiceId
 										, @RequestParam(required = false) Integer userId 
-										, @RequestParam(required = false) Integer payment
+										, @RequestParam(required = false) Integer paymentFrom
+										, @RequestParam(required = false) Integer paymentUntil
 										/* 포트원 적용으로 삭제_21 08 2024
 										, @RequestParam(required = false) String paymentType
 										, @RequestParam(required = false) String company
@@ -148,7 +150,8 @@ public class AdminInvoiceController {
 		
 		Page<AdminInvoiceVO> pageInfo = adminInvoiceBO.getInvoicesForPaging(invoiceId
 																			, userId
-																			, payment
+																			, paymentFrom
+																			, paymentUntil
 																			/* 포트원 적용으로 삭제_21 08 2024
 																			, paymentType
 																			, company

@@ -56,7 +56,8 @@ public interface InvoiceMapper {
 	List<Invoice> selectInvoicesForPaging(
 							@Param("id") Integer invoiceId
 							, @Param("userId") Integer userId
-							, @Param("payment") Integer payment
+							, @Param("paymentFrom") Integer paymentFrom
+							, @Param("paymentUntil") Integer paymentUntil
 							/* 포트원 결제 방식 도입으로 해당 Column 삭제_21 08 2024
 							, @Param("paymentType") String paymentType
 							, @Param("company") String company
