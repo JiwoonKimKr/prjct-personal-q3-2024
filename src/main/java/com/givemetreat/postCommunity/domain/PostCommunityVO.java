@@ -2,6 +2,8 @@ package com.givemetreat.postCommunity.domain;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +20,7 @@ public class PostCommunityVO {
 		this.userId = entity.getUserId();
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
-		this.agePetProper = entity.getAgePetProper().getAgePetK();
+		this.agePetProper = ObjectUtils.isEmpty(entity.getAgePetProper()) ? null : entity.getAgePetProper().getAgePetK();
 		this.createdAt = entity.getCreatedAt();
 		this.updatedAt = entity.getUpdatedAt();
 		

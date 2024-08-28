@@ -40,7 +40,7 @@ public class PostCommunityEntity {
 	private String content;
 	
 	@Convert(converter = AgePetConverter.class)
-	@Column(name = "agePetProper")
+	@Column(name = "agePetProper", nullable = true)
 	private AgePet agePetProper;
 	
 	@CreationTimestamp
