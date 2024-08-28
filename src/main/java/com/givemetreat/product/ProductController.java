@@ -92,6 +92,11 @@ public class ProductController {
 																, pageRequested);
 		List<ProductVO> listProducts = pageInfo.generateCurrentPageList();
 		
+		if(listProducts.size() < 1) {
+			return "redirect:/product/product-list-view";
+		}
+		
+		
 		model.addAttribute("listProducts", listProducts);
 		model.addAttribute("numberPageCurrent", pageInfo.getNumberPageCurrent());
 		model.addAttribute("numberPageMax", pageInfo.getNumberPageMax());

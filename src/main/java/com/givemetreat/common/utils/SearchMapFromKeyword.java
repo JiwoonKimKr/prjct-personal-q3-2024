@@ -49,7 +49,7 @@ public class SearchMapFromKeyword {
 		mapAgePet.put(AgePet.senior, 0);
 		
 		//빈칸으로 나누고 List 형태로 만들기
-		List<String> listString = new ArrayList<>(Arrays.asList(keyword.trim().split(" "))) ;
+		List<String> listString = new ArrayList<>(Arrays.asList(keyword.trim().split("_"))) ;
 
 		log.info("[SearchMapFromKeyword] list<String> from keyword. keyword:{}, listString:{}", keyword, listString.toString());
 		

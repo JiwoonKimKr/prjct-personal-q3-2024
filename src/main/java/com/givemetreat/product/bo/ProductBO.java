@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import com.givemetreat.common.generic.Page;
+import com.givemetreat.common.utils.SearchMapFromKeyword;
 import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.product.domain.CategoryProduct;
 import com.givemetreat.product.domain.Product;
@@ -59,6 +60,24 @@ public class ProductBO {
 		//Enum 타입 추가_27 08 2024
 		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
 		AgePet agePetCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		
+		//Keyword 입력된 경우 SearchMapFromKeyword 검색어 유틸리티 활용하도록 작성_28 08 2024
+		if(ObjectUtils.isEmpty(keyword) == false) {
+			SearchMapFromKeyword keywordMap = new SearchMapFromKeyword(keyword);
+			
+			if(ObjectUtils.isEmpty(keywordMap.getProductName()) == false) {
+				name = keywordMap.getProductName();
+				log.info("[ProductBO getProductsForPaging()] name get updated by keywordMap. name:{}", name);
+			}
+			if(ObjectUtils.isEmpty(keywordMap.getCategory()) == false) {
+				categoryCurrent = keywordMap.getCategory();
+				log.info("[ProductBO getProductsForPaging()] CategoryProduct Enum get updated by keywordMap. category:{}", categoryCurrent);
+			}
+			if(ObjectUtils.isEmpty(keywordMap.getAgePetProper()) == false) {
+				agePetCurrent = keywordMap.getAgePetProper();
+				log.info("[ProductBO getProductsForPaging()] AgePet Enum get updated by keywordMap. agePetProper:{}", agePetCurrent);
+			}
+		}
 		
 		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
 																			, name

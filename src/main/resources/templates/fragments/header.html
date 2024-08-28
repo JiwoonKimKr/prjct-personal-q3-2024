@@ -244,7 +244,8 @@
 		$(document).ready(
 				function() {
 					$("#btn-search-keyword").on('click', function(){
-						let keyword = $("#search-keyword").val().trim();
+						//검색 키워드는 앞뒤 여백을 없애고, 모두 소문자로 만듬
+						let keyword = $("#search-keyword").val().trim().toLowerCase();
 						if(!keyword){
 							alert("검색하실 상품명을 입력해 주세요.");
 							return;
@@ -253,11 +254,11 @@
 							alert("검색어 길이는 최대 30 입니다.")
 							return;
 						}
+						
+						keyword = keyword.replace(/[\s]/gi, "_");
 
 						console.log(`#search-keyword: ${keyword}`);
-						return;
-
-						location.href= "/product/product-list-view?keyword=" + keyword;
+						location.href= `/product/product-list-view?keyword=${keyword}`;
 
 					});// btn-search-keyword on click
 					
