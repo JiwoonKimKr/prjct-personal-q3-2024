@@ -31,7 +31,7 @@
 					<hr>
 					<p th:text="|수정 시간: ${pet.updatedAt}|"></p>
 					<hr>
-					<a id="btn-delete-product" class="btn btn-danger m-3 p-3" th:data-user-id=${pet.userId} th:data-pet-id=${pet.id}>
+					<a id="btn-delete-pet-current" class="btn btn-danger m-3 p-3" th:data-user-id=${pet.userId} th:data-pet-id=${pet.id}>
 						반려견 등록 삭제
 					</a>
 				</th:block>
@@ -42,8 +42,11 @@
     	<script>
     		$(document).ready(function(){
     			
-    			$("#btn-delete-product").on('click', function(e){
-    				//주의 문구 띄우는 것도 좋을 듯
+    			$("#btn-delete-pet-current").on('click', function(e){
+    				
+    				if(confirm("해당 사용자의 반려견 등록 정보를 삭제하시겠습니까?") == false){
+    					return;
+    				}
     				
     				let userId = $(this).data('user-id');
     				let petId = $(this).data('pet-id');

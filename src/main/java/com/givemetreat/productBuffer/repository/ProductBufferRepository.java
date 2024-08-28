@@ -19,4 +19,6 @@ public interface ProductBufferRepository extends JpaRepository<ProductBufferEnti
 
 	List<ProductBufferEntity> findByProductInvoiceId(int productInvoiceId);
 
+	List<ProductBufferEntity> findByProductId(int productId);
+
 }

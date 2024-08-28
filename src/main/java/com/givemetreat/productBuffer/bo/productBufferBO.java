@@ -31,7 +31,7 @@ public class ProductBufferBO {
 	
 	@Transactional
 	public List<ProductBufferEntity> getListProductBuffersByProductId(int productId) {
-		return null;
+		return productBufferRepository.findByProductId(productId);
 	}	
 
 	@Transactional
@@ -41,14 +41,13 @@ public class ProductBufferBO {
 		log.info("[productBufferBO: addProductBuffersInQuantity() Requested] productId:{}, quantity:{}"
 					, productId, quantity);
 		List<ProductBufferEntity> listEntities = new ArrayList<>();
-		ProductBufferEntity entity = ProductBufferEntity.builder()
-				.productId(productId)
-				.reserved(false)
-				.build();
 		
 		//해당 수량만큼 entity를 생성해서 DB에 저장
 		for(int i = 0; i < quantity; i ++) {
-			productBufferRepository.save(entity);
+			ProductBufferEntity entity =productBufferRepository.save(ProductBufferEntity.builder()
+																					.productId(productId)
+																					.reserved(false)
+																					.build());
 			
 			listEntities.add(entity);
 		}
