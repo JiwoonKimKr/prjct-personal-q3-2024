@@ -241,172 +241,204 @@
 	</aside>
 
 	<script type="text/javascript" th:inline="javascript">
-		$(document).ready(
-				function() {
-					$("#btn-search-keyword").on('click', function(){
-						//검색 키워드는 앞뒤 여백을 없애고, 모두 소문자로 만듬
-						let keyword = $("#search-keyword").val().trim().toLowerCase();
-						if(!keyword){
-							alert("검색하실 상품명을 입력해 주세요.");
-							return;
-						}
-						if(keyword.length > 32){
-							alert("검색어 길이는 최대 30 입니다.")
-							return;
-						}
-						
-						keyword = keyword.replace(/[\s]/gi, "_");
-
-						console.log(`#search-keyword: ${keyword}`);
-						location.href= `/product/product-list-view?keyword=${keyword}`;
-
-					});// btn-search-keyword on click
+		$(document).ready(function() {
+			updateKeywordSearched()
+			
+			/* 검색어로 조회된 경우, 검색창에 검색어 띄워주기*/
+			function updateKeywordSearched(){
+				let link = window.location.href;
+   				let url = new URL(link.toString());
+   				let urlParams = url.searchParams;
+   				let keys = urlParams.keys();
+   				let keywordSearched;
+   				
+   				for(let key of keys){
+   					if(key == 'keyword'){
+   						keywordSearched = urlParams.get(key);
+   						console.log(`[header.html updateKeywordSearched()] keywordSearched:${keywordSearched}`);
+   					}
+   				}
+   				if(!keywordSearched){
+   					return;
+   				}
+   				
+   				keywordSearched = keywordSearched.replaceAll("_", " ")
+				console.log(`[header.html updateKeywordSearched()] keywordSearched Space Renewed:${keywordSearched}`);
+   				$("#search-keyword").val(keywordSearched);
+			}
 					
-					$("#toggle-aside-dropdown").on('click', function() {
-								let asideDisplay = $(".groups-aside-dropdown")
-										.css("display");
-								$(".groups-aside-dropdown").css(
-										"display",
-										asideDisplay == "none" ? "flex"
-												: "none");
-							});// toggle-aside-dropdown
+			/* #search-keyword 테그에서 Enter키(ASCII 13번)가 눌린 경우, #btn-search-keyword 버튼이 눌린 것으로 간주!*/
+			$("#search-keyword").on('keyup', function(key){
+				if(key.keyCode == 13){
+					$("#btn-search-keyword").trigger('click');
+				}
+			})
+					
+					
+			$("#btn-search-keyword").on('click', function(){
+				//검색 키워드는 앞뒤 여백을 없애고, 모두 소문자로 만듬
+				let keyword = $("#search-keyword").val().trim().toLowerCase();
+				if(!keyword){
+					alert("검색하실 상품명을 입력해 주세요.");
+					return;
+				}
+				if(keyword.length > 32){
+					alert("검색어 길이는 최대 30 입니다.")
+					return;
+				}
+				
+				keyword = keyword.replace(/[\s]/gi, "_");
+
+				console.log(`#search-keyword: ${keyword}`);
+				location.href= `/product/product-list-view?keyword=${keyword}`;
+
+			});// btn-search-keyword on click
+					
+			$("#toggle-aside-dropdown").on('click', function() {
+					let asideDisplay = $(".groups-aside-dropdown")
+							.css("display");
+					$(".groups-aside-dropdown").css(
+							"display",
+							asideDisplay == "none" ? "flex"
+									: "none");
+				});// toggle-aside-dropdown
 
 /* 측면 삼선 버튼(숨겨진 메뉴 열기) 눌렸을 때: btn-dropdown-asie */							
-					$(".btn-dropdown-aside").on('click', function() {
-						let userId = /*[[${session.userId}]]*/null;
-						//console.log(userId);
+			$(".btn-dropdown-aside").on('click', function() {
+				let userId = /*[[${session.userId}]]*/null;
+				//console.log(userId);
 
-						if (!userId) {
-							location.href = "/user/sign-in-view";
-							return;
-						}
-					}); //btn-dropdown-aside on click
+				if (!userId) {
+					location.href = "/user/sign-in-view";
+					return;
+				}
+			}); //btn-dropdown-aside on click
 
 /*프로필 이미지 추가 버튼 눌렀을 때: btn-add-profile-image */
 //아예 등록된 이미지 없는 경우
-					$("#btn-add-profile-image").on('click', function() {
-						$("#imageProfile").click();
-					})//btn-add-profile-image on click
+			$("#btn-add-profile-image").on('click', function() {
+				$("#imageProfile").click();
+			})//btn-add-profile-image on click
 					
 /*프로필 이미지 변경: btn-update-image-profile */					
-					$("#btn-update-image-profile").on('click', function(){
-						$("#imageProfile").click();
-						
-					})//btn-update-image-profile on click
+			$("#btn-update-image-profile").on('click', function(){
+				$("#imageProfile").click();
+				
+			})//btn-update-image-profile on click
 					
-					$("#imageProfile").on('change', function(e){
-	    				let file = e.target.files[0];
-						if(file == null){
-							$("#btn-add-profile-image").removeClass('d-none');
-							$("#imagePreview").attr('src', '');
-							$(this).val("");
-							return;
-						}
-						//console.log(file);
-	    				
-						let pathFile = $("#imageProfile").val();
-						
-						let extension = pathFile.split(".").pop().toLowerCase();
-	    				if(pathFile != "" && $.inArray(extension, ["jpg", "gif", "png"]) == -1){
-	    					alert("이미지 파일만 업로드 가능합니다.");
-	    					$("#imageProfile").val("");
-	    					return;
-	    				}
-	    				
-	    				let formData = new FormData();
-	    				
-	    				formData.append("imageProfile", $("#imageProfile")[0].files[0]);
-						
-	    				console.log(formData);
-	    				
-	    				$.ajax({
-	    					type: "POST"
-	    					, url: "/user/register-image-profile"
-	    					, data: formData
-	    					, enctype: 'multipart/form-data'
-	    					, processData: false
-	    					, contentType: false
-	    					
-	    					, success: function(data){
-	    						if(data.code == 200){
-	    							alert("🤩🥳프로필 이미지 등록 성공하였습니다.");
-	    							
-	    							location.reload();
-	    						} else {
-	    							alert(data.error_message);
-	    						}
-	    					}
-	    					, error: function(error){
-	    						alert("프로필 이미지 등록 시도가 실패하였습니다.")
-	    					}
-	    					
-	    				})//ajax POST
-	    				
-	    			})// imagePet on change
+			$("#imageProfile").on('change', function(e){
+   				let file = e.target.files[0];
+				if(file == null){
+					$("#btn-add-profile-image").removeClass('d-none');
+					$("#imagePreview").attr('src', '');
+					$(this).val("");
+					return;
+				}
+				//console.log(file);
+   				
+				let pathFile = $("#imageProfile").val();
+				
+				let extension = pathFile.split(".").pop().toLowerCase();
+   				if(pathFile != "" && $.inArray(extension, ["jpg", "gif", "png"]) == -1){
+   					alert("이미지 파일만 업로드 가능합니다.");
+   					$("#imageProfile").val("");
+   					return;
+   				}
+   				
+   				let formData = new FormData();
+   				
+   				formData.append("imageProfile", $("#imageProfile")[0].files[0]);
+				
+   				console.log(formData);
+   				
+   				$.ajax({
+   					type: "POST"
+   					, url: "/user/register-image-profile"
+   					, data: formData
+   					, enctype: 'multipart/form-data'
+   					, processData: false
+   					, contentType: false
+   					
+   					, success: function(data){
+   						if(data.code == 200){
+   							alert("🤩🥳프로필 이미지 등록 성공하였습니다.");
+   							
+   							location.reload();
+   						} else {
+   							alert(data.error_message);
+   						}
+   					}
+   					, error: function(error){
+   						alert("프로필 이미지 등록 시도가 실패하였습니다.")
+   					}
+   					
+   				})//ajax POST
+   				
+   			})// imagePet on change
 
-	    			/*btn-self-description */
-	    			$("#btn-self-description").on('click', function(){
-	    				let selfDescription = $("#input-self-description").val().trim();
-	    				if(!selfDescription || selfDescription == "✋자기소개 하기"){
-	    					alert("자기 소개를 입력해주세요 🙃🙃🙃");
-	    					$("#input-self-description").val('✋자기소개 하기');
-	    					return;
-	    				}
-	    				
-	    				if(selfDescription.length > 500){
-	    					alert("500자 이내로 자기 소개를 적어주세요");
-	    					return;
-	    				}
-	    				
-	    				console.log(`자기소개: ${selfDescription}`);
-	    				$.ajax({
-	    					type: "POST"
-	    					, url: "/user/register-self-description"
-	    					, data: {"selfDescription": selfDescription}
-	    					
-	    					, success: function(data){
-	    						if(data.code == 200){
-	    							alert("🥳🥳자기 소개를 추가하였습니다.");
-	    							location.reload();
-	    						} else {
-	    							alert(data.error_message);
-	    						}
-	    						
-	    					}
-	    					, error: function(error){
-	    						alert("반려견 등록에 실패하였습니다. 관리자에게 문의하세요.")
-	    					}
-	    					
-	    				})//ajax POST	
-	    				
-	    			}); // btn-self-description on click
+   			/*btn-self-description */
+   			$("#btn-self-description").on('click', function(){
+   				let selfDescription = $("#input-self-description").val().trim();
+   				if(!selfDescription || selfDescription == "✋자기소개 하기"){
+   					alert("자기 소개를 입력해주세요 🙃🙃🙃");
+   					$("#input-self-description").val('✋자기소개 하기');
+   					return;
+   				}
+   				
+   				if(selfDescription.length > 500){
+   					alert("500자 이내로 자기 소개를 적어주세요");
+   					return;
+   				}
+   				
+   				console.log(`자기소개: ${selfDescription}`);
+   				$.ajax({
+   					type: "POST"
+   					, url: "/user/register-self-description"
+   					, data: {"selfDescription": selfDescription}
+   					
+   					, success: function(data){
+   						if(data.code == 200){
+   							alert("🥳🥳자기 소개를 추가하였습니다.");
+   							location.reload();
+   						} else {
+   							alert(data.error_message);
+   						}
+   						
+   					}
+   					, error: function(error){
+   						alert("반려견 등록에 실패하였습니다. 관리자에게 문의하세요.")
+   					}
+   					
+   				})//ajax POST	
+   				
+   			}); // btn-self-description on click
 	    			
-					/* btn-pet-list-view 클릭 */
-					$("#btn-pet-list-view").on('click', function() {
-						location.href = "/pet/pet-list-view";
-					});// btn-pet-list-view on click
+			/* btn-pet-list-view 클릭 */
+			$("#btn-pet-list-view").on('click', function() {
+				location.href = "/pet/pet-list-view";
+			});// btn-pet-list-view on click
 
-					/* btn-shopping-cart-view */
-					$("#btn-shopping-cart-view").on('click', function() {
-						location.href = "/shopping-cart/shopping-cart-view";
-					})//btn-shopping-cart-view on click
+			/* btn-shopping-cart-view */
+			$("#btn-shopping-cart-view").on('click', function() {
+				location.href = "/shopping-cart/shopping-cart-view";
+			})//btn-shopping-cart-view on click
 
-					/* btn-delivery-view */
-					$("#btn-delivery-view").on('click', function() {
-						location.href = "/invoice/delivery-status-view";
-					})
+			/* btn-delivery-view */
+			$("#btn-delivery-view").on('click', function() {
+				location.href = "/invoice/delivery-status-view";
+			})
 
-					/* btn-invoice-list-view */
-					$("#btn-invoice-list-view").on('click', function() {
-						location.href = "/invoice/invoice-list-view";
-					})
+			/* btn-invoice-list-view */
+			$("#btn-invoice-list-view").on('click', function() {
+				location.href = "/invoice/invoice-list-view";
+			})
 
-					/* btn-log-out */
-					$("#btn-log-out").on('click', function() {
-						location.href = "/user/sign-out";
-					})
+			/* btn-log-out */
+			$("#btn-log-out").on('click', function() {
+				location.href = "/user/sign-out";
+			})
 
-				})//document ready
+		})//document ready
 	</script>
 </header>
 </html>
