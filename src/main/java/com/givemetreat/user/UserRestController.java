@@ -205,7 +205,7 @@ public class UserRestController {
 	@ApiResponses({
 		@ApiResponse(responseCode = "500", description = "error_message: \"아이디를 확인해 주세요.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "500", description = "error_message: \"비밀번호를 확인해 주세요.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "200", description = "result: \"success\", \n 로그인 성공 시 session에 \"userId\", \"loginId\", \"userName\" 세 값 추가", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\", <br> 로그인 성공 시 session에 &lt;Integer&gt; \"userId\", &lt;String&gt; \"loginId\", &lt;Integer&gt; \"userName\" 세 값 추가", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/sign-in")
 	public Map<String, Object> signIn(@RequestParam String loginId

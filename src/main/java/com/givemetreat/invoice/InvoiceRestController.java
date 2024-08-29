@@ -47,17 +47,17 @@ public class InvoiceRestController {
 		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 이용 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "500", description = "error_message: \"주문 송장(Invoice) 생성 시도가 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"주문 송장(Invoice) 생성 시도가 성공하였습니다.\"" 
-																+ "<br>, \"storeId\": storeId "
-																+ "<br>, \"channelKey\": channelKey"
-																+ "<br>, \"paymentId\": givemetreat-'${invoice.id}' "
-																+ "<br>, \"orderName\": givemetreat-'${invoice.id}'-'${invoice.createdAt}' "
-																+ "<br>, \"totalAmount\": payment"
-																+ "<br>, \"fullName\": buyerName "
-																+ "<br>, \"email\": session.loginId "
-																+ "<br>, \"phoneNumber\": buyerPhoneNumber "
-																+ "<br>, \"invoiceId\": invoice.id "
-																+ "<br>, \"addressLine1\": 구매자 일반주소 "
-																+ "<br>, \"addressLine2\": 구매자 상세주소 "
+																+ "<br>, \"storeId\" &lt;Integer&gt; storeId "
+																+ "<br>, \"channelKey\" channelKey"
+																+ "<br>, \"paymentId\" givemetreat-'${invoice.id}' "
+																+ "<br>, \"orderName\" givemetreat-'${invoice.id}'-'${invoice.createdAt}' "
+																+ "<br>, \"totalAmount\" payment"
+																+ "<br>, \"fullName\" buyerName "
+																+ "<br>, \"email\" session.loginId "
+																+ "<br>, \"phoneNumber\" buyerPhoneNumber "
+																+ "<br>, \"invoiceId\" &lt;Integer&gt; invoice.id "
+																+ "<br>, \"addressLine1\" 구매자 일반주소 "
+																+ "<br>, \"addressLine2\" 구매자 상세주소 "
 		
 		, content = @Content(mediaType = "APPLICATION_JSON"))
 	})
