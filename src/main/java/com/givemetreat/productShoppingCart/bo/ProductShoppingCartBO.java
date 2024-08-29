@@ -68,7 +68,7 @@ public class ProductShoppingCartBO {
 			}
 		}
 		
-		if(ObjectUtils.isEmpty(entity) == false && quantity == 0) {
+		if(ObjectUtils.isEmpty(entity) == false) {
 			log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
 					+ " A Record for current arguments was already exist."
 					+ " userId:{}, productId:{}, quantity:{}", userId, productId, quantity);
@@ -100,7 +100,7 @@ public class ProductShoppingCartBO {
 	}
 
 	@Transactional
-	private void deleteEntity(ProductShoppingCartEntity entity) {
+	public void deleteEntity(ProductShoppingCartEntity entity) {
 		log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
 				+ " current entity get deleted."
 				+ " entity:{}", entity);

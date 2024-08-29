@@ -126,6 +126,12 @@
 
     			 function updateCostCurrent(){
     				let count = $("#count-order-product").val().trim();
+    				if(count > quantityAvailable){
+    					count = quantityAvailable;
+    					$("#count-order-product").val(count);
+    					alert("최대 구매 가능 수량으로 제한됩니다.");
+    				}
+    				
     				let price = $("#count-order-product").data('price');
     				console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);
     				count = Number(count);

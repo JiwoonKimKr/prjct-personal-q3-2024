@@ -42,8 +42,9 @@ public class ShoppingCartRestController {
 		, @Parameter(name = "<HttpSession> session", description = "session")
 	})
 	@ApiResponses({
-		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 이용 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500", description = "shortOfQuantity: \"true\" error_message: \"해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다. 장바구니에서 해당 항목이 지워집니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		@ApiResponse(responseCode = "403",  description = "error_message: \"로그인 후 이용 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500", description = "quantity: 상품 수량, shortOfQuantity: \"true\", error_message: \"해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다.\""
+						, content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "500", description = "error_message: \"해당 상품과 수량이 장바구니에 담기지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"해당 상품이 장바구니에 담겼습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
@@ -63,24 +64,34 @@ public class ShoppingCartRestController {
 			return result;			
 		}
 		
-		//해당 재품의 재고가 요구 수량보다 적을 때, 또는 아예 수량이 null로 돌아오거나 0일 때
+		//해당 재품의 재고가 요구 수량보다 적을 때, 또는 가용 재고가 0일 때
 		Integer quantityAvailable = productBufferBO.getCountAvailableByProductIdAndReserved(productId, false);
 		
-		if(ObjectUtils.isEmpty(quantityAvailable)
-				|| quantityAvailable == 0
-				|| quantity > quantityAvailable) {
-			log.warn("[UserShoppingCartRestController updateProductQuantity()] Available quantity of current product is not available for count ordered."
+		if(ObjectUtils.isEmpty(quantityAvailable) == false && (quantity > quantityAvailable || quantityAvailable == 0)) {
+			log.warn("[UserShoppingCartRestController updateProductQuantity()] Quantity ordered is greater than stock available now."
 					+ " productId:{}, quantityOrdered:{}", productId, quantity);
 			
-			//해당 장바구니 record 삭제하기
-			productShoppingCartBO.updateQuantity(userId, productId, 0, cartItemId);
+			//해당 장바구니 record 가용 최대 수량으로 변경
+			productShoppingCartBO.updateQuantity(userId, productId, quantityAvailable, cartItemId);
 			
 			result.put("code", 500);
 			result.put("shortOfQuantity", "true");
+			result.put("quantity", quantityAvailable);
 			result.put("error_message", "해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다.");
 			return result;
 		}
 		
+		//update 수량이 0이어서 해당 record를 지워야 하는 경우
+		if(quantity == 0) {
+			log.warn("[UserShoppingCartRestController updateProductQuantity()] requested quantity is zero, so record will be deleted."
+					+ " productId:{}, quantityOrdered:{}", productId, quantity);
+			
+			productShoppingCartBO.updateQuantity(userId, productId, 0, cartItemId);
+			
+			result.put("code", 200);
+			result.put("quantity", 0);
+			return result;
+		}
 		
 		
 		ProductShoppingCartEntity itemEnlisted = productShoppingCartBO.updateQuantity(userId
