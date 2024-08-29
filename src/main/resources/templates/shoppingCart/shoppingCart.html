@@ -201,6 +201,11 @@
 							location.href= "/user/sign-in-view";
 						} else {
 							alert(data.error_message);
+							if(data.shortOfQuantity == 'true'){
+								console.log("[shoppingCart.html updateQuantity()] stock available is lesser than quantity requested. Page get reloaded.");
+								location.reload();
+							}
+							
 						}
 					})//ajax
     			}

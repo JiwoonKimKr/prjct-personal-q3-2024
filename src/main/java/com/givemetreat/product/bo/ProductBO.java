@@ -15,6 +15,7 @@ import com.givemetreat.product.domain.CategoryProduct;
 import com.givemetreat.product.domain.Product;
 import com.givemetreat.product.domain.ProductVO;
 import com.givemetreat.product.mapper.ProductMapper;
+import com.givemetreat.productBuffer.bo.ProductBufferBO;
 import com.givemetreat.productUserInterested.bo.ProductUserInterestedBO;
 import com.givemetreat.productUserInterested.domain.ProductUserInterestedEntity;
 import com.givemetreat.userFavorite.bo.UserFavoriteBO;
@@ -28,9 +29,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductBO {
 	private final ProductMapper productMapper;
+	private final ProductBufferBO productBufferBO;
+	
 	private final UserFavoriteBO userFavoriteBO;
 	private final ProductUserInterestedBO productUserInterestedBO;
-	
+
 	private final int LIMIT_SELECTION = 6;
 	private final int LIMIT_SELECTION_RECOMMNEDATION = 4;
 
@@ -161,6 +164,12 @@ public class ProductBO {
 		
 		for(Product product : listProducts) {
 			ProductVO vo = new ProductVO(product);
+			Integer quantityAvailable = productBufferBO.getCountAvailableByProductIdAndReserved(product.getId(), false);
+			if(ObjectUtils.isEmpty(quantityAvailable)) {
+				log.warn("[getProducts] quantity Available failed to get figured out. product Id:{}", product.getId());
+			}
+			
+			vo.setQuantityAvailable(quantityAvailable);
 			listVOs.add(vo);
 		}
 		

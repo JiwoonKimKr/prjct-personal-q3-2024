@@ -6,6 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Integer productInvoiceId는 ProductInvoiceBO에서,
+ * Integer quantityAvailable의 경우, ProductBufferBO에서 별도로 받아와야!
+ * 
+ * @param product
+ */
 @Schema(description = "상품 관련 정보 조회 VO")
 @NoArgsConstructor
 @Data
@@ -26,6 +32,7 @@ public class ProductVO {
 		this.imgThumbnail = product.getImgThumbnail();
 	};
 	private Integer productInvoiceId;
+	private Integer quantityAvailable;
 	
 	private Integer id;
 	private String name;

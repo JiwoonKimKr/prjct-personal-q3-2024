@@ -136,22 +136,26 @@ public class FileManagerService {
 	
 	public static void deleteImageOriginAndThumbnail(String imageOrigin, String imageThumbnail) {
 		Path path = Paths.get(FILE_UPLOAD_PATH + imageOrigin.replace("/images/", ""));
+		log.info("[FileManagerService] current imageOrigin path:{}", imageOrigin);
 		
 		if(Files.exists(path)) {
 			try {
 				Files.delete(path);
+				log.info("[FileManagerService] Trial to delete file has done. path:{}", path.toString());
 			} catch (IOException e) {
-				log.info("[FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				log.info("[🚧🚧🚧🚧🚧FileManagerService] Trial to delete file has failed. path:{}", path.toString());
 				return;
 			}
 		}
 		path = Paths.get(FILE_UPLOAD_PATH + imageThumbnail.replace("/images/", ""));
+		log.info("[FileManagerService] current imageThumbnail path:{}", imageThumbnail);
 		
 		if(Files.exists(path)) {
 			try {
 				Files.delete(path);
+				log.info("[FileManagerService] Trial to delete file has done. path:{}", path.toString());
 			} catch (IOException e) {
-				log.info("[FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				log.info("[🚧🚧🚧🚧🚧FileManagerService] Trial to delete file has failed. path:{}", path.toString());
 				return;
 			}
 		}
@@ -166,7 +170,6 @@ public class FileManagerService {
 			}
 			
 		}
-		log.info("[FileManagerService] current image get deleted. path:{}", imageOrigin);
 	}
 	
 }

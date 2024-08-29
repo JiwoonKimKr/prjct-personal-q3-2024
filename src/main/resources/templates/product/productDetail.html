@@ -16,6 +16,10 @@
 							<div class="title-upper-side-detail-product">
 								<p th:text="${product.name}"></p>
 							</div>
+							<div class="title-quantity-available-current-detail-product">
+								<p th:if="${product.quantityAvailable} > 0" th:text="'구매 가능 수량: ' + ${product.quantityAvailable}"></p>
+								<p th:unless="${product.quantityAvailable} > 0" th:text="'판매 종료 되었습니다.'"></p>
+							</div>
 							<div class="title-price-current-detail-product">
 								<p th:text="'￦ ' + ${product.price}"></p>
 							</div>
@@ -112,8 +116,15 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(e){
-    			
-    			function updateCostCurrent(){
+    			 let quantityAvailable =/*[[${product.quantityAvailable}]]*/null;
+    			 
+    			 if(quantityAvailable < 1){
+    				 $(".btns-quantity-detail-product").css('visibility','hidden');
+     				 $(".btns-pay-or-not").css('visibility','hidden');
+     				 $(".groups-buttom-cart-total").css('visibility','hidden');
+    			 }
+
+    			 function updateCostCurrent(){
     				let count = $("#count-order-product").val().trim();
     				let price = $("#count-order-product").data('price');
     				console.log(`"[updateCostCurrent())] count :${count}, price: ${price}"`);

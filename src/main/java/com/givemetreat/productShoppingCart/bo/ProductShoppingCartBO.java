@@ -68,21 +68,25 @@ public class ProductShoppingCartBO {
 			}
 		}
 		
-		if(ObjectUtils.isEmpty(entity) == false) {
+		if(ObjectUtils.isEmpty(entity) == false && quantity == 0) {
 			log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
 					+ " A Record for current arguments was already exist."
 					+ " userId:{}, productId:{}, quantity:{}", userId, productId, quantity);
-			entity = entity.toBuilder()
-						.quantity(quantity)
-						.build();
 			//quantity가 0일 경우 db에서 삭제해야
 			if(quantity == 0) {
 				deleteEntity(entity);
 				return entity;
 			}
-			
-			productShoppingCartRepository.save(entity);
-			return entity;
+			return productShoppingCartRepository.save(entity.toBuilder()
+															.quantity(quantity)
+															.build());
+		}
+		
+		if(ObjectUtils.isEmpty(entity) && quantity == 0) {
+			log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
+					+ "Record is not generated Because quantity current is zero."
+					+ " userId:{}, productId:{}, quantity:{}", userId, productId, quantity);	
+			return null;
 		}
 		
 		log.info("[ProductShoppingCartBO addProductsByProductIdAndQuantity()]"
@@ -121,5 +125,7 @@ public class ProductShoppingCartBO {
 				+ " userId:{}", userId);
 		return true;
 	}
+
+
 	
 }

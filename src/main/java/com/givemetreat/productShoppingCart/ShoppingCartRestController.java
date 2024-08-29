@@ -3,12 +3,14 @@ package com.givemetreat.productShoppingCart;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.givemetreat.productBuffer.bo.ProductBufferBO;
 import com.givemetreat.productShoppingCart.bo.ProductShoppingCartBO;
 import com.givemetreat.productShoppingCart.domain.ProductShoppingCartEntity;
 
@@ -30,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class ShoppingCartRestController {
 	private final ProductShoppingCartBO productShoppingCartBO;
+	private final ProductBufferBO productBufferBO;
 	
 	@Operation(summary = "updateProductQuantity() 장바구니 해당 상품 수량 업데이트", description = "사용자가 요청한 장바구니 수량에 맞게 업데이트")
 	@Parameters({
@@ -40,6 +43,7 @@ public class ShoppingCartRestController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 이용 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500", description = "shortOfQuantity: \"true\" error_message: \"해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다. 장바구니에서 해당 항목이 지워집니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "500", description = "error_message: \"해당 상품과 수량이 장바구니에 담기지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"해당 상품이 장바구니에 담겼습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
@@ -53,11 +57,31 @@ public class ShoppingCartRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		
 		if(userId == null) {
-			log.info("[UserShoppingCartRestController addProduct()] userId is null now. Sign-In needed.");
+			log.info("[UserShoppingCartRestController updateProductQuantity()] userId is null now. Sign-In needed.");
 			result.put("code", 403);
 			result.put("error_message", "로그인 후 이용 가능합니다.");
 			return result;			
 		}
+		
+		//해당 재품의 재고가 요구 수량보다 적을 때, 또는 아예 수량이 null로 돌아오거나 0일 때
+		Integer quantityAvailable = productBufferBO.getCountAvailableByProductIdAndReserved(productId, false);
+		
+		if(ObjectUtils.isEmpty(quantityAvailable)
+				|| quantityAvailable == 0
+				|| quantity > quantityAvailable) {
+			log.warn("[UserShoppingCartRestController updateProductQuantity()] Available quantity of current product is not available for count ordered."
+					+ " productId:{}, quantityOrdered:{}", productId, quantity);
+			
+			//해당 장바구니 record 삭제하기
+			productShoppingCartBO.updateQuantity(userId, productId, 0, cartItemId);
+			
+			result.put("code", 500);
+			result.put("shortOfQuantity", "true");
+			result.put("error_message", "해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다.");
+			return result;
+		}
+		
+		
 		
 		ProductShoppingCartEntity itemEnlisted = productShoppingCartBO.updateQuantity(userId
 															, productId
@@ -65,14 +89,14 @@ public class ShoppingCartRestController {
 															, cartItemId);
 		
 		if(itemEnlisted == null) {
-			log.info("[UserShoppingCartRestController addProduct()] current item got failed to get enlisted in cart.");
+			log.info("[UserShoppingCartRestController updateProductQuantity()] current item got failed to get enlisted in cart.");
 			result.put("code", 500);
 			result.put("error_message", "해당 상품과 수량이 장바구니에 담기지 못하였습니다.");
 			return result;
 		}
 		
 		
-		log.info("[UserShoppingCartRestController addProduct()] success to enlist current item in cart.");
+		log.info("[UserShoppingCartRestController updateProductQuantity()] success to enlist current item in cart.");
 		result.put("code", 200);
 		result.put("success", "해당 상품이 장바구니에 담겼습니다.");
 		result.put("quantity", itemEnlisted.getQuantity());
