@@ -1,6 +1,7 @@
 package com.givemetreat.invoice;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.givemetreat.api.dto.ResponseDtoPortOneApi;
 import com.givemetreat.api.utils.PrivatePortOneApi;
 import com.givemetreat.invoice.bo.InvoiceBO;
 import com.givemetreat.invoice.domain.InvoiceEntity;
@@ -16,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,20 +50,8 @@ public class InvoiceRestController {
 	@ApiResponses({
 		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 이용 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "500", description = "error_message: \"주문 송장(Invoice) 생성 시도가 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "200", description = "result: \"주문 송장(Invoice) 생성 시도가 성공하였습니다.\"" 
-																+ "<br>, \"storeId\" &lt;Integer&gt; storeId "
-																+ "<br>, \"channelKey\" channelKey"
-																+ "<br>, \"paymentId\" givemetreat-'${invoice.id}' "
-																+ "<br>, \"orderName\" givemetreat-'${invoice.id}'-'${invoice.createdAt}' "
-																+ "<br>, \"totalAmount\" payment"
-																+ "<br>, \"fullName\" buyerName "
-																+ "<br>, \"email\" session.loginId "
-																+ "<br>, \"phoneNumber\" buyerPhoneNumber "
-																+ "<br>, \"invoiceId\" &lt;Integer&gt; invoice.id "
-																+ "<br>, \"addressLine1\" 구매자 일반주소 "
-																+ "<br>, \"addressLine2\" 구매자 상세주소 "
-		
-		, content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"주문 송장(Invoice) 생성 시도가 성공하였습니다.\" <br> response= &lt;ResponseDtoPortOneApi&gt;"
+		, content = @Content(mediaType = "APPLICATION_JSON", schema = @Schema(implementation = ResponseDtoPortOneApi.class)))
 	})
 	@PostMapping("/payment-validation")
 	public Map<String, Object> payment(@RequestParam String listItemsOrdered
@@ -111,32 +102,16 @@ public class InvoiceRestController {
 			return result;			
 		}
 		
-		log.info("[InvoiceRestController payment()] current invoice has success to get paid.");
+		log.info("[InvoiceRestController payment()] current invoice has success to get generated.");
+		
+		ResponseDtoPortOneApi responseDto =
+				new ResponseDtoPortOneApi(privatePortOneApi.storeId
+										, privatePortOneApi.channelKey
+										, invoice
+										, (String) session.getAttribute("loginId"));
 		result.put("code", 200);
 		result.put("result", "주문 송장(Invoice) 생성 시도가 성공하였습니다.");
-		result.put("storeId", privatePortOneApi.storeId);
-		result.put("channelKey", privatePortOneApi.channelKey);
-		//★★★★★paymentId; givemetreat-{invoice.id}
-		result.put("paymentId", String.format("givemetreat-%s",invoice.getId()));
-		result.put("orderName", String.format("orderName-%s-%s", invoice.getId(), invoice.getCreatedAt()));
-		result.put("totalAmount", invoice.getPayment());
-		result.put("fullName", invoice.getBuyerName());
-		result.put("email", session.getAttribute("loginId"));
-		result.put("phoneNumber", invoice.getBuyerPhoneNumber());
-		result.put("invoiceId", invoice.getId());
-		
-		String[] listStrAddress = address.split(" ");
-		String addressLine1 = "".concat(listStrAddress[0]).concat(" ").concat(listStrAddress[1]);
-		String addressLine2 = "";
-		
-		for(int i = 2; i < listStrAddress.length; i++ ) {
-			addressLine2 = addressLine2.concat(listStrAddress[i]).concat(" ");
-		}
-		
-		//★★★★★구매자 주소 1; addressLine1 ; 일반주소 
-		result.put("addressLine1", addressLine1);
-		//★★★★★구매자 주소 2; addressLine2 ; 일반주소 		
-		result.put("addressLine2", addressLine2);
+		result.put("response", responseDto);
 		
 		return result;
 	}
@@ -173,7 +148,7 @@ public class InvoiceRestController {
 	
 	//TODO
 	@PostMapping("/payment/complete")
-	public Map<String, Object> paymentValidationWhenCompleted(@RequestParam String paymentId){
+	public Map<String, Object> paymentCompletedValidation(@RequestParam String paymentId){
 		Map<String, Object> result = new HashMap<>();
 		
 		//webclient로 kakaoApi 처럼 구현해야
@@ -215,7 +190,9 @@ public class InvoiceRestController {
 		    res.status(400).send(e);
 		  }
 		 */
-		
+		log.info("[InvoiceRestController paymentCompletedValidation()] current invoice get Deleted. paymentId:{}", paymentId);
+		result.put("code", 302);
+		result.put("result", "아직 API가 구현되지 않았습니다.");
 		
 		return result;
 	}
