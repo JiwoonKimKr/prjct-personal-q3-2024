@@ -9,7 +9,7 @@
     </head>
 	<section layout:fragment="contents" class="contents mt-5">
 			<article class="group-article ">
-	 			<!-- Dropdown: Choosing Field for Searching __Start__ -->
+	 			<!-- Fields for Searching __Start__ -->
 	 			<div class="bg-info rounded d-flex justify-content-between py-3 px-3">
 					<span class="h3 text-white col-3">
 						검색 항목
@@ -31,7 +31,7 @@
 						</button>
 					</div>	
 				</div>
-				<!-- 숨겨진 검색 항목별 카테고리들 -->
+				<!-- 검색 항목별 카테고리들 -->
 				<div class="groups-category-for-search" >
 					<!-- Dropdown: userid -->
 					<div id="field-userid" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
@@ -40,28 +40,28 @@
 						</span>
 						<input id="userId" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: loginId -->
+					<!-- loginId -->
 					<div id="field-loginId" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							로그인ID
 						</span>
 						<input id="loginId" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: nickname -->
+					<!-- nickname -->
 					<div id="field-nickname" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							닉네임
 						</span>
 						<input id="nickname" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: selfDesc -->
+					<!-- selfDesc -->
 					<div id="field-selfDesc" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							자기조개
 						</span>
 						<input id="selfDesc" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: createdAt ★★★★★ 달력 라이브러리 써서 시간 범위 선택하도록 보완해야 -->
+					<!-- createdAt: createdAtSince, createdAtUntil -->
 					<div id="field-createdAt" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							가입 시간
@@ -69,7 +69,7 @@
 						<input id="createdAtSince" type="text" class="input-time-between form-control col-4" placeholder="created From">
 						<input id="createdAtUntil" type="text" class="input-time-between form-control col-4" placeholder="created Until">
 					</div>	
-					<!-- Dropdown: updatedAt ★★★★★ 달력 라이브러리 써서 시간 범위 선택하도록 보완해야 -->
+					<!-- updatedAt: updatedAtSince, updatedAtUntil -->
 					<div id="field-updatedAt" class="d-none bg-secondary rounded d-flex justify-content-between py-3 px-3">
 						<span class="h3 text-white col-4">
 							수정 시간

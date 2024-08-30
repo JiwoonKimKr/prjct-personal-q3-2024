@@ -146,13 +146,11 @@ public class AdminUserBO {
 			return generateListVOsFromListEntities(listUsers);
 		}
 		
-		//createdAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!
 		if(createdAt != null) {
 			List<UserEntity> listUsers = userRepository.findByCreatedAtOrderByIdDesc(createdAt);
 			return generateListVOsFromListEntities(listUsers);
 		}
 		
-		//updatedAt ★★★★★ 날짜 범위 추후 지정하도록 수정해야!		
 		if(updatedAt != null) {
 			List<UserEntity> listUsers = userRepository.findByUpdatedAtOrderByIdDesc(updatedAt);
 			return generateListVOsFromListEntities(listUsers);

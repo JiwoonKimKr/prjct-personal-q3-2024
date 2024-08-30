@@ -106,7 +106,7 @@
     			
      			$(".btn-invoice-detail").on('click', function(){
      				let invoiceId = $(this).data('id');
-     				let userId = $(this).data('user-id'); //★★★★★data 받아올 때는 절대 대문자 섞어서 쓰면 안 된다 ㅠㅠ Snake Case로 작성해야!
+     				let userId = $(this).data('user-id'); //🚫🛑🚫🛑data 받아올 때는 절대 대문자 섞어서 쓰면 안 된다 ㅠㅠ Snake Case로 작성해야!
      				
      				location.href= "/admin/invoice/invoice-latest-detail-view?invoiceId=" + invoiceId
      								+ "&userId=" + userId;

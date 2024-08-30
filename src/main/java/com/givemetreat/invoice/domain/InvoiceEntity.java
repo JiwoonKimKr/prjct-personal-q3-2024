@@ -70,12 +70,6 @@ public class InvoiceEntity {
 	
 	@Column(name="receiverPhoneNumber")
 	private String receiverPhoneNumber;
-	
-	/*★★★★★ 포트원 요구에 맞게
-	 * addressLine1 
-	 * addressLine2
-	 * 그리고 난수로 생성한 paymentId가 별도로 있어야!
-	*/
 	private String address;
 	
 	@CreationTimestamp

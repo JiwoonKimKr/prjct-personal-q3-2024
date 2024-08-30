@@ -13,7 +13,7 @@ Model Attributes
 listInvoices
  -->	
 			<article class="group-article ">
-	 			<!-- Dropdown: Choosing Field for Searching -->
+	 			<!-- Fields for Searching -->
 	 			<div class="bg-info rounded d-flex justify-content-between">
 					<span class="h4 text-white col-3">
 						검색 항목
@@ -24,16 +24,16 @@ listInvoices
 						</button>
 					</div>	
 				</div>
-				<!-- 숨겨진 검색 항목별 카테고리들 -->
+				<!-- 검색 항목별 카테고리들 -->
 				<div class="groups-category-for-search" >
-					<!-- Dropdown: userId -->
+					<!-- userId -->
 					<div id="field-userId" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							결제자PK
 						</span>
 						<input id="userId" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: payment -->
+					<!-- payment -->
 					<div id="field-payment" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							결제금액
@@ -42,7 +42,7 @@ listInvoices
 						<input id="paymentUntil" type="text" class="input-to-choose form-control col-4" placeholder="￦까지">
 					</div>
 <!-- 포트원 적용으로 해당 field 3개 삭제__21 08 2024 -->					
-					<!-- Dropdown: paymentType -->
+					<!-- paymentType -->
 					<!--
 					<div id="field-paymentType" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
@@ -57,7 +57,7 @@ listInvoices
 						</div>
 					</div>
 					-->
-					<!-- Dropdown: company -->
+					<!-- company -->
 					<!-- 
 					<div id="field-company" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
@@ -66,7 +66,7 @@ listInvoices
 						<input id="company" type="text" class="input-to-choose form-control col-8">
 					</div>
 					-->
-					<!-- Dropdown: monthlyInstallment -->
+					<!-- monthlyInstallment -->
 					<!--
 					<div id="field-monthlyInstallment" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
@@ -75,7 +75,7 @@ listInvoices
 						<input id="monthlyInstallment" type="text" class="input-to-choose form-control col-8">
 					</div>
 					-->
-					<!-- Dropdown: hasCanceled -->
+					<!-- hasCanceled -->
 					<div id="field-hasCanceled" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							주문 취소 여부
@@ -88,21 +88,21 @@ listInvoices
 							</select>
 						</div>
 					</div>
-					<!-- Dropdown: buyerName -->
+					<!-- buyerName -->
 					<div id="field-buyerName" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							구매자 이름
 						</span>
 						<input id="buyerName" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: buyerPhoneNumber -->
+					<!-- buyerPhoneNumber -->
 					<div id="field-buyerPhoneNumber" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							구매자 연락처
 						</span>
 						<input id="buyerPhoneNumber" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: statusDelivery -->
+					<!-- statusDelivery -->
 					<div id="field-statusDelivery" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							배송 현황
@@ -118,28 +118,28 @@ listInvoices
 							</select>
 						</div>
 					</div>
-					<!-- Dropdown: receiverName -->
+					<!-- receiverName -->
 					<div id="field-receiverName" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							수령자 이름
 						</span>
 						<input id="receiverName" type="text" class="input-to-choose form-control col-8">
 					</div>	
-					<!-- Dropdown: receiverPhoneNumber -->
+					<!-- receiverPhoneNumber -->
 					<div id="field-receiverPhoneNumber" class="d-none bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							수령자 연락처
 						</span>
 						<input id="receiverPhoneNumber" type="text" class="input-to-choose form-control col-8">
 					</div>	
-					<!-- Dropdown: address -->
+					<!-- address -->
 					<div id="field-address" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							배송 주소
 						</span>
 						<input id="address" type="text" class="input-to-choose form-control col-8">
 					</div>
-					<!-- Dropdown: createdAt ★★★★★ jQuery 달력 라이브러리 활용해서 특정 기간 선택하도록 바꿔야-->
+					<!-- createdAt: createdAtSince, createdAtUntil -->
 					<div id="field-createdAt" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							기입 시간
@@ -147,7 +147,7 @@ listInvoices
 						<input id="createdAtSince" type="text" class="input-to-choose form-control col-4" placeholder="created From">
 						<input id="createdAtUntil" type="text" class="input-to-choose form-control col-4" placeholder="created Until">
 					</div>
-					<!-- Dropdown: updatedAt ★★★★★ jQuery 달력 라이브러리 활용해서 특정 기간 선택하도록 바꿔야 -->	
+					<!-- updatedAt: updatedAtSince, updatedAtUntil -->	
 					<div id="field-updatedAt" class="bg-secondary rounded d-flex justify-content-between py-2">
 						<span class="h4 text-white col-4 text-right">
 							수정 시간
@@ -405,7 +405,7 @@ listInvoices
 
      			$("#btn-search-invoices").on('click', function(){
 					let userId = $("#userId").val().trim();
-					//★★★★★ 결제 금액 관련 범위 넣어야
+
 					let paymentFrom = $("#paymentFrom").val().trim();
 					let paymentUntil = $("#paymentUntil").val().trim();
 
