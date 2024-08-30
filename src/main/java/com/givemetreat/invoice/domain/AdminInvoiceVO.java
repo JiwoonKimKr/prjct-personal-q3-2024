@@ -3,13 +3,14 @@ package com.givemetreat.invoice.domain;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.givemetreat.common.generic.VOforIndexing;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
-public class AdminInvoiceVO {
+public class AdminInvoiceVO implements VOforIndexing {
 	
 	//JPA InvoiceEntity => VO
 	public AdminInvoiceVO(InvoiceEntity invoice) {

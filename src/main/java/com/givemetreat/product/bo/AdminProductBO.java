@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.FileManagerService;
 import com.givemetreat.common.generic.Page;
+import com.givemetreat.common.generic.VOforIndexing;
+import com.givemetreat.common.utils.IndexBinarySearchTreeUtil;
 import com.givemetreat.pet.domain.AgePet;
 import com.givemetreat.product.domain.AdminProductVO;
 import com.givemetreat.product.domain.CategoryProduct;
@@ -27,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminProductBO {
 	private final ProductMapper productMapper;
 	private final ProductBufferBO productBufferBO;
+	
+	private final IndexBinarySearchTreeUtil indexBinarySearchTreeUtil;
 
 	private final int LIMIT_SELECTION = 3;
 
@@ -118,14 +122,10 @@ public class AdminProductBO {
 		}
 		
 		//index 아직 입력 안 된 경우 반복문으로 찾기
-			//★★★★★ 나중에 이진트리 방식으로 찾는 것도 도입하면 좋을 듯?
 		if(index == null) {
-			for(int i = 0; i < listVOs.size(); i++) {
-				if(listVOs.get(i).getId() == idRequested) {
-					index = i;
-					break;
-				}
-			}
+			@SuppressWarnings("unchecked")
+			List<VOforIndexing> list = (List<VOforIndexing>) (List<?>) listVOs;
+			index = indexBinarySearchTreeUtil.findIndexFromList(list, idRequested);
 		}
 		
 		Page<AdminProductVO> pageInfo = new Page<AdminProductVO>(listVOs

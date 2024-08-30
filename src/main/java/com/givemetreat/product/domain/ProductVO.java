@@ -2,6 +2,7 @@ package com.givemetreat.product.domain;
 
 import java.time.LocalDateTime;
 
+import com.givemetreat.common.generic.VOforIndexing;
 import com.givemetreat.pet.domain.AgePet;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "상품 관련 정보 조회 VO")
 @NoArgsConstructor
 @Data
-public class ProductVO {
+public class ProductVO implements VOforIndexing {
 
 	public ProductVO (Product product) {
 		this.id = product.getId();
@@ -39,7 +40,7 @@ public class ProductVO {
 	private Integer productInvoiceId;
 	private Integer quantityAvailable;
 	
-	private Integer id;
+	private int id;
 	private String name;
 	
 	/*

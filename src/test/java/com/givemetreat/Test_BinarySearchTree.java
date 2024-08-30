@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.util.StopWatch;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,8 +24,8 @@ class Test_BinarySearchTree {
 		
 		log.info("[Test_BinarySearchTree test()] list for test:{}", list.size());
 		//when
-//		StopWatch stopWatch = new StopWatch();
-//		stopWatch.start();
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
 		
 		int length = list.size() - 1;
 		Integer indexMax = length;
@@ -45,13 +46,14 @@ class Test_BinarySearchTree {
 			} else {
 				indexMax = indexCurrent;
 			}
-			
-			log.info("[Test_BinarySearchTree test()] indexCurrent:{}", indexCurrent);
 		}
+		
 		//then
-//		stopWatch.stop();
-//		log.info("[Test_BinarySearchTree test()] execution time:{} ms", stopWatch.getTotalTimeMillis());
-//		log.info(stopWatch.prettyPrint());
+		stopWatch.stop();
+		log.info("[Test_BinarySearchTree test()]"
+				+ "Binary Search Tree execution time:{} ms"
+				, stopWatch.getTotalTimeMillis());
+		log.info(stopWatch.prettyPrint());
 	
 	}
 
