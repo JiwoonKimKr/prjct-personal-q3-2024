@@ -37,11 +37,9 @@ public class TrackUsersFavorAop {
 			return joinPoint.proceed(); 
 		}
 		
-		int countNull = 0;
 		for(Object parameter : targetParameters) {
 			if(ObjectUtils.isEmpty(parameter)
 					|| parameter instanceof Enum == false) {
-				countNull ++;
 				continue;
 			}
 			
@@ -65,10 +63,6 @@ public class TrackUsersFavorAop {
 					log.warn("[⚠️⚠️⚠️⚠️⚠️TrackUsersFavorAop execute()] entity for userFavorite table not made. parameter:{}", parameter);
 				}
 			}
-		}
-		//들어온 변수 없는 경우 리턴
-		if(targetParameters.length == countNull) {
-			return joinPoint.proceed();
 		}
 		
 		return joinPoint.proceed();

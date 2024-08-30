@@ -44,6 +44,7 @@ public class ProductUserInterestedBO {
 																				.productId(productId)
 																				.fromClicked(fromClicked)
 																				.fromPayment(fromPayment)
+																				.countOrdered(size)
 																				.build());
 	}
 }

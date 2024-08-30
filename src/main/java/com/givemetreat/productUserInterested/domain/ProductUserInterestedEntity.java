@@ -41,7 +41,7 @@ public class ProductUserInterestedEntity {
 	@Column(name = "fromPayment")
 	private boolean fromPayment;
 	
-	@Column(name = "countOrdered")
+	@Column(name = "countOrdered", nullable = true)
 	private Integer countOrdered;
 	
 	@CreationTimestamp

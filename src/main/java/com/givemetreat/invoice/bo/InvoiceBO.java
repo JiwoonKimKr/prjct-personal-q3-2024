@@ -267,7 +267,12 @@ public class InvoiceBO {
 			}
 			
 			//사용자 경험 관련된 DB 테이블에 productId 관련된 정보 추가_25 08 2024
-			ProductUserInterestedEntity recordProductOrdered = productUserInterestedBO.addRecordForProductUserInterested(userId, productId, false, true, listItemQuantity.size());
+			ProductUserInterestedEntity recordProductOrdered =
+					productUserInterestedBO.addRecordForProductUserInterested(userId
+																			, productId
+																			, false
+																			, true
+																			, listItemQuantity.size());
 			
 			if(ObjectUtils.isEmpty(recordProductOrdered)) {
 				log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 

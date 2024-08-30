@@ -2,6 +2,8 @@ package com.givemetreat.product.domain;
 
 import java.time.LocalDateTime;
 
+import com.givemetreat.pet.domain.AgePet;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +22,14 @@ public class ProductVO {
 	public ProductVO (Product product) {
 		this.id = product.getId();
 		this.name = product.getName();
+		
+		this.categoryEnumerable = product.getCategory();
 		this.category = product.getCategory().getTypeE();
 		this.categoryTranslatedK = product.getCategory().getTypeK();
 		
 		this.price = product.getPrice();
 		
+		this.agePetEnumerable = product.getAgePetProper();
 		this.agePetProper = product.getAgePetProper().getAgePetE();
 		this.agePetProperTranslatedK = product.getAgePetProper().getAgePetK();
 		
@@ -42,6 +47,7 @@ public class ProductVO {
 	 * kibble : 사료
 	 * treat : 간식
 	 */
+	private CategoryProduct categoryEnumerable;
 	private String category;
 	private String categoryTranslatedK;
 	
@@ -53,6 +59,7 @@ public class ProductVO {
 	 * adult : 성견
 	 * senior : 고령견
 	 */	
+	private AgePet agePetEnumerable;
 	private String agePetProper;
 	private String agePetProperTranslatedK;
 
