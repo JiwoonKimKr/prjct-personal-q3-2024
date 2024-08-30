@@ -74,8 +74,12 @@ public class InvoiceParamsValidation {
 			return false;
 		}
 		
-		//address
-			//★★★★★ 주소 검증하는 장치 마련해야 ㅠㅡㅜ
+		//address 주소는 추후 addressLine1와 addressLine2로 나뉨, 그래서 빈칸으로 나눈 배열 길이가 최소 3-4는 넘어야
+		//TODO 그래서 나중에는 제대로된 String 값을 점검하도록 변경해야
+		if(address.split(" ").length < 3) {
+			log.warn("[InvoiceParamsValidation] receiverPhoneNumber isn't correct. receiverPhoneNumber:{}", receiverPhoneNumber);
+			return false;
+		}
 		return true;
 	}
 }

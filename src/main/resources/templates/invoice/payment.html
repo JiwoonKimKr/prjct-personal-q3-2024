@@ -522,9 +522,11 @@ th:data-product-id
 					
 					let params ={"listItemsOrdered": '['+ listItemOrderedDto.join(",") + ']'
 							,"payment": sum
-							/* ,"paymentType": paymentType */
-							/* , "company": company */
-							/* , "monthlyInstallment": monthlyInstallment */
+							/* 
+							,"paymentType": paymentType
+							, "company": company
+							, "monthlyInstallment": monthlyInstallment
+							*/
 							, "buyerName": buyerName
 							, "buyerPhoneNumber": buyerPhoneNumber
 							, "receiverName": receiverName
@@ -608,16 +610,19 @@ th:data-product-id
 					    return;
 				 	}
 					
-					return alert("결제 시도 성공, 이제 결제 내용과 서버 저장 내용 대조해봐야!");
+					let paymentId = response.payment_id
+					
 					// 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
 					  // (다음 목차에서 설명합니다)
+					  /*
+					  	TODO  PortOne에서 결제 관련 피드백으로 DB에 저장된 Invoice 레코드와 대조하는 API 구현해야
+					  */
 			  		const notified = await fetch(`localhost/invoice/payment/complete`, {
 					    method: "POST"
 					    , headers: { "Content-Type": "application/json" }
 					    // paymentId와 주문 정보를 서버에 전달합니다
 					    , body: JSON.stringify({
-				      		paymentId: paymentId
-				      		, orderName: `orderName-${data.orderName}`
+				      		'paymentId': paymentId
 				    	})
 				  	});
 				} //requestPayment(data) ;

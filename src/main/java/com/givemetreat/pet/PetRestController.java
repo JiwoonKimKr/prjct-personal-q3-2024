@@ -33,9 +33,9 @@ public class PetRestController {
 
 	@Operation(summary = "addPetInfo() 반려견 등록", description = "해당 사용자가 반려견을 등록")
 	@Parameters({
-		@Parameter(name = "<String> name", description = "<RequestPart> 반려견 이름", example = "망고")
-		, @Parameter(name = "<String> age", description = "<RequestPart> 반려견 연령대 ('under6months', 'adult', 'senior')", example = "under6months")
-		, @Parameter(name = "<MultipartFile> imageProfile", description = "<RequestPart> 반려견 이미지", example = "manggo-puppy.img")
+		@Parameter(name = "<String> name", description = "&lt;RequestPart&gt; 반려견 이름", example = "망고")
+		, @Parameter(name = "<String> age", description = "&lt;RequestPart&gt; 반려견 연령대 ('under6months', 'adult', 'senior')", example = "under6months")
+		, @Parameter(name = "<MultipartFile> imageProfile", description = "&lt;RequestPart&gt; 반려견 이미지", example = "manggo-puppy.img")
 		, @Parameter(name = "<HttpSession> session", description = "session")
 	})
 	@ApiResponses({
@@ -47,7 +47,7 @@ public class PetRestController {
 	@PostMapping("/register-pet")
 	public Map<String, Object> addPetInfo(
 			@RequestPart("name") String name
-			, @RequestPart String age //TODO enum 타입으로 변형하는 것을 고려해야
+			, @RequestPart String age
 			, @RequestPart(name = "imageProfile", required = false) MultipartFile file
 			, HttpSession session){
 		Map<String, Object> result = new HashMap<>();

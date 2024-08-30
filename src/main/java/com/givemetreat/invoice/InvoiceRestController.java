@@ -1,7 +1,6 @@
 package com.givemetreat.invoice;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.givemetreat.api.utils.PrivatePortOneApi;
 import com.givemetreat.invoice.bo.InvoiceBO;
 import com.givemetreat.invoice.domain.InvoiceEntity;
 
@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class InvoiceRestController {
 	private final InvoiceBO invoiceBO;
+	private final PrivatePortOneApi privatePortOneApi;
 
 	//포트원 결제 적용으로 수정_21 08 2024
 	@Operation(summary = "payment() 해당 주문 결제 시도", description = " 해당 주문 결제 시도")
@@ -113,8 +114,8 @@ public class InvoiceRestController {
 		log.info("[InvoiceRestController payment()] current invoice has success to get paid.");
 		result.put("code", 200);
 		result.put("result", "주문 송장(Invoice) 생성 시도가 성공하였습니다.");
-		result.put("storeId", "store-2ef6fb64-16b3-406b-9080-f581ef4541f4");
-		result.put("channelKey", "channel-key-6855e0fa-5ce5-4e9c-a5c7-ff0aa14e2dd6");
+		result.put("storeId", privatePortOneApi.storeId);
+		result.put("channelKey", privatePortOneApi.channelKey);
 		//★★★★★paymentId; givemetreat-{invoice.id}
 		result.put("paymentId", String.format("givemetreat-%s",invoice.getId()));
 		result.put("orderName", String.format("orderName-%s-%s", invoice.getId(), invoice.getCreatedAt()));
@@ -123,10 +124,19 @@ public class InvoiceRestController {
 		result.put("email", session.getAttribute("loginId"));
 		result.put("phoneNumber", invoice.getBuyerPhoneNumber());
 		result.put("invoiceId", invoice.getId());
+		
+		String[] listStrAddress = address.split(" ");
+		String addressLine1 = "".concat(listStrAddress[0]).concat(" ").concat(listStrAddress[1]);
+		String addressLine2 = "";
+		
+		for(int i = 2; i < listStrAddress.length; i++ ) {
+			addressLine2 = addressLine2.concat(listStrAddress[i]).concat(" ");
+		}
+		
 		//★★★★★구매자 주소 1; addressLine1 ; 일반주소 
-		result.put("addressLine1", "서울특별시 강남구");
+		result.put("addressLine1", addressLine1);
 		//★★★★★구매자 주소 2; addressLine2 ; 일반주소 		
-		result.put("addressLine2", "강남대로94길 13");
+		result.put("addressLine2", addressLine2);
 		
 		return result;
 	}
@@ -157,6 +167,56 @@ public class InvoiceRestController {
 		log.info("[InvoiceRestController deleteInvoice()] current invoice get Deleted. invoice Id:{}", invoiceId);
 		result.put("code", 200);
 		result.put("result", "주문 송장(Invoice)이 삭제되었습니다.");
+		return result;
+	}
+	
+	
+	//TODO
+	@PostMapping("/payment/complete")
+	public Map<String, Object> paymentValidationWhenCompleted(@RequestParam String paymentId){
+		Map<String, Object> result = new HashMap<>();
+		
+		//webclient로 kakaoApi 처럼 구현해야
+		
+		/*
+		 //https://developers.portone.io/opi/ko/integration/start/v1/auth?v=v2
+		  try {
+		    // 요청의 body로 paymentId가 전달되기를 기대합니다.
+		    const { paymentId, orderId } = req.body;
+		
+		    // 1. 포트원 결제내역 단건조회 API 호출
+		    const paymentResponse = await fetch(
+		      `https://api.portone.io/payments/${paymentId}`,
+		      { headers: { Authorization: `PortOne ${PORTONE_API_SECRET}` } },
+		    );
+		    if (!paymentResponse.ok)
+		      throw new Error(`paymentResponse: ${await paymentResponse.json()}`);
+		    const payment = await paymentResponse.json();
+		
+		    // 2. 고객사 내부 주문 데이터의 가격과 실제 지불된 금액을 비교합니다.
+		    const order = await OrderService.findById(orderId);
+		    if (order.amount === payment.amount.total) {
+		      switch (payment.status) {
+		        case "VIRTUAL_ACCOUNT_ISSUED": {
+		          // 가상 계좌가 발급된 상태입니다.
+		          // 계좌 정보를 이용해 원하는 로직을 구성하세요.
+		          break;
+		        }
+		        case "PAID": {
+		          // 모든 금액을 지불했습니다! 완료 시 원하는 로직을 구성하세요.
+		          break;
+		        }
+		      }
+		    } else {
+		      // 결제 금액이 불일치하여 위/변조 시도가 의심됩니다.
+		    }
+		  } catch (e) {
+		    // 결제 검증에 실패했습니다.
+		    res.status(400).send(e);
+		  }
+		 */
+		
+		
 		return result;
 	}
 }
