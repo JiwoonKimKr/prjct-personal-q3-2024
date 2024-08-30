@@ -304,14 +304,14 @@ listInvoices
 				let idLast = /*[[${idLast}]]*/null;
 				let error_message = /*[[${error_message}]]*/null;
 				
-				/*
+				
 				console.log(`numberPageCurrent : ${numberPageCurrent}`);
 				console.log(`numberPageMax : ${numberPageMax}`);
 				console.log(`limit : ${limit}`);
 				console.log(`idFirst : ${idFirst}`);
 				console.log(`idLast : ${idLast}`);
 				console.log(`error_message : ${error_message}`);
-				*/
+				
 				if(error_message){
 					alert(error_message);
 					return location.href= "http://localhost/admin/invoice/invoices-entire-view";
@@ -384,7 +384,7 @@ listInvoices
 					let indexStart = parseInt(numberPageCurrent / 5) * 5;
 					let indexLast = (numberPageCurrent / 5 + 1) * 5 < numberPageMax ? (numberPageCurrent / 5) * 5 : numberPageMax; //5의 배수
 					
-					for(let i = indexStart; i < indexLast; i ++){
+					for(let i = indexStart; i < indexLast + 1; i ++){
 						let anchor = document.createElement('a');
 	    				
 						urlParams.delete('direction');
