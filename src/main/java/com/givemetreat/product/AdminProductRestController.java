@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.givemetreat.common.generic.Page;
+import com.givemetreat.common.validation.AdminProductParamsValidation;
 import com.givemetreat.product.bo.AdminProductBO;
 import com.givemetreat.product.domain.AdminProductVO;
 
@@ -48,7 +49,10 @@ public class AdminProductRestController {
 		, @Parameter(name = "<String> quantity", description = "추가될 상품 재고, 유닛 단위", example = "100")
 	})
 	@ApiResponses({
-		@ApiResponse(responseCode = "500", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		@ApiResponse(responseCode = "500_1", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500_2", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"" 
+															+ "<br> wrong_parameter &lt;String&gt; 잘못 넘어온 변수 명칭" 
+						, content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/register-product")
@@ -62,7 +66,21 @@ public class AdminProductRestController {
 			){
 		Map<String, Object> result = new HashMap<>();
 
-		//TODO Server쪽에서도 관련 Parameter들 Validatoin 거쳐야!!!
+		String wrongParameterRequested = 
+				AdminProductParamsValidation.getParamsValidated(name
+															, category
+															, price
+															, agePetProper
+															, quantity);
+		
+		if(wrongParameterRequested != null) {
+			result.put("code", 500);
+			result.put("error_message", "특정 변수가 잘못 입력되었습니다.");
+			result.put("wrong_parameter", wrongParameterRequested);
+			log.info("[ADMIN-Product: register-product] fail to register current product:{},{},{},{},{}"
+					, name, category, price, agePetProper, imageProduct);
+			return result;
+		}
 		
 		Integer pkInserted = adminProductBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct, Integer.parseInt(quantity));
 		

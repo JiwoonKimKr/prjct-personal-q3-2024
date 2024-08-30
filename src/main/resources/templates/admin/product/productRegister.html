@@ -131,12 +131,21 @@
 						alert("제품명을 기재해 주세요.");
     					return;
 					}
+					if(name.length > 24){
+						alert("제품명은 24자 이하여야 합니다.")
+						return;
+					}
 					if(!category){
 						alert("제품 카데고리를 선택해 주세요.");
 						return;
 					}
 					if(!price){
 						alert("제품 가격을 입력해 주세요.");
+						return;
+					}
+					let regExp = /^[0-9]*$/;
+					if(regExp.test(price) == false || price < 1){
+						alert("price 가격은 0 이상의 정수로만 입력해주세요.")
 						return;
 					}
 					if(!agePetProper){
@@ -154,7 +163,10 @@
 						alert("제품 수량을 기입해 주세요.");
 						return;
 					}
-					
+					if(regExp.test(quantity) == false || quantity < 1){
+						alert("quantity 제품 수량은 0 이상의 정수로 기입해주세요.");
+						return;
+					}
 					
 					let formData = new FormData();
 					
@@ -178,7 +190,7 @@
     							alert("🌞🌞해당 제품 추가 등록 성공하였습니다.");
     							location.reload();
     						} else {
-    							alert(data.error_message);
+    							alert(`${data.error_message}. 잘못 입력된 변수: ${data.wrong_parameter}`);
     						}
     					}
     					, error: function(error){

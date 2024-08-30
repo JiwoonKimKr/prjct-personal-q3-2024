@@ -207,14 +207,14 @@ public class InvoiceBO {
 		
 		//validating each parameters for Invoice before sending payment invoice for PG Company
 		
-		Boolean hasParamsforInvoiceValidated = InvoiceParamsValidation.getParamsValidated(payment
+		Boolean hasParamsForInvoiceValidated = InvoiceParamsValidation.getParamsValidated(payment
 																						, buyerName
 																						, buyerPhoneNumber
 																						, receiverName
 																						, receiverPhoneNumber
 																						, address);
 		
-		if(hasParamsforInvoiceValidated == false) {
+		if(hasParamsForInvoiceValidated == false) {
 			log.warn("[InvoiceBO generateInvoiceFromJsonString()]" 
 					+ " Some of values from Request Parameters failed to get validated."
 					+ " userId:{}", userId);
