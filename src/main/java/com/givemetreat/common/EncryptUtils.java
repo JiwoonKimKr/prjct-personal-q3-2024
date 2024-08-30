@@ -42,8 +42,7 @@ public class EncryptUtils {
 			encData = sb.toString();
 			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("[EncryptUtils sha256()] failed to be encrypted. salt:{}, message:{}", salt, message);
 		}
 		
 		return encData;

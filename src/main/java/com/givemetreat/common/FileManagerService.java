@@ -39,11 +39,6 @@ public class FileManagerService {
 			// ISO-8859-1 방식으로 파일명(한글도 있을 수 있는)을 인코딩
 			nameEncoded = new String(file.getOriginalFilename().getBytes("utf-8"), "8859_1");
 			log.info("[FileManagerService: uploadFile()] namedEncoded:{}", nameEncoded);
-			
-			//URLDecoder.decode(nameEncoded, "UTF-8")이란 반대 방식도 추후 추가해야!
-			
-			//TODO 화질과 해상도 낮춘 imageThumbnail도 별도로 생성해서 path 반환해야함! 
-			
 			Path path = Paths.get(filePath + nameEncoded);
 			Files.write(path, bytes);
 			

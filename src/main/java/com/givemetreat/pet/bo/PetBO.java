@@ -25,7 +25,6 @@ public class PetBO {
 		List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
 		
 		AgePet agePetCurrent = AgePet.findAgeCurrent(age, null, null);
-		//TODO imageThumbnail도 생성해서 DB에 넣을 때 Thumbnail 경로도 추가해야 한다!
 		return petMapper.insertPet(
 								userId
 								, name

@@ -146,7 +146,7 @@ public class InvoiceRestController {
 	}
 	
 	
-	//TODO
+	//TODO 결제 완료 후 검증 단계_30 08 2024
 	@PostMapping("/payment/complete")
 	public Map<String, Object> paymentCompletedValidation(@RequestParam String paymentId){
 		Map<String, Object> result = new HashMap<>();

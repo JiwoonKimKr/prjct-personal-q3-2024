@@ -37,7 +37,6 @@ public class StringTranslator {
 	 * 신용카드: CreditCard
 	 * 계좌이체: AccounTranster
 	 * 
-	 * TODO 다른 할부 개월 목록 더 추가해야
 	 */
 	public static String translatePaymentTypeE2K(String type) {
 		if(type.equals("CreditCard")) return "신용카드";
@@ -61,7 +60,6 @@ public class StringTranslator {
 	 * 2개월: 2M
 	 * 3개월: 3M
 	 * 
-	 * TODO 다른 할부 개월 목록 더 추가해야
 	 */
 	public static String translateMonthlyInstallmentE2K(String type) {
 		if(type.equals("instance")) return "일시불";
@@ -73,7 +71,6 @@ public class StringTranslator {
 	 * 0: 온전한 결제 완료
 	 * 1: 결제 취소 상태
 	 * 
-	 * TODO 다른 할부 개월 목록 더 추가해야
 	 */
 	public static String translateHasCanceledE2K(int type) {
 		if(type == 0) return "결제 완료";

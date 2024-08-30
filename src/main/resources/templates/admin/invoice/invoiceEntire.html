@@ -435,7 +435,52 @@ listInvoices
 					let updatedAtSince = $("#updatedAtSince").val().trim();
 					let updatedAtUntil = $("#updatedAtUntil").val().trim();
 					
-					//★★★★★ client 쪽 JavaScript로 작성한 validation 넣어야	
+					//Invoice 관련 Parameters validation	
+					let regExp = /^[0-9]*$/;
+					if(paymentFrom && (regExp.test(paymentFrom) == false || paymentFrom < 1)){
+						alert("paymentFrom 지풀 가격은 0 이상의 정수로만 입력해주세요.");
+						$("#paymentFrom").val('');
+						return;
+					}
+					if(paymentUntil && (regExp.test(paymentUntil) == false || paymentUntil < 1)){
+						alert("paymentUntil 지풀 가격은 0 이상의 정수로만 입력해주세요.");
+						$("#paymentUntil").val('');
+						return;
+					}
+					if(hasCanceled && (hasCanceled != "0" && hasCanceled != "1")){
+						alert("올바른 hasCanceled 값을 선택해 주세요.");
+						return;
+					}
+					let regExpPhoneNumber = /^[0-9]{11}$/;
+					if(buyerPhoneNumber && regExpPhoneNumber.test(buyerPhoneNumber) == false){
+						alert("올바른 구매자 전화번호 buyerPhoneNumber를 입력해 주세요.");
+						$("#buyerPhoneNumber").val('');
+						return;
+					}
+
+					if(statusDelivery
+							&& $.inArray(statusDelivery, ["PaymentBilled"
+															, "PackingFinished"
+															, "TerminalHub"
+															, "EndPoint"
+															, "DeliveryCurrent"
+															, "DeliveryFinished"]) == -1){
+    					alert("statusDelivery 배송 상태는 올바른 값을 입력해 주세요.");
+    					return;
+    				}
+					
+					if(receiverPhoneNumber && regExpPhoneNumber.test(buyerPhoneNumber) == false){
+						alert("올바른 수령자 전화번호 receiverPhoneNumber를 입력해 주세요.");
+						$("#receiverPhoneNumber").val('');
+						return;
+					}
+					
+					if(address && address.split(" ").length < 3){
+						alert("올바른 주소 address를 입력해 주세요.");
+						$("#address").val('');
+						return;
+					}
+					// Validation
 					
 					let link = "http://localhost/admin/invoice/invoices-entire-view";
     				let url = new URL(link.toString());

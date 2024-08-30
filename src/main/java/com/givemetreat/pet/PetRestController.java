@@ -104,8 +104,8 @@ public class PetRestController {
 	public Map<String, Object> updatePetInfo(
 			@RequestParam int petId
 			, @RequestPart("name") String name
-			, @RequestPart String age //TODO enum 타입으로 변형하는 것을 고려해야
-			, @RequestPart String hasImageChanged //TODO enum 타입으로 변형하는 것을 고려해야
+			, @RequestPart String age
+			, @RequestPart String hasImageChanged
 			, @RequestPart(name = "imageProfile", required = false) MultipartFile file
 			, HttpSession session){
 		Map<String, Object> result = new HashMap<>();
