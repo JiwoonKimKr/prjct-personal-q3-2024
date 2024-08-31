@@ -48,7 +48,7 @@ public class AdminInvoiceBO {
 	
 	private final IndexBinarySearchTreeUtil indexBinarySearchTreeUtil;
 
-	private final int LIMIT_SELECTION = 3;
+	private final int LIMIT_SELECTION = 10;
 
 	@Transactional
 	public Page<AdminInvoiceVO> getInvoicesForPaging(Integer invoiceId

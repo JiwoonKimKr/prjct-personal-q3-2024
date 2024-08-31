@@ -49,8 +49,8 @@ public class AdminProductRestController {
 		, @Parameter(name = "<String> quantity", description = "추가될 상품 재고, 유닛 단위", example = "100")
 	})
 	@ApiResponses({
-		@ApiResponse(responseCode = "500_1", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500_2", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"" 
+		@ApiResponse(responseCode = "500__1", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"" 
 															+ "<br> wrong_parameter &lt;String&gt; 잘못 넘어온 변수 명칭" 
 						, content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))

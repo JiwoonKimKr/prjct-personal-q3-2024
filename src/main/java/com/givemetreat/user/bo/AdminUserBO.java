@@ -28,7 +28,7 @@ public class AdminUserBO {
 	private final UserRepository userRepository;
 	private final PetBO petBO;
 	
-	private final Integer SIZE_PAGE_CURRENT = 3;
+	private final Integer SIZE_PAGE_CURRENT = 10;
 	
 	@Transactional
 	public Page<AdminUserVO> getListUserVOsForPaging(Integer userId

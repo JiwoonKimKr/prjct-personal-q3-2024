@@ -43,13 +43,13 @@ public class ShoppingCartRestController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "403",  description = "error_message: \"로그인 후 이용 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500", description = "error_message: \"해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다.\""
+		, @ApiResponse(responseCode = "500__1", description = "error_message: \"해당 상품의 판매 가능 수량이 요청 수량보다 부족합니다.\""
 													+ "<br>, \"shortOfQuantity\" &lt;String&gt; 'true'"
 													+ "<br>, \"quantity\"=&lt;Integer&gt; 해당 물품 가용 재고"
 						, content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500", description = "error_message: \"해당 상품과 수량이 장바구니에 담기지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "200", description = "quantity: &lt;Integer&gt; 0", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "200", description = "result: \"해당 상품이 장바구니에 담겼습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"해당 상품과 수량이 장바구니에 담기지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200__1", description = "quantity: &lt;Integer&gt; 0", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200__2", description = "result: \"해당 상품이 장바구니에 담겼습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/update-quantity")
 	public Map<String, Object> updateProductQuantity(@RequestParam int productId
