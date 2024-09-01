@@ -321,7 +321,7 @@ public class UserRestController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "500", description = "error_message: \"프로필 이미지를 등록하지 못 하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "200", description = "result: \"success\" <br> session에 이미지 경로인 $lt;String$gt; 'imageProfile' 추가 "
+		, @ApiResponse(responseCode = "200", description = "result: \"success\" <br> session에 이미지 경로인 &lt;String&gt; 'imageProfile' 추가 "
 			, content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/register-image-profile")
@@ -351,13 +351,13 @@ public class UserRestController {
 	
 	@Operation(summary = "updateSelfDescription() 자기소개 추가", description = "사용자 자기소개 추가")
 	@Parameters({
-		@Parameter(name = "<String> selfDescription", description = "자기소개", example = "육식왕을 보시는 butler라고 합니다.")
+		@Parameter(name = "<String> selfDescription", description = "자기소개", example = "육식왕을 모시는 butler라고 합니다.")
 		, @Parameter(name = "<HttpSession> session", description = "session 세션")
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "500__1", description = "error_message: \"문자열만 입력 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "500__2", description = "error_message: \"자기소개를 등록하지 못 하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "200", description = "result: \"success\" <br> session에 $lt;String$gt; 'selfDescription' 추가"
+		, @ApiResponse(responseCode = "200", description = "result: \"success\" <br> session에 &lt;String&gt; 'selfDescription' 추가"
 			, content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/register-self-description")
