@@ -1,0 +1,62 @@
+{"properties": [
+  {
+    "name": "private-keys-kakao-api.url_token",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-kakao-api.url_token'"
+  },
+  {
+    "name": "private-keys-kakao-api.grant_type",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-kakao-api.grant_type'"
+  },
+  {
+    "name": "private-keys-kakao-api.client_id",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-kakao-api.client_id'"
+  },
+  {
+    "name": "private-keys-kakao-api.redirect_uri",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-kakao-api.redirect_uri'"
+  },
+  {
+    "name": "private-keys-kakao-api.client_secret",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-kakao-api.client_secret'"
+  },
+  {
+    "name": "private-keys-kakao-api.url_access",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-kakao-api.url_access'"
+  },
+  {
+    "name": "private-keys-admin-page.login-id-admin",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-admin-page.login-id-admin'"
+  },
+  {
+    "name": "private-keys-admin-page.passwordAdmin",
+    "type": "java.lang.String",
+    "description": "A description for 'private-keys-admin-page.passwordAdmin'"
+  },
+  {
+    "name": "private-port-one-api.store-id",
+    "type": "java.lang.String",
+    "description": "A description for 'private-port-one-api.store-id'"
+  },
+  {
+    "name": "private-port-one-api.channelKey",
+    "type": "java.lang.String",
+    "description": "A description for 'private-port-one-api.channelKey'"
+  },
+  {
+    "name": "spring.mail.templates.logo-path",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.mail.templates.logo-path'"
+  },
+  {
+    "name": "server-side-location-for-file-manager-service.FILE_-uPLOAD_-pATH",
+    "type": "java.lang.String",
+    "description": "A description for 'server-side-location-for-file-manager-service.FILE_-uPLOAD_-pATH'"
+  }
+]}

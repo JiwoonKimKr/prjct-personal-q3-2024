@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.givemetreat.api.dto.ResponseDtoPortOneApi;
-import com.givemetreat.api.utils.PrivatePortOneApi;
+import com.givemetreat.config.properties.PrivatePortOneApi;
 import com.givemetreat.invoice.bo.InvoiceBO;
 import com.givemetreat.invoice.domain.InvoiceEntity;
 

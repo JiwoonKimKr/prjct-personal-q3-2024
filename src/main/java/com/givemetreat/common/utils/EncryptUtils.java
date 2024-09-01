@@ -1,4 +1,4 @@
-package com.givemetreat.common;
+package com.givemetreat.common.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

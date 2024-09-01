@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.givemetreat.common.EncryptUtils;
+import com.givemetreat.common.utils.EncryptUtils;
 import com.givemetreat.user.domain.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;

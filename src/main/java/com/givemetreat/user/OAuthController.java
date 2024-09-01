@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.givemetreat.api.dto.ResponseTokenKakaoApi;
 import com.givemetreat.api.dto.UserInfoKakaoApi;
-import com.givemetreat.common.EncryptUtils;
+import com.givemetreat.common.utils.EncryptUtils;
 import com.givemetreat.user.bo.OAuthBO;
 import com.givemetreat.user.bo.UserBO;
 import com.givemetreat.user.domain.UserEntity;

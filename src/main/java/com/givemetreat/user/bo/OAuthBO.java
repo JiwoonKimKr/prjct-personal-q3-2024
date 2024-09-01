@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.givemetreat.api.dto.ResponseTokenKakaoApi;
 import com.givemetreat.api.dto.UserInfoKakaoApi;
-import com.givemetreat.api.utils.PrivateKeysKakaoApi;
+import com.givemetreat.config.properties.PrivateKeysKakaoApi;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

@@ -31,6 +31,7 @@ public class AdminProductBO {
 	private final ProductBufferBO productBufferBO;
 	
 	private final IndexBinarySearchTreeUtil indexBinarySearchTreeUtil;
+	private final FileManagerService fileManagerService;
 
 	private final int LIMIT_SELECTION = 10;
 
@@ -178,10 +179,8 @@ public class AdminProductBO {
 							MultipartFile imageProduct
 							, int quantity) {
 
-		List<String> ListpathsImageProfile = FileManagerService
-												.uploadImageWithThumbnail(
-														imageProduct
-														, "productProfile");
+		List<String> ListpathsImageProfile = fileManagerService
+												.uploadImageWithThumbnail(imageProduct, "productProfile");
 		
 		Product productToInsert = new Product(name
 										, category
@@ -225,7 +224,7 @@ public class AdminProductBO {
 		String imageProfile = product.getImgProfile();
 		String imageThumbnail = product.getImgThumbnail();
 		
-		FileManagerService.deleteImageOriginAndThumbnail(imageProfile, imageThumbnail);
+		fileManagerService.deleteImageOriginAndThumbnail(imageProfile, imageThumbnail);
 		
 		return productMapper.deleteProduct(productId);
 	}

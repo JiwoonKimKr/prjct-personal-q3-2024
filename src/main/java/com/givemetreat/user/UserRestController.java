@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.givemetreat.common.EncryptUtils;
+import com.givemetreat.common.utils.EncryptUtils;
 import com.givemetreat.common.validation.WordingValidation;
 import com.givemetreat.user.bo.UserBO;
 import com.givemetreat.user.bo.UserEmailBO;

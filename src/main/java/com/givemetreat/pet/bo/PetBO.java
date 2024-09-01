@@ -20,9 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class PetBO {
 	private final PetMapper petMapper;
+	private final FileManagerService fileManagerService;
 	
 	public int addPet(int userId, String loginId, String name, String age, MultipartFile file) {
-		List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
+		List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, loginId);
 		
 		AgePet agePetCurrent = AgePet.findAgeCurrent(age, null, null);
 		return petMapper.insertPet(
@@ -91,7 +92,7 @@ public class PetBO {
 			
 		} else if(ObjectUtils.isEmpty(file) == false){
 			//이미지 파일을 받은 경우
-			List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
+			List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, loginId);
 			imgProfileCur = imagePathProfile.get(0);
 			imgThumbnailCur = imagePathProfile.get(1);
 			
@@ -114,7 +115,7 @@ public class PetBO {
 		//record의 이미지가 비워졌거나, 예전 파일들과 다른 경우 삭제한다!
 		if((ObjectUtils.isEmpty(pet.getImgProfile()) && hasImageChanged)
 				|| pet.getImgProfile().equals(imgProfileCur) == false) {
-			FileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
+			fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
 			log.info("[PetBO updatePet()] previous profile images got deleted. petId:{}", petId);
 		}
 		

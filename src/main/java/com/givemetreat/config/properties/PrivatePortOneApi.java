@@ -1,4 +1,4 @@
-package com.givemetreat.api.utils;
+package com.givemetreat.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

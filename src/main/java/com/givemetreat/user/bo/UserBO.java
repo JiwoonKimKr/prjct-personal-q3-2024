@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class UserBO {
 	private final UserRepository userRepository;
+	private final FileManagerService fileManagerService;
 	
 	@Transactional
 	public UserEntity updatePassword(UserEntity user, String password, String salt) {
@@ -64,7 +65,7 @@ public class UserBO {
 	 */
 	@Transactional
 	public UserEntity updateImageProfile(int userId, String loginId, MultipartFile file) {
-		List<String> imagePathProfile = FileManagerService.uploadImageWithThumbnail(file, loginId);
+		List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, loginId);
 		UserEntity user = userRepository.findById(userId).orElse(null);
 		
 		String imgProfilePrev = user.getImgProfile();
@@ -79,7 +80,7 @@ public class UserBO {
 		if(ObjectUtils.isEmpty(user.getImgProfile()) == false 
 				&& user.getImgProfile().equals(imgProfilePrev) == false) {
 			log.info("[UserBO updateImageProfile()] trial to delete previous profile images. usesId:{}", userId);
-			FileManagerService.deleteImageOriginAndThumbnail(imgProfilePrev, imgThumbnailPrev);
+			fileManagerService.deleteImageOriginAndThumbnail(imgProfilePrev, imgThumbnailPrev);
 		}
 		
 		return user;
