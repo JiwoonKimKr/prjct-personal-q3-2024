@@ -38,7 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminProductRestController {
 	private final AdminProductBO adminProductBO;
 	
-	//localhost/admin/product/register-product
 	@Operation(summary = "registerProduct() 새 상품 등록", description = "관리자페이지 상품 등록")
 	@Parameters({
 		@Parameter(name = "<String> name", description = "상품명", example = "10")

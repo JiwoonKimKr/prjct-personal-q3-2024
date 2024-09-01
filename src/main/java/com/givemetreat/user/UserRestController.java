@@ -105,7 +105,6 @@ public class UserRestController {
 	}
 	
 	
-	//localhost/user/email-verification
 	/**
 	 * 사용자 이메일(로그인아이디) 확인 후 해당 이메일로 인증코드 보내기;
 	 * @param userEmail
@@ -195,7 +194,6 @@ public class UserRestController {
 		return result;
 	}
 	
-	//localhost/user/sign-in
 	@Operation(summary = "signIn() 로그인", description = "로그인")
 	@Parameters({
 		@Parameter(name = "<String> loginId", description = "로그인 아이디(이메일)")
@@ -245,7 +243,6 @@ public class UserRestController {
 		return result;
 	}
 
-	//localhost/user/sign-up
 	@Operation(summary = "signUp() 회원가입", description = "회원가입")
 	@Parameters({
 		@Parameter(name = "<String> loginId", description = "로그인 아이디(이메일)")

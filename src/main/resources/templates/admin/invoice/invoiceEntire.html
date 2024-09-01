@@ -314,7 +314,7 @@ listInvoices
 				
 				if(error_message){
 					alert(error_message);
-					return location.href= "http://localhost/admin/invoice/invoices-entire-view";
+					return location.href= "/admin/invoice/invoices-entire-view";
 				}
     			
 				updateFilteringsCurrentPage();
@@ -482,7 +482,8 @@ listInvoices
 					}
 					// Validation
 					
-					let link = "http://localhost/admin/invoice/invoices-entire-view";
+					let base_url = window.location.origin;
+					let link = `${base_url}/admin/invoice/invoices-entire-view`;
     				let url = new URL(link.toString());
     				let urlParams = url.searchParams;
     				

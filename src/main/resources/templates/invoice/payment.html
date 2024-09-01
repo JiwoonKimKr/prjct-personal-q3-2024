@@ -618,7 +618,7 @@ th:data-product-id
 					  /*
 					  	TODO  PortOne에서 결제 관련 피드백으로 DB에 저장된 Invoice 레코드와 대조하는 API 구현해야
 					  */
-			  		const notified = await fetch('localhost/invoice/payment/complete', {
+			  		const notified = await fetch('/invoice/payment/complete', {
 					    method: "POST"
 					    , headers: { "Content-Type": "application/json" }
 					    // paymentId와 주문 정보를 서버에 전달합니다
