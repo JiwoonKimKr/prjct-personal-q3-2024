@@ -81,6 +81,12 @@ public class CommunityBO {
 				, postId, commentId, userId);
 		return commentCommunityBO.deleteComment(postId, commentId, userId);
 	}
+	
+	@Transactional
+	public List<PostCommunityVO> getPostsByKeyword(String keyword) {
+		
+		return postCommunityBO.getPostsByKeyword(keyword);
+	}
 
 
 }

@@ -34,8 +34,9 @@ public class CommunityController {
 
 	@Operation(summary = "communityMainView() 커뮤니티 메인페이지", description = "커뮤니티 메인페이지")
 	@Parameters({
-		@Parameter(name = "<HttpSession> session", description = "session")
+		@Parameter(name = "<String> keyword", description = "(비필수 변수) 검색 키워드 ", example = "포리_간식_강아지")
 		, @Parameter(name = "<String> agePetProper", description = "(비필수 변수)섭취 적정 연령(enum type); <product>의 category Column과 동일 ", example = "under6Months")
+		, @Parameter(name = "<HttpSession> session", description = "session")
 		, @Parameter(name = "<Model> model", description = "MVC Model")
 	})
 	@ApiResponses({
@@ -46,12 +47,20 @@ public class CommunityController {
 		, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = ProductShoppingCartVO.class)))
 	})
 	@GetMapping("/community-main-view")
-	public String communityMainView(HttpSession session
+	public String communityMainView(@RequestParam(required = false) String keyword
 									, @RequestParam(required = false) String agePetProper
+									, HttpSession session
 									, Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
 			return "redirect:user/sign-in-view";
+		}
+		
+		if(keyword != null) {
+			List<PostCommunityVO> listPosts = communityBO.getPostsByKeyword(keyword);
+			model.addAttribute("listPosts", listPosts);
+		
+			return "community/communityMain";
 		}
 		
 		if(agePetProper != null) {

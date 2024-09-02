@@ -1,5 +1,8 @@
 package com.givemetreat.postCommunity.bo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -99,5 +102,33 @@ public class PostCommunityBO {
 				+ " Post Id:{}, User Id:{}", postId, userId);
 		
 		return entity;
+	}
+
+	public List<PostCommunityVO> getPostsByKeyword(String keyword) {
+		List<String> listString = new ArrayList<>(Arrays.asList(keyword.trim().split("_"))) ;
+		List<PostCommunityEntity> listPosts = new ArrayList<>();
+		
+		for(String unit : listString) {
+			Character lastLetter = unit.charAt(unit.length()-1);
+			List<Character> listChar = Arrays.asList('이', '가', '을', '를', '는', '도');
+			if(listChar.contains(lastLetter)) {
+				unit = unit.substring(0, unit.length()-1);
+				log.info("[PostCommunityBO getPostsByKeyword()] last letter of String get erased."
+						+ " String Unit:{}", unit);
+			}
+			
+			List<PostCommunityEntity> listEntities = postCommunityRepository.findByTitleStartingWith(unit);
+			
+			for(PostCommunityEntity entity : listEntities) {
+				if(listPosts.contains(entity) == false) {
+					listPosts.add(entity);
+				}
+			}
+		}
+		listPosts.sort(Comparator.comparing(PostCommunityEntity::getCreatedAt).reversed());
+		
+		log.info("[PostCommunityBO getPostsByKeyword()] List PostEntities get selected."
+				+ " listString:{}", listString.toString());
+		return listPosts.stream().map(entity -> voFromEntity(entity)).collect(Collectors.toList());
 	}
 }

@@ -13,4 +13,6 @@ public interface PostCommunityRepository extends JpaRepository<PostCommunityEnti
 
 	List<PostCommunityEntity> findTop20ByAgePetProperOrderByIdDesc(AgePet agePetProper);
 
+	List<PostCommunityEntity> findByTitleStartingWith(String unit);
+
 }
