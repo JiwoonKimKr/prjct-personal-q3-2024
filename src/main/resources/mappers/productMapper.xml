@@ -161,7 +161,7 @@
  		
  	</insert>
  	<update id="updateProduct" parameterType="map">
- 		UPDATE `pet`
+ 		UPDATE `product`
  		SET
  			`name` = #{name}
 			, `category` = #{category.typeE}

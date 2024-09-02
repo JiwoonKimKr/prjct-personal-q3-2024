@@ -207,7 +207,6 @@ public class AdminProductRestController {
 			, @RequestPart String agePetProper
 			, @RequestPart String hasImageChanged
 			, @RequestPart(required = false) MultipartFile imageProduct
-			, @RequestPart String quantity
 			){
 		Map<String, Object> result = new HashMap<>();
 
@@ -216,7 +215,7 @@ public class AdminProductRestController {
 															, category
 															, price
 															, agePetProper
-															, quantity);
+															, "0");
 		
 		if(wrongParameterRequested != null) {
 			result.put("code", 500);
