@@ -157,13 +157,21 @@
     			let idFirst = /*[[${idFirst}]]*/null;
     			let idLast = /*[[${idLast}]]*/null;
     			
+    			/*리다이렉트 되는 경우 넘어오는 RedirectAttributes*/
+    			let error_message = /*[[${error_message}]]*/null;
+    			
     			/*
     			console.log(`numberPageCurrent: ${numberPageCurrent}`);
     			console.log(`numberPageMax: ${numberPageMax}`);
     			console.log(`limit: ${limit}`);
     			console.log(`idFirst: ${idFirst}`);
     			console.log(`idLast :${idLast}`);
+    			console.log(`error_message :${error_message}`);
     			*/
+
+    			if(error_message){
+    				alert(error_message);
+    			}
     			
     			updateFilteringsCurrentPage();
     			

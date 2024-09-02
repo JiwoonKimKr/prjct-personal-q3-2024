@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.givemetreat.common.generic.Page;
 import com.givemetreat.product.bo.ProductBO;
@@ -50,10 +51,14 @@ public class ProductController {
 		, @Parameter(name = "<Integer> pageCurrent", description = "(pageCurrent과 pageRequested) 현재 페이지 번호", example = "0")
 		, @Parameter(name = "<Integer> pageRequested", description = "(pageCurrent과 pageRequested) 요청받은 페이지 번호", example = "3")
 		, @Parameter(name = "<HttpSession> session", description = "session")
+		, @Parameter(name = "<RedirectAttributes> redirectAttributtes", description = "리다이렉트 되는 경우 받아오는 변수값")
 		, @Parameter(name = "<Model> model", description = "MVC Model")
 	})
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "/product/productList.html"
+		@ApiResponse(responseCode = "302", description = "redirect:/product/product-list-view <br> 해당 검색어가 존재하지 않아 메인페이지로 리다이렉트시킴"
+													+ "<br> Model Attributtes"
+													+ "<br>, \"error_message\" \"해당 검색 결과가 존재하지 않습니다.\"")
+		, @ApiResponse(responseCode = "200", description = "/product/productList.html"
 																	+"<br> Model Attributtes"
 																	+"<br>, List&lt;ProductVO&gt; listProducts"
 																	+"<br>, &lt;Integer&gt; numberPageCurrent"
@@ -77,6 +82,7 @@ public class ProductController {
 								, @RequestParam(required = false) Integer pageCurrent
 								, @RequestParam(required = false) Integer pageRequested
 								, HttpSession session
+								, RedirectAttributes redirectAttributtes
 								, Model model) {
 		
 		Page<ProductVO> pageInfo = productBO.getProductsForPaging(keyword
@@ -90,9 +96,16 @@ public class ProductController {
 																, idRequested
 																, pageCurrent
 																, pageRequested);
+		
+		if(ObjectUtils.isEmpty(pageInfo)) {
+			redirectAttributtes.addFlashAttribute("error_message", "해당 검색 결과가 존재하지 않습니다.");
+			return "redirect:/product/product-list-view";
+		}
+		
 		List<ProductVO> listProducts = pageInfo.generateCurrentPageList();
 		
 		if(listProducts.size() < 1) {
+			redirectAttributtes.addFlashAttribute("error_message", "해당 검색 결과가 존재하지 않습니다.");
 			return "redirect:/product/product-list-view";
 		}
 		

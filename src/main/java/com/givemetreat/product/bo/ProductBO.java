@@ -95,6 +95,11 @@ public class ProductBO {
 																			, null
 																			, null
 																			, null);
+		
+		if(listProductsWhole.size() < 1) {
+			return null;
+		}
+		
 		List<ProductVO> listVOs = listProductsWhole.stream()
 												.map(product -> new ProductVO(product))
 												.collect(Collectors.toList());
