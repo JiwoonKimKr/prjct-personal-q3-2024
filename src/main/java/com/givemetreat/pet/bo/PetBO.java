@@ -47,9 +47,19 @@ public class PetBO {
 		return petMapper.selectPetByIdAndUserId(petId, userId);
 	}
 
-	public int deletePetByUserIdAndPetId(int userId, int petId) {
+	public int deletePetByUserIdAndPetId(Pet pet) {
+		int userId = pet.getUserId();
+		int petId = pet.getId();
+		String imgProfileCur = pet.getImgProfile();
+		String imgThumbnailCur = pet.getImgThumbnail();
 		//Mapper로 보낼때는 petId를 Id라고 지칭하여 순서를 바꾸었다!
-		return petMapper.deletePetByIdAndUserId(petId, userId);
+		int count = petMapper.deletePetByIdAndUserId(petId, userId);
+		
+		//DB에서 해당 반려견 정보가 지워졌으면, 그 때 이미지 지우기
+		if(count > 0) {
+			fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
+		}
+		return count;
 	}
 
 	public Integer countPetsByUserId(int userId) {

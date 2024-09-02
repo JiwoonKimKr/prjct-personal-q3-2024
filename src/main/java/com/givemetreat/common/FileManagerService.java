@@ -77,7 +77,7 @@ public class FileManagerService {
 			byte[] bytes = file.getBytes();
 			// ISO-8859-1 방식으로 파일명(한글도 있을 수 있는)을 인코딩
 			nameEncoded = new String(file.getOriginalFilename().getBytes("utf-8"), "8859_1");
-			log.info("[FileManagerService: uploadFile()] namedEncoded:{}", nameEncoded);
+			log.info("[FileManagerService: uploadImageWithThumbnail()] namedEncoded:{}", nameEncoded);
 			
 			//URLDecoder.decode(nameEncoded, "UTF-8")이란 반대 방식도 추후 추가해야!
 
@@ -116,7 +116,7 @@ public class FileManagerService {
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
-				log.info("[FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				log.info("[FileManagerService deleteFile()] Trial to delete file has failed. path:{}", path.toString());
 				return;
 			}
 		}
@@ -127,7 +127,7 @@ public class FileManagerService {
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
-				log.info("[FileManagerService] Trial to delete directory has failed. path:{}", path.toString());
+				log.info("[FileManagerService deleteFile()] Trial to delete directory has failed. path:{}", path.toString());
 			}
 			
 		}
@@ -140,21 +140,21 @@ public class FileManagerService {
 		if(Files.exists(path)) {
 			try {
 				Files.delete(path);
-				log.info("[FileManagerService] Trial to delete file has done. path:{}", path.toString());
+				log.info("[FileManagerService deleteImageOriginAndThumbnail()] Trial to delete file has done. path:{}", path.toString());
 			} catch (IOException e) {
-				log.info("[🚧🚧🚧🚧🚧FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				log.info("[🚧🚧🚧🚧🚧FileManagerService deleteImageOriginAndThumbnail()] Trial to delete file has failed. path:{}", path.toString());
 				return;
 			}
 		}
 		path = Paths.get(filesConfig.FILE_UPLOAD_PATH + imageThumbnail.replace("/images/", ""));
-		log.info("[FileManagerService] current imageThumbnail path:{}", imageThumbnail);
+		log.info("[FileManagerService deleteImageOriginAndThumbnail()] current imageThumbnail path:{}", imageThumbnail);
 		
 		if(Files.exists(path)) {
 			try {
 				Files.delete(path);
-				log.info("[FileManagerService] Trial to delete file has done. path:{}", path.toString());
+				log.info("[FileManagerService deleteImageOriginAndThumbnail()] Trial to delete file has done. path:{}", path.toString());
 			} catch (IOException e) {
-				log.info("[🚧🚧🚧🚧🚧FileManagerService] Trial to delete file has failed. path:{}", path.toString());
+				log.info("[🚧🚧🚧🚧🚧FileManagerService deleteImageOriginAndThumbnail()] Trial to delete file has failed. path:{}", path.toString());
 				return;
 			}
 		}
@@ -165,7 +165,7 @@ public class FileManagerService {
 			try {
 				Files.delete(path);
 			} catch (IOException e) {
-				log.info("[FileManagerService] Trial to delete directory has failed. path:{}", path.toString());
+				log.info("[FileManagerService deleteImageOriginAndThumbnail()] Trial to delete directory has failed. path:{}", path.toString());
 			}
 			
 		}

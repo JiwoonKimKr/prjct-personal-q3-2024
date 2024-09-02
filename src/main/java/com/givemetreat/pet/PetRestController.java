@@ -169,7 +169,7 @@ public class PetRestController {
 			return result;
 		}
 		
-		int count = petBO.deletePetByUserIdAndPetId(userId, petId);
+		int count = petBO.deletePetByUserIdAndPetId(pet);
 		
 		if(count < 1) {
 			result.put("code", 500);

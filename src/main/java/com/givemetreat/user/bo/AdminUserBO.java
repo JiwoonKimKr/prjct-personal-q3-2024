@@ -174,7 +174,8 @@ public class AdminUserBO {
 
 	@Transactional
 	public int deletePetByUserIdAndPetId(int userId, int petId) {
-		return petBO.deletePetByUserIdAndPetId(userId, petId);
+		Pet pet = petBO.getPetByUserIdAndPetId(userId, petId);
+		return petBO.deletePetByUserIdAndPetId(pet);
 	}
 
 	/**
