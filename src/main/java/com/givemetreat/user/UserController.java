@@ -46,7 +46,7 @@ public class UserController {
 		return "redirect:https://kauth.kakao.com/oauth/authorize?" 
 				+ "response_type=code"
 				+ "&client_id=" + privateKeysKakaoApi.client_id
-				+ "&redirect_uri=/OAuth/kakao-sign-up";
+				+ "&redirect_uri=" + privateKeysKakaoApi.redirect_uri;
 	}
 	
 	@Operation(summary = "signOut() 로그아웃", description = "로그아웃; Get메소드와 Post메소드 둘 다 허용")
