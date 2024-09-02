@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "server-side-location-for-file-manager-service")
-public class ServerSideFileLocationConfig {
+@ConfigurationProperties(prefix = "file-location-config")
+public class FileLocationConfig {
 	public String FILE_UPLOAD_PATH;
 }

@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.givemetreat.config.properties.ServerSideFileLocationConfig;
+import com.givemetreat.config.properties.FileLocationConfig;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,12 +25,12 @@ import net.coobird.thumbnailator.Thumbnails;
 @RequiredArgsConstructor
 @Component
 public class FileManagerService {
-	private final ServerSideFileLocationConfig filesConfig;
+	private final FileLocationConfig fileLocationConfig;
 	
 	public String uploadFile(MultipartFile file, String loginId) {
 		
 		String directoryName = loginId + "_" + System.currentTimeMillis();
-		String filePath = filesConfig.FILE_UPLOAD_PATH + directoryName + "/";
+		String filePath = fileLocationConfig.FILE_UPLOAD_PATH + directoryName + "/";
 		
 		File directory = new File(filePath);
 		if(directory.mkdir() == false) {
@@ -64,7 +64,7 @@ public class FileManagerService {
 	 */
 	public List<String> uploadImageWithThumbnail(MultipartFile file, String loginId) {
 		String directoryName = loginId + "_" + System.currentTimeMillis();
-		String filePath = filesConfig.FILE_UPLOAD_PATH + directoryName + "/";
+		String filePath = fileLocationConfig.FILE_UPLOAD_PATH + directoryName + "/";
 		
 		File directory = new File(filePath);
 		if(directory.mkdir() == false) {
@@ -110,7 +110,7 @@ public class FileManagerService {
 	}
 	
 	public void deleteFile(String imagePath) {
-		Path path = Paths.get(filesConfig.FILE_UPLOAD_PATH + imagePath.replace("/images/", ""));
+		Path path = Paths.get(fileLocationConfig.FILE_UPLOAD_PATH + imagePath.replace("/images/", ""));
 		
 		if(Files.exists(path)) {
 			try {
@@ -134,7 +134,7 @@ public class FileManagerService {
 	}
 	
 	public void deleteImageOriginAndThumbnail(String imageOrigin, String imageThumbnail) {
-		Path path = Paths.get(filesConfig.FILE_UPLOAD_PATH + imageOrigin.replace("/images/", ""));
+		Path path = Paths.get(fileLocationConfig.FILE_UPLOAD_PATH + imageOrigin.replace("/images/", ""));
 		log.info("[FileManagerService] current imageOrigin path:{}", imageOrigin);
 		
 		if(Files.exists(path)) {
@@ -146,7 +146,7 @@ public class FileManagerService {
 				return;
 			}
 		}
-		path = Paths.get(filesConfig.FILE_UPLOAD_PATH + imageThumbnail.replace("/images/", ""));
+		path = Paths.get(fileLocationConfig.FILE_UPLOAD_PATH + imageThumbnail.replace("/images/", ""));
 		log.info("[FileManagerService deleteImageOriginAndThumbnail()] current imageThumbnail path:{}", imageThumbnail);
 		
 		if(Files.exists(path)) {

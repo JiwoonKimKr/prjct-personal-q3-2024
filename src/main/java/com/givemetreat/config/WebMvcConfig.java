@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.givemetreat.config.properties.ServerSideFileLocationConfig;
+import com.givemetreat.config.properties.FileLocationConfig;
 import com.givemetreat.interceptor.PermissionInterceptor;
 
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 	private final PermissionInterceptor permissionInterceptor;
-	private final ServerSideFileLocationConfig fileConfig;
+	private final FileLocationConfig fileLocationConfig;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -37,6 +37,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 			ResourceHandlerRegistry registry) {
 		registry
 		.addResourceHandler("/images/**")
-		.addResourceLocations("file:///" + fileConfig.FILE_UPLOAD_PATH);
+		.addResourceLocations("file:///" + fileLocationConfig.FILE_UPLOAD_PATH);
 	}
 }

@@ -55,8 +55,8 @@
     "description": "A description for 'spring.mail.templates.logo-path'"
   },
   {
-    "name": "server-side-location-for-file-manager-service.FILE_-uPLOAD_-pATH",
+    "name": "file-location-config.FILE_-uPLOAD_-pATH",
     "type": "java.lang.String",
-    "description": "A description for 'server-side-location-for-file-manager-service.FILE_-uPLOAD_-pATH'"
+    "description": "A description for 'file-location-config.FILE_-uPLOAD_-pATH'"
   }
 ]}
