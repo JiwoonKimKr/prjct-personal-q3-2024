@@ -22,7 +22,7 @@
 					 	<p class="pl-5 m-0" th:text="|내용: ${post.content}|"></p>
 					</div>
 					<div class="d-flex justify-content-center mr-5 mb-4">
-						<button class="btn-update-post" type="button" data-toggle="modal" data-target="#modal-update-current-post">
+						<button class="btn-update-post" th:if="${session.userId} == ${post.userId}" type="button" data-toggle="modal" data-target="#modal-update-current-post">
 							<span>글 수정하기</span>
 							<div class="icon-pencil">
 								<svg width="28" height="33" viewBox="0 0 28 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,7 +31,7 @@
 								</svg>
 							</div>
 						</button>
-						<button class="btn-delete-post" type="button">
+						<button class="btn-delete-post" th:if="${session.userId} == ${post.userId}" type="button">
 							글 삭제하기
 						</button>
 					</div>

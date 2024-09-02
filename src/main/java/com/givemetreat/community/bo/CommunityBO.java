@@ -63,17 +63,24 @@ public class CommunityBO {
 		return entity;
 	}
 	
-/* 댓글 관련 */	
+/* 댓글 관련 */
+	@Transactional
+	public CommentCommunityEntity getCommentByPostIdAndCommentId(int postId, int commentId) {
+		return commentCommunityBO.getCommentByPostIdAndCommentId(postId, commentId);
+	}
+	
 	@Transactional
 	public CommentCommunityEntity addComment(int postId, Integer userId, String content) {
 		return commentCommunityBO.addComment(postId, userId, content);
 	}
 	
+	@Transactional
 	public CommentCommunityEntity deleteComment(int postId, int commentId, Integer userId) {
 		log.info("[CommunityBO deleteComment()] comment get deleted."
 				+ " Post Id:{}, Comment Id:{}, User Id:{}"
 				, postId, commentId, userId);
 		return commentCommunityBO.deleteComment(postId, commentId, userId);
 	}
+
 
 }

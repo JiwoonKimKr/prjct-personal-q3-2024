@@ -41,6 +41,11 @@ public class CommentCommunityBO {
 	}
 
 	@Transactional
+	public CommentCommunityEntity getCommentByPostIdAndCommentId(int postId, int commentId) {
+		return commentCommunityRepository.findByIdAndPostId(commentId, postId);
+	}
+	
+	@Transactional
 	public void deleteCommentsByPostId(int postId) {
 		List<CommentCommunityEntity> listEntities = commentCommunityRepository.findByPostIdOrderByIdDesc(postId);
 		commentCommunityRepository.deleteAllInBatch(listEntities);
@@ -70,4 +75,6 @@ public class CommentCommunityBO {
 				, postId, commentId, userId);
 		return entity;
 	}
+
+
 }

@@ -51,7 +51,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("code", "로그인 후 커뮤니티 글 작성이 가능합니다.");
+			result.put("result", "로그인 후 커뮤니티 글 작성이 가능합니다.");
 			return result;
 		}
 		
@@ -59,7 +59,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("code", "새 글 쓰기 시도가 실패하였습니다.");
+			result.put("result", "새 글 쓰기 시도가 실패하였습니다.");
 			return result;
 		}
 		
@@ -79,7 +79,8 @@ public class CommunityRestController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 커뮤니티 글 작성이 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500", description = "error_message: \"글을 수정하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__1", description = "error_message: \"작성자 본인만 글을 수정할 수 있습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"글을 수정하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"글을 수정하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/update-current-post")
@@ -93,7 +94,15 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("code", "로그인 후 커뮤니티에 접근 가능합니다.");
+			result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
+			return result;
+		}
+		
+		int userIdCurrentPost = communityBO.getPostByPostId(postId).getUserId();
+		
+		if(userId != userIdCurrentPost) {
+			result.put("code", 500);
+			result.put("result", "작성자 본인만 글을 수정할 수 있습니다.");
 			return result;
 		}
 		
@@ -101,9 +110,10 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("code", "글을 수정하지 못하였습니다.");
+			result.put("result", "글을 수정하지 못 하였습니다.");
 			return result;
-		}		
+		}
+		
 		
 		result.put("code", 200);
 		result.put("result", "글을 수정하였습니다.");
@@ -118,7 +128,8 @@ public class CommunityRestController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 커뮤니티 글 작성이 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500", description = "error_message: \"글을 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__1", description = "error_message: \"작성자 본인만 글을 삭제할 수 있습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"글을 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"글을 삭제하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@DeleteMapping("/delete-current-post")
@@ -128,7 +139,15 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("code", "로그인 후 커뮤니티에 접근 가능합니다.");
+			result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
+			return result;
+		}
+		
+		int userIdCurrentPost = communityBO.getPostByPostId(postId).getUserId();
+		
+		if(userId != userIdCurrentPost) {
+			result.put("code", 500);
+			result.put("code", "작성자 본인만 글을 삭제할 수 있습니다.");
 			return result;
 		}
 		
@@ -136,7 +155,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("code", "글을 삭제하지 못하였습니다.");
+			result.put("result", "글을 삭제하지 못하였습니다.");
 			return result;
 		}
 		
@@ -165,7 +184,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("code", "로그인 후 커뮤니티에 접근 가능합니다.");
+			result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
 			return result;
 		}
 		
@@ -173,7 +192,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(comment)) {
 			result.put("code", 500);
-			result.put("code", "댓글을 추가하지 못하였습니다.");
+			result.put("result", "댓글을 추가하지 못하였습니다.");
 			return result;
 		}
 		
@@ -191,7 +210,8 @@ public class CommunityRestController {
 	})
 	@ApiResponses({
 		@ApiResponse(responseCode = "403", description = "error_message: \"로그인 후 커뮤니티 글 작성이 가능합니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500", description = "error_message: \"댓글을 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__1", description = "error_message: \"작성자 본인만 해당 댓글을 삭제할 수 있습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"댓글을 삭제하지 못하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"댓글을 삭제하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@DeleteMapping("/delete-current-comment")
@@ -202,15 +222,23 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 		result.put("code", 403);
-		result.put("code", "로그인 후 커뮤니티에 접근 가능합니다.");
+		result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
 		return result;
 		}
+		
+		int userIdCurrentComment = communityBO.getCommentByPostIdAndCommentId(postId, commentId).getUserId();
+		
+		if(userId != userIdCurrentComment) {
+			result.put("code", 500);
+			result.put("result", "작성자 본인만 해당 댓글을 삭제할 수 있습니다.");
+			return result;
+		}	
 		
 		CommentCommunityEntity comment = communityBO.deleteComment(postId, commentId, userId);
 		
 		if(ObjectUtils.isEmpty(comment)) {
 		result.put("code", 500);
-		result.put("code", "댓글을 삭제하지 못하였습니다.");
+		result.put("result", "댓글을 삭제하지 못하였습니다.");
 		return result;
 		}
 		result.put("code", 200);
