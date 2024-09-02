@@ -257,7 +257,7 @@ public class AdminProductBO {
 			log.warn("[AdminProductBO updateProduct()] imageFile for Product Should be submitted. productId:{}", id);
 			return 0;
 		} else if(ObjectUtils.isEmpty(file) == false) {
-			List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, "ProductProfile");
+			List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, "productProfile");
 			count = productMapper.updateProduct(id
 					, name
 					, categoryCurrent

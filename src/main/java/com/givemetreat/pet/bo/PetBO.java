@@ -56,7 +56,9 @@ public class PetBO {
 		int count = petMapper.deletePetByIdAndUserId(petId, userId);
 		
 		//DB에서 해당 반려견 정보가 지워졌으면, 그 때 이미지 지우기
-		if(count > 0) {
+		if(count > 0
+			&& ObjectUtils.isEmpty(imgProfileCur) == false
+			&& ObjectUtils.isEmpty(imgThumbnailCur) == false) {
 			fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
 		}
 		return count;
