@@ -67,6 +67,12 @@
 		<script th:inline="javascript">
 			$(document).ready(function(){
 				
+				$("input").on('keyup', function(key){
+					if(key.keyCode == 13){
+						$(".btn-login").trigger('click');
+					}
+				})// .input on keyup
+				
 				/* 로그인 버튼 클릭 */
 				$(".btn-login").on('click', function(){
 					/* 

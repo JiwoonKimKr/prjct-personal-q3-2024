@@ -74,7 +74,7 @@ public class AdminProductBO {
 					+ " priceFrom & priceUntil get swapped. priceFrom:{}, priceUntil:{}", priceFrom, priceUntil);
 		}
 		
-		List<Product> listProductsWhole = productMapper.selectProductForPaging(null
+		List<Product> listProductsWhole = productMapper.selectProductForPaging(id
 																			, name
 																			, categoryCurrent
 																			, priceFrom
