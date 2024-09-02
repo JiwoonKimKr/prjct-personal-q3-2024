@@ -135,14 +135,8 @@
     				let content = /*[[${post.content}]]*/null;
     				$("#content-modal").val(content);
     				let agePetProper = /*[[${post.agePetProper}]]*/null;
-    				let options = $("#agePetProper").children();
-    				for(let option of options){
-    					let value = option.getAttribute('value');
-    					if(value == agePetProper){
-    						option.setAttribute('selected', true);
-    					}
-    				}
-    				console.log(`${title}, ${content}, ${agePetProper}`);
+    				$("#agePetProper").children(`option[value=${agePetProper}]`).prop('selected', true);
+    				//console.log(/*[[${post}]]*/);
     				
     			})// btn-update-current-post on click
     			

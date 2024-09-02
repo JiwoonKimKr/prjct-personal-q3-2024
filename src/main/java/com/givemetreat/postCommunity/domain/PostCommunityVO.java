@@ -20,7 +20,8 @@ public class PostCommunityVO {
 		this.userId = entity.getUserId();
 		this.title = entity.getTitle();
 		this.content = entity.getContent();
-		this.agePetProper = ObjectUtils.isEmpty(entity.getAgePetProper()) ? null : entity.getAgePetProper().getAgePetK();
+		this.agePetProper = ObjectUtils.isEmpty(entity.getAgePetProper()) ? null : entity.getAgePetProper().getAgePetE();
+		this.agePetProperTranslatedK = ObjectUtils.isEmpty(entity.getAgePetProper()) ? null : entity.getAgePetProper().getAgePetK();
 		this.createdAt = entity.getCreatedAt();
 		this.updatedAt = entity.getUpdatedAt();
 		
@@ -36,6 +37,7 @@ public class PostCommunityVO {
 	private String title;
 	private String content;
 	private String agePetProper;
+	private String agePetProperTranslatedK;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 }
