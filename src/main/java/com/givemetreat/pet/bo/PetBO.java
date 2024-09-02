@@ -23,9 +23,17 @@ public class PetBO {
 	private final FileManagerService fileManagerService;
 	
 	public int addPet(int userId, String loginId, String name, String age, MultipartFile file) {
+		AgePet agePetCurrent = AgePet.findAgeCurrent(age, null, null);
+		if(ObjectUtils.isEmpty(file)) {
+			return petMapper.insertPet(
+					userId
+					, name
+					, agePetCurrent
+					, null
+					, null);
+		}
 		List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, loginId);
 		
-		AgePet agePetCurrent = AgePet.findAgeCurrent(age, null, null);
 		return petMapper.insertPet(
 								userId
 								, name
@@ -124,8 +132,12 @@ public class PetBO {
 		//record의 이미지가 비워졌거나, 예전 파일들과 다른 경우 삭제한다!
 		if((ObjectUtils.isEmpty(pet.getImgProfile()) && hasImageChanged)
 				|| pet.getImgProfile().equals(imgProfileCur) == false) {
-			fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
-			log.info("[PetBO updatePet()] previous profile images got deleted. petId:{}", petId);
+			
+			if(ObjectUtils.isEmpty(imgProfileCur) == false 
+					&& ObjectUtils.isEmpty(imgThumbnailCur) == false) {
+				fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
+				log.info("[PetBO updatePet()] previous profile images got deleted. petId:{}", petId);
+			}
 		}
 		
 		return pet;
