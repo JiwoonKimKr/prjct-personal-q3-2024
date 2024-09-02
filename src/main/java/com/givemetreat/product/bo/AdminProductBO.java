@@ -229,4 +229,60 @@ public class AdminProductBO {
 		return productMapper.deleteProduct(productId);
 	}
 
+
+	@Transactional
+	public Integer updateProduct(int id
+								, String name
+								, String category
+								, int price
+								, String agePetProper
+								, boolean hasImageChanged
+								, MultipartFile file) {
+		
+		Product product = productMapper.selectProduct(id, null, null, null, null).get(0);
+		
+		if(ObjectUtils.isEmpty(product)) {
+			log.warn("[AdminProductBO updateProduct()] current Product failed to be found. productId:{}", id);
+			return 0;
+		}
+		
+		CategoryProduct categoryCurrent = CategoryProduct.findCategoryProduct(category, null, null);
+		AgePet agePetProperCurrent = AgePet.findAgeCurrent(agePetProper, null, null);
+		String imgProfileCur = product.getImgProfile();
+		String imgThumbnailCur = product.getImgThumbnail();
+		int count = 0;
+		
+		if(ObjectUtils.isEmpty(file) && hasImageChanged) {
+			//이미지 파일이 넘어오지 않은 경우
+			log.warn("[AdminProductBO updateProduct()] imageFile for Product Should be submitted. productId:{}", id);
+			return 0;
+		} else if(ObjectUtils.isEmpty(file) == false) {
+			List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, "ProductProfile");
+			count = productMapper.updateProduct(id
+					, name
+					, categoryCurrent
+					, price
+					, agePetProperCurrent
+					, imagePathProfile.get(0)
+					, imagePathProfile.get(1));
+		} else {
+			count = productMapper.updateProduct(id
+					, name
+					, categoryCurrent
+					, price
+					, agePetProperCurrent
+					, imgProfileCur
+					, imgThumbnailCur);
+		}
+		
+		product = productMapper.selectProduct(id, null, null, null, null).get(0);
+		
+		if(hasImageChanged == true && product.getImgProfile().equals(imgProfileCur) == false) {
+			fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
+			log.info("[AdminProductBO updateProduct()] previous profile images got deleted. productId:{}", id);
+		}
+		
+		return count;
+	}
+
 }

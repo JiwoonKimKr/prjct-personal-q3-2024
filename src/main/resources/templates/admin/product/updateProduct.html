@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/adminDefaultLayout}">
+    <head>
+    	<title>
+    		상품 정보 수정
+    	</title>
+    </head>
+	<section layout:fragment="contents" class="contents mt-5">
+			<article class="group-article ">
+<!-- 상품 이미지 업로드 -->
+				<div class="d-flex justify-content-center">
+					<div class="col-6 group-btn-product-image-upload">
+						<button class="btn-product-image-upload">
+							<img id="imagePreview" th:src="${productCurrent.imgProfile}" class="rounded" width="400" height="400">
+						</button>
+						<input id="imageProduct" type="file" class="input-file-upload-image" accept=".jpg, .png, .gif">
+					</div>
+					<div class="col-6 groups-input-register-product">
+						<!-- name -->
+						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
+							<span class="h3 text-white col-4">
+								제품명
+							</span>
+							<input id="nameProduct" type="text" class="form-control col-8" th:value="${productCurrent.name}">
+						</div>
+						<!-- category -->
+						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
+							<span class="h3 text-white col-4">
+								카테고리
+							</span>
+							<div class="input-group p-0 col-8">
+								<select id="categoryProduct" class="custom-select input-select-inside w-100 h-100" aria-label="Example select with button addon">
+								    <option selected>--------</option>
+								    <option value="kibble">사료</option>
+								    <option value="treat">간식</option>
+								</select>
+							</div>
+						</div>
+						<!-- price -->
+						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
+							<span class="h3 text-white col-4">
+								제품 가격
+							</span>
+							<input id="priceProduct" type="text" class="form-control col-8" th:value="${productCurrent.price}">
+						</div>
+						<!-- agePetProper -->
+						<div class="bg-secondary rounded d-flex justify-content-between py-3 px-3">
+							<span class="h3 text-white col-4">
+								섭취 적정 연령
+							</span>
+							<div class="input-group p-0 col-8">
+								<select class="custom-select input-select-inside w-100 h-100" id="agePetProperProduct" aria-label="Example select with button addon">
+								    <option selected>--------</option>
+								    <option value="under6months">생후 6개월 미만</option>
+								    <option value="adult">성견</option>
+								    <option value="senior">고령견</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-end">
+					<button class="btn btn-danger btn-cancel-register mr-5">
+						취소하기
+					</button>
+					<button class="btn btn-primary btn-submit mr-5">
+						제출하기
+					</button>
+				</div>			
+			</article>
+	</section>
+
+	<th:block layout:fragment="script">
+    	<script th:inline="javascript">
+    		$(document).ready(function(){
+    			let imagePathPrev = $("#imagePreview").attr('src');
+    			let hasImageChanged = false;
+    			//console.log(/*[[${productCurrent}]]*/);
+    			
+    			let category = /*[[${productCurrent.category}]]*/null;
+    			$(`option[value=${category}]`).prop('selected', true);
+    			let agePetProper = /*[[${productCurrent.agePetProper}]]*/null;
+    			$(`option[value=${agePetProper}]`).prop('selected', true);
+    			
+    			
+    			$(".btn-product-image-upload").on('click', function(){
+    				$("#imageProduct").click();
+    			})// btn-product-image-upload on click
+    			
+    			$("#imageProduct").on('change', function(e){
+    				let file = e.target.files[0];
+    				if(file == null){
+    					$(this).val("");
+    					return;
+    				}
+    				
+					let reader = new FileReader();
+					reader.onload = function(event){
+						$("#imagePreview").attr('src', event.target.result);
+						hasImageChanged = true;
+					};
+					reader.readAsDataURL(file);
+    				
+    			})// imageProduct on Click
+    			
+    			$(".btn-submit").on('click', function(){
+					let productId = /*[[${productCurrent.id}]]*/null;
+					let name = $("#nameProduct").val().trim();
+					let category = $("#categoryProduct").val();
+					let price = $("#priceProduct").val().trim();
+					let agePetProper = $("#agePetProperProduct").val();
+					let pathFile = $("#imageProduct").val();
+    				
+					if(!name){
+						alert("제품명을 기재해 주세요.");
+    					return;
+					}
+					if(name.length > 24){
+						alert("제품명은 24자 이하여야 합니다.")
+						return;
+					}
+					if(!category){
+						alert("제품 카데고리를 선택해 주세요.");
+						return;
+					}
+					if(!price){
+						alert("제품 가격을 입력해 주세요.");
+						return;
+					}
+					let regExp = /^[0-9]*$/;
+					if(regExp.test(price) == false || price < 1){
+						alert("price 가격은 0 이상의 정수로만 입력해주세요.")
+						return;
+					}
+					if(!agePetProper){
+						alert("해당 제품의 적정 섭취 연령을 선택해 주세요.");
+						return;
+					}
+
+					let extension = pathFile.split(".").pop().toLowerCase();
+					if(pathFile != "" && $.inArray(extension, ["jpg", "gif", "png"]) == -1){
+    					alert("이미지 파일만 업로드 가능합니다.");
+    					$("#pathFile").val("");
+    					return;
+    				}
+					
+					/*_02 09 2024*/
+					console.log(`
+							productId: ${productId}
+							, name: ${name}
+							, category: ${category}
+							, price: ${price}
+							, agePetProper: ${agePetProper}
+							, pathFile: ${pathFile}
+							, hasImageChanged : ${hasImageChanged}
+							`);
+					
+					let formData = new FormData();
+					
+					formData.append("id", productId);
+					formData.append("name", name);
+					formData.append("category", category);
+					formData.append("price", price);
+					formData.append("agePetProper", agePetProper);
+					formData.append("hasImageChanged", hasImageChanged ? "true" : "false");
+					formData.append("imageProduct", $("#imageProduct")[0].files[0]);
+
+					$.ajax({
+						type: "POST"
+    					, url: "/admin/product/update-product"
+    					, data: formData
+    					, enctype: 'multipart/form-data'
+    					, processData: false
+    					, contentType: false
+    					
+    					, success: function(data){
+    						if(data.code == 200){
+    							alert("🌞🌞해당 제품 정보를 수정하였습니다.");
+    							location.reload();
+    						} else {
+    							alert(data.error_message);
+    						}
+    					}
+    					, error: function(error){
+    						alert("상품 정보 변경 시도가 실패하였습니다. 관리자에게 문의하세요.")
+    					}
+					})//ajax
+    			}) // btn-submit on click
+    			
+    		})//document ready
+    	
+    	</script>
+	</th:block>
+	
+</html>

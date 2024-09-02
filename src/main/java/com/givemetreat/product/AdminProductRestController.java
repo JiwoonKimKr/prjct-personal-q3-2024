@@ -81,9 +81,9 @@ public class AdminProductRestController {
 			return result;
 		}
 		
-		Integer pkInserted = adminProductBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct, Integer.parseInt(quantity));
+		Integer countInserted = adminProductBO.registerProduct(name, category, Integer.parseInt(price), agePetProper, imageProduct, Integer.parseInt(quantity));
 		
-		if(pkInserted < 0) {
+		if(countInserted < 0) {
 			result.put("code", 500);
 			result.put("error_message", "해당 상품 등록이 실패하였습니다.");
 			log.info("[ADMIN-Product: register-product] fail to register current product:{},{},{},{},{}"
@@ -179,6 +179,86 @@ public class AdminProductRestController {
 		
 		return result;
 	}
+	
+	@Operation(summary = "registerProduct() 새 상품 등록", description = "관리자페이지 상품 등록")
+	@Parameters({
+		@Parameter(name = "<String> name", description = "상품명", example = "10")
+		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
+		, @Parameter(name = "<String> price", description = "상품 가격, 원 단위", example = "10000")
+		, @Parameter(name = "<String> agePetProper", description = "반려견 적정 섭취 연령", example = "under6months")
+		, @Parameter(name = "<String> hasImageChanged", description = "상품 이미지 변경 여부", example = "true")
+		, @Parameter(name = "<MultipartFile> imageProduct", description = "(변경 없을 경우 nullable)상품 이미지", example = "treat03_givemetreat.png")
+		, @Parameter(name = "<String> quantity", description = "추가될 상품 재고, 유닛 단위", example = "100")
+	})
+	@ApiResponses({
+		@ApiResponse(responseCode = "500__1", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__3", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"" 
+															+ "<br> wrong_parameter &lt;String&gt; 잘못 넘어온 변수 명칭" 
+						, content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
+	})
+	@PostMapping("/update-product")
+	public Map<String, Object> updateProduct(
+			@RequestPart String id 
+			, @RequestPart String name 
+			, @RequestPart String category
+			, @RequestPart String price
+			, @RequestPart String agePetProper
+			, @RequestPart String hasImageChanged
+			, @RequestPart(required = false) MultipartFile imageProduct
+			, @RequestPart String quantity
+			){
+		Map<String, Object> result = new HashMap<>();
+
+		String wrongParameterRequested = 
+				AdminProductParamsValidation.getParamsValidated(name
+															, category
+															, price
+															, agePetProper
+															, quantity);
+		
+		if(wrongParameterRequested != null) {
+			result.put("code", 500);
+			result.put("error_message", "특정 변수가 잘못 입력되었습니다.");
+			result.put("wrong_parameter", wrongParameterRequested);
+			log.info("[ADMIN-Product: register-product] fail to register current product:{},{},{},{},{}"
+					, name, category, price, agePetProper, imageProduct);
+			return result;
+		}
+		
+		AdminProductVO vo = adminProductBO.getProduct(Integer.parseInt(id), null, null, null, null).get(0);
+		
+		if(ObjectUtils.isEmpty(vo)) {
+			result.put("code", 500);
+			result.put("error_message", "해당 상품 정보가 존재하지 않습니다.");
+			return result;
+		}
+		 
+		Boolean imageChanged = hasImageChanged.equals("true") ? true : false;
+		 
+		Integer countUpdated = adminProductBO.updateProduct(Integer.parseInt(id)
+															, name
+															, category
+															, Integer.parseInt(price)
+															, agePetProper
+															, imageChanged
+															, imageProduct);
+		
+		if(countUpdated < 1) {
+			result.put("code", 500);
+			result.put("error_message", "해당 상품 정보 수정 시도가 실패하였습니다.");
+			log.info("[ADMIN-Product: updateProduct()] fail to register current product:{},{},{},{},{}"
+					, name, category, price, agePetProper, imageProduct);
+			return result;
+		}
+		
+		result.put("code", 200);
+		result.put("result", "success");
+		log.info("[ADMIN-Product: updateProduct()] success updating current product info. product id:{}", id);
+		return result;
+	}	
+	
 	
 	@Operation(summary = "deleteProduct() 해당 상품 삭제", description = "상품 삭제")
 	@Parameters({

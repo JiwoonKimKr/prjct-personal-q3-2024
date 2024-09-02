@@ -103,14 +103,11 @@ public class PetBO {
 		} else if(ObjectUtils.isEmpty(file) == false){
 			//이미지 파일을 받은 경우
 			List<String> imagePathProfile = fileManagerService.uploadImageWithThumbnail(file, loginId);
-			imgProfileCur = imagePathProfile.get(0);
-			imgThumbnailCur = imagePathProfile.get(1);
-			
 			petMapper.updatePet(petId
 					, nameCur
 					, ageCur
-					, imgProfileCur
-					, imgThumbnailCur);
+					, imagePathProfile.get(0)
+					, imagePathProfile.get(1));
 		} else { // 파일이 바뀐 것이 없는 경우; hasImageChanged= false인 경우
 			petMapper.updatePet(petId
 					, nameCur

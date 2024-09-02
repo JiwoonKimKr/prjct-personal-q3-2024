@@ -90,6 +90,7 @@ public class PetRestController {
 		@Parameter(name = "<int> petId", description = "<RequestPart> 반려견 PK", example = "3")
 		, @Parameter(name = "<String> name", description = "<RequestPart> 반려견 이름", example = "망고")
 		, @Parameter(name = "<String> age", description = "<RequestPart> 반려견 연령대 ('under6months', 'adult', 'senior')", example = "under6months")
+		, @Parameter(name = "<String> hasImageChanged", description = "반려견 이미지 변경 여부", example = "true")
 		, @Parameter(name = "<MultipartFile> imageProfile", description = "<RequestPart> 반려견 이미지", example = "manggo-puppy.img")
 		, @Parameter(name = "<HttpSession> session", description = "session")
 	})

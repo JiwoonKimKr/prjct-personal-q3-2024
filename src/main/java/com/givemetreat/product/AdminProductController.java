@@ -59,4 +59,23 @@ public class AdminProductController {
 		return "admin/product/productDetail";
 	}
 	
+	
+	//해당 상품 정보 변경(업데이트) 페이지
+	@Operation(summary = "updateProductView() 해당 상품 정보 변경 페이지", description = "해당 상품 정보 변경 페이지")
+	@Parameters({
+		@Parameter(name = "[PathVariable] <int> idProduct", description = "해당 상품 PK", example = "5")
+		, @Parameter(name = "<Model> model", description = "MVC Model")
+	})
+	@ApiResponse(responseCode = "200", description = "/admin/product/productDetail.html "
+													+ "<br> Model Attributes"
+													+" <br> &lt;AdminProductVO&gt; \"productCurrent\""
+		, content = @Content(mediaType = "TEXT_HTML", schema = @Schema(implementation = AdminProductVO.class)))
+	@GetMapping("/updateProduct/{idProduct}")
+	public String updateProductView(@PathVariable int idProduct
+									, Model model) {
+		AdminProductVO productCurrent = adminProductBO.getProduct(idProduct, null, null, null, null).get(0);
+		
+		model.addAttribute("productCurrent", productCurrent);
+		return "admin/product/updateProduct";
+	}
 }

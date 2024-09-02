@@ -50,6 +50,15 @@ public interface ProductMapper {
 
 	public int deleteProduct(int id);
 
+	public Integer updateProduct(
+			@Param("id") int id
+			, @Param("name") String name
+			, @Param("category") CategoryProduct category
+			, @Param("price") int price
+			, @Param("agePetProper") AgePet agePetProper
+			, @Param("imgProfile") String imgProfile
+			, @Param("imgThumbnail") String imgThumbnails);
+
 	
 	
 }

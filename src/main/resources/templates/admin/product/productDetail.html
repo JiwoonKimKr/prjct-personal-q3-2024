@@ -28,7 +28,10 @@
 					<hr>
 					<p th:text="|제품 정보 수정 시간: ${productCurrent.updatedAt}|"></p>
 					<hr>
-					<a id="btn-delete-product" class="btn btn-danger m-3 p-3" th:data-product-id=${productCurrent.id}>
+					<a id="btn-update-product" class="btn btn-warning m-3 p-3" th:href="@{/admin/product/updateProduct/{productId}(productId=${productCurrent.id})}">
+						제품 정보 수정
+					</a>
+					<a id="btn-delete-product" class="btn btn-danger m-3 p-3" th:data-product-id="${productCurrent.id}">
 						제품 삭제
 					</a>
 				</th:block>
@@ -44,7 +47,6 @@
     				
     				let productId = $(this).data('product-id');
     				console.log(productId);
-    				
     				$.ajax({
     					type: "DELETE"
     					, url: "/admin/product/delete-product"

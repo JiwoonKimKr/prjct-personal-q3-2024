@@ -160,6 +160,19 @@
 		)
  		
  	</insert>
+ 	<update id="updateProduct" parameterType="map">
+ 		UPDATE `pet`
+ 		SET
+ 			`name` = #{name}
+			, `category` = #{category.typeE}
+			, `price` = #{price}
+			, `agePetProper` = #{agePetProper.agePetE}
+			, `imgProfile` = #{imgProfile}
+			, `imgThumbnail` = #{imgThumbnail}
+ 			, `updatedAt` = NOW()
+		WHERE
+			`id` = #{id}
+ 	</update>
  	
  	<delete id="deleteProduct">
  		DELETE FROM `product`
