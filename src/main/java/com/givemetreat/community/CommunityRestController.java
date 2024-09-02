@@ -51,7 +51,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("result", "로그인 후 커뮤니티 글 작성이 가능합니다.");
+			result.put("error_message", "로그인 후 커뮤니티 글 작성이 가능합니다.");
 			return result;
 		}
 		
@@ -59,7 +59,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("result", "새 글 쓰기 시도가 실패하였습니다.");
+			result.put("error_message", "새 글 쓰기 시도가 실패하였습니다.");
 			return result;
 		}
 		
@@ -94,7 +94,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
+			result.put("error_message", "로그인 후 커뮤니티에 접근 가능합니다.");
 			return result;
 		}
 		
@@ -102,7 +102,7 @@ public class CommunityRestController {
 		
 		if(userId != userIdCurrentPost) {
 			result.put("code", 500);
-			result.put("result", "작성자 본인만 글을 수정할 수 있습니다.");
+			result.put("error_message", "작성자 본인만 글을 수정할 수 있습니다.");
 			return result;
 		}
 		
@@ -110,7 +110,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("result", "글을 수정하지 못 하였습니다.");
+			result.put("error_message", "글을 수정하지 못 하였습니다.");
 			return result;
 		}
 		
@@ -139,7 +139,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
+			result.put("error_message", "로그인 후 커뮤니티에 접근 가능합니다.");
 			return result;
 		}
 		
@@ -147,7 +147,7 @@ public class CommunityRestController {
 		
 		if(userId != userIdCurrentPost) {
 			result.put("code", 500);
-			result.put("code", "작성자 본인만 글을 삭제할 수 있습니다.");
+			result.put("error_message", "작성자 본인만 글을 삭제할 수 있습니다.");
 			return result;
 		}
 		
@@ -155,7 +155,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(post)) {
 			result.put("code", 500);
-			result.put("result", "글을 삭제하지 못하였습니다.");
+			result.put("error_message", "글을 삭제하지 못하였습니다.");
 			return result;
 		}
 		
@@ -184,7 +184,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 			result.put("code", 403);
-			result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
+			result.put("error_message", "로그인 후 커뮤니티에 접근 가능합니다.");
 			return result;
 		}
 		
@@ -192,7 +192,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(comment)) {
 			result.put("code", 500);
-			result.put("result", "댓글을 추가하지 못하였습니다.");
+			result.put("error_message", "댓글을 추가하지 못하였습니다.");
 			return result;
 		}
 		
@@ -222,7 +222,7 @@ public class CommunityRestController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(ObjectUtils.isEmpty(userId)) {
 		result.put("code", 403);
-		result.put("result", "로그인 후 커뮤니티에 접근 가능합니다.");
+		result.put("error_message", "로그인 후 커뮤니티에 접근 가능합니다.");
 		return result;
 		}
 		
@@ -230,7 +230,7 @@ public class CommunityRestController {
 		
 		if(userId != userIdCurrentComment) {
 			result.put("code", 500);
-			result.put("result", "작성자 본인만 해당 댓글을 삭제할 수 있습니다.");
+			result.put("error_message", "작성자 본인만 해당 댓글을 삭제할 수 있습니다.");
 			return result;
 		}	
 		
@@ -238,7 +238,7 @@ public class CommunityRestController {
 		
 		if(ObjectUtils.isEmpty(comment)) {
 		result.put("code", 500);
-		result.put("result", "댓글을 삭제하지 못하였습니다.");
+		result.put("error_message", "댓글을 삭제하지 못하였습니다.");
 		return result;
 		}
 		result.put("code", 200);

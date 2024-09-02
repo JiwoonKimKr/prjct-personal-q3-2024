@@ -63,16 +63,16 @@ public class CommentCommunityBO {
 
 	@Transactional
 	public CommentCommunityEntity deleteComment(int postId, int commentId, Integer userId) {
-		CommentCommunityEntity entity = commentCommunityRepository.findByIdAndPostIdAndUserId(postId, commentId, userId);
+		CommentCommunityEntity entity = commentCommunityRepository.findByIdAndPostIdAndUserId(commentId, postId, userId);
 		if(ObjectUtils.isEmpty(entity)) {
 			log.warn("[CommentCommunityBO deleteComment()] failed to delete comment."
-					+ "Post ID:{}, Comment ID:{}, User ID:{}", postId, commentId, userId);
+					+ "Comment ID:{}, Post ID:{}, User ID:{}", commentId, postId, userId);
 			return null;
 		}
 		commentCommunityRepository.delete(entity);
 		log.info("[CommentCommunityBO deleteComment()] comment get deleted."
-				+ "Post ID:{}, Comment ID:{}, User ID:{}"
-				, postId, commentId, userId);
+				+ "Comment ID:{}, Post ID:{}, User ID:{}"
+				, commentId, postId, userId);
 		return entity;
 	}
 
