@@ -130,11 +130,11 @@ public class PetBO {
 		pet = petMapper.selectPetByIdAndUserId(petId, userId);
 		
 		//record의 이미지가 비워졌거나, 예전 파일들과 다른 경우 삭제한다!
-		if((ObjectUtils.isEmpty(pet.getImgProfile()) && hasImageChanged)
-				|| pet.getImgProfile().equals(imgProfileCur) == false) {
-			
-			if(ObjectUtils.isEmpty(imgProfileCur) == false 
-					&& ObjectUtils.isEmpty(imgThumbnailCur) == false) {
+		if(ObjectUtils.isEmpty(imgProfileCur) == false 
+				&& ObjectUtils.isEmpty(imgThumbnailCur) == false) {
+			if((ObjectUtils.isEmpty(pet.getImgProfile()) && hasImageChanged)
+					|| pet.getImgProfile().equals(imgProfileCur) == false) {
+				
 				fileManagerService.deleteImageOriginAndThumbnail(imgProfileCur, imgThumbnailCur);
 				log.info("[PetBO updatePet()] previous profile images got deleted. petId:{}", petId);
 			}
