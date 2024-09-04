@@ -1,6 +1,7 @@
 package com.givemetreat;
 
-import java.util.List;
+import java.util.*;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
@@ -40,5 +41,23 @@ class 람다테스트 {
 				.map(String::toUpperCase) // element -> element.toUpperCase() 람다식을 변환한 것과 동일하다!
 				.collect(Collectors.toList());
 		log.info("[🚧🚧🚧💡💡💡 메소드레퍼런스] fruits{}", fruits);
+	}
+	
+	@Test
+	void 멥테스트(){
+		List<Map<String, Object>> personList = new ArrayList<>();
+		Map<String, Object> person = new HashMap<>();
+
+		for (int i = 0; i < 2; i++) {
+		    if (i == 0) {
+		        person.put("이름", "리자몽");
+		    } else if (i == 1) {
+		        person.put("이름", "픽시");
+		    }
+
+		    personList.add(person);
+		}
+
+		System.out.println(personList);
 	}
 }
