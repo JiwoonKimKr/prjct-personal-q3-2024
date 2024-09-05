@@ -16,6 +16,6 @@ public class MainController {
 	@ApiResponse(responseCode = "200"
 		, description = "redirect:product/product-list-view")
 	public String initialIndexView() {
-		return "redirect:product/product-list-view";
+		return "redirect:/product/product-list-view";
 	}
 }

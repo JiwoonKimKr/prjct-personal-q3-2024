@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<head>
-		<th:block th:replace="~{/fragments/adminConfig :: configFragment}">
+		<th:block th:replace="~{fragments/adminConfig :: configFragment}">
 		</th:block>
 	</head>
 <body>
 	<div id="wrap" class="mx-auto">
 		<!-- header -->
 		<header layout:fragment="header">
-			<th:block th:replace="~{/fragments/adminHeader :: headerFragment}">
+			<th:block th:replace="~{fragments/adminHeader :: headerFragment}">
 			</th:block>
 		</header>
 		
@@ -22,7 +22,7 @@
 		</div>
 		
 		<!-- footer -->
-		<footer th:replace="~{/fragments/footer :: footerFragment}">	
+		<footer th:replace="~{fragments/footer :: footerFragment}">	
 		</footer>
 	</div>
 </body>

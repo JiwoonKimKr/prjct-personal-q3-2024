@@ -11,5 +11,4 @@ public class GivemetreatApplication{
 	public static void main(String[] args) {
 		SpringApplication.run(GivemetreatApplication.class, args);
 	}
-
 }

@@ -92,7 +92,7 @@ public class AdminUserController {
 		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("pageCurrent", pageCurrent);
 		model.addAttribute("sizeCurrent", sizeCurrent);
-		return "/admin/user/userDetail";
+		return "admin/user/userDetail";
 	}
 	
 	@Operation(summary = "userPetDetailView() 해당 사용자 반려견 상세조회 페이지", description = "반려견 상세 정보 조회 페이지")
@@ -112,7 +112,7 @@ public class AdminUserController {
 		AdminPetVO petVO = adminUserBO.getPetByUserIdAndPetId(userId, petId);
 		
 		model.addAttribute("pet", petVO);
-		return "/admin/user/userPetDetail";
+		return "admin/user/userPetDetail";
 	}
 	
 }

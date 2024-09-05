@@ -53,7 +53,7 @@ public class CommunityController {
 									, Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
-			return "redirect:user/sign-in-view";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		if(keyword != null) {

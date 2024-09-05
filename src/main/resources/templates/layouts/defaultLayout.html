@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<head>
-		<th:block th:replace="~{/fragments/config :: configFragment}">
+		<th:block th:replace="~{fragments/config :: configFragment}">
 		</th:block>
 	</head>
 <body>
 	<div id="wrap" class="mx-auto">
 		<!-- header -->
-		<header th:replace="~{/fragments/header :: headerFragment}">	
+		<header th:replace="~{fragments/header :: headerFragment}">	
 		</header>
 		
 		<!-- content -->
 		<div class="d-flex justify-content-between align-items-start w-100">
 			<section layout:fragment="contents">
 			</section>
-			<div th:replace="~{/fragments/aside :: asideFragment}">
+			<div th:replace="~{fragments/aside :: asideFragment}">
 			</div>
 		</div>
 		
@@ -24,7 +24,7 @@
 		</div>
 		
 		<!-- footer -->
-		<footer th:replace="~{/fragments/footer :: footerFragment}">	
+		<footer th:replace="~{fragments/footer :: footerFragment}">	
 		</footer>
 	</div>
 </body>

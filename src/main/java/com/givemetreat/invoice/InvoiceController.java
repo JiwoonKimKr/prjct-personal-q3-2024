@@ -52,7 +52,7 @@ public class InvoiceController {
 		//장바구니 페이지에서 넘어온 경우
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
-			return "redirect:user/sign-in-view";
+			return "redirect:/user/sign-in-view";
 		}
 		List<ProductShoppingCartVO> listItems = invoiceBO.getListProductsFromCartByUserId(userId);
 		
@@ -84,7 +84,7 @@ public class InvoiceController {
 		
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
-			return "redirect:user/sign-in-view";
+			return "redirect:/user/sign-in-view";
 		}
 		List<ProductShoppingCartVO> listItems =
 				invoiceBO.getProductByProductIdAndQuantity(productId, quantity);
@@ -112,7 +112,7 @@ public class InvoiceController {
 									, Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
-			return "redirect:user/sign-in-view";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		List<InvoiceVO> listInvoiceVOs = invoiceBO.getListInvoicesByIdDeliveryNotFinished(userId);		
@@ -144,7 +144,7 @@ public class InvoiceController {
 		
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
-			return "redirect:user/sign-in-view";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		InvoiceVO invoice = invoiceBO.getInvoiceById(invoiceId);
@@ -221,7 +221,7 @@ public class InvoiceController {
 											, Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if(userId == null) {
-			return "redirect:user/sign-in-view";
+			return "redirect:/user/sign-in-view";
 		}
 		
 		InvoiceVO invoice = invoiceBO.getInvoiceById(invoiceId);

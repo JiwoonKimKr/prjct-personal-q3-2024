@@ -125,7 +125,7 @@ public class ProductController {
 			model.addAttribute("listProductsRecommended", listProductsRecommended);
 		}
 		
-		return "/product/productList";
+		return "product/productList";
 	}
 	
 	@Operation(summary = "productDetailView() 상품 상세 조회 페이지", description = "상품 상세 조회 페이지")
@@ -163,7 +163,7 @@ public class ProductController {
 		
 		model.addAttribute("product", product);
 		
-		return "/product/productDetail";
+		return "product/productDetail";
 	}
 	
 }

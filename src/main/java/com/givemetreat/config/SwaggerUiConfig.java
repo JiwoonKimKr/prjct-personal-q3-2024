@@ -20,6 +20,6 @@ public class SwaggerUiConfig {
 		return new Info()
 				.title("givemetreat")
 				.description("personal project 3Q 2024_Mega It Gangnam")
-				.version("0.0.1");
+				.version("0.9.0");
 	}
 }
