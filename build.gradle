@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.2'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'org.springdoc.openapi-gradle-plugin' version "1.9.0"
 }
 
 group = 'com.givemetreat'
@@ -38,8 +39,8 @@ dependencies {
 	
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 	
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-	implementation 'org.springdoc:springdoc-openapi-starter-webflux-api:2.6.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0'
 	
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
 	
