@@ -19,7 +19,32 @@ AWS EC2(AWS Linux) 인스턴스에 배포한 현 프로젝트입니다.
 ### 🖥️🖥️ 관리자 페이지 스크린샷
 ![image](https://github.com/user-attachments/assets/619bf10d-fdf9-43c9-b261-304dd058e45c)
 
+---
 
-🛂🛂 로그인 페이지 진입
+🛂🛂 로그인 페이지 진입 GIF
+
 ![sign-in_givemetreat](https://github.com/user-attachments/assets/6113fc8d-fc19-4eaf-864b-db47b616e33b)
 
+---
+
+🐶🐶 반려견 등록 페이지 GIF
+
+![제목 없는 동영상 - Clipchamp로 제작](https://github.com/user-attachments/assets/01516b2c-de8d-4b17-984a-55fb2610a410)
+
+---
+
+🎁📌 추천 시스템 GIF
+
+![recommendeor system_givemetreat](https://github.com/user-attachments/assets/e90b763d-2c7b-4d9b-823a-fe899dfd9efa)
+
+---
+
+🚛🚀 주문 및 배송 조회 
+
+![deliveryInvoice_givemetreat](https://github.com/user-attachments/assets/5a157b3f-0b61-45a1-8af6-45d8496e90db)
+
+---
+
+🏛️🏛️ 관리자 페이지 GIF
+
+![adminPage_givemetreat](https://github.com/user-attachments/assets/7fb8194b-3aef-42d5-8c61-095f771532d0)
