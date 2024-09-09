@@ -54,6 +54,11 @@ public class AdminInvoiceController {
 		
 		model.addAttribute("ListInvoicesLatest", ListInvoicesLatest);
 		
+		if(ListInvoicesLatest.size() < 1) {
+			log.info("[AdminInvoiceController invoiceEntireView()] current data get null result.");
+			model.addAttribute("error_message", "해당 결과를 찾지 못 하였습니다.");	
+		}
+		
 		return "admin/invoice/invoiceLatest";
 	}
 	

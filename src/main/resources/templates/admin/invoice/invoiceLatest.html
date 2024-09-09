@@ -59,6 +59,13 @@
 	<th:block layout:fragment="script">
     	<script th:inline="javascript">
     		$(document).ready(function(){
+    			//조회 결과값이 없을 경우
+    			let error_message = /*[[${error_message}]]*/null;
+    			if(error_message){
+					alert(error_message);
+					return location.href= "/admin/admin-main-view";
+				}
+    			
      			$(".btn-invoice-detail").on('click', function(){
      				let invoiceId = $(this).data('id');
      				let userId = $(this).data('user-id');
