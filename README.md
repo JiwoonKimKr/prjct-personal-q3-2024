@@ -37,13 +37,16 @@ Notion 링크에서 확인하실 수 있습니다 :)
 
 🎁📌 추천 시스템 GIF
 
-![recommendeor system_givemetreat](https://github.com/user-attachments/assets/e90b763d-2c7b-4d9b-823a-fe899dfd9efa)
+![recommendor-system_givemetreat](https://github.com/user-attachments/assets/48fb8a70-e64d-4900-9e92-82022d88b49c)
+
 
 ---
 
 🚛🚀 주문 및 배송 조회 
 
-![deliveryInvoice_givemetreat](https://github.com/user-attachments/assets/5a157b3f-0b61-45a1-8af6-45d8496e90db)
+![deliveryStatus_client_givemetreat](https://github.com/user-attachments/assets/b229674b-7581-4a17-adaa-058d1944061d)
+
+![invoice_client_givemetreat](https://github.com/user-attachments/assets/82e9fe6c-91c8-43b7-84ca-2d5748029ac9)
 
 ---
 
