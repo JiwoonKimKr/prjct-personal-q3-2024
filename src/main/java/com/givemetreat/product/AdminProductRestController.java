@@ -180,7 +180,7 @@ public class AdminProductRestController {
 		return result;
 	}
 	
-	@Operation(summary = "registerProduct() 새 상품 등록", description = "관리자페이지 상품 등록")
+	@Operation(summary = "updateProduct() 상품 정보 수정", description = "관리자페이지 기존 상품 정보 수정")
 	@Parameters({
 		@Parameter(name = "<String> name", description = "상품명", example = "10")
 		, @Parameter(name = "<String> category", description = "상품 카데고리", example = "1")
@@ -191,11 +191,11 @@ public class AdminProductRestController {
 		, @Parameter(name = "<String> quantity", description = "추가될 상품 재고, 유닛 단위", example = "100")
 	})
 	@ApiResponses({
-		@ApiResponse(responseCode = "500__1", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500__2", description = "error_message: \"해당 상품 등록이 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
-		, @ApiResponse(responseCode = "500__3", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"" 
+		@ApiResponse(responseCode = "500__1", description = "error_message: \"특정 변수가 잘못 입력되었습니다.\"" 
 															+ "<br> wrong_parameter &lt;String&gt; 잘못 넘어온 변수 명칭" 
 						, content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__2", description = "error_message: \"해당 상품 정보가 존재하지 않습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
+		, @ApiResponse(responseCode = "500__3", description = "error_message: \"해당 상품 정보 수정 시도가 실패하였습니다.\"", content = @Content(mediaType = "APPLICATION_JSON"))
 		, @ApiResponse(responseCode = "200", description = "result: \"success\"", content = @Content(mediaType = "APPLICATION_JSON"))
 	})
 	@PostMapping("/update-product")
