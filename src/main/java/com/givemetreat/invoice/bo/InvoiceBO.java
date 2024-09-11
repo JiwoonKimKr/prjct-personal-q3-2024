@@ -10,13 +10,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.givemetreat.common.validation.InvoiceParamsValidation;
 import com.givemetreat.invoice.domain.HasCanceled;
 import com.givemetreat.invoice.domain.Invoice;
@@ -151,30 +154,42 @@ public class InvoiceBO {
 												, String receiverName
 												, String receiverPhoneNumber
 												, String address){
-		JSONArray jsonArray = new JSONArray();
+		//JSONArray jsonArray = new JSONArray();
+		ObjectMapper objectMapper = new ObjectMapper();
 		List<ItemOrderedDto> listItemOrderedDto = new ArrayList<>();
 		int sumCost = 0;
 		int sumServerSide = 0;
 		try {
-			jsonArray = new JSONArray(jsonString);
-			for(int i=0; i < jsonArray.length(); i++) {
-				JSONObject jsonObject = jsonArray.getJSONObject(i);
-				ItemOrderedDto item = new ItemOrderedDto();
-				item.setCartItemId(Integer.parseInt(jsonObject.get("cartItemId").toString()));
-				item.setProductId(Integer.parseInt(jsonObject.get("productId").toString()));
-				item.setQuantity(Integer.parseInt(jsonObject.get("quantity").toString()));
-				item.setPrice(Integer.parseInt(jsonObject.get("price").toString()));
-				item.setChecked(jsonObject.get("checked").toString());
+			listItemOrderedDto = objectMapper.readValue(jsonString, new TypeReference<>(){});
+			for(int i=0; i < listItemOrderedDto.size() ; i++) {
+				ItemOrderedDto item = listItemOrderedDto.get(i);
 				log.info("[InvoiceBO generateInvoiceFromJsonString()]"
 						+ " Current itemOrderedDto generated. item: {}", item.toString());
 				
 				sumCost += item.getPrice() * item.getQuantity();
 				int priceServerSide = productBO.getProducts(item.getProductId(), null, null, null, null).get(0).getPrice();
 				sumServerSide += priceServerSide * item.getQuantity();
-				listItemOrderedDto.add(item);
+//				listItemOrderedDto.add(item);
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+//			for(int i=0; i < jsonArray.length(); i++) {
+//				JSONObject jsonObject = jsonArray.getJSONObject(i);
+//				ItemOrderedDto item = new ItemOrderedDto();
+//				item.setCartItemId(Integer.parseInt(jsonObject.get("cartItemId").toString()));
+//				item.setProductId(Integer.parseInt(jsonObject.get("productId").toString()));
+//				item.setQuantity(Integer.parseInt(jsonObject.get("quantity").toString()));
+//				item.setPrice(Integer.parseInt(jsonObject.get("price").toString()));
+//				item.setChecked(jsonObject.get("checked").toString());
+//				log.info("[InvoiceBO generateInvoiceFromJsonString()]"
+//						+ " Current itemOrderedDto generated. item: {}", item.toString());
+//				
+//				sumCost += item.getPrice() * item.getQuantity();
+//				int priceServerSide = productBO.getProducts(item.getProductId(), null, null, null, null).get(0).getPrice();
+//				sumServerSide += priceServerSide * item.getQuantity();
+//				listItemOrderedDto.add(item);
+//			}
+//		} catch (JSONException e) {
+		} catch (JsonProcessingException e) {
+			log.warn("[InvoiceBO generateInvoiceFromJsonString()] Json String failed to be deserialized. Json String:{}, Exception:{}", jsonString, e);
 		}
 		//List<ItemOrderedDto> generated
 		log.info("[InvoiceBO generateInvoiceFromJsonString()] Json String to listItemOrderedDto. listItemOrderedDto:{}", listItemOrderedDto.toString());
