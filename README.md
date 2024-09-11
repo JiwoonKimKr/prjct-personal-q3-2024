@@ -4,9 +4,11 @@
 ---
 AWS EC2(AWS Linux) 인스턴스에 배포한 현 프로젝트입니다.
 
-### [Client Page_'간식줘집사'](http://52.78.129.95/)
+현재 탄력적 IP(Elastic IP)로 고정시켰습니다🙆‍♀️🙆‍♂️🙆__(09 09 2024)
 
-### [Admin Page_'간식줘집사' 관리자 페이지](http://52.78.129.95/admin/sign-in-view)
+### [Client Page_'간식줘집사'](http://13.125.131.19/)
+
+### [Admin Page_'간식줘집사' 관리자 페이지](http://13.125.131.19/admin/sign-in-view)
 
 각 페이지의 로그인 아이디와 비밀번호가 필요하신 경우,
 
