@@ -2,18 +2,10 @@
 ---
 ### 💻💻 [Portfolio_개인 프로젝트_Q3_2024_Notion](https://ethereal-guan-66b.notion.site/Portfolio_-_Q3_2024-241dd7802b7d470eb8e9d3a5e380eca5)
 ---
-AWS EC2(AWS Linux) 인스턴스에 배포한 현 프로젝트입니다.
-
-현재 탄력적 IP(Elastic IP)로 고정시켰습니다🙆‍♀️🙆‍♂️🙆__(09 09 2024)
 
 ### [Client Page_'간식줘집사']
 
 ### [Admin Page_'간식줘집사' 관리자 페이지]
-
-각 페이지의 로그인 아이디와 비밀번호가 필요하신 경우,
-
-Notion 링크에서 확인하실 수 있습니다 :)
-
 ---
 
 ### 🐶🐶 메인 페이지 스크린샷
